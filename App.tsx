@@ -1,11 +1,18 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { RecoilRoot } from 'recoil';
+import { NavigationContainer } from '@react-navigation/native';
+import Root from './src/navigation/Root';
 
 const App = () => {
   return (
-    <View>
-      <Text>안녕하세요</Text>
-    </View>
+    <SafeAreaProvider>
+      <RecoilRoot>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </RecoilRoot>
+    </SafeAreaProvider>
   );
 };
 export default App;
