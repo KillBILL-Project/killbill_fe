@@ -1,11 +1,18 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { Text } from 'react-native';
+import styled from 'styled-components/native';
+
+const Main = styled.SafeAreaView`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
 const App = () => {
   return (
-    <SafeAreaView>
+    <Main>
       <Text>안녕하세요</Text>
-    </SafeAreaView>
+    </Main>
   );
 };
 
