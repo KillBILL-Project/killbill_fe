@@ -1,13 +1,12 @@
-import React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { User } from '@react-native-google-signin/google-signin';
+import { useRecoilState } from 'recoil';
 import { tokenAtom, userAtom } from '../state';
+import { User } from '../state/types';
 
 const useAuth = () => {
   const [user, setUser] = useRecoilState<User | null>(userAtom);
-  const setToken = useSetRecoilState<string | null>(tokenAtom);
+  const [token, setToken] = useRecoilState<string | null>(tokenAtom);
 
-  const auth = () => {};
-
-  return null;
+  return { user, setUser, token, setToken };
 };
+
+export default useAuth;
