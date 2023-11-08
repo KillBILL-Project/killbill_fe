@@ -32,11 +32,10 @@ const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const onChangeEmail = (text: string) => setEnteredEmail(text);
-
   const onChangePassword = (text: string) => setEnteredPassword(text);
 
-  const isValidEmail = () => EMAIL_PATTERN.test(enteredEmail);
-  const isValidPassword = () => PASSWORD_PATTERN.test(enteredPassword);
+  const isValidEmail = EMAIL_PATTERN.test(enteredEmail);
+  const isValidPassword = PASSWORD_PATTERN.test(enteredPassword);
 
   const loginRequest = {
     email: enteredEmail,
