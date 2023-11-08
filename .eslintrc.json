@@ -17,12 +17,14 @@
   ],
   "rules": {
     "import/no-extraneous-dependencies": "warn",
+    "no-restricted-exports": ["error", { "restrictDefaultExports": { "defaultFrom": false } }],
     "react/function-component-definition": [
       "error",
       {
         "namedComponents": "arrow-function"
       }
     ],
-    "react/require-default-props": 0
+    "react/require-default-props": 0,
+    "@typescript-eslint/no-explicit-any": "warn"
   }
 }
