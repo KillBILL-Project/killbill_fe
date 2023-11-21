@@ -1,23 +1,23 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { RootStackParamList } from './types';
-import Login from '../screens/auth/Login/LoginScreen';
-import Register from '../screens/auth/Register';
-import AuthDetails from '../screens/auth/AuthDetails';
-import ForgotPassword from '../screens/auth/ForgotPassword';
-import ResetPassword from '../screens/auth/ResetPassword';
-import Home from '../screens/Home';
+import LoginScreen from '../domains/auth/screens/LoginScreen/LoginScreen';
+import RegisterScreen from '../domains/auth/screens/RegisterScreen';
+import AuthDetailsScreen from '../domains/auth/screens/AuthDetailScreen';
+import ForgotPasswordScreen from '../domains/auth/screens/ForgotPasswordScreen';
+import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
+import Home from '../domains/home/screens/HomeScreen';
+import { RootStackParamList } from '../types/navigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const MainNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="AuthDetails" component={AuthDetails} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="AuthDetails" component={AuthDetailsScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
       <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );

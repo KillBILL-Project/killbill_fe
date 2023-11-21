@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { AxiosResponse } from 'axios';
-import api from '../api/api';
-import useAuth from './useAuth';
+import { useRecoilState } from 'recoil';
+import api from '../services/utils/api';
+import { User } from '../types/states/auth';
+import { tokenAtom, userAtom } from '../states';
 
 const useInterceptor = () => {
-  const { token } = useAuth();
+  const [user, setUser] = useRecoilState<User | null>(userAtom);
+  const [token, setToken] = useRecoilState<string | null>(tokenAtom);
 
   const requestInterceptor = api.interceptors.request.use(
     config => {
