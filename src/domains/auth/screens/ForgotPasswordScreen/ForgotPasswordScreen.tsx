@@ -46,7 +46,7 @@ const BackDrop = () => {
   );
 };
 
-export default () => {
+const ForgotPasswordScreen = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState('');
 
@@ -96,3 +96,5 @@ export default () => {
     </>
   );
 };
+
+export default ForgotPasswordScreen;

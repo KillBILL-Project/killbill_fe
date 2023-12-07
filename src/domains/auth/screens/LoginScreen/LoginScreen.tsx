@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Alert } from 'react-native';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, GOOGLE_LOGIN, GREY_4, WHITE } from '../../../../constants/colors';
 import {
@@ -10,8 +12,6 @@ import {
   LoginContainer,
   SsoLoginButtonContainer,
   AdditionalButtonContainer,
-  AdditionalTouchable,
-  AdditionalButtonText,
   Separator,
 } from './Login.style';
 import BaseInput from '../../components/BaseInput/BaseInput';
@@ -21,37 +21,20 @@ import { RootStackParamList } from '../../../../types/navigation';
 
 import GoogleLoginIcon from '../../../../assets/icon/login_icon_google.png';
 import AppleLoginIcon from '../../../../assets/icon/login_icon_apple.png';
-import { LoginType } from '../../../../types/common';
-import { emailLogin } from '../../../../services/api/authService';
+import { LoginFormType, LoginType } from '../../../../types/common';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
+import AdditionalButton from './components/AdditionalButton';
+import useAuth from '../../../../hooks/useAuth';
 
-interface AdditionalButtonProps {
-  onPress: () => void;
-  title: string;
-}
-
-interface LoginFormType {
-  email: string;
-  password: string;
-  loginType: LoginType | undefined;
-}
-
-const AdditionalButton = ({ onPress, title }: AdditionalButtonProps) => {
-  return (
-    <AdditionalTouchable>
-      <AdditionalButtonText onPress={onPress}>{title}</AdditionalButtonText>
-    </AdditionalTouchable>
-  );
-};
-
-export default () => {
+const LoginScreen = () => {
+  const { emailLogin, googleLogin } = useAuth();
   const [loginForm, setLoginForm] = useState<LoginFormType>({
     email: '',
     password: '',
     loginType: undefined,
+    authCode: null,
   });
   const [inLoginProgress, setInLoginProgress] = useState(false);
-
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const onChangeEmail = (text: string) => {
@@ -66,9 +49,7 @@ export default () => {
 
   const isValidForm = useMemo(() => {
     return (
-      isValidEmail(loginForm.email) &&
-      isValidPassword(loginForm.password) &&
-      loginForm.loginType !== undefined
+      isValidEmail(loginForm.email) && isValidPassword(loginForm.password) && !!loginForm.loginType
     );
   }, [loginForm.email, loginForm.loginType, loginForm.password]);
 
@@ -77,15 +58,17 @@ export default () => {
     setLoginType('EMAIL');
     if (!isValidForm) {
       // TODO: 토스트
+      Alert.alert('로그인 유효성 검사');
       return;
     }
-    const data = JSON.stringify(loginForm);
-    const result = await emailLogin({ data, setInLoginProgress });
-    navigation.navigate('Home');
+
+    await emailLogin(loginForm);
   };
 
   const onPressAppleLoginButton = async () => {
     if (inLoginProgress) return;
+    setLoginType('APPLE');
+
     try {
       setInLoginProgress(true);
     } finally {
@@ -95,20 +78,29 @@ export default () => {
 
   const onPressGoogleLoginButton = async () => {
     if (inLoginProgress) return;
+    setLoginType('GOOGLE');
+
     try {
-      setInLoginProgress(true);
-    } finally {
-      setInLoginProgress(false);
+      GoogleSignin.configure({
+        webClientId: '1361813122-mn0eqsjcn0aar3cvr8on3grfo7agfi0h.apps.googleusercontent.com',
+        iosClientId: '1361813122-5d0kpqd78q7bvsqbsi3lpqmp6laq747m.apps.googleusercontent.com',
+      });
+
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      // 로그인 성공 처리
+      loginForm.loginType = 'GOOGLE';
+      loginForm.authCode = userInfo.serverAuthCode;
+      loginForm.email = userInfo.user.email;
+
+      await googleLogin(loginForm);
+    } catch (error) {
+      console.log('구글 로그인 도중 문제가 발생하였습니다.');
     }
   };
 
-  const onPressRegisterButton = () => {
-    navigation.navigate('Register');
-  };
-
-  const onPressForgotPasswordButton = () => {
-    navigation.navigate('ForgotPassword');
-  };
+  const onPressRegisterButton = () => navigation.navigate('Register');
+  const onPressForgotPasswordButton = () => navigation.navigate('ForgotPassword');
 
   return (
     <Screen isHeaderShown={false} backgroundColor={WHITE}>
@@ -164,3 +156,5 @@ export default () => {
     </Screen>
   );
 };
+
+export default LoginScreen;

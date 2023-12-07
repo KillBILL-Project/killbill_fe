@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType } from 'react-native';
 import { GREY_3 } from '../../../../constants/colors';
 import {
   BaseButtonIcon,
@@ -7,6 +7,7 @@ import {
   BaseButtonTitleText,
   BaseTouchable,
 } from './BaseButton.style';
+import BaseIcon from '../../../../components/Icon/BaseIcon';
 
 interface LoginButtonProps {
   text: string;
@@ -21,7 +22,7 @@ const BaseButton = ({ text, onPress, backgroundColor, color, icon }: LoginButton
     <BaseTouchable onPress={onPress} backgroundColor={backgroundColor} borderColor={GREY_3}>
       {icon != null && (
         <BaseButtonIcon>
-          <Image source={icon} />
+          <BaseIcon size="15px" image={icon} />
         </BaseButtonIcon>
       )}
       <BaseButtonTitle>

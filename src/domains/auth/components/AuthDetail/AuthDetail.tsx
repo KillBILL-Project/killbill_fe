@@ -22,6 +22,7 @@ interface AuthDetailProps extends DropDownProps {
   age: string;
   gender: Gender;
   setAuthDetail: Dispatch<SetStateAction<AuthDetailType>>;
+  setSelectedItem: Dispatch<SetStateAction<ItemType | undefined>>;
 }
 
 const AuthDetail = ({
@@ -32,6 +33,7 @@ const AuthDetail = ({
   selectedItem,
   itemList,
   setAuthDetail,
+  setSelectedItem,
 }: AuthDetailProps) => {
   const setGender = (selectedGender: Gender) => {
     setAuthDetail(prevState => ({ ...prevState, gender: selectedGender }));
@@ -44,7 +46,7 @@ const AuthDetail = ({
     });
   };
   const setCountry = (selectedCountry: ItemType) => {
-    setAuthDetail(prevState => ({ ...prevState, country: selectedCountry }));
+    setSelectedItem(selectedCountry);
   };
 
   const onPressManButton = () => setGender('M');

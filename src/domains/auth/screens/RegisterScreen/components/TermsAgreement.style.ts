@@ -1,17 +1,5 @@
 import styled from 'styled-components/native';
-import { WHITE } from '../../../../constants/colors';
-import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../constants/constants';
-
-export const Container = styled.ScrollView`
-  flex: 1;
-  padding: 20px;
-  background-color: ${WHITE};
-`;
-
-export const RegisterContainer = styled.View`
-  flex: 1;
-  align-items: center;
-`;
+import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../../constants/constants';
 
 export const TermsAgreementContainer = styled.View`
   width: 100%;
@@ -41,8 +29,3 @@ export const TermsAgreementButtonText = styled.Text``;
 export const TermsAgreementDetailButton = styled.TouchableOpacity``;
 
 export const TermsAgreementDetailButtonText = styled.Text``;
-
-export const RegisterBottomContainer = styled.View`
-  margin-top: 20px;
-  align-items: center;
-`;

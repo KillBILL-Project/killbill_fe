@@ -1,8 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
-import api from '../utils/api';
+import { AxiosError, AxiosResponse } from 'axios';
+import { api, apiWithoutInterceptor } from '../utils/api';
+import { LoginFormType, ResponseType } from '../../types/common';
+import { getRefreshToken } from '../storage/localStorage';
 
 interface EmailLoginProps {
-  data: string;
+  params: LoginFormType;
   setInLoginProgress: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -11,21 +14,31 @@ interface EmailRegisterProps {
   setInRegisterProgress: Dispatch<SetStateAction<boolean>>;
 }
 
-export const emailLogin = async ({ data, setInLoginProgress }: EmailLoginProps) => {
+export const login = async <T>({
+  params,
+  setInLoginProgress,
+}: EmailLoginProps): Promise<AxiosResponse<ResponseType<T>>> => {
   try {
     setInLoginProgress(true);
 
-    return await api.post('/auth/login', data, {
+    return await api.post('/auth/login', params, {
       headers: { 'Content-Type': `application/json` },
     });
   } catch (error) {
-    return error;
+    if (error instanceof AxiosError && error.response) {
+      console.log('에러입니다.ㅇ');
+      return error.response;
+    }
+    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
   } finally {
     setInLoginProgress(false);
   }
 };
 
-export const emailRegister = async ({ data, setInRegisterProgress }: EmailRegisterProps) => {
+export const register = async <T>({
+  data,
+  setInRegisterProgress,
+}: EmailRegisterProps): Promise<AxiosResponse<ResponseType<T>>> => {
   try {
     setInRegisterProgress(true);
 
@@ -33,8 +46,25 @@ export const emailRegister = async ({ data, setInRegisterProgress }: EmailRegist
       headers: { 'Content-Type': `application/json` },
     });
   } catch (error) {
-    return error;
+    if (error instanceof AxiosError && error.response) {
+      return error.response;
+    }
+    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
   } finally {
     setInRegisterProgress(false);
+  }
+};
+
+export const reissue = async <T>(): Promise<AxiosResponse<ResponseType<T>>> => {
+  const refreshToken = await getRefreshToken();
+  try {
+    return await api.post('/auth/reissue', null, {
+      headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
+    });
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      return error.response;
+    }
+    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
   }
 };

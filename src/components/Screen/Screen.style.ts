@@ -36,6 +36,7 @@ export const Center = styled.View`
 
 export const Right = styled.View`
   flex: 1;
+  justify-content: center;
 `;
 
 export const HeaderTitle = styled.Text`

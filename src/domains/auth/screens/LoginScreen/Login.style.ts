@@ -32,15 +32,6 @@ export const AdditionalButtonContainer = styled.View`
   align-items: center;
 `;
 
-export const AdditionalTouchable = styled.TouchableOpacity`
-  flex: 1;
-  align-items: center;
-`;
-
-export const AdditionalButtonText = styled.Text`
-  color: ${GREY_8};
-`;
-
 export const Separator = styled.Text`
   color: ${GREY_2};
 `;

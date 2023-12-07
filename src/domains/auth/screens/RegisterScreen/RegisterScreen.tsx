@@ -1,30 +1,16 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import _ from 'lodash';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  Container,
-  RegisterContainer,
-  TermsAgreementButton,
-  TermsAgreementButtonText,
-  TermsAgreementCheckBox,
-  TermsAgreementContainer,
-  TermsAgreementDetailButton,
-  TermsAgreementDetailButtonText,
-} from './RegisterScreen.style';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Alert } from 'react-native';
+import { Container, RegisterBottomContainer, RegisterContainer } from './RegisterScreen.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { AuthDetailType, LoginType } from '../../../../types/common';
+import { AuthDetailType, ItemType, LoginType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import { WHITE, ORANGE } from '../../../../constants/colors';
-import { isValidEmail, isValidPassword } from '../../../../utils/common';
-import { RootStackParamList } from '../../../../types/navigation';
-import { emailRegister } from '../../../../services/api/authService';
-
-import checkedIcon from '../../../../assets/icon/checked.png';
-import uncheckedIcon from '../../../../assets/icon/unchecked.png';
+import { isCompletelyDifferent, isValidEmail, isValidPassword } from '../../../../utils/common';
+import TermsAgreement from './components/TermsAgreement';
+import useAuth from '../../../../hooks/useAuth';
 
 interface RegisterFormType {
   email: string;
@@ -33,15 +19,10 @@ interface RegisterFormType {
   loginType: LoginType | undefined;
 }
 
-interface TermsAgreementProps {
-  isCheckedTermsAgreement: boolean;
-  setIsCheckedTermsAgreement: Dispatch<SetStateAction<boolean>>;
-}
-
 const initialAuthDetail = {
   age: '',
   gender: undefined,
-  country: undefined,
+  country: '',
 };
 
 const initialRegisterForm = {
@@ -51,37 +32,13 @@ const initialRegisterForm = {
   loginType: undefined,
 };
 
-const TermsAgreement = ({
-  isCheckedTermsAgreement,
-  setIsCheckedTermsAgreement,
-}: TermsAgreementProps) => {
-  const onPressTermsAgreementButton = () => setIsCheckedTermsAgreement(prevState => !prevState);
-
-  return (
-    <TermsAgreementContainer>
-      <TermsAgreementButton onPress={onPressTermsAgreementButton}>
-        {isCheckedTermsAgreement ? (
-          <TermsAgreementCheckBox source={checkedIcon} />
-        ) : (
-          <TermsAgreementCheckBox source={uncheckedIcon} />
-        )}
-        <TermsAgreementButtonText>서비스 이용약관 동의 (필수)</TermsAgreementButtonText>
-      </TermsAgreementButton>
-      <TermsAgreementDetailButton>
-        <TermsAgreementDetailButtonText>{'자세히 >'}</TermsAgreementDetailButtonText>
-      </TermsAgreementDetailButton>
-    </TermsAgreementContainer>
-  );
-};
-
-export default () => {
+const RegisterScreen = () => {
   const [registerForm, setRegisterForm] = useState<RegisterFormType>(initialRegisterForm);
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isCheckedTermsAgreement, setIsCheckedTermsAgreement] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [inRegisterProgress, setInRegisterProgress] = useState(false);
-
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
+  const { userRegister, inProgress } = useAuth();
 
   const onChangeEmail = (text: string) => {
     setRegisterForm(prevState => ({ ...prevState, email: text }));
@@ -92,14 +49,11 @@ export default () => {
   const onChangeConfirmedPassword = (text: string) => {
     setRegisterForm(prevState => ({ ...prevState, confirmedPassword: text }));
   };
-  const setLoginType = (text: LoginType) => {
-    setRegisterForm(prevState => ({ ...prevState, loginType: text }));
-  };
 
   const isValidForm = useMemo(() => {
     return (
-      !_.isEqual(registerForm, initialRegisterForm) &&
-      !_.isEqual(authDetail, initialAuthDetail) &&
+      isCompletelyDifferent(registerForm, initialRegisterForm) &&
+      isCompletelyDifferent(authDetail, initialAuthDetail) &&
       isValidEmail(registerForm.email) &&
       isValidPassword(registerForm.password) &&
       isValidPassword(registerForm.confirmedPassword) &&
@@ -109,19 +63,25 @@ export default () => {
   }, [authDetail, isCheckedTermsAgreement, registerForm]);
 
   const onPressRegisterButton = async () => {
+    if (inProgress) return;
     if (!isValidForm) {
       // TODO: 추후 토스트와 연결
+      Alert.alert('유효성 검사');
       return;
     }
 
-    const data = JSON.stringify(registerForm);
-    const result = await emailRegister({ data, setInRegisterProgress });
-
-    navigation.navigate('Home');
+    registerForm.loginType = 'EMAIL';
+    const data = JSON.stringify({ ...registerForm, ...authDetail });
+    await userRegister(data);
   };
 
+  useEffect(() => {
+    if (selectedCountry)
+      setAuthDetail(prevState => ({ ...prevState, country: selectedCountry.value }));
+  }, [selectedCountry]);
+
   return (
-    <Screen title="회원가입" isHeaderShown>
+    <Screen title="회원가입">
       <Container>
         <RegisterContainer>
           <BaseInput
@@ -149,10 +109,13 @@ export default () => {
             gender={authDetail.gender}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            selectedItem={authDetail.country}
+            selectedItem={selectedCountry}
+            setSelectedItem={setSelectedCountry}
             setAuthDetail={setAuthDetail}
             itemList={COUNTRIES}
           />
+        </RegisterContainer>
+        <RegisterBottomContainer>
           <TermsAgreement
             isCheckedTermsAgreement={isCheckedTermsAgreement}
             setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
@@ -163,8 +126,10 @@ export default () => {
             backgroundColor={ORANGE}
             color={WHITE}
           />
-        </RegisterContainer>
+        </RegisterBottomContainer>
       </Container>
     </Screen>
   );
 };
+
+export default RegisterScreen;
