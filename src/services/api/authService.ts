@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
-import { api, apiWithoutInterceptor } from '../utils/api';
+import { api } from '../utils/api';
 import { LoginFormType, ResponseType } from '../../types/common';
 import { getRefreshToken } from '../storage/localStorage';
 
@@ -13,6 +13,10 @@ interface EmailRegisterProps {
   data: string;
   setInRegisterProgress: Dispatch<SetStateAction<boolean>>;
 }
+
+/**
+ * 전체적으로 에러를 단순히 error.reponse로 리턴해주는데 그냥 interceptor에서 일괄 처리 안되나?
+ */
 
 export const login = async <T>({
   params,

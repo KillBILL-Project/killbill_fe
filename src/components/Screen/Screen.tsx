@@ -24,7 +24,6 @@ const Screen = ({
 }: ScreenProps) => {
   const { clearTokens } = useAuth();
   const { goBack, canGoBack } = useNavigation();
-  useInterceptor();
 
   const onPressBackButton = () => goBack();
   const onPressTempButton = async () => {
