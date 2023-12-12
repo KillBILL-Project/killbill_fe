@@ -12,13 +12,22 @@ export interface SsoRegisterParams {
   loginType: LoginType;
 }
 
+export interface RegisterFormType {
+  email: string;
+  password?: string;
+  confirmedPassword?: string;
+  loginType: LoginType | undefined;
+}
+
 export interface AuthDetailType {
   age: string;
   gender: Gender | undefined;
   country: string;
 }
 
-export interface ResponseType<T> {
+export interface RegisterType extends RegisterFormType, AuthDetailType {}
+
+export interface WwoossResponse<T> {
   code: number;
   title: string;
   message: string;

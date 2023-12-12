@@ -3,7 +3,6 @@ import React from 'react';
 import dropDownIcon from '../../assets/icon/dropdown_icon.png';
 
 import { Container, Header, Left, Center, Right, HeaderTitle, Body } from './Screen.style';
-import useInterceptor from '../../hooks/useInterceptor';
 import HeaderButton from './components/HeaderButton/HeaderButton';
 import useAuth from '../../hooks/useAuth';
 

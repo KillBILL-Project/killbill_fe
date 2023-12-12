@@ -2,15 +2,11 @@ import React from 'react';
 import { Button, Text } from 'react-native';
 import Screen from '../../../../components/Screen/Screen';
 import { Container } from './HomeScreen.style';
-import { api } from '../../../../services/utils/api';
-import { getAccessToken, getRefreshToken } from '../../../../services/storage/localStorage';
+import api from '../../../../services/utils/api';
 
 const HomeScreen = () => {
   const onPressButton = async () => {
-    const response = await api.post('/auth/test', {
-      headers: { 'Content-Type': `application/json` },
-    });
-    console.log(response.data);
+    await api.post('/auth/test');
   };
   return (
     <Screen title="홈">

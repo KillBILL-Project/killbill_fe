@@ -5,19 +5,12 @@ import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { AuthDetailType, ItemType, LoginType } from '../../../../types/common';
+import { AuthDetailType, ItemType, RegisterFormType, RegisterType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import { WHITE, ORANGE } from '../../../../constants/colors';
 import { isCompletelyDifferent, isValidEmail, isValidPassword } from '../../../../utils/common';
 import TermsAgreement from './components/TermsAgreement';
 import useAuth from '../../../../hooks/useAuth';
-
-interface RegisterFormType {
-  email: string;
-  password: string;
-  confirmedPassword: string;
-  loginType: LoginType | undefined;
-}
 
 const initialAuthDetail = {
   age: '',
@@ -38,7 +31,8 @@ const RegisterScreen = () => {
   const [isCheckedTermsAgreement, setIsCheckedTermsAgreement] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
-  const { userRegister, inProgress } = useAuth();
+  const [inProgress, setInProgress] = useState(false);
+  const { register } = useAuth();
 
   const onChangeEmail = (text: string) => {
     setRegisterForm(prevState => ({ ...prevState, email: text }));
@@ -71,8 +65,13 @@ const RegisterScreen = () => {
     }
 
     registerForm.loginType = 'EMAIL';
-    const data = JSON.stringify({ ...registerForm, ...authDetail });
-    await userRegister(data);
+    const params: RegisterType = { ...registerForm, ...authDetail };
+    try {
+      setInProgress(true);
+      await register(params);
+    } finally {
+      setInProgress(false);
+    }
   };
 
   useEffect(() => {
@@ -94,14 +93,14 @@ const RegisterScreen = () => {
             title="비밀번호"
             placeholder="비밀번호 입력"
             onChangeText={onChangePassword}
-            value={registerForm.password}
+            value={registerForm.password ? registerForm.password : ''}
             isSecure
           />
           <BaseInput
             title="비밀번호 확인"
             placeholder="비밀번호 확인"
             onChangeText={onChangeConfirmedPassword}
-            value={registerForm.confirmedPassword}
+            value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
             isSecure
           />
           <AuthDetail

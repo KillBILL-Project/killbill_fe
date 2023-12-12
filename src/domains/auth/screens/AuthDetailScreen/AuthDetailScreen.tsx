@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { Alert } from 'react-native';
 import { Container, AuthDetailContainer, BaseButtonContainer } from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
-import { AuthDetailType, ItemType } from '../../../../types/common';
+import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
@@ -22,7 +22,7 @@ const AuthDetailScreen = () => {
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
-  const { userRegister, inProgress } = useAuth();
+  const { register } = useAuth();
   const route = useRoute<RouteProp<RootStackParamList, 'AuthDetail'>>();
 
   const isValidForm = useMemo(() => {
@@ -30,14 +30,13 @@ const AuthDetailScreen = () => {
   }, [authDetail]);
 
   const onPressButton = async () => {
-    if (inProgress) return;
     if (!isValidForm) {
       Alert.alert('유효성 검사');
       return;
     }
 
-    const data = JSON.stringify({ ...route.params, ...authDetail });
-    await userRegister(data);
+    const params: RegisterType = { ...route.params, ...authDetail };
+    await register(params);
   };
 
   useEffect(() => {

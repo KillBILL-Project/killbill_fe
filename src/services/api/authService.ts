@@ -1,74 +1,23 @@
-import { Dispatch, SetStateAction } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
-import { api } from '../utils/api';
-import { LoginFormType, ResponseType } from '../../types/common';
-import { getRefreshToken } from '../storage/localStorage';
+import axios, { AxiosResponse } from 'axios';
+import api from '../utils/api';
+import { LoginFormType, RegisterType, WwoossResponse } from '../../types/common';
+import { loadRefreshToken } from '../storage/encryptedStorage';
 
-interface EmailLoginProps {
-  params: LoginFormType;
-  setInLoginProgress: Dispatch<SetStateAction<boolean>>;
-}
-
-interface EmailRegisterProps {
-  data: string;
-  setInRegisterProgress: Dispatch<SetStateAction<boolean>>;
-}
-
-/**
- * 전체적으로 에러를 단순히 error.reponse로 리턴해주는데 그냥 interceptor에서 일괄 처리 안되나?
- */
-
-export const login = async <T>({
-  params,
-  setInLoginProgress,
-}: EmailLoginProps): Promise<AxiosResponse<ResponseType<T>>> => {
-  try {
-    setInLoginProgress(true);
-
-    return await api.post('/auth/login', params, {
-      headers: { 'Content-Type': `application/json` },
-    });
-  } catch (error) {
-    if (error instanceof AxiosError && error.response) {
-      console.log('에러입니다.ㅇ');
-      return error.response;
-    }
-    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
-  } finally {
-    setInLoginProgress(false);
-  }
+export const requestLogin = async <T>(
+  params: LoginFormType,
+): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  return api.post('/auth/login', params);
 };
 
-export const register = async <T>({
-  data,
-  setInRegisterProgress,
-}: EmailRegisterProps): Promise<AxiosResponse<ResponseType<T>>> => {
-  try {
-    setInRegisterProgress(true);
-
-    return await api.post('/auth/register', data, {
-      headers: { 'Content-Type': `application/json` },
-    });
-  } catch (error) {
-    if (error instanceof AxiosError && error.response) {
-      return error.response;
-    }
-    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
-  } finally {
-    setInRegisterProgress(false);
-  }
+export const requestRegister = async <T>(
+  params: RegisterType,
+): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  return api.post('/auth/register', params);
 };
 
-export const reissue = async <T>(): Promise<AxiosResponse<ResponseType<T>>> => {
-  const refreshToken = await getRefreshToken();
-  try {
-    return await api.post('/auth/reissue', null, {
-      headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
-    });
-  } catch (error) {
-    if (error instanceof AxiosError && error.response) {
-      return error.response;
-    }
-    throw new Error('예상치 못한 에러'); // 예상한 에러가 아닐 때는 어떻게 처리를 해야하지...?
-  }
+export const requestReissue = async <T>(): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  const refreshToken = await loadRefreshToken();
+  return axios.post('http://localhost:9090/api/v1/auth/reissue', null, {
+    headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
+  });
 };

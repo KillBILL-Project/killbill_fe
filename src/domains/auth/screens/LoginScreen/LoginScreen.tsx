@@ -27,7 +27,7 @@ import AdditionalButton from './components/AdditionalButton';
 import useAuth from '../../../../hooks/useAuth';
 
 const LoginScreen = () => {
-  const { emailLogin, googleLogin } = useAuth();
+  const { login } = useAuth();
   const [loginForm, setLoginForm] = useState<LoginFormType>({
     email: '',
     password: '',
@@ -62,7 +62,7 @@ const LoginScreen = () => {
       return;
     }
 
-    await emailLogin(loginForm);
+    await login(loginForm);
   };
 
   const onPressAppleLoginButton = async () => {
@@ -93,7 +93,7 @@ const LoginScreen = () => {
       loginForm.authCode = userInfo.serverAuthCode;
       loginForm.email = userInfo.user.email;
 
-      await googleLogin(loginForm);
+      await login(loginForm);
     } catch (error) {
       console.log('구글 로그인 도중 문제가 발생하였습니다.');
     }
