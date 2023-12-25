@@ -7,7 +7,6 @@ import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
 import { AuthDetailType, ItemType, RegisterFormType, RegisterType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
-import { WHITE, ORANGE } from '../../../../constants/colors';
 import { isCompletelyDifferent, isValidEmail, isValidPassword } from '../../../../utils/common';
 import TermsAgreement from './components/TermsAgreement';
 import useAuth from '../../../../hooks/useAuth';
@@ -46,25 +45,33 @@ const RegisterScreen = () => {
 
   const isValidForm = useMemo(() => {
     return (
-      isCompletelyDifferent(registerForm, initialRegisterForm) &&
       isCompletelyDifferent(authDetail, initialAuthDetail) &&
       isValidEmail(registerForm.email) &&
       isValidPassword(registerForm.password) &&
       isValidPassword(registerForm.confirmedPassword) &&
       registerForm.password === registerForm.confirmedPassword &&
+      !!registerForm.loginType &&
       isCheckedTermsAgreement
     );
-  }, [authDetail, isCheckedTermsAgreement, registerForm]);
+  }, [
+    authDetail,
+    isCheckedTermsAgreement,
+    registerForm.email,
+    registerForm.password,
+    registerForm.confirmedPassword,
+    registerForm.loginType,
+  ]);
 
   const onPressRegisterButton = async () => {
     if (inProgress) return;
+
+    registerForm.loginType = 'EMAIL';
     if (!isValidForm) {
       // TODO: 추후 토스트와 연결
       Alert.alert('유효성 검사');
       return;
     }
 
-    registerForm.loginType = 'EMAIL';
     const params: RegisterType = { ...registerForm, ...authDetail };
     try {
       setInProgress(true);
@@ -119,12 +126,7 @@ const RegisterScreen = () => {
             isCheckedTermsAgreement={isCheckedTermsAgreement}
             setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
           />
-          <BaseButton
-            text="회원가입"
-            onPress={onPressRegisterButton}
-            backgroundColor={ORANGE}
-            color={WHITE}
-          />
+          <BaseButton text="회원가입" onPress={onPressRegisterButton} />
         </RegisterBottomContainer>
       </Container>
     </Screen>

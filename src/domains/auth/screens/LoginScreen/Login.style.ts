@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../constants/constants';
-import { GREY_2, GREY_3, GREY_8, WHITE } from '../../../../constants/colors';
+import { GREY300 } from '../../../../constants/colors';
 
 export const Container = styled.View`
   align-items: center;
@@ -33,7 +32,7 @@ export const AdditionalButtonContainer = styled.View`
 `;
 
 export const Separator = styled.Text`
-  color: ${GREY_2};
+  color: ${GREY300};
 `;
 
 export const SsoLoginButtonContainer = styled.View`
@@ -41,14 +40,4 @@ export const SsoLoginButtonContainer = styled.View`
   width: 100%;
   align-items: center;
   justify-content: flex-end;
-`;
-
-export const LoginTextInput = styled.TextInput`
-  height: ${AUTH_HEIGHT};
-  width: 100%;
-  padding: 5px 15px;
-  background-color: ${WHITE};
-  border-width: 1px;
-  border-color: ${GREY_3};
-  border-radius: ${AUTH_BORDER_RADIUS};
 `;

@@ -1,5 +1,7 @@
 import React from 'react';
-import { AdditionalButtonText, AdditionalTouchable } from './AdditionalButton.style';
+import { AdditionalTouchable } from './AdditionalButton.style';
+import { Regular14 } from '../../../../../components/Typography/Typography';
+import { GREY700 } from '../../../../../constants/colors';
 
 interface AdditionalButtonProps {
   onPress: () => void;
@@ -8,8 +10,8 @@ interface AdditionalButtonProps {
 
 const AdditionalButton = ({ onPress, title }: AdditionalButtonProps) => {
   return (
-    <AdditionalTouchable>
-      <AdditionalButtonText onPress={onPress}>{title}</AdditionalButtonText>
+    <AdditionalTouchable onPress={onPress}>
+      <Regular14 color={GREY700}>{title}</Regular14>
     </AdditionalTouchable>
   );
 };

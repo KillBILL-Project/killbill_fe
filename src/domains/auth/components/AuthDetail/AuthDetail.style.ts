@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 import { AUTH_BORDER_RADIUS, AUTH_HEIGHT, INPUT_MARGIN } from '../../../../constants/constants';
-import { BLACK, GREEN, GREEN_2, GREY_2, GREY_8 } from '../../../../constants/colors';
+import { BLACK, MAIN, BTN_DESELECTED_BG } from '../../../../constants/colors';
+
+interface GenderButtonProps {
+  isSelected: boolean;
+}
 
 export const Container = styled.View`
   width: 100%;
@@ -19,17 +23,13 @@ export const GenderSelectContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const GenderButton = styled.TouchableOpacity<{ isSelected: boolean }>`
+export const GenderButton = styled.TouchableOpacity<GenderButtonProps>`
   justify-content: center;
   align-items: center;
   width: 48%;
   height: ${AUTH_HEIGHT};
-  background-color: ${({ isSelected }) => (isSelected ? GREEN : GREY_2)};
+  background-color: ${({ isSelected }) => (isSelected ? MAIN : BTN_DESELECTED_BG)};
   border-radius: ${AUTH_BORDER_RADIUS};
   border-width: 1px;
-  border-color: ${({ isSelected }) => (isSelected ? GREEN_2 : 'transparent')};
-`;
-
-export const GenderButtonText = styled.Text<{ isSelected: boolean }>`
-  color: ${({ isSelected }) => (isSelected ? BLACK : GREY_8)};
+  border-color: ${({ isSelected }) => (isSelected ? MAIN : 'transparent')};
 `;

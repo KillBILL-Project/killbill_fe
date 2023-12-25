@@ -2,9 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import dropDownIcon from '../../assets/icon/dropdown_icon.png';
 
-import { Container, Header, Left, Center, Right, HeaderTitle, Body } from './Screen.style';
+import { Container, Header, Left, Center, Right, Body } from './Screen.style';
 import HeaderButton from './components/HeaderButton/HeaderButton';
 import useAuth from '../../hooks/useAuth';
+import { Medium18 } from '../Typography/Typography';
+import { BLACK } from '../../constants/colors';
 
 interface ScreenProps {
   title?: string;
@@ -47,7 +49,7 @@ const Screen = ({
             )}
           </Left>
           <Center>
-            <HeaderTitle>{title}</HeaderTitle>
+            <Medium18 color={BLACK}>{title}</Medium18>
           </Center>
           <Right>
             <HeaderButton

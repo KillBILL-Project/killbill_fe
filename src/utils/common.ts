@@ -16,3 +16,9 @@ export const isCompletelyDifferent = (
 ) => {
   return Object.keys(obj1).every(key => !_.isEqual(obj1[key], obj2[key]));
 };
+
+export const sleep = (milliSeconds: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, milliSeconds);
+  });
+};

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../../constants/constants';
+import { GREY500, GREY900 } from '../../../../../constants/colors';
 
 export const TermsAgreementContainer = styled.View`
   width: 100%;
@@ -24,8 +25,12 @@ export const TermsAgreementCheckBox = styled.Image`
   margin-right: 5px;
 `;
 
-export const TermsAgreementButtonText = styled.Text``;
+export const TermsAgreementButtonText = styled.Text`
+  color: ${GREY900};
+`;
 
 export const TermsAgreementDetailButton = styled.TouchableOpacity``;
 
-export const TermsAgreementDetailButtonText = styled.Text``;
+export const TermsAgreementDetailButtonText = styled.Text`
+  color: ${GREY500};
+`;

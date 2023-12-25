@@ -46,3 +46,15 @@ export interface LoginFormType {
   loginType: LoginType | undefined;
   authCode: string | null;
 }
+
+export interface PopupProps {
+  text: string | string[];
+  confirmText?: string;
+  onPressConfirm?: () => void;
+  onPressCancel?: () => void;
+}
+
+export interface ToastProps {
+  message: string | string[];
+  isFailed?: boolean;
+}

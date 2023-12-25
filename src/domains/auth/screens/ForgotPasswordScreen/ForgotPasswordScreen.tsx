@@ -4,66 +4,41 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import {
   AuthButtonContainer,
   Container,
-  FullScreen,
   InfoMessage,
   InfoMessageText,
   InputContainer,
-  Notification,
-  NotificationButton,
-  NotificationButtonText,
-  NotificationContainer,
-  NotificationText,
-  BackDropContainer,
 } from './ForgotPassword.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
-import { ORANGE, WHITE } from '../../../../constants/colors';
+import { BLACK, PRIMARY } from '../../../../constants/colors';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { EMAIL_PATTERN } from '../../../../constants/constants';
 import { RootStackParamList } from '../../../../types/navigation';
+import usePopup from '../../../../hooks/usePopup';
+import { isValidEmail } from '../../../../utils/common';
 
-const BackDrop = () => {
+const ForgotPasswordScreen = () => {
+  const [enteredEmail, setEnteredEmail] = useState('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { showPopup, AlertComponent } = usePopup();
+
+  const alertMessage = ['입력하신 이메일 주소로', '임시 비밀번호를 발송했습니다.'];
 
   const onPressConfirm = () => {
     navigation.navigate('Login');
   };
-
-  return (
-    <FullScreen>
-      <BackDropContainer>
-        <NotificationContainer>
-          <Notification>
-            <NotificationText>입력하신 이메일 주소로</NotificationText>
-            <NotificationText>임시 비밀번호를 발송했습니다.</NotificationText>
-          </Notification>
-          <NotificationButton onPress={onPressConfirm}>
-            <NotificationButtonText>확인</NotificationButtonText>
-          </NotificationButton>
-        </NotificationContainer>
-      </BackDropContainer>
-    </FullScreen>
-  );
-};
-
-const ForgotPasswordScreen = () => {
-  const [isComplete, setIsComplete] = useState(false);
-  const [enteredEmail, setEnteredEmail] = useState('');
-
-  const isValidEmail = EMAIL_PATTERN.test(enteredEmail);
 
   const onChangeEmail = (email: string) => {
     setEnteredEmail(email);
   };
 
   const onPressNextButton = () => {
-    if (!isValidEmail) {
+    if (!isValidEmail(enteredEmail)) {
       // TODO: 토스트
       return;
     }
     // TODO: api
 
-    setIsComplete(true);
+    showPopup({ text: alertMessage, onPressConfirm });
   };
 
   return (
@@ -86,13 +61,13 @@ const ForgotPasswordScreen = () => {
             <BaseButton
               text="다음"
               onPress={onPressNextButton}
-              backgroundColor={ORANGE}
-              color={WHITE}
+              backgroundColor={PRIMARY}
+              color={BLACK}
             />
           </AuthButtonContainer>
         </Container>
       </Screen>
-      {isComplete && <BackDrop />}
+      {AlertComponent}
     </>
   );
 };

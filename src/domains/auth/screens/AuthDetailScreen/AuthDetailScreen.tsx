@@ -7,7 +7,6 @@ import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common
 import { COUNTRIES } from '../../../../constants/constants';
 import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { ORANGE, WHITE } from '../../../../constants/colors';
 import { RootStackParamList } from '../../../../types/navigation';
 import useAuth from '../../../../hooks/useAuth';
 import { isCompletelyDifferent } from '../../../../utils/common';
@@ -60,12 +59,7 @@ const AuthDetailScreen = () => {
           />
         </AuthDetailContainer>
         <BaseButtonContainer>
-          <BaseButton
-            text="입력 완료"
-            onPress={onPressButton}
-            backgroundColor={ORANGE}
-            color={WHITE}
-          />
+          <BaseButton text="입력 완료" onPress={onPressButton} />
         </BaseButtonContainer>
       </Container>
     </Screen>

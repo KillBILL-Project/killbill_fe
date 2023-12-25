@@ -5,13 +5,13 @@ import {
   Container,
   DropDownContainer,
   DropDownItem,
-  DropDownItemText,
   DropDownList,
   DropDownTitle,
   DropDownTitleIcon,
-  DropDownTitleText,
   InputTitle,
 } from './BaseDropDown.style';
+import { Medium14, Regular16 } from '../../../../components/Typography/Typography';
+import { BLACK, GREY500, GREY900 } from '../../../../constants/colors';
 
 type SetSelectedItemType = (item: ItemType) => void;
 
@@ -45,12 +45,12 @@ const DropDown = ({
 
   return (
     <Container>
-      <InputTitle>국가</InputTitle>
+      <InputTitle>
+        <Medium14 color={GREY900}>국가</Medium14>
+      </InputTitle>
       <DropDownContainer onPress={onPressDropDownContainer} activeOpacity={1}>
         <DropDownTitle isDropDownActive={isOpen}>
-          <DropDownTitleText isItemSelected={selectedItem !== undefined}>
-            {dropDownTitleText}
-          </DropDownTitleText>
+          <Regular16 color={selectedItem ? BLACK : GREY500}>{dropDownTitleText}</Regular16>
           <DropDownTitleIcon isDropDownActive={isOpen} source={dropDownIcon} />
         </DropDownTitle>
       </DropDownContainer>
@@ -58,7 +58,7 @@ const DropDown = ({
         <DropDownList>
           {itemList.map(item => (
             <DropDownItem key={item.value} onPress={() => onPressDropDownItem(item)}>
-              <DropDownItemText>{item.label}</DropDownItemText>
+              <Regular16 color={BLACK}>{item.label}</Regular16>
             </DropDownItem>
           ))}
         </DropDownList>

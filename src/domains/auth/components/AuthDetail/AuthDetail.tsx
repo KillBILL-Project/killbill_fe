@@ -1,15 +1,11 @@
 import React, { Dispatch, SetStateAction, useMemo } from 'react';
 import BaseInput from '../BaseInput/BaseInput';
-import {
-  Container,
-  GenderButton,
-  GenderButtonText,
-  GenderSelectContainer,
-  InputTitle,
-} from './AuthDetail.style';
+import { Container, GenderButton, GenderSelectContainer, InputTitle } from './AuthDetail.style';
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
 import { AuthDetailType, Gender, ItemType } from '../../../../types/common';
 import { EXCLUDED_NUMERIC_PATTERN } from '../../../../constants/constants';
+import { Semibold18 } from '../../../../components/Typography/Typography';
+import { GREY600, WHITE } from '../../../../constants/colors';
 
 export interface DropDownProps {
   isOpen: boolean;
@@ -61,10 +57,10 @@ const AuthDetail = ({
         <InputTitle>성별</InputTitle>
         <GenderSelectContainer>
           <GenderButton onPress={onPressManButton} isSelected={isSelectedMan}>
-            <GenderButtonText isSelected={isSelectedMan}>남자</GenderButtonText>
+            <Semibold18 color={isSelectedMan ? WHITE : GREY600}>남자</Semibold18>
           </GenderButton>
           <GenderButton onPress={onPressWomanButton} isSelected={isSelectedWoman}>
-            <GenderButtonText isSelected={isSelectedWoman}>여자</GenderButtonText>
+            <Semibold18 color={isSelectedWoman ? WHITE : GREY600}>여자</Semibold18>
           </GenderButton>
         </GenderSelectContainer>
       </Container>
