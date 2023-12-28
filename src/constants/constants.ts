@@ -1,9 +1,13 @@
 import { ItemType } from '../types/common';
+import { ratio } from '../utils/platform';
 
-export const INPUT_MARGIN = '20px';
-export const INPUT_BORDER_WIDTH = '1px';
-export const AUTH_HEIGHT = '50px';
-export const AUTH_BORDER_RADIUS = '5px';
+export const INPUT_MARGIN = ratio * 24;
+export const INPUT_TITLE_MARGIN = ratio * 6;
+export const INPUT_WIDTH = ratio * 327;
+export const TOAST_WIDTH = ratio * 327;
+export const AUTH_HEIGHT = ratio * 48;
+export const AUTH_BORDER_RADIUS = ratio * 5;
+export const TAB_HEIGHT = ratio * 60;
 
 export const EMAIL_PATTERN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 export const PASSWORD_PATTERN =
