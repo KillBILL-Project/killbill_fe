@@ -3,7 +3,7 @@ import { ImageSourcePropType } from 'react-native';
 import { IconStyled } from './Icon.style';
 
 interface BaseIconProps {
-  size: string;
+  size: number;
   image: ImageSourcePropType;
 }
 

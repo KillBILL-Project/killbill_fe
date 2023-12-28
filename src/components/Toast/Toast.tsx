@@ -11,7 +11,7 @@ import { ToastProps } from '../../types/common';
 const Toast = ({ message = [], isFailed = false }: ToastProps) => {
   return (
     <Container isFailed={isFailed}>
-      <BaseIcon size="15px" image={isFailed ? toastErrorIcon : toastInfoIcon} />
+      <BaseIcon size={15} image={isFailed ? toastErrorIcon : toastInfoIcon} />
       <Spacer width={10} />
       <MessageContainer>
         {typeof message === 'string' ? (

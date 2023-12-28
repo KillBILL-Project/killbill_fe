@@ -24,7 +24,7 @@ const BaseButton = ({
     <BaseTouchable onPress={onPress} backgroundColor={backgroundColor} borderColor={GREY400}>
       {icon != null && (
         <BaseButtonIcon>
-          <BaseIcon size="15px" image={icon} />
+          <BaseIcon size={15} image={icon} />
         </BaseButtonIcon>
       )}
       <BaseButtonTitle>

@@ -1,7 +1,6 @@
 import { LoginType } from './common';
 
 export type RootStackParamList = {
-  Home: undefined;
   Login: undefined;
   Register: undefined;
   AuthDetail: {
@@ -10,4 +9,9 @@ export type RootStackParamList = {
   };
   ForgotPassword: undefined;
   ResetPassword: undefined;
+
+  Home: undefined;
+  Location: undefined;
+  Report: undefined;
+  MyPage: undefined;
 };

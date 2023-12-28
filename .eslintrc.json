@@ -27,6 +27,8 @@
     ],
     "react/require-default-props": 0,
     "@typescript-eslint/no-explicit-any": "warn",
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "no-nested-ternary": 0,
+    "react/jsx-props-no-spreading": "warn"
   }
 }

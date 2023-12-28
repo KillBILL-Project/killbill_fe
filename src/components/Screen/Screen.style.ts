@@ -1,9 +1,17 @@
 import styled from 'styled-components/native';
 import { BLACK, WHITE } from '../../constants/colors';
 
-export const Container = styled.SafeAreaView<{ backgroundColor?: string }>`
+interface ContainerProps {
+  backgroundColor?: string;
+}
+
+export const Container = styled.View<ContainerProps>`
   flex: 1;
   background-color: ${({ backgroundColor }) => backgroundColor || WHITE};
+`;
+
+export const InnerContainer = styled.SafeAreaView`
+  flex: 1;
 `;
 
 export const Header = styled.View`
