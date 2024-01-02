@@ -1,31 +1,29 @@
 import styled from 'styled-components/native';
-import { BLACK, WHITE } from '../../constants/colors';
+import { WHITE } from '../../constants/colors';
+import { px } from '../../utils/platform';
+import { HEADER_HEIGHT } from '../../constants/constants';
 
-export const Container = styled.SafeAreaView<{ backgroundColor?: string }>`
+interface ContainerProps {
+  backgroundColor?: string;
+}
+
+export const Container = styled.View<ContainerProps>`
   flex: 1;
-  background-color: ${({ backgroundColor }) => backgroundColor || WHITE};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
+`;
+
+export const InnerContainer = styled.SafeAreaView`
+  flex: 1;
 `;
 
 export const Header = styled.View`
-  height: 48px;
+  height: ${px(HEADER_HEIGHT)};
   flex-direction: row;
 `;
 
 export const Left = styled.View`
   flex: 1;
   justify-content: center;
-`;
-
-export const BackButton = styled.TouchableOpacity`
-  padding: 10px;
-  margin: 10px;
-  justify-content: center;
-`;
-
-export const BackButtonIcon = styled.Image`
-  width: 25px;
-  height: 25px;
-  transform: rotate(90deg);
 `;
 
 export const Center = styled.View`
@@ -36,12 +34,7 @@ export const Center = styled.View`
 
 export const Right = styled.View`
   flex: 1;
-`;
-
-export const HeaderTitle = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  color: ${BLACK};
+  justify-content: center;
 `;
 
 export const Body = styled.View`

@@ -1,40 +1,23 @@
-import { Dispatch, SetStateAction } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import api from '../utils/api';
+import { LoginFormType, RegisterType, WwoossResponse } from '../../types/common';
+import { loadRefreshToken } from '../storage/encryptedStorage';
 
-interface EmailLoginProps {
-  data: string;
-  setInLoginProgress: Dispatch<SetStateAction<boolean>>;
-}
-
-interface EmailRegisterProps {
-  data: string;
-  setInRegisterProgress: Dispatch<SetStateAction<boolean>>;
-}
-
-export const emailLogin = async ({ data, setInLoginProgress }: EmailLoginProps) => {
-  try {
-    setInLoginProgress(true);
-
-    return await api.post('/auth/login', data, {
-      headers: { 'Content-Type': `application/json` },
-    });
-  } catch (error) {
-    return error;
-  } finally {
-    setInLoginProgress(false);
-  }
+export const requestLogin = async <T>(
+  params: LoginFormType,
+): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  return api.post('/auth/login', params);
 };
 
-export const emailRegister = async ({ data, setInRegisterProgress }: EmailRegisterProps) => {
-  try {
-    setInRegisterProgress(true);
+export const requestRegister = async <T>(
+  params: RegisterType,
+): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  return api.post('/auth/register', params);
+};
 
-    return await api.post('/auth/register', data, {
-      headers: { 'Content-Type': `application/json` },
-    });
-  } catch (error) {
-    return error;
-  } finally {
-    setInRegisterProgress(false);
-  }
+export const requestReissue = async <T>(): Promise<AxiosResponse<WwoossResponse<T>>> => {
+  const refreshToken = await loadRefreshToken();
+  return axios.post('http://localhost:9090/api/v1/auth/reissue', null, {
+    headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
+  });
 };

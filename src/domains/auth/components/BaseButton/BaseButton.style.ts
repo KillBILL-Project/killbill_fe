@@ -2,29 +2,27 @@ import styled from 'styled-components/native';
 import {
   AUTH_BORDER_RADIUS,
   AUTH_HEIGHT,
-  INPUT_BORDER_WIDTH,
+  INPUT_MARGIN,
+  INPUT_WIDTH,
 } from '../../../../constants/constants';
+import { px, ratioPx } from '../../../../utils/platform';
 
 interface BaseTouchableProps {
   backgroundColor: string;
   borderColor?: string;
+  marginBottom?: number;
 }
-
-interface BaseButtonTitleTextProps {
-  color: string;
-}
-
 export const BaseTouchable = styled.TouchableOpacity<BaseTouchableProps>`
   background-color: ${({ backgroundColor }) => backgroundColor};
-  height: ${AUTH_HEIGHT};
-  width: 100%;
+  height: ${px(AUTH_HEIGHT)};
+  width: ${px(INPUT_WIDTH)};
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-bottom: 15px;
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? ratioPx(marginBottom) : px(INPUT_MARGIN))};
   position: relative;
-  border-radius: ${AUTH_BORDER_RADIUS};
-  border-width: ${({ borderColor }) => (borderColor ? INPUT_BORDER_WIDTH : 0)};
+  border-radius: ${px(AUTH_BORDER_RADIUS)};
+  border-width: ${({ borderColor }) => (borderColor ? '1px' : 0)};
   border-color: ${({ borderColor }) => borderColor};
   overflow: hidden;
 `;
@@ -37,8 +35,4 @@ export const BaseButtonIcon = styled.View`
 export const BaseButtonTitle = styled.View`
   justify-content: center;
   align-items: center;
-`;
-
-export const BaseButtonTitleText = styled.Text<BaseButtonTitleTextProps>`
-  color: ${({ color }) => color};
 `;

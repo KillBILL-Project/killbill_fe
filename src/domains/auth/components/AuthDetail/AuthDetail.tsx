@@ -1,15 +1,11 @@
 import React, { Dispatch, SetStateAction, useMemo } from 'react';
 import BaseInput from '../BaseInput/BaseInput';
-import {
-  Container,
-  GenderButton,
-  GenderButtonText,
-  GenderSelectContainer,
-  InputTitle,
-} from './AuthDetail.style';
+import { Container, GenderButton, GenderSelectContainer, InputTitle } from './AuthDetail.style';
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
 import { AuthDetailType, Gender, ItemType } from '../../../../types/common';
 import { EXCLUDED_NUMERIC_PATTERN } from '../../../../constants/constants';
+import { Medium14, Semibold18 } from '../../../../components/Typography/Typography';
+import { BLACK, GREY600, WHITE } from '../../../../constants/colors';
 
 export interface DropDownProps {
   isOpen: boolean;
@@ -22,6 +18,7 @@ interface AuthDetailProps extends DropDownProps {
   age: string;
   gender: Gender;
   setAuthDetail: Dispatch<SetStateAction<AuthDetailType>>;
+  setSelectedItem: Dispatch<SetStateAction<ItemType | undefined>>;
 }
 
 const AuthDetail = ({
@@ -32,6 +29,7 @@ const AuthDetail = ({
   selectedItem,
   itemList,
   setAuthDetail,
+  setSelectedItem,
 }: AuthDetailProps) => {
   const setGender = (selectedGender: Gender) => {
     setAuthDetail(prevState => ({ ...prevState, gender: selectedGender }));
@@ -44,7 +42,7 @@ const AuthDetail = ({
     });
   };
   const setCountry = (selectedCountry: ItemType) => {
-    setAuthDetail(prevState => ({ ...prevState, country: selectedCountry }));
+    setSelectedItem(selectedCountry);
   };
 
   const onPressManButton = () => setGender('M');
@@ -56,13 +54,15 @@ const AuthDetail = ({
     <>
       <BaseInput title="나이" placeholder="나이 입력" onChangeText={onChangeAge} value={age} />
       <Container>
-        <InputTitle>성별</InputTitle>
+        <InputTitle>
+          <Medium14 color={BLACK}>성별</Medium14>
+        </InputTitle>
         <GenderSelectContainer>
           <GenderButton onPress={onPressManButton} isSelected={isSelectedMan}>
-            <GenderButtonText isSelected={isSelectedMan}>남자</GenderButtonText>
+            <Semibold18 color={isSelectedMan ? WHITE : GREY600}>남자</Semibold18>
           </GenderButton>
           <GenderButton onPress={onPressWomanButton} isSelected={isSelectedWoman}>
-            <GenderButtonText isSelected={isSelectedWoman}>여자</GenderButtonText>
+            <Semibold18 color={isSelectedWoman ? WHITE : GREY600}>여자</Semibold18>
           </GenderButton>
         </GenderSelectContainer>
       </Container>

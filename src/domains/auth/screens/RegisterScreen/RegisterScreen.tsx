@@ -1,47 +1,20 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import _ from 'lodash';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  Container,
-  RegisterContainer,
-  TermsAgreementButton,
-  TermsAgreementButtonText,
-  TermsAgreementCheckBox,
-  TermsAgreementContainer,
-  TermsAgreementDetailButton,
-  TermsAgreementDetailButtonText,
-} from './RegisterScreen.style';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Container, RegisterBottomContainer, RegisterContainer } from './RegisterScreen.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { AuthDetailType, LoginType } from '../../../../types/common';
+import { AuthDetailType, ItemType, RegisterFormType, RegisterType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
-import { WHITE, ORANGE } from '../../../../constants/colors';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
-import { RootStackParamList } from '../../../../types/navigation';
-import { emailRegister } from '../../../../services/api/authService';
-
-import checkedIcon from '../../../../assets/icon/checked.png';
-import uncheckedIcon from '../../../../assets/icon/unchecked.png';
-
-interface RegisterFormType {
-  email: string;
-  password: string;
-  confirmedPassword: string;
-  loginType: LoginType | undefined;
-}
-
-interface TermsAgreementProps {
-  isCheckedTermsAgreement: boolean;
-  setIsCheckedTermsAgreement: Dispatch<SetStateAction<boolean>>;
-}
+import TermsAgreement from './components/TermsAgreement';
+import useAuth from '../../../../hooks/useAuth';
+import useToast from '../../../../hooks/useToast';
 
 const initialAuthDetail = {
   age: '',
   gender: undefined,
-  country: undefined,
+  country: '',
 };
 
 const initialRegisterForm = {
@@ -51,120 +24,139 @@ const initialRegisterForm = {
   loginType: undefined,
 };
 
-const TermsAgreement = ({
-  isCheckedTermsAgreement,
-  setIsCheckedTermsAgreement,
-}: TermsAgreementProps) => {
-  const onPressTermsAgreementButton = () => setIsCheckedTermsAgreement(prevState => !prevState);
-
-  return (
-    <TermsAgreementContainer>
-      <TermsAgreementButton onPress={onPressTermsAgreementButton}>
-        {isCheckedTermsAgreement ? (
-          <TermsAgreementCheckBox source={checkedIcon} />
-        ) : (
-          <TermsAgreementCheckBox source={uncheckedIcon} />
-        )}
-        <TermsAgreementButtonText>서비스 이용약관 동의 (필수)</TermsAgreementButtonText>
-      </TermsAgreementButton>
-      <TermsAgreementDetailButton>
-        <TermsAgreementDetailButtonText>{'자세히 >'}</TermsAgreementDetailButtonText>
-      </TermsAgreementDetailButton>
-    </TermsAgreementContainer>
-  );
-};
-
-export default () => {
+const RegisterScreen = () => {
   const [registerForm, setRegisterForm] = useState<RegisterFormType>(initialRegisterForm);
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isCheckedTermsAgreement, setIsCheckedTermsAgreement] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [inRegisterProgress, setInRegisterProgress] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
+  const [inProgress, setInProgress] = useState(false);
+  const { register } = useAuth();
+  const { showToast, ToastComponent } = useToast();
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-  const onChangeEmail = (text: string) => {
-    setRegisterForm(prevState => ({ ...prevState, email: text }));
-  };
-  const onChangePassword = (text: string) => {
-    setRegisterForm(prevState => ({ ...prevState, password: text }));
-  };
-  const onChangeConfirmedPassword = (text: string) => {
-    setRegisterForm(prevState => ({ ...prevState, confirmedPassword: text }));
-  };
-  const setLoginType = (text: LoginType) => {
-    setRegisterForm(prevState => ({ ...prevState, loginType: text }));
+  const onChangeForm = (filed: string, value: string) => {
+    setRegisterForm(prevState => ({ ...prevState, [filed]: value }));
   };
 
-  const isValidForm = useMemo(() => {
-    return (
-      !_.isEqual(registerForm, initialRegisterForm) &&
-      !_.isEqual(authDetail, initialAuthDetail) &&
-      isValidEmail(registerForm.email) &&
-      isValidPassword(registerForm.password) &&
-      isValidPassword(registerForm.confirmedPassword) &&
-      registerForm.password === registerForm.confirmedPassword &&
-      isCheckedTermsAgreement
-    );
-  }, [authDetail, isCheckedTermsAgreement, registerForm]);
+  const validationList = useMemo(
+    () => [
+      {
+        validation: isValidEmail(registerForm.email),
+        message: '이메일 형식이 올바르지 않습니다.',
+      },
+      {
+        validation: isValidPassword(registerForm.password),
+        message: '비밀번호를 확인해주세요.',
+      },
+      {
+        validation: isValidPassword(registerForm.confirmedPassword),
+        message: '비밀번호가 일치하지 않습니다.',
+      },
+      {
+        validation: authDetail.age !== '' && !Number.isNaN(Number(authDetail.age)),
+        message: '나이를 입력해주세요.',
+      },
+      {
+        validation: authDetail.gender !== undefined,
+        message: '성별을 선택해주세요.',
+      },
+      {
+        validation: authDetail.country !== '',
+        message: '국가를 선택해주세요.',
+      },
+      {
+        validation: isCheckedTermsAgreement,
+        message: '약관 동의가 필요합니다.',
+      },
+    ],
+    [
+      authDetail.age,
+      authDetail.country,
+      authDetail.gender,
+      isCheckedTermsAgreement,
+      registerForm.confirmedPassword,
+      registerForm.email,
+      registerForm.password,
+    ],
+  );
+
+  const isValidForm = useCallback(() => {
+    for (const element of validationList) {
+      if (!element.validation) {
+        showToast({ message: element.message, isFailed: true });
+        return false;
+      }
+    }
+    return true;
+  }, [showToast, validationList]);
 
   const onPressRegisterButton = async () => {
-    if (!isValidForm) {
-      // TODO: 추후 토스트와 연결
-      return;
+    if (inProgress) return;
+    if (!isValidForm()) return;
+    registerForm.loginType = 'EMAIL';
+
+    const params: RegisterType = { ...registerForm, ...authDetail };
+    try {
+      setInProgress(true);
+      await register(params);
+    } finally {
+      setInProgress(false);
     }
-
-    const data = JSON.stringify(registerForm);
-    const result = await emailRegister({ data, setInRegisterProgress });
-
-    navigation.navigate('Home');
   };
 
+  useEffect(() => {
+    if (selectedCountry)
+      setAuthDetail(prevState => ({ ...prevState, country: selectedCountry.value }));
+  }, [selectedCountry]);
+
   return (
-    <Screen title="회원가입" isHeaderShown>
-      <Container>
-        <RegisterContainer>
-          <BaseInput
-            title="이메일"
-            placeholder="이메일 입력"
-            onChangeText={onChangeEmail}
-            value={registerForm.email}
-          />
-          <BaseInput
-            title="비밀번호"
-            placeholder="비밀번호 입력"
-            onChangeText={onChangePassword}
-            value={registerForm.password}
-            isSecure
-          />
-          <BaseInput
-            title="비밀번호 확인"
-            placeholder="비밀번호 확인"
-            onChangeText={onChangeConfirmedPassword}
-            value={registerForm.confirmedPassword}
-            isSecure
-          />
-          <AuthDetail
-            age={authDetail.age}
-            gender={authDetail.gender}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            selectedItem={authDetail.country}
-            setAuthDetail={setAuthDetail}
-            itemList={COUNTRIES}
-          />
-          <TermsAgreement
-            isCheckedTermsAgreement={isCheckedTermsAgreement}
-            setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
-          />
-          <BaseButton
-            text="회원가입"
-            onPress={onPressRegisterButton}
-            backgroundColor={ORANGE}
-            color={WHITE}
-          />
-        </RegisterContainer>
-      </Container>
-    </Screen>
+    <>
+      {ToastComponent}
+      <Screen title="회원가입">
+        <Container>
+          <RegisterContainer>
+            <BaseInput
+              title="이메일"
+              placeholder="이메일 입력"
+              onChangeText={text => onChangeForm('email', text)}
+              value={registerForm.email}
+            />
+            <BaseInput
+              title="비밀번호"
+              placeholder="비밀번호 입력"
+              onChangeText={text => onChangeForm('password', text)}
+              value={registerForm.password ? registerForm.password : ''}
+              isSecure
+            />
+            <BaseInput
+              title="비밀번호 확인"
+              placeholder="비밀번호 확인"
+              onChangeText={text => onChangeForm('confirmedPassword', text)}
+              value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
+              isSecure
+            />
+            <AuthDetail
+              age={authDetail.age}
+              gender={authDetail.gender}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              selectedItem={selectedCountry}
+              setSelectedItem={setSelectedCountry}
+              setAuthDetail={setAuthDetail}
+              itemList={COUNTRIES}
+            />
+          </RegisterContainer>
+          <RegisterBottomContainer>
+            <TermsAgreement
+              isCheckedTermsAgreement={isCheckedTermsAgreement}
+              setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
+            />
+            <BaseButton text="회원가입" onPress={onPressRegisterButton} />
+          </RegisterBottomContainer>
+        </Container>
+      </Screen>
+    </>
   );
 };
+
+export default RegisterScreen;

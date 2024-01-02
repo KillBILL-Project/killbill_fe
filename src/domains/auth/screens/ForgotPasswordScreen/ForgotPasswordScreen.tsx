@@ -4,70 +4,49 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import {
   AuthButtonContainer,
   Container,
-  FullScreen,
   InfoMessage,
   InfoMessageText,
   InputContainer,
-  Notification,
-  NotificationButton,
-  NotificationButtonText,
-  NotificationContainer,
-  NotificationText,
-  BackDropContainer,
 } from './ForgotPassword.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
-import { ORANGE, WHITE } from '../../../../constants/colors';
+import { BLACK, PRIMARY } from '../../../../constants/colors';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { EMAIL_PATTERN } from '../../../../constants/constants';
 import { RootStackParamList } from '../../../../types/navigation';
+import usePopup from '../../../../hooks/usePopup';
+import { isValidEmail } from '../../../../utils/common';
+import useToast from '../../../../hooks/useToast';
 
-const BackDrop = () => {
+const ForgotPasswordScreen = () => {
+  const [email, setEmail] = useState('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { showPopup, AlertComponent } = usePopup();
+  const { showToast, ToastComponent } = useToast();
+
+  const alertMessage = ['입력하신 이메일 주소로', '임시 비밀번호를 발송했습니다.'];
 
   const onPressConfirm = () => {
     navigation.navigate('Login');
   };
 
-  return (
-    <FullScreen>
-      <BackDropContainer>
-        <NotificationContainer>
-          <Notification>
-            <NotificationText>입력하신 이메일 주소로</NotificationText>
-            <NotificationText>임시 비밀번호를 발송했습니다.</NotificationText>
-          </Notification>
-          <NotificationButton onPress={onPressConfirm}>
-            <NotificationButtonText>확인</NotificationButtonText>
-          </NotificationButton>
-        </NotificationContainer>
-      </BackDropContainer>
-    </FullScreen>
-  );
-};
-
-export default () => {
-  const [isComplete, setIsComplete] = useState(false);
-  const [enteredEmail, setEnteredEmail] = useState('');
-
-  const isValidEmail = EMAIL_PATTERN.test(enteredEmail);
-
-  const onChangeEmail = (email: string) => {
-    setEnteredEmail(email);
+  const onChangeEmail = (value: string) => {
+    setEmail(value);
   };
 
   const onPressNextButton = () => {
-    if (!isValidEmail) {
-      // TODO: 토스트
+    if (!isValidEmail(email)) {
+      showToast({ message: '이메일 형식이 올바르지 않습니다.', isFailed: true });
       return;
     }
     // TODO: api
 
-    setIsComplete(true);
+    showPopup({ text: alertMessage, onPressConfirm });
   };
 
   return (
     <>
+      {ToastComponent}
+      {AlertComponent}
       <Screen title="비밀번호 찾기">
         <Container>
           <InputContainer>
@@ -79,20 +58,21 @@ export default () => {
               title="이메일"
               placeholder="이메일을 입력해주세요."
               onChangeText={onChangeEmail}
-              value={enteredEmail}
+              value={email}
             />
           </InputContainer>
           <AuthButtonContainer>
             <BaseButton
               text="다음"
               onPress={onPressNextButton}
-              backgroundColor={ORANGE}
-              color={WHITE}
+              backgroundColor={PRIMARY}
+              color={BLACK}
             />
           </AuthButtonContainer>
         </Container>
       </Screen>
-      {isComplete && <BackDrop />}
     </>
   );
 };
+
+export default ForgotPasswordScreen;

@@ -1,16 +1,21 @@
 import styled from 'styled-components/native';
-import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../constants/constants';
-import { GREY_2, GREY_3, GREY_8, WHITE } from '../../../../constants/colors';
+import { TouchableWithoutFeedback } from 'react-native';
+import { GREY300 } from '../../../../constants/colors';
+import { px, ratioPx } from '../../../../utils/platform';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView<{ height: number }>`
   align-items: center;
-  padding: 20px;
+  height: ${({ height }) => px(height)};
+  justify-content: space-between;
+`;
+
+export const KeyboardHideArea = styled(TouchableWithoutFeedback)`
   flex: 1;
 `;
 
 export const LoginContainer = styled.View`
-  flex: 3;
   width: 100%;
+  flex: 3;
   justify-content: center;
   align-items: center;
 `;
@@ -18,13 +23,7 @@ export const LoginContainer = styled.View`
 export const Greeting = styled.View`
   justify-content: center;
   align-items: center;
-  padding-bottom: 30px;
-`;
-
-export const GreetingText = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
-  padding: 5px;
+  margin-bottom: ${ratioPx(36)};
 `;
 
 export const AdditionalButtonContainer = styled.View`
@@ -32,17 +31,8 @@ export const AdditionalButtonContainer = styled.View`
   align-items: center;
 `;
 
-export const AdditionalTouchable = styled.TouchableOpacity`
-  flex: 1;
-  align-items: center;
-`;
-
-export const AdditionalButtonText = styled.Text`
-  color: ${GREY_8};
-`;
-
 export const Separator = styled.Text`
-  color: ${GREY_2};
+  color: ${GREY300};
 `;
 
 export const SsoLoginButtonContainer = styled.View`
@@ -50,14 +40,4 @@ export const SsoLoginButtonContainer = styled.View`
   width: 100%;
   align-items: center;
   justify-content: flex-end;
-`;
-
-export const LoginTextInput = styled.TextInput`
-  height: ${AUTH_HEIGHT};
-  width: 100%;
-  padding: 5px 15px;
-  background-color: ${WHITE};
-  border-width: 1px;
-  border-color: ${GREY_3};
-  border-radius: ${AUTH_BORDER_RADIUS};
 `;
