@@ -35,7 +35,3 @@ export const GREY700 = '#767676';
 export const GREY800 = '#333333';
 // selected
 export const GREY900 = '#191F28';
-
-// 아이디 찾기 버튼 색
-export const GREY_8 = '#8E8E93';
-export const GOOGLE_LOGIN = '#00000054';

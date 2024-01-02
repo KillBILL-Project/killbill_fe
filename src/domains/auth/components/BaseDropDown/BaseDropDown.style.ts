@@ -1,13 +1,16 @@
 import styled from 'styled-components/native';
-import { AUTH_BORDER_RADIUS, AUTH_HEIGHT, INPUT_MARGIN } from '../../../../constants/constants';
-import { BLACK, GREY400, GREY500 } from '../../../../constants/colors';
+import {
+  AUTH_BORDER_RADIUS,
+  AUTH_HEIGHT,
+  INPUT_MARGIN,
+  INPUT_TITLE_MARGIN,
+  INPUT_WIDTH,
+} from '../../../../constants/constants';
+import { GREY400 } from '../../../../constants/colors';
+import { px } from '../../../../utils/platform';
 
 interface DropDownTitleProps {
   isDropDownActive: boolean;
-}
-
-interface DropDownTitleTextProps {
-  isItemSelected: boolean;
 }
 
 interface DropDownTitleIconProps {
@@ -15,13 +18,12 @@ interface DropDownTitleIconProps {
 }
 
 export const Container = styled.View`
-  width: 100%;
-  margin-bottom: ${INPUT_MARGIN};
+  width: ${px(INPUT_WIDTH)};
+  margin-bottom: ${px(INPUT_MARGIN)};
 `;
 
 export const InputTitle = styled.View`
-  padding-left: 4px;
-  margin-bottom: 10px;
+  margin-bottom: ${px(INPUT_TITLE_MARGIN)};
 `;
 
 export const DropDownContainer = styled.TouchableOpacity``;
@@ -32,19 +34,15 @@ export const DropDownTitle = styled.View<DropDownTitleProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: ${AUTH_HEIGHT};
+  height: ${px(AUTH_HEIGHT)};
   border-width: 1px;
-  border-radius: ${AUTH_BORDER_RADIUS};
+  border-radius: ${px(AUTH_BORDER_RADIUS)};
   border-bottom-left-radius: ${({ isDropDownActive }) =>
-    isDropDownActive ? 0 : AUTH_BORDER_RADIUS};
+    isDropDownActive ? 0 : px(AUTH_BORDER_RADIUS)};
   border-bottom-right-radius: ${({ isDropDownActive }) =>
-    isDropDownActive ? 0 : AUTH_BORDER_RADIUS};
+    isDropDownActive ? 0 : px(AUTH_BORDER_RADIUS)};
   border-bottom-width: ${({ isDropDownActive }) => (isDropDownActive ? 0 : '1px')};
   border-color: ${GREY400};
-`;
-
-export const DropDownTitleText = styled.Text<DropDownTitleTextProps>`
-  color: ${({ isItemSelected }) => (isItemSelected ? BLACK : GREY500)};
 `;
 
 export const DropDownTitleIcon = styled.Image<DropDownTitleIconProps>`
@@ -56,7 +54,7 @@ export const DropDownTitleIcon = styled.Image<DropDownTitleIconProps>`
 export const DropDownList = styled.ScrollView`
   border-width: 1px;
   border-color: ${GREY400};
-  border-radius: 0 0 ${AUTH_BORDER_RADIUS} ${AUTH_BORDER_RADIUS};
+  border-radius: 0 0 ${px(AUTH_BORDER_RADIUS)} ${px(AUTH_BORDER_RADIUS)};
 `;
 
 export const DropDownItem = styled.TouchableOpacity`
@@ -65,7 +63,5 @@ export const DropDownItem = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: ${AUTH_HEIGHT};
+  height: ${px(AUTH_HEIGHT)};
 `;
-
-export const DropDownItemText = styled.Text``;

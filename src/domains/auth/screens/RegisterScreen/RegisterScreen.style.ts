@@ -3,7 +3,6 @@ import { WHITE } from '../../../../constants/colors';
 
 export const Container = styled.ScrollView`
   flex: 1;
-  padding: 20px;
   background-color: ${WHITE};
 `;
 

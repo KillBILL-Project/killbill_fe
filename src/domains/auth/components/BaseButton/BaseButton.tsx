@@ -11,6 +11,7 @@ interface LoginButtonProps {
   backgroundColor?: string;
   color?: string;
   icon?: ImageSourcePropType;
+  marginBottom?: number;
 }
 
 const BaseButton = ({
@@ -19,9 +20,15 @@ const BaseButton = ({
   backgroundColor = PRIMARY,
   color = MAIN,
   icon,
+  marginBottom,
 }: LoginButtonProps) => {
   return (
-    <BaseTouchable onPress={onPress} backgroundColor={backgroundColor} borderColor={GREY400}>
+    <BaseTouchable
+      onPress={onPress}
+      backgroundColor={backgroundColor}
+      borderColor={GREY400}
+      marginBottom={marginBottom}
+    >
       {icon != null && (
         <BaseButtonIcon>
           <BaseIcon size={15} image={icon} />

@@ -1,10 +1,11 @@
 import styled from 'styled-components/native';
 import { AUTH_BORDER_RADIUS } from '../../constants/constants';
 import { PRIMARY, WHITE } from '../../constants/colors';
+import { px } from '../../utils/platform';
 
 export const PopupContainer = styled.View`
   width: 90%;
-  border-radius: ${AUTH_BORDER_RADIUS};
+  border-radius: ${px(AUTH_BORDER_RADIUS)};
   overflow: hidden;
   z-index: 1001;
 `;

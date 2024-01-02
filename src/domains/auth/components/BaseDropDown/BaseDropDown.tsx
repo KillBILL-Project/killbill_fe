@@ -23,7 +23,7 @@ export interface DropDownProps {
   itemList: ItemType[];
 }
 
-const DropDown = ({
+const BaseDropDown = ({
   isOpen,
   setIsOpen,
   selectedItem,
@@ -67,4 +67,4 @@ const DropDown = ({
   );
 };
 
-export default DropDown;
+export default BaseDropDown;

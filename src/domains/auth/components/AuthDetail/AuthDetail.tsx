@@ -4,8 +4,8 @@ import { Container, GenderButton, GenderSelectContainer, InputTitle } from './Au
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
 import { AuthDetailType, Gender, ItemType } from '../../../../types/common';
 import { EXCLUDED_NUMERIC_PATTERN } from '../../../../constants/constants';
-import { Semibold18 } from '../../../../components/Typography/Typography';
-import { GREY600, WHITE } from '../../../../constants/colors';
+import { Medium14, Semibold18 } from '../../../../components/Typography/Typography';
+import { BLACK, GREY600, WHITE } from '../../../../constants/colors';
 
 export interface DropDownProps {
   isOpen: boolean;
@@ -54,7 +54,9 @@ const AuthDetail = ({
     <>
       <BaseInput title="나이" placeholder="나이 입력" onChangeText={onChangeAge} value={age} />
       <Container>
-        <InputTitle>성별</InputTitle>
+        <InputTitle>
+          <Medium14 color={BLACK}>성별</Medium14>
+        </InputTitle>
         <GenderSelectContainer>
           <GenderButton onPress={onPressManButton} isSelected={isSelectedMan}>
             <Semibold18 color={isSelectedMan ? WHITE : GREY600}>남자</Semibold18>

@@ -1,15 +1,21 @@
 import styled from 'styled-components/native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { GREY300 } from '../../../../constants/colors';
+import { px, ratioPx } from '../../../../utils/platform';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView<{ height: number }>`
   align-items: center;
-  padding: 20px;
+  height: ${({ height }) => px(height)};
+  justify-content: space-between;
+`;
+
+export const KeyboardHideArea = styled(TouchableWithoutFeedback)`
   flex: 1;
 `;
 
 export const LoginContainer = styled.View`
-  flex: 3;
   width: 100%;
+  flex: 3;
   justify-content: center;
   align-items: center;
 `;
@@ -17,13 +23,7 @@ export const LoginContainer = styled.View`
 export const Greeting = styled.View`
   justify-content: center;
   align-items: center;
-  padding-bottom: 30px;
-`;
-
-export const GreetingText = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
-  padding: 5px;
+  margin-bottom: ${ratioPx(36)};
 `;
 
 export const AdditionalButtonContainer = styled.View`

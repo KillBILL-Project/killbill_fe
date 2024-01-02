@@ -1,4 +1,7 @@
 import React from 'react';
+import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
+import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { PanResponderInstance } from 'react-native';
 import { Medium14 } from '../Typography/Typography';
 import { WHITE } from '../../constants/colors';
 import { Container, MessageContainer } from './Toast.style';
@@ -8,9 +11,14 @@ import toastInfoIcon from '../../assets/icon/toast_info.png';
 import Spacer from '../Spacer/Spacer';
 import { ToastProps } from '../../types/common';
 
-const Toast = ({ message = [], isFailed = false }: ToastProps) => {
+interface ToastPropsWithStyle extends ToastProps {
+  style: StyleProp<ViewStyle>;
+  panResponder: PanResponderInstance;
+}
+
+const Toast = ({ message = [], isFailed = false, style, panResponder }: ToastPropsWithStyle) => {
   return (
-    <Container isFailed={isFailed}>
+    <Container isFailed={isFailed} style={style} {...panResponder.panHandlers}>
       <BaseIcon size={15} image={isFailed ? toastErrorIcon : toastInfoIcon} />
       <Spacer width={10} />
       <MessageContainer>

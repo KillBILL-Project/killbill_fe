@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Animated, Easing, PanResponder } from 'react-native';
 import Toast from '../components/Toast/Toast';
 import { ToastProps } from '../types/common';
-import { sleep } from '../utils/common';
 
 const useToast = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,31 +9,73 @@ const useToast = () => {
     message: '',
     isFailed: false,
   });
-  const toastTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const hideToast = useCallback(() => {
-    setIsVisible(false);
-  }, []);
+  const toastAnim = useRef(new Animated.Value(-130)).current;
 
-  const showToast = useCallback(async ({ isFailed, message }: ToastProps) => {
-    setProps({ message, isFailed });
-    if (toastTimeout.current) {
-      setIsVisible(false);
-      clearTimeout(toastTimeout.current);
-    }
+  const resetToast = useCallback(() => {
+    toastAnim.resetAnimation();
+  }, [toastAnim]);
 
-    await sleep(100);
+  const hideToast = useCallback(
+    (delay?: number) => {
+      Animated.timing(toastAnim, {
+        toValue: -130,
+        easing: Easing.out(Easing.linear),
+        duration: 200,
+        delay: delay ?? 1000,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished) setIsVisible(false);
+      });
+    },
+    [toastAnim],
+  );
 
-    setIsVisible(true);
-    toastTimeout.current = setTimeout(() => {
-      setIsVisible(false);
-      toastTimeout.current = null;
-    }, 1500);
-  }, []);
+  const showToast = useCallback(
+    ({ isFailed, message }: ToastProps) => {
+      if (isVisible) {
+        setIsVisible(false);
+        resetToast();
+      }
+
+      setProps({ message, isFailed });
+      setIsVisible(true);
+
+      Animated.timing(toastAnim, {
+        toValue: 0,
+        easing: Easing.out(Easing.circle),
+        duration: 200,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished) hideToast();
+      });
+    },
+    [hideToast, isVisible, resetToast, toastAnim],
+  );
+
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderMove: (e, gestureState) => {
+      if (gestureState.dy < 0) hideToast(0);
+    },
+  });
 
   const ToastComponent = useMemo(() => {
-    return isVisible ? <Toast isFailed={props.isFailed} message={props.message} /> : null;
-  }, [isVisible, props.isFailed, props.message]);
+    return isVisible ? (
+      <Toast
+        isFailed={props.isFailed}
+        message={props.message}
+        style={{
+          transform: [
+            {
+              translateY: toastAnim,
+            },
+          ],
+        }}
+        panResponder={panResponder}
+      />
+    ) : null;
+  }, [isVisible, panResponder, props.isFailed, props.message, toastAnim]);
 
   return { showToast, ToastComponent };
 };

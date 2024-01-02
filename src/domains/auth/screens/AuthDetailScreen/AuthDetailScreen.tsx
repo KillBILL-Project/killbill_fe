@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { Alert } from 'react-native';
 import { Container, AuthDetailContainer, BaseButtonContainer } from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common';
@@ -9,7 +8,7 @@ import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
 import { RootStackParamList } from '../../../../types/navigation';
 import useAuth from '../../../../hooks/useAuth';
-import { isCompletelyDifferent } from '../../../../utils/common';
+import useToast from '../../../../hooks/useToast';
 
 const initialAuthDetail = {
   age: '',
@@ -23,16 +22,38 @@ const AuthDetailScreen = () => {
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
   const { register } = useAuth();
   const route = useRoute<RouteProp<RootStackParamList, 'AuthDetail'>>();
+  const { showToast, ToastComponent } = useToast();
 
-  const isValidForm = useMemo(() => {
-    return isCompletelyDifferent(authDetail, initialAuthDetail);
-  }, [authDetail]);
+  const validationList = useMemo(
+    () => [
+      {
+        validation: authDetail.age !== '' && !Number.isNaN(Number(authDetail.age)),
+        message: '나이를 입력해주세요.',
+      },
+      {
+        validation: authDetail.gender !== undefined,
+        message: '성별을 선택해주세요.',
+      },
+      {
+        validation: authDetail.country !== '',
+        message: '국가를 선택해주세요.',
+      },
+    ],
+    [authDetail.age, authDetail.country, authDetail.gender],
+  );
+
+  const isValidForm = useCallback(() => {
+    for (const element of validationList) {
+      if (!element.validation) {
+        showToast({ message: element.message, isFailed: true });
+        return false;
+      }
+    }
+    return true;
+  }, [showToast, validationList]);
 
   const onPressButton = async () => {
-    if (!isValidForm) {
-      Alert.alert('유효성 검사');
-      return;
-    }
+    if (!isValidForm()) return;
 
     const params: RegisterType = { ...route.params, ...authDetail };
     await register(params);
@@ -44,25 +65,28 @@ const AuthDetailScreen = () => {
   }, [selectedCountry]);
 
   return (
-    <Screen title="추가정보 입력" isBackButtonShown={false}>
-      <Container>
-        <AuthDetailContainer>
-          <AuthDetail
-            age={authDetail.age}
-            gender={authDetail.gender}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            selectedItem={selectedCountry}
-            setSelectedItem={setSelectedCountry}
-            itemList={COUNTRIES}
-            setAuthDetail={setAuthDetail}
-          />
-        </AuthDetailContainer>
-        <BaseButtonContainer>
-          <BaseButton text="입력 완료" onPress={onPressButton} />
-        </BaseButtonContainer>
-      </Container>
-    </Screen>
+    <>
+      {ToastComponent}
+      <Screen title="추가정보 입력" isBackButtonShown={false}>
+        <Container>
+          <AuthDetailContainer>
+            <AuthDetail
+              age={authDetail.age}
+              gender={authDetail.gender}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              selectedItem={selectedCountry}
+              setSelectedItem={setSelectedCountry}
+              itemList={COUNTRIES}
+              setAuthDetail={setAuthDetail}
+            />
+          </AuthDetailContainer>
+          <BaseButtonContainer>
+            <BaseButton text="입력 완료" onPress={onPressButton} />
+          </BaseButtonContainer>
+        </Container>
+      </Screen>
+    </>
   );
 };
 

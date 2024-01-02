@@ -15,11 +15,13 @@ import BaseButton from '../../components/BaseButton/BaseButton';
 import { RootStackParamList } from '../../../../types/navigation';
 import usePopup from '../../../../hooks/usePopup';
 import { isValidEmail } from '../../../../utils/common';
+import useToast from '../../../../hooks/useToast';
 
 const ForgotPasswordScreen = () => {
-  const [enteredEmail, setEnteredEmail] = useState('');
+  const [email, setEmail] = useState('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { showPopup, AlertComponent } = usePopup();
+  const { showToast, ToastComponent } = useToast();
 
   const alertMessage = ['입력하신 이메일 주소로', '임시 비밀번호를 발송했습니다.'];
 
@@ -27,13 +29,13 @@ const ForgotPasswordScreen = () => {
     navigation.navigate('Login');
   };
 
-  const onChangeEmail = (email: string) => {
-    setEnteredEmail(email);
+  const onChangeEmail = (value: string) => {
+    setEmail(value);
   };
 
   const onPressNextButton = () => {
-    if (!isValidEmail(enteredEmail)) {
-      // TODO: 토스트
+    if (!isValidEmail(email)) {
+      showToast({ message: '이메일 형식이 올바르지 않습니다.', isFailed: true });
       return;
     }
     // TODO: api
@@ -43,6 +45,8 @@ const ForgotPasswordScreen = () => {
 
   return (
     <>
+      {ToastComponent}
+      {AlertComponent}
       <Screen title="비밀번호 찾기">
         <Container>
           <InputContainer>
@@ -54,7 +58,7 @@ const ForgotPasswordScreen = () => {
               title="이메일"
               placeholder="이메일을 입력해주세요."
               onChangeText={onChangeEmail}
-              value={enteredEmail}
+              value={email}
             />
           </InputContainer>
           <AuthButtonContainer>
@@ -67,7 +71,6 @@ const ForgotPasswordScreen = () => {
           </AuthButtonContainer>
         </Container>
       </Screen>
-      {AlertComponent}
     </>
   );
 };

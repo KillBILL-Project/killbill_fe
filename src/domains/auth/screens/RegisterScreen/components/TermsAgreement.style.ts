@@ -1,17 +1,18 @@
 import styled from 'styled-components/native';
-import { AUTH_BORDER_RADIUS, AUTH_HEIGHT } from '../../../../../constants/constants';
-import { GREY500, GREY900 } from '../../../../../constants/colors';
+import { AUTH_BORDER_RADIUS, AUTH_HEIGHT, INPUT_WIDTH } from '../../../../../constants/constants';
+import { GREY500 } from '../../../../../constants/colors';
+import { px, ratioPx } from '../../../../../utils/platform';
 
 export const TermsAgreementContainer = styled.View`
-  width: 100%;
-  height: ${AUTH_HEIGHT};
+  width: ${px(INPUT_WIDTH)};
+  height: ${px(AUTH_HEIGHT)};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
-  margin-bottom: 30px;
+  padding: 0 ${ratioPx(10)};
+  margin-bottom: ${ratioPx(40)};
   background-color: #f7f7fb;
-  border-radius: ${AUTH_BORDER_RADIUS};
+  border-radius: ${px(AUTH_BORDER_RADIUS)};
 `;
 
 export const TermsAgreementButton = styled.TouchableOpacity`
@@ -20,13 +21,9 @@ export const TermsAgreementButton = styled.TouchableOpacity`
 `;
 
 export const TermsAgreementCheckBox = styled.Image`
-  width: 21px;
-  height: 21px;
-  margin-right: 5px;
-`;
-
-export const TermsAgreementButtonText = styled.Text`
-  color: ${GREY900};
+  width: ${ratioPx(21)};
+  height: ${ratioPx(21)};
+  margin-right: ${ratioPx(5)};
 `;
 
 export const TermsAgreementDetailButton = styled.TouchableOpacity``;
