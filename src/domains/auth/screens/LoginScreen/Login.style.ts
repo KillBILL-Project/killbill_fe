@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { TouchableWithoutFeedback } from 'react-native';
 import { GREY300 } from '../../../../constants/colors';
 import { px, ratioPx } from '../../../../utils/platform';
 
@@ -9,7 +8,7 @@ export const Container = styled.SafeAreaView<{ height: number }>`
   justify-content: space-between;
 `;
 
-export const KeyboardHideArea = styled(TouchableWithoutFeedback)`
+export const KeyboardHideArea = styled.Pressable`
   flex: 1;
 `;
 
