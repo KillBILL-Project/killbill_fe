@@ -63,7 +63,7 @@ const LoginScreen = () => {
         message: t('login.validation.invalid_password'),
       },
     ],
-    [loginForm.email, loginForm.password],
+    [loginForm.email, loginForm.password, t],
   );
 
   const isValidForm = useCallback(() => {
