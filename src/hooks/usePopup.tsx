@@ -2,12 +2,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Alert from '../components/Popup/Alert';
 import { PopupProps } from '../types/common';
 import Confirm from '../components/Popup/Confirm';
+import i18n from '../locales/i18n';
 
 const usePopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [props, setProps] = useState<PopupProps>({
     text: '',
-    confirmText: '확인',
+    confirmText: i18n.t('use_popup.confirm_text'),
     onPressConfirm: undefined,
   });
 
@@ -17,7 +18,7 @@ const usePopup = () => {
 
   const showPopup = useCallback(
     ({ text, confirmText, onPressConfirm }: PopupProps) => {
-      setProps({ text, confirmText, onPressConfirm: onPressConfirm || hidePopup });
+      setProps({ text, confirmText, onPressConfirm: onPressConfirm ?? hidePopup });
       setIsVisible(true);
     },
     [hidePopup],
@@ -43,7 +44,7 @@ const usePopup = () => {
       />
     ) : null;
   }, [isVisible, props.confirmText, props.onPressConfirm, props.text, hidePopup]);
-  return { showPopup, AlertComponent, ConfirmComponent };
+  return { showPopup, hidePopup, AlertComponent, ConfirmComponent };
 };
 
 export default usePopup;

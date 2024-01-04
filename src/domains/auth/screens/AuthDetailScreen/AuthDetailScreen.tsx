@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { Container, AuthDetailContainer, BaseButtonContainer } from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common';
@@ -24,22 +25,24 @@ const AuthDetailScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'AuthDetail'>>();
   const { showToast, ToastComponent } = useToast();
 
+  const { t } = useTranslation();
+
   const validationList = useMemo(
     () => [
       {
         validation: authDetail.age !== '' && !Number.isNaN(Number(authDetail.age)),
-        message: '나이를 입력해주세요.',
+        message: t('auth_detail.validation.invalid_age'),
       },
       {
         validation: authDetail.gender !== undefined,
-        message: '성별을 선택해주세요.',
+        message: t('auth_detail.validation.invalid_gender'),
       },
       {
         validation: authDetail.country !== '',
-        message: '국가를 선택해주세요.',
+        message: t('auth_detail.validation.invalid_country'),
       },
     ],
-    [authDetail.age, authDetail.country, authDetail.gender],
+    [authDetail.age, authDetail.country, authDetail.gender, t],
   );
 
   const isValidForm = useCallback(() => {
@@ -67,7 +70,7 @@ const AuthDetailScreen = () => {
   return (
     <>
       {ToastComponent}
-      <Screen title="추가정보 입력" isBackButtonShown={false}>
+      <Screen title={t('auth_detail.title')} isBackButtonShown={false}>
         <Container>
           <AuthDetailContainer>
             <AuthDetail
@@ -82,7 +85,7 @@ const AuthDetailScreen = () => {
             />
           </AuthDetailContainer>
           <BaseButtonContainer>
-            <BaseButton text="입력 완료" onPress={onPressButton} />
+            <BaseButton text={t('auth_detail.button.submit')} onPress={onPressButton} />
           </BaseButtonContainer>
         </Container>
       </Screen>

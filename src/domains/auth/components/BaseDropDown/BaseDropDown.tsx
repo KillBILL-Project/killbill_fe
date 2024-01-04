@@ -16,6 +16,8 @@ import { BLACK, GREY500, GREY900 } from '../../../../constants/colors';
 type SetSelectedItemType = (item: ItemType) => void;
 
 export interface DropDownProps {
+  title: string;
+  placeholder: string;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedItem: ItemType | undefined;
@@ -24,6 +26,8 @@ export interface DropDownProps {
 }
 
 const BaseDropDown = ({
+  title,
+  placeholder,
   isOpen,
   setIsOpen,
   selectedItem,
@@ -40,13 +44,13 @@ const BaseDropDown = ({
   };
 
   const dropDownTitleText = useMemo(() => {
-    return selectedItem === undefined ? '국가 선택' : selectedItem.label;
-  }, [selectedItem]);
+    return selectedItem === undefined ? placeholder : selectedItem.label;
+  }, [placeholder, selectedItem]);
 
   return (
     <Container>
       <InputTitle>
-        <Medium14 color={GREY900}>국가</Medium14>
+        <Medium14 color={GREY900}>{title}</Medium14>
       </InputTitle>
       <DropDownContainer onPress={onPressDropDownContainer} activeOpacity={1}>
         <DropDownTitle isDropDownActive={isOpen}>

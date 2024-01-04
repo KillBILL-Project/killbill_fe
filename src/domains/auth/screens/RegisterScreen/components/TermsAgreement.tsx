@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   TermsAgreementButton,
   TermsAgreementCheckBox,
@@ -20,6 +21,7 @@ const TermsAgreement = ({
   isCheckedTermsAgreement,
   setIsCheckedTermsAgreement,
 }: TermsAgreementProps) => {
+  const { t } = useTranslation();
   const onPressTermsAgreementButton = () => setIsCheckedTermsAgreement(prevState => !prevState);
 
   return (
@@ -30,10 +32,12 @@ const TermsAgreement = ({
         ) : (
           <TermsAgreementCheckBox source={uncheckedIcon} />
         )}
-        <Medium14 color={GREY900}>서비스 이용약관 동의 (필수)</Medium14>
+        <Medium14 color={GREY900}>{t('terms_agreement.terms.0')}</Medium14>
       </TermsAgreementButton>
       <TermsAgreementDetailButton>
-        <TermsAgreementDetailButtonText>{'자세히 >'}</TermsAgreementDetailButtonText>
+        <TermsAgreementDetailButtonText>
+          {t('terms_agreement.button.detail')}
+        </TermsAgreementDetailButtonText>
       </TermsAgreementDetailButton>
     </TermsAgreementContainer>
   );

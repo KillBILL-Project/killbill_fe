@@ -5,6 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from 'react-native-config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Keyboard } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, GREY500, WHITE } from '../../../../constants/colors';
 import {
@@ -42,6 +43,7 @@ const LoginScreen = () => {
   const [inLoginProgress, setInLoginProgress] = useState(false);
   const { showToast, ToastComponent } = useToast();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { t } = useTranslation();
   const { top, bottom } = useSafeAreaInsets();
 
   const safeAreaHeight = windowHeight - top - bottom;
@@ -54,11 +56,11 @@ const LoginScreen = () => {
     () => [
       {
         validation: isValidEmail(loginForm.email),
-        message: '이메일 형식이 올바르지 않습니다.',
+        message: t('login.validation.invalid_email'),
       },
       {
         validation: isValidPassword(loginForm.password),
-        message: '비밀번호를 확인해주세요.',
+        message: t('login.validation.invalid_password'),
       },
     ],
     [loginForm.email, loginForm.password],
@@ -128,40 +130,46 @@ const LoginScreen = () => {
           <Container height={safeAreaHeight}>
             <LoginContainer>
               <Greeting>
-                <H1 color={BLACK}>어서오세요.</H1>
-                <H1 color={BLACK}>반가워해드릴게요</H1>
+                <H1 color={BLACK}>{t('login.greeting.0')}</H1>
+                <H1 color={BLACK}>{t('login.greeting.1')}</H1>
               </Greeting>
               <BaseInput
-                title="이메일"
-                placeholder="이메일 주소 입력"
+                title={t('login.input.email.title')}
+                placeholder={t('login.input.email.placeholder')}
                 onChangeText={text => onChangeForm('email', text)}
                 value={loginForm.email}
               />
               <BaseInput
-                title="비밀번호"
+                title={t('login.input.password.title')}
                 isSecure
-                placeholder="비밀번호 입력"
+                placeholder={t('login.input.password.placeholder')}
                 onChangeText={text => onChangeForm('password', text)}
                 value={loginForm.password}
               />
               <Spacer height={10} />
               <BaseButton
                 onPress={onPressEmailLoginButton}
-                text="로그인"
+                text={t('login.button.login')}
                 backgroundColor={GREY500}
                 color={WHITE}
                 marginBottom={16}
               />
               <AdditionalButtonContainer>
-                <AdditionalButton title="이메일 회원가입" onPress={onPressRegisterButton} />
+                <AdditionalButton
+                  title={t('login.button.register')}
+                  onPress={onPressRegisterButton}
+                />
                 <Separator>|</Separator>
-                <AdditionalButton title="비밀번호 찾기" onPress={onPressForgotPasswordButton} />
+                <AdditionalButton
+                  title={t('login.button.find_password')}
+                  onPress={onPressForgotPasswordButton}
+                />
               </AdditionalButtonContainer>
             </LoginContainer>
             <SsoLoginButtonContainer>
               <BaseButton
                 onPress={onPressAppleLoginButton}
-                text="Apple로 시작하기"
+                text={t('login.button.apple_login')}
                 backgroundColor={BLACK}
                 color={WHITE}
                 icon={AppleLoginIcon}
@@ -169,7 +177,7 @@ const LoginScreen = () => {
               />
               <BaseButton
                 onPress={onPressGoogleLoginButton}
-                text="Google로 시작하기"
+                text={t('login.button.google_login')}
                 backgroundColor={WHITE}
                 color="#00000054"
                 icon={GoogleLoginIcon}
