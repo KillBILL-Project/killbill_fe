@@ -7,6 +7,10 @@ interface ContainerProps {
   backgroundColor?: string;
 }
 
+interface HeaderProps {
+  backgroundColor?: string;
+}
+
 export const Container = styled.View<ContainerProps>`
   flex: 1;
   background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
@@ -16,8 +20,9 @@ export const InnerContainer = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const Header = styled.View`
+export const Header = styled.View<HeaderProps>`
   height: ${px(HEADER_HEIGHT)};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
   flex-direction: row;
 `;
 

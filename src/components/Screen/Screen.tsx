@@ -11,6 +11,8 @@ import { BLACK } from '../../constants/colors';
 interface ScreenProps {
   title?: string;
   backgroundColor?: string;
+  headerColor?: string;
+  titleColor?: string;
   children?: React.ReactNode;
   isHeaderShown?: boolean;
   isBackButtonShown?: boolean;
@@ -20,6 +22,8 @@ const Screen = ({
   children,
   title,
   backgroundColor,
+  headerColor,
+  titleColor,
   isHeaderShown = true,
   isBackButtonShown = true,
 }: ScreenProps) => {
@@ -35,7 +39,7 @@ const Screen = ({
     <Container backgroundColor={backgroundColor}>
       <InnerContainer>
         {isHeaderShown ? (
-          <Header>
+          <Header backgroundColor={headerColor}>
             <Left>
               {canGoBack() && isBackButtonShown && (
                 <HeaderButton
@@ -50,7 +54,7 @@ const Screen = ({
               )}
             </Left>
             <Center>
-              <Medium18 color={BLACK}>{title}</Medium18>
+              <Medium18 color={titleColor ?? BLACK}>{title}</Medium18>
             </Center>
             <Right>
               <HeaderButton

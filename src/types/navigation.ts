@@ -14,4 +14,5 @@ export type RootStackParamList = {
   Location: undefined;
   Report: undefined;
   MyPage: undefined;
+  ReportDetail: undefined;
 };
