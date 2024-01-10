@@ -42,7 +42,6 @@ import {
 import Spacer from '../../../../components/Spacer/Spacer';
 
 const ReportScreen = () => {
-  const [selectedBarIndex, setSelectedBarIndex] = useState<number | undefined>(undefined);
   return (
     <Screen title="9월 4주차 리포트" isHeaderShown headerColor={BLACK} titleColor={WHITE}>
       <Container>
