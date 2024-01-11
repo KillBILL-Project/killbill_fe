@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import BaseInput from '../BaseInput/BaseInput';
 import { Container, GenderButton, GenderSelectContainer, InputTitle } from './AuthDetail.style';
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
@@ -31,6 +32,7 @@ const AuthDetail = ({
   setAuthDetail,
   setSelectedItem,
 }: AuthDetailProps) => {
+  const { t } = useTranslation();
   const setGender = (selectedGender: Gender) => {
     setAuthDetail(prevState => ({ ...prevState, gender: selectedGender }));
   };
@@ -52,21 +54,32 @@ const AuthDetail = ({
 
   return (
     <>
-      <BaseInput title="나이" placeholder="나이 입력" onChangeText={onChangeAge} value={age} />
+      <BaseInput
+        title={t('auth_detail.input.age.title')}
+        placeholder={t('auth_detail.input.age.placeholder')}
+        onChangeText={onChangeAge}
+        value={age}
+      />
       <Container>
         <InputTitle>
-          <Medium14 color={BLACK}>성별</Medium14>
+          <Medium14 color={BLACK}>{t('auth_detail.input.gender.title')}</Medium14>
         </InputTitle>
         <GenderSelectContainer>
           <GenderButton onPress={onPressManButton} isSelected={isSelectedMan}>
-            <Semibold18 color={isSelectedMan ? WHITE : GREY600}>남자</Semibold18>
+            <Semibold18 color={isSelectedMan ? WHITE : GREY600}>
+              {t('auth_detail.input.gender.button.man')}
+            </Semibold18>
           </GenderButton>
           <GenderButton onPress={onPressWomanButton} isSelected={isSelectedWoman}>
-            <Semibold18 color={isSelectedWoman ? WHITE : GREY600}>여자</Semibold18>
+            <Semibold18 color={isSelectedWoman ? WHITE : GREY600}>
+              {t('auth_detail.input.gender.button.woman')}
+            </Semibold18>
           </GenderButton>
         </GenderSelectContainer>
       </Container>
       <BaseDropDown
+        title={t('auth_detail.input.country.title')}
+        placeholder={t('auth_detail.input.country.placeholder')}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         selectedItem={selectedItem}

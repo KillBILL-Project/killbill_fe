@@ -4,8 +4,13 @@ import { Medium16, Regular16 } from '../Typography/Typography';
 import { BLACK, MAIN } from '../../constants/colors';
 import { PopupProps } from '../../types/common';
 import Backdrop from '../Backdrop/Backdrop';
+import i18n from '../../locales/i18n';
 
-const Alert = ({ text, confirmText = '확인', onPressConfirm }: PopupProps) => {
+const Alert = ({
+  text,
+  confirmText = i18n.t('alert.confirm_text'),
+  onPressConfirm,
+}: PopupProps) => {
   return (
     <Backdrop>
       <PopupContainer>

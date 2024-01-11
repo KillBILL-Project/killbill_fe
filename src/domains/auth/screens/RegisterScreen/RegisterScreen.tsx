@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Container, RegisterBottomContainer, RegisterContainer } from './RegisterScreen.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
@@ -33,6 +34,7 @@ const RegisterScreen = () => {
   const [inProgress, setInProgress] = useState(false);
   const { register } = useAuth();
   const { showToast, ToastComponent } = useToast();
+  const { t } = useTranslation();
 
   const onChangeForm = (filed: string, value: string) => {
     setRegisterForm(prevState => ({ ...prevState, [filed]: value }));
@@ -42,31 +44,31 @@ const RegisterScreen = () => {
     () => [
       {
         validation: isValidEmail(registerForm.email),
-        message: '이메일 형식이 올바르지 않습니다.',
+        message: t('register.validation.invalid_email'),
       },
       {
         validation: isValidPassword(registerForm.password),
-        message: '비밀번호를 확인해주세요.',
+        message: t('register.validation.invalid_password'),
       },
       {
         validation: isValidPassword(registerForm.confirmedPassword),
-        message: '비밀번호가 일치하지 않습니다.',
+        message: t('register.validation.not_equal_password'),
       },
       {
         validation: authDetail.age !== '' && !Number.isNaN(Number(authDetail.age)),
-        message: '나이를 입력해주세요.',
+        message: t('register.validation.invalid_age'),
       },
       {
         validation: authDetail.gender !== undefined,
-        message: '성별을 선택해주세요.',
+        message: t('register.validation.invalid_gender'),
       },
       {
         validation: authDetail.country !== '',
-        message: '국가를 선택해주세요.',
+        message: t('register.validation.invalid_country'),
       },
       {
         validation: isCheckedTermsAgreement,
-        message: '약관 동의가 필요합니다.',
+        message: t('register.validation.required_terms'),
       },
     ],
     [
@@ -77,6 +79,7 @@ const RegisterScreen = () => {
       registerForm.confirmedPassword,
       registerForm.email,
       registerForm.password,
+      t,
     ],
   );
 
@@ -112,25 +115,25 @@ const RegisterScreen = () => {
   return (
     <>
       {ToastComponent}
-      <Screen title="회원가입">
+      <Screen title={t('register.title')}>
         <Container>
           <RegisterContainer>
             <BaseInput
-              title="이메일"
-              placeholder="이메일 입력"
+              title={t('register.input.email.title')}
+              placeholder={t('register.input.email.placeholder')}
               onChangeText={text => onChangeForm('email', text)}
               value={registerForm.email}
             />
             <BaseInput
-              title="비밀번호"
-              placeholder="비밀번호 입력"
+              title={t('register.input.password.title')}
+              placeholder={t('register.input.password.placeholder')}
               onChangeText={text => onChangeForm('password', text)}
               value={registerForm.password ? registerForm.password : ''}
               isSecure
             />
             <BaseInput
-              title="비밀번호 확인"
-              placeholder="비밀번호 확인"
+              title={t('register.input.confirmed_password.title')}
+              placeholder={t('register.input.confirmed_password.placeholder')}
               onChangeText={text => onChangeForm('confirmedPassword', text)}
               value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
               isSecure
@@ -151,7 +154,7 @@ const RegisterScreen = () => {
               isCheckedTermsAgreement={isCheckedTermsAgreement}
               setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
             />
-            <BaseButton text="회원가입" onPress={onPressRegisterButton} />
+            <BaseButton text={t('register.button.submit')} onPress={onPressRegisterButton} />
           </RegisterBottomContainer>
         </Container>
       </Screen>

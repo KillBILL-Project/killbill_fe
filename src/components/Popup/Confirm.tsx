@@ -9,8 +9,14 @@ import {
 import { Medium16, Regular16 } from '../Typography/Typography';
 import { BLACK, MAIN } from '../../constants/colors';
 import { PopupProps } from '../../types/common';
+import i18n from '../../locales/i18n';
 
-const Confirm = ({ text, confirmText = '확인', onPressConfirm, onPressCancel }: PopupProps) => {
+const Confirm = ({
+  text,
+  confirmText = i18n.t('confirm.confirm_text'),
+  onPressConfirm,
+  onPressCancel,
+}: PopupProps) => {
   return (
     <PopupContainer>
       <PopupTextContainer>
@@ -26,7 +32,7 @@ const Confirm = ({ text, confirmText = '확인', onPressConfirm, onPressCancel }
       </PopupTextContainer>
       <ConfirmButtonContainer>
         <ConfirmButtonLeft onPress={onPressCancel}>
-          <Medium16 color={MAIN}>취소</Medium16>
+          <Medium16 color={MAIN}>{i18n.t('confirm.cancel_text')}</Medium16>
         </ConfirmButtonLeft>
         <ConfirmButtonRight onPress={onPressConfirm}>
           <Medium16 color={MAIN}>{confirmText}</Medium16>

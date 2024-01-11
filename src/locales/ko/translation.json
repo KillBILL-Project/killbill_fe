@@ -1,0 +1,149 @@
+{
+  "auth_detail": {
+    "input": {
+      "age": {
+        "title": "나이",
+        "placeholder": "나이 입력"
+      },
+      "country": {
+        "title": "국가",
+        "placeholder": "국가 선택"
+      },
+      "gender": {
+        "title": "성별",
+        "button": {
+          "man": "남자",
+          "woman": "여자"
+        }
+      }
+    },
+    "button": {
+      "submit": "입력 완료"
+    },
+    "validation": {
+      "title": "추가정보 입력",
+      "invalid_age": "나이를 입력해주세요.",
+      "invalid_gender": "성별을 선택해주세요.",
+      "invalid_country": "국가를 선택해주세요."
+    }
+  },
+  "reset_password": {
+    "title": "비밀번호 재설정",
+    "input": {
+      "password": {
+        "title": "변경할 비밀번호",
+        "placeholder": "대소문자, 숫자, 기호 포함 8자리"
+      },
+      "confirmed_password": {
+        "title": "비밀번호 확인",
+        "placeholder": "대소문자, 숫자, 기호 포함 8자리"
+      }
+    },
+    "button": {
+      "submit": "저장"
+    },
+    "validation": {
+      "invalid_password": "비밀번호를 확인해주세요.",
+      "not_equal_password": "비밀번호가 일치하지 않습니다."
+    },
+    "alert": {
+      "reset_password": ["비밀번호가 재설정되었습니다.", "다시 로그인해 주세요."]
+    }
+  },
+  "forgot_password": {
+    "title": "비밀번호 찾기",
+    "button": {
+      "submit": "다음"
+    },
+    "info_message": [
+      "비밀번호를 확인할 이메일을",
+      "입력해주세요."
+    ],
+    "input": {
+      "email": {
+        "title": "이메일",
+        "placeholder": "이메일을 입력해주세요."
+      }
+    },
+    "validation": {
+      "invalid_email": "이메일 형식이 올바르지 않습니다."
+    },
+    "alert": {
+      "sent_email": ["입력하신 이메일 주소로", "임시 비밀번호를 발송했습니다."]
+    }
+  },
+  "login": {
+    "greeting": [
+      "어서오세요.",
+      "반가워해드릴게요."
+    ],
+    "input": {
+      "email": {
+        "placeholder": "이메일 주소 입력.",
+        "title": "이메일"
+      },
+      "password": {
+        "placeholder": "비밀번호 입력",
+        "title": "비밀번호"
+      }
+    },
+    "button": {
+      "apple_login": "Apple로 시작하기",
+      "find_password": "비밀번호 찾기",
+      "google_login": "Google로 시작하기",
+      "login": "로그인",
+      "register": "이메일 회원가입"
+    },
+    "validation": {
+      "invalid_email": "이메일 형식이 올바르지 않습니다.",
+      "invalid_password": "비밀번호를 확인해주세요."
+    }
+  },
+  "register": {
+    "title": "회원가입",
+    "button": {
+      "submit": "회원가입"
+    },
+    "input": {
+      "email": {
+        "title": "이메일",
+        "placeholder": "이메일 입력."
+      },
+      "password": {
+        "title": "비밀번호",
+        "placeholder": "비밀번호 입력"
+      },
+      "confirmed_password": {
+        "title": "비밀번호 확인",
+        "placeholder": "비밀번호 확인"
+      }
+    },
+    "validation": {
+      "invalid_email": "이메일 형식이 올바르지 않습니다.",
+      "invalid_password": "비밀번호를 확인해주세요.",
+      "not_equal_password": "비밀번호가 일치하지 않습니다.",
+      "invalid_age": "나이를 입력해주세요.",
+      "invalid_gender": "성별을 선택해주세요.",
+      "invalid_country": "국가를 선택해주세요.",
+      "required_terms": "약관 동의가 필요합니다."
+    }
+  },
+  "terms_agreement": {
+    "button": {
+      "detail": "자세히 >"
+    },
+    "terms": [
+      "서비스 이용얀관 동의(필수)"
+    ]
+  },
+  "alert": {
+    "confirm_text": "확인"
+  },
+  "confirm": {
+    "confirm_text": "확인",
+    "cancel_text": "취소"
+  },
+  "use_popup": {
+    "confirm_text": "확인"
+  }
+}
