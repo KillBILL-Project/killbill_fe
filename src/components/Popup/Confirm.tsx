@@ -32,7 +32,7 @@ const Confirm = ({
       </PopupTextContainer>
       <ConfirmButtonContainer>
         <ConfirmButtonLeft onPress={onPressCancel}>
-          <Medium16 color={MAIN}>{i18n.t('cancel_text.confirm_text')}</Medium16>
+          <Medium16 color={MAIN}>{i18n.t('confirm.cancel_text')}</Medium16>
         </ConfirmButtonLeft>
         <ConfirmButtonRight onPress={onPressConfirm}>
           <Medium16 color={MAIN}>{confirmText}</Medium16>
