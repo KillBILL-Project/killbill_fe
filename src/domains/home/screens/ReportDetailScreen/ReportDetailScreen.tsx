@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { processColor, Text } from 'react-native';
 import { BarChart } from 'react-native-charts-wrapper';
 import Screen from '../../../../components/Screen/Screen';
