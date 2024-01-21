@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, GREY600, MAIN, WHITE } from '../../../../constants/colors';
@@ -25,10 +25,10 @@ import {
   ListContainer,
   ListTitle,
 } from './ReportScreen.style';
-import { RootStackParamList } from '../../../../types/navigation';
+import { HomeStackParamList } from '../../../../types/navigation';
 
 const Item = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   return (
     // List 패딩 전체 마진 혹은 패딩 8
     <ItemContainer onPress={() => navigation.navigate('ReportDetail')}>

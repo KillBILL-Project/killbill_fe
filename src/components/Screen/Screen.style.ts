@@ -9,6 +9,7 @@ interface ContainerProps {
 
 interface HeaderProps {
   backgroundColor?: string;
+  topSafeArea: number;
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -16,30 +17,38 @@ export const Container = styled.View<ContainerProps>`
   background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
 `;
 
-export const InnerContainer = styled.SafeAreaView`
-  flex: 1;
+export const HeaderContainer = styled.View<HeaderProps>`
+  height: ${({ topSafeArea }) => px(topSafeArea + HEADER_HEIGHT)};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
+  padding-top: ${({ topSafeArea }) => px(topSafeArea)};
 `;
 
-export const Header = styled.View<HeaderProps>`
+export const Header = styled.SafeAreaView`
   height: ${px(HEADER_HEIGHT)};
-  background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
   flex-direction: row;
+  align-items: center;
 `;
 
 export const Left = styled.View`
-  flex: 1;
+  position: absolute;
+  left: 0;
   justify-content: center;
+  align-items: flex-start;
+  z-index: 1;
 `;
 
 export const Center = styled.View`
-  flex: 3;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
 export const Right = styled.View`
-  flex: 1;
+  position: absolute;
+  right: 0;
   justify-content: center;
+  align-items: flex-end;
+  z-index: 1;
 `;
 
 export const Body = styled.View`

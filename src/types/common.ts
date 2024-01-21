@@ -1,3 +1,5 @@
+import { ParamListBase } from '@react-navigation/native';
+
 export type Gender = 'M' | 'F' | undefined;
 
 export interface ItemType {
@@ -57,4 +59,9 @@ export interface PopupProps {
 export interface ToastProps {
   message: string | string[];
   isFailed?: boolean;
+}
+
+export interface MenuType<T extends ParamListBase> {
+  name: string;
+  route: keyof T;
 }

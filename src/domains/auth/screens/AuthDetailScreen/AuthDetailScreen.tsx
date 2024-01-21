@@ -7,7 +7,7 @@ import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common
 import { COUNTRIES } from '../../../../constants/constants';
 import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { RootStackParamList } from '../../../../types/navigation';
+import { HomeStackParamList } from '../../../../types/navigation';
 import useAuth from '../../../../hooks/useAuth';
 import useToast from '../../../../hooks/useToast';
 
@@ -22,7 +22,7 @@ const AuthDetailScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
   const { register } = useAuth();
-  const route = useRoute<RouteProp<RootStackParamList, 'AuthDetail'>>();
+  const route = useRoute<RouteProp<HomeStackParamList, 'AuthDetail'>>();
   const { showToast, ToastComponent } = useToast();
 
   const { t } = useTranslation();

@@ -38,15 +38,23 @@ import {
   TrashAmount,
   TrashCategoryChart,
   TrashChangeGuide,
-} from './ReportScreenDetail.style';
+} from './ReportDetailScreen.style';
 import Spacer from '../../../../components/Spacer/Spacer';
+import Separator from '../../../../components/Separator/Separator';
+import { styles } from '../../../../constants/constants';
 
 const ReportScreen = () => {
   return (
-    <Screen title="9월 4주차 리포트" isHeaderShown headerColor={BLACK} titleColor={WHITE}>
+    <Screen
+      title="9월 4주차 리포트"
+      isHeaderShown
+      headerColor={BLACK}
+      titleColor={WHITE}
+      backButtonColor={WHITE}
+    >
       <Container>
         <Header />
-        <OverviewContainer>
+        <OverviewContainer style={styles.shadow}>
           <WeeklyAttendanceStatus>
             <AttendanceTitle>
               <Medium14 color={BLACK}>출석체크</Medium14>
@@ -75,6 +83,7 @@ const ReportScreen = () => {
               </DailyIndicator>
             </DailyIndicatorContainer>
           </WeeklyAttendanceStatus>
+          <Separator horizontal length={303} margin={16} />
           <WeeklyChange>
             <WeeklyChangeTitle>
               <Medium14 color={BLACK}>탄소절감량(Beta)</Medium14>
@@ -105,7 +114,7 @@ const ReportScreen = () => {
             </ChangeIndicator>
           </WeeklyChange>
         </OverviewContainer>
-        <TrashSummaryContainer>
+        <TrashSummaryContainer style={styles.shadow}>
           <TrashAmountContainer>
             <TrashAmountTitle>
               <Bold12 color={GREY700}>우리가 버린 쓰레기</Bold12>

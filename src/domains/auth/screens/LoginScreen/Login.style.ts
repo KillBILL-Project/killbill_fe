@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { GREY300 } from '../../../../constants/colors';
 import { px, ratioPx } from '../../../../utils/platform';
 
 export const Container = styled.SafeAreaView<{ height: number }>`
@@ -28,10 +27,6 @@ export const Greeting = styled.View`
 export const AdditionalButtonContainer = styled.View`
   flex-direction: row;
   align-items: center;
-`;
-
-export const Separator = styled.Text`
-  color: ${GREY300};
 `;
 
 export const SsoLoginButtonContainer = styled.View`
