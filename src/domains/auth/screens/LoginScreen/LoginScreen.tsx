@@ -18,7 +18,7 @@ import {
 import BaseInput from '../../components/BaseInput/BaseInput';
 import Spacer from '../../../../components/Spacer/Spacer';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { HomeStackParamList } from '../../../../types/navigation';
+import { AuthStackParamList, HomeStackParamList } from '../../../../types/navigation';
 
 import GoogleLoginIcon from '../../../../assets/icon/login_icon_google.png';
 import AppleLoginIcon from '../../../../assets/icon/login_icon_apple.png';
@@ -41,7 +41,7 @@ const LoginScreen = () => {
   });
   const [inLoginProgress, setInLoginProgress] = useState(false);
   const { showToast, ToastComponent } = useToast();
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
   const { t } = useTranslation();
   const { top, bottom } = useSafeAreaInsets();
 
