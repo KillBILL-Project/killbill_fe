@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import { Animated } from 'react-native';
 import { px, ratioPx } from '../../../../utils/platform';
 import { GREY500 } from '../../../../constants/colors';
-import ImageWithRef from './components/ImageWithRef';
 
 interface EmptyContainerProps {
   inactiveTrashHistoryHeight: number;
@@ -32,46 +31,6 @@ export const TrashContainer = styled.View`
   width: 100%;
   flex: 1;
 `;
-
-export const SizeBarContainer = styled.View`
-  background-color: aqua;
-  height: 60px;
-  width: 100%;
-  position: relative;
-  align-items: center;
-`;
-
-export const Temp = styled.View`
-  position: absolute;
-  width: ${ratioPx(311)};
-  bottom: 0;
-`;
-
-export const SizeBar = styled(ImageWithRef)`
-  width: 100%;
-  height: ${ratioPx(16)};
-`;
-
-export const Temp2 = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1px 10px;
-`;
-
-export const SizeIndicatorContainer = styled.View`
-  align-items: center;
-`;
-
-export const SizeExample = styled.View``;
-
-export const SizeIndicator = styled.View`
-  background-color: black;
-  width: ${px(28)};
-  height: ${px(28)};
-  border-radius: ${px(14)};
-`;
-
-export const SizeIndicatorTitle = styled.View``;
 
 export const CategoryContainer = styled.View`
   background-color: aquamarine;
