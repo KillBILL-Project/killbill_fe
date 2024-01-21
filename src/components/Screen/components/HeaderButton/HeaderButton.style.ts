@@ -1,24 +1,22 @@
 import styled from 'styled-components/native';
+import { ratioPx } from '../../../../utils/platform';
 
 interface HeaderTouchableProps {
   padding: number;
-  margin: number;
 }
 
 interface HeaderButtonIconProps {
   width: number;
   height: number;
-  rotate?: number;
 }
 
 export const HeaderTouchable = styled.TouchableOpacity<HeaderTouchableProps>`
-  padding: ${({ padding }) => `${padding}px`};
-  margin: ${({ margin }) => `${margin}px`};
+  padding: ${({ padding }) => ratioPx(padding)};
   justify-content: center;
+  align-items: center;
 `;
 
 export const HeaderButtonIcon = styled.Image<HeaderButtonIconProps>`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  transform: ${({ rotate }) => (rotate ? `rotate(${rotate}deg)` : '')};
+  width: ${({ width }) => ratioPx(width)};
+  height: ${({ height }) => ratioPx(height)};
 `;

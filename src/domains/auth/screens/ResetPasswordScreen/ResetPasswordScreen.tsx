@@ -13,14 +13,14 @@ import Screen from '../../../../components/Screen/Screen';
 import { isValidPassword } from '../../../../utils/common';
 import useToast from '../../../../hooks/useToast';
 import usePopup from '../../../../hooks/usePopup';
-import { RootStackParamList } from '../../../../types/navigation';
+import { HomeStackParamList } from '../../../../types/navigation';
 
 const ResetPasswordScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const { showPopup, AlertComponent } = usePopup();
   const { showToast, ToastComponent } = useToast();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
   const { t } = useTranslation();
 
   const onChangePassword = (enteredPassword: string) => setPassword(enteredPassword);

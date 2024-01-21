@@ -1,72 +1,76 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import dropDownIcon from '../../assets/icon/dropdown_icon.png';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ImageSourcePropType } from 'react-native';
+import backButton from '../../assets/icon/back_button.png';
 
-import { Container, Header, Left, Center, Right, Body, InnerContainer } from './Screen.style';
-import HeaderButton from './components/HeaderButton/HeaderButton';
-import useAuth from '../../hooks/useAuth';
+import { Container, HeaderContainer, Left, Center, Right, Body, Header } from './Screen.style';
 import { Medium18 } from '../Typography/Typography';
 import { BLACK } from '../../constants/colors';
+import HeaderButton from './components/HeaderButton/HeaderButton';
+
+interface RightButtonProps {
+  icon: ImageSourcePropType;
+  margin: number;
+  padding: number;
+  height: number;
+  width: number;
+  onPress: () => void;
+}
 
 interface ScreenProps {
   title?: string;
   backgroundColor?: string;
+  backButtonColor?: string;
+  headerColor?: string;
+  titleColor?: string;
   children?: React.ReactNode;
   isHeaderShown?: boolean;
   isBackButtonShown?: boolean;
+  rightButtonProps?: RightButtonProps;
 }
 
 const Screen = ({
   children,
   title,
   backgroundColor,
+  backButtonColor,
+  headerColor,
+  titleColor,
   isHeaderShown = true,
   isBackButtonShown = true,
+  rightButtonProps,
 }: ScreenProps) => {
-  const { clearTokens } = useAuth();
+  const { top } = useSafeAreaInsets();
   const { goBack, canGoBack } = useNavigation();
 
   const onPressBackButton = () => goBack();
-  const onPressTempButton = async () => {
-    await clearTokens();
-  };
 
   return (
     <Container backgroundColor={backgroundColor}>
-      <InnerContainer>
-        {isHeaderShown ? (
+      {isHeaderShown ? (
+        <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
           <Header>
             <Left>
               {canGoBack() && isBackButtonShown && (
                 <HeaderButton
-                  margin={15}
                   padding={15}
-                  height={25}
-                  width={25}
-                  rotate={90}
-                  icon={dropDownIcon}
+                  height={24}
+                  width={24}
+                  backButtonColor={backButtonColor}
+                  icon={backButton}
                   onPress={onPressBackButton}
                 />
               )}
             </Left>
             <Center>
-              <Medium18 color={BLACK}>{title}</Medium18>
+              <Medium18 color={titleColor ?? BLACK}>{title}</Medium18>
             </Center>
-            <Right>
-              <HeaderButton
-                margin={15}
-                padding={15}
-                height={25}
-                width={25}
-                rotate={270}
-                icon={dropDownIcon}
-                onPress={onPressTempButton}
-              />
-            </Right>
+            <Right>{rightButtonProps && <HeaderButton {...rightButtonProps} />}</Right>
           </Header>
-        ) : null}
-        <Body>{children}</Body>
-      </InnerContainer>
+        </HeaderContainer>
+      ) : null}
+      <Body>{children}</Body>
     </Container>
   );
 };

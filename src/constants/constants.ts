@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { ItemType } from '../types/common';
 import { ratio } from '../utils/platform';
 
@@ -23,3 +24,13 @@ export const COUNTRIES: ItemType[] = [
   { label: 'Japan', value: 'japan' },
   { label: 'China', value: 'china' },
 ];
+
+export const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+});

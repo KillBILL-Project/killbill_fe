@@ -10,7 +10,7 @@ const Navigation = () => {
   const accessToken = useRecoilValue(tokenState);
   return (
     <NavigationContainer>
-      <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+      <AppFrame>{!accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
     </NavigationContainer>
   );
 };

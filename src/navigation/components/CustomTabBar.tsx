@@ -38,9 +38,9 @@ const TabIcon = ({ route, isFocused }: IconProps) => {
   return <TabIconStyle source={iconName} />;
 };
 
-const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
+const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarProps) => {
   return (
-    <TabBar>
+    <TabBar bottomSafeArea={insets.bottom}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label = options.title ?? route.name;

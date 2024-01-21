@@ -3,27 +3,30 @@ import { ImageSourcePropType } from 'react-native';
 import { HeaderButtonIcon, HeaderTouchable } from './HeaderButton.style';
 
 interface HeaderButtonProps {
-  margin: number;
   padding: number;
   height: number;
   width: number;
-  rotate?: number;
+  backButtonColor?: string;
   icon: ImageSourcePropType;
   onPress?: () => void;
 }
 
 const HeaderButton = ({
-  margin,
   padding,
   height,
   width,
-  rotate,
+  backButtonColor,
   icon,
   onPress,
 }: HeaderButtonProps) => {
   return (
-    <HeaderTouchable margin={margin} padding={padding} onPress={onPress}>
-      <HeaderButtonIcon height={height} width={width} rotate={rotate} source={icon} />
+    <HeaderTouchable padding={padding} onPress={onPress}>
+      <HeaderButtonIcon
+        height={height}
+        width={width}
+        source={icon}
+        style={backButtonColor ? { tintColor: backButtonColor } : {}}
+      />
     </HeaderTouchable>
   );
 };

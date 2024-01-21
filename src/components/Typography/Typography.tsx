@@ -31,7 +31,7 @@ import {
 } from './Typography.style';
 
 interface TypographyProps {
-  children?: string;
+  children?: string | number;
   color: string;
 }
 

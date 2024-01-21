@@ -1,26 +1,24 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from 'react-native-config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Keyboard } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Screen from '../../../../components/Screen/Screen';
-import { BLACK, GREY500, WHITE } from '../../../../constants/colors';
+import { BLACK, GREY300, GREY500, WHITE } from '../../../../constants/colors';
 import {
   Container,
   Greeting,
   LoginContainer,
   SsoLoginButtonContainer,
   AdditionalButtonContainer,
-  Separator,
   KeyboardHideArea,
 } from './Login.style';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import Spacer from '../../../../components/Spacer/Spacer';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { RootStackParamList } from '../../../../types/navigation';
+import { HomeStackParamList } from '../../../../types/navigation';
 
 import GoogleLoginIcon from '../../../../assets/icon/login_icon_google.png';
 import AppleLoginIcon from '../../../../assets/icon/login_icon_apple.png';
@@ -31,6 +29,7 @@ import useAuth from '../../../../hooks/useAuth';
 import { H1 } from '../../../../components/Typography/Typography';
 import useToast from '../../../../hooks/useToast';
 import { windowHeight } from '../../../../utils/platform';
+import Separator from '../../../../components/Separator/Separator';
 
 const LoginScreen = () => {
   const { login } = useAuth();
@@ -42,7 +41,7 @@ const LoginScreen = () => {
   });
   const [inLoginProgress, setInLoginProgress] = useState(false);
   const { showToast, ToastComponent } = useToast();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const { t } = useTranslation();
   const { top, bottom } = useSafeAreaInsets();
 
@@ -159,7 +158,7 @@ const LoginScreen = () => {
                   title={t('login.button.register')}
                   onPress={onPressRegisterButton}
                 />
-                <Separator>|</Separator>
+                <Separator margin={16} length={12} color={GREY300} />
                 <AdditionalButton
                   title={t('login.button.find_password')}
                   onPress={onPressForgotPasswordButton}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import {
@@ -13,14 +13,14 @@ import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import { BLACK, PRIMARY } from '../../../../constants/colors';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { RootStackParamList } from '../../../../types/navigation';
+import { AuthStackParamList, HomeStackParamList } from '../../../../types/navigation';
 import usePopup from '../../../../hooks/usePopup';
 import { isValidEmail } from '../../../../utils/common';
 import useToast from '../../../../hooks/useToast';
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
   const { showPopup, AlertComponent } = usePopup();
   const { showToast, ToastComponent } = useToast();
   const { t } = useTranslation();

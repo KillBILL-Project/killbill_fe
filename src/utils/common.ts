@@ -22,3 +22,13 @@ export const sleep = (milliSeconds: number) => {
     setTimeout(resolve, milliSeconds);
   });
 };
+
+export const getDayOfWeek = (date: Date) => {
+  const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  return days[date.getDay()];
+};
+
+export const getDayOfWeek2 = (date: number) => {
+  const days = ['월', '화', '수', '목', '금', '토', '일'];
+  return days[date];
+};
