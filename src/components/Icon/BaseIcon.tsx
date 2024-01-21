@@ -1,14 +1,15 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
-import { IconStyled } from './Icon.style';
+import { Icon } from './Icon.style';
 
 interface BaseIconProps {
   size: number;
-  image: ImageSourcePropType;
+  icon: ImageSourcePropType;
+  color?: string;
 }
 
-const BaseIcon = ({ size, image }: BaseIconProps) => {
-  return <IconStyled size={size} source={image} />;
+const BaseIcon = ({ size, icon, color }: BaseIconProps) => {
+  return <Icon size={size} source={icon} style={color ? { tintColor: color } : {}} />;
 };
 
 export default BaseIcon;

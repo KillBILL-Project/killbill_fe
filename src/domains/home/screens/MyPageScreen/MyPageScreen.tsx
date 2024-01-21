@@ -66,10 +66,8 @@ const MyPageScreen = () => {
 
   const rightButtonProps = {
     icon: notification,
-    margin: 24,
     padding: 24,
-    height: 24,
-    width: 24,
+    size: 24,
     onPress: onPressNotification,
   };
 

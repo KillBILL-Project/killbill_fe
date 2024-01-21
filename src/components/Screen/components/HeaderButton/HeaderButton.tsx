@@ -1,32 +1,20 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
-import { HeaderButtonIcon, HeaderTouchable } from './HeaderButton.style';
+import { HeaderTouchable } from './HeaderButton.style';
+import BaseIcon from '../../../Icon/BaseIcon';
 
 interface HeaderButtonProps {
   padding: number;
-  height: number;
-  width: number;
-  backButtonColor?: string;
+  size: number;
+  color?: string;
   icon: ImageSourcePropType;
   onPress?: () => void;
 }
 
-const HeaderButton = ({
-  padding,
-  height,
-  width,
-  backButtonColor,
-  icon,
-  onPress,
-}: HeaderButtonProps) => {
+const HeaderButton = ({ padding, size, color, icon, onPress }: HeaderButtonProps) => {
   return (
     <HeaderTouchable padding={padding} onPress={onPress}>
-      <HeaderButtonIcon
-        height={height}
-        width={width}
-        source={icon}
-        style={backButtonColor ? { tintColor: backButtonColor } : {}}
-      />
+      <BaseIcon size={size} icon={icon} color={color} />
     </HeaderTouchable>
   );
 };

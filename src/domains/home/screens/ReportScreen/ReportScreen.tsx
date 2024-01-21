@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, GREY600, MAIN, WHITE } from '../../../../constants/colors';
 import {

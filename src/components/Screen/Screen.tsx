@@ -11,10 +11,8 @@ import HeaderButton from './components/HeaderButton/HeaderButton';
 
 interface RightButtonProps {
   icon: ImageSourcePropType;
-  margin: number;
   padding: number;
-  height: number;
-  width: number;
+  size: number;
   onPress: () => void;
 }
 
@@ -55,9 +53,8 @@ const Screen = ({
               {canGoBack() && isBackButtonShown && (
                 <HeaderButton
                   padding={15}
-                  height={24}
-                  width={24}
-                  backButtonColor={backButtonColor}
+                  size={24}
+                  color={backButtonColor}
                   icon={backButton}
                   onPress={onPressBackButton}
                 />
