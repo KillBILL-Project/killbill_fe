@@ -5,6 +5,7 @@ import { CategoryContainer, Container } from './FaqScreen.style';
 import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';
 import { GREY400 } from '../../../../constants/colors';
+import Faq from './components/Faq/Faq';
 
 const categories = [
   { key: 'all', name: '전체' },
@@ -36,6 +37,9 @@ const FaqScreen = () => {
           ))}
         </CategoryContainer>
         <Separator horizontal length={width} margin={0} color={GREY400} />
+        {faqList.map(({ title, category, content }) => (
+          <Faq title={title} category={category} content={content} />
+        ))}
       </Container>
     </Screen>
   );
