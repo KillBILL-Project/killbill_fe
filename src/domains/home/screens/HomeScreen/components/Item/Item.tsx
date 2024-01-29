@@ -8,9 +8,9 @@ import {
   ItemName,
 } from './Item.style';
 
-import can from '../../../../../assets/image/can.png';
-import { Regular14, Regular16 } from '../../../../../components/Typography/Typography';
-import { BLACK, GREY600 } from '../../../../../constants/colors';
+import can from '../../../../../../assets/image/can.png';
+import { Regular14, Regular16 } from '../../../../../../components/Typography';
+import { BLACK, GREY600 } from '../../../../../../constants/colors';
 
 const Item = () => {
   return (

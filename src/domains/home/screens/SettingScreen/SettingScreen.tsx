@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Switch } from 'react-native-switch';
 import Screen from '../../../../components/Screen/Screen';
-import { Bold18, Regular16 } from '../../../../components/Typography/Typography';
-import { BLACK, BTN_DESELECTED_BG, GREY500, WHITE } from '../../../../constants/colors';
+import { Bold18, Regular16 } from '../../../../components/Typography';
+import { BLACK, GREY500, WHITE } from '../../../../constants/colors';
 import Separator from '../../../../components/Separator/Separator';
 import { ratio, width } from '../../../../utils/platform';
 import {
+  Box,
   Container,
   PushContainer,
   PushTitle,
   PushToggleSwitch,
   Title,
-  Box,
 } from './SettingScreen.style';
 
 const SettingScreen = () => {

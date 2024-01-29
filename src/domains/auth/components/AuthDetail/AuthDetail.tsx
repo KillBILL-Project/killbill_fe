@@ -5,7 +5,7 @@ import { Container, GenderButton, GenderSelectContainer, InputTitle } from './Au
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
 import { AuthDetailType, Gender, ItemType } from '../../../../types/common';
 import { EXCLUDED_NUMERIC_PATTERN } from '../../../../constants/constants';
-import { Medium14, Semibold18 } from '../../../../components/Typography/Typography';
+import { Medium14, Semibold18 } from '../../../../components/Typography';
 import { BLACK, GREY600, WHITE } from '../../../../constants/colors';
 
 export interface DropDownProps {

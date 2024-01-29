@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Regular14 } from '../../../../../components/Typography/Typography';
+import { Regular14 } from '../../../../../components/Typography';
 import { GREY700 } from '../../../../../constants/colors';
 
 interface AdditionalButtonProps {

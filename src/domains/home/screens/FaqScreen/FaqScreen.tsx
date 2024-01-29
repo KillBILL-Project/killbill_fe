@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Screen from '../../../../components/Screen/Screen';
-import Category from './components/Category/Category';
+import Screen from '../../../../components/Screen';
+import Category from './components/Category';
 import { CategoryContainer, Container } from './FaqScreen.style';
-import Separator from '../../../../components/Separator/Separator';
+import Separator from '../../../../components/Separator';
 import { width } from '../../../../utils/platform';
 import { GREY400 } from '../../../../constants/colors';
-import Faq from './components/Faq/Faq';
+import Faq from './components/Faq';
 
 const categories = [
   { key: 'all', name: '전체' },
@@ -38,7 +38,7 @@ const FaqScreen = () => {
         </CategoryContainer>
         <Separator horizontal length={width} margin={0} color={GREY400} />
         {faqList.map(({ title, category, content }) => (
-          <Faq title={title} category={category} content={content} />
+          <Faq key={title} title={title} category={category} content={content} />
         ))}
       </Container>
     </Screen>

@@ -6,7 +6,7 @@ import {
   ConfirmButtonLeft,
   ConfirmButtonRight,
 } from './Popup.style';
-import { Medium16, Regular16 } from '../Typography/Typography';
+import { Medium16, Regular16 } from '../Typography';
 import { BLACK, MAIN } from '../../constants/colors';
 import { PopupProps } from '../../types/common';
 import i18n from '../../locales/i18n';

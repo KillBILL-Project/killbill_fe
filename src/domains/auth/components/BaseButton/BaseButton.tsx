@@ -3,7 +3,7 @@ import { ImageSourcePropType } from 'react-native';
 import { MAIN, GREY400, PRIMARY } from '../../../../constants/colors';
 import { BaseButtonIcon, BaseButtonTitle, BaseTouchable } from './BaseButton.style';
 import BaseIcon from '../../../../components/Icon/BaseIcon';
-import { Bold18 } from '../../../../components/Typography/Typography';
+import { Bold18 } from '../../../../components/Typography';
 
 interface LoginButtonProps {
   text: string;
@@ -31,7 +31,7 @@ const BaseButton = ({
     >
       {icon != null && (
         <BaseButtonIcon>
-          <BaseIcon size={15} image={icon} />
+          <BaseIcon size={15} icon={icon} />
         </BaseButtonIcon>
       )}
       <BaseButtonTitle>

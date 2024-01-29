@@ -1,5 +1,5 @@
 import React from 'react';
-import { Regular14, Semibold18 } from '../../../../../../components/Typography/Typography';
+import { Regular14, Semibold18 } from '../../../../../../components/Typography';
 import { WHITE } from '../../../../../../constants/colors';
 import Spacer from '../../../../../../components/Spacer/Spacer';
 import checkedIcon from '../../../../../../assets/icon/checked.png';

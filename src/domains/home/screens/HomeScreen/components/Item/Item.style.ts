@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '../../../../../utils/platform';
-import { LIGHT_BG } from '../../../../../constants/colors';
+import { ratioPx } from '../../../../../../utils/platform';
+import { LIGHT_BG } from '../../../../../../constants/colors';
 
 export const Container = styled.View`
   padding: ${ratioPx(8)};

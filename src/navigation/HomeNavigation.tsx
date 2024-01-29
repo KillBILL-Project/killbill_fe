@@ -13,7 +13,7 @@ import UserGuideScreen from '../domains/home/screens/UserGuideScreen';
 import MyInfoScreen from '../domains/home/screens/MyInfoScreen';
 import MyHistoryScreen from '../domains/home/screens/MyHistoryScreen';
 import NotifySettingScreen from '../domains/home/screens/NotifySettingScreen';
-import Notification from '../domains/home/screens/Notification';
+import NotificationScreen from '../domains/home/screens/NotificationScreen';
 import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
 import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
 import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
@@ -43,7 +43,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="UserGuide" component={UserGuideScreen} />
       <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       <Stack.Screen name="MyHistory" component={MyHistoryScreen} />
-      <Stack.Screen name="Notification" component={Notification} />
+      <Stack.Screen name="Notification" component={NotificationScreen} />
       <Stack.Screen name="NotifySetting" component={NotifySettingScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
     </Stack.Navigator>

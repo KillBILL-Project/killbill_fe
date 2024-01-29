@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseTextInput, Container, InputTitle } from './BaseInput.style';
 import { GREY500, GREY800 } from '../../../../constants/colors';
-import { Medium14 } from '../../../../components/Typography/Typography';
+import { Medium14 } from '../../../../components/Typography';
 
 interface BaseInputProps {
   title: string;

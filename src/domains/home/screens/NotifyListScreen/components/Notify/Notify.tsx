@@ -8,12 +8,7 @@ import {
   SelectedDay,
   TimeContainer,
 } from './Notify.style';
-import {
-  Bold18,
-  Medium14,
-  Regular12,
-  Regular14,
-} from '../../../../../../components/Typography/Typography';
+import { Bold18, Medium14, Regular12, Regular14 } from '../../../../../../components/Typography';
 import { BLACK, GREY500, WHITE } from '../../../../../../constants/colors';
 import { getDayOfWeek2 } from '../../../../../../utils/common';
 import Spacer from '../../../../../../components/Spacer/Spacer';

@@ -1,35 +1,6 @@
 import styled from 'styled-components/native';
-import { px, ratioPx } from '../../../../utils/platform';
-import { BTN_DESELECTED_BG, MAIN } from '../../../../constants/colors';
-import { AUTH_BORDER_RADIUS } from '../../../../constants/constants';
-
-export const ItemContainer = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-`;
-export const WeeklyContainer = styled.View`
-  width: ${ratioPx(56)};
-  height: ${ratioPx(62)};
-  align-items: center;
-  justify-content: center;
-  background-color: ${BTN_DESELECTED_BG};
-  margin: ${ratioPx(16)} ${ratioPx(16)} ${ratioPx(16)} 0;
-  border-radius: ${px(AUTH_BORDER_RADIUS)};
-`;
-export const ReportContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-`;
-export const Period = styled.View``;
-export const ReportTitle = styled.View``;
-export const ArrowContainer = styled.View`
-  width: ${px(20)};
-  height: ${px(20)};
-  justify-content: center;
-  align-items: center;
-`;
-
-/*-----------------------*/
+import { ratioPx } from '../../../../utils/platform';
+import { MAIN } from '../../../../constants/colors';
 
 export const Container = styled.View`
   flex: 1;
@@ -40,13 +11,13 @@ export const Header = styled.View`
   background-color: ${MAIN};
   flex-direction: row;
   align-items: center;
-  padding-left: 24px;
+  padding-left: ${ratioPx(24)};
 `;
 export const SelectYear = styled.View`
-  margin-right: 18px;
+  margin-right: ${ratioPx(18)};
 `;
 export const SelectMonth = styled.View``;
 export const ListContainer = styled.View`
-  margin: 24px;
+  margin: ${ratioPx(24)};
 `;
 export const ListTitle = styled.View``;

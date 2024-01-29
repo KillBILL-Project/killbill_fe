@@ -12,12 +12,7 @@ import {
   TRACK_BG,
   WHITE,
 } from '../../../../constants/colors';
-import {
-  Bold12,
-  Medium14,
-  Regular11,
-  Regular12,
-} from '../../../../components/Typography/Typography';
+import { Bold12, Medium14, Regular11, Regular12 } from '../../../../components/Typography';
 import {
   Container,
   Header,
@@ -43,7 +38,7 @@ import Spacer from '../../../../components/Spacer/Spacer';
 import Separator from '../../../../components/Separator/Separator';
 import { styles } from '../../../../constants/constants';
 
-const ReportScreen = () => {
+const ReportDetailScreen = () => {
   return (
     <Screen
       title="9월 4주차 리포트"
@@ -172,4 +167,4 @@ const ReportScreen = () => {
   );
 };
 
-export default ReportScreen;
+export default ReportDetailScreen;

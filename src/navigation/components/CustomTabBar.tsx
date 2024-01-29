@@ -1,7 +1,7 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs/src/types';
 import React, { useMemo } from 'react';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
-import { Medium14 } from '../../components/Typography/Typography';
+import { Medium14 } from '../../components/Typography';
 import { GREY700, GREY800 } from '../../constants/colors';
 import { TabBar, TabContainer, TabIconStyle } from './CustomTabBar.style';
 import homeIconFocused from '../../assets/icon/home_focused.png';

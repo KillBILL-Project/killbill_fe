@@ -21,7 +21,7 @@ import {
 
 import can from '../../../../assets/image/can.png';
 import Category from './components/Category';
-import { H3 } from '../../../../components/Typography/Typography';
+import { H3 } from '../../../../components/Typography';
 import { BLACK } from '../../../../constants/colors';
 import Item from './components/Item';
 import { windowHeight, ratio } from '../../../../utils/platform';

@@ -3,7 +3,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { tokenState, userState } from '../states';
 import { requestLogin, requestRegister } from '../services/api/authService';
 import { LoginFormType, LoginResponse, RegisterType } from '../types/common';
-import { HomeStackParamList } from '../types/navigation';
+import { AuthStackParamList } from '../types/navigation';
 import { removeRefreshToken, saveRefreshToken } from '../services/storage/encryptedStorage';
 
 interface UseAuthType {
@@ -18,7 +18,7 @@ const useAuth = (): UseAuthType => {
   const [user, setUser] = useRecoilState(userState);
   const setAccessToken = useSetRecoilState(tokenState);
 
-  const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
 
   const setTokens = async (params: LoginResponse) => {
     setAccessToken(params.accessToken);

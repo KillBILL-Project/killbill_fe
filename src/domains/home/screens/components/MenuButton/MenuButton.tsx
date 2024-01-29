@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { Container, Icon, Title } from './MenuButton.style';
-import { Medium16 } from '../../../../../components/Typography/Typography';
+import { Medium16 } from '../../../../../components/Typography';
 import Spacer from '../../../../../components/Spacer/Spacer';
 import arrowIcon from '../../../../../assets/icon/arrow.png';
 

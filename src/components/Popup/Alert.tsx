@@ -1,6 +1,6 @@
 import React from 'react';
 import { PopupTextContainer, AlertButton, PopupContainer } from './Popup.style';
-import { Medium16, Regular16 } from '../Typography/Typography';
+import { Medium16, Regular16 } from '../Typography';
 import { BLACK, MAIN } from '../../constants/colors';
 import { PopupProps } from '../../types/common';
 import Backdrop from '../Backdrop/Backdrop';

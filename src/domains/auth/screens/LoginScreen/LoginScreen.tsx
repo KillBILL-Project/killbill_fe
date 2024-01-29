@@ -8,17 +8,17 @@ import { useTranslation } from 'react-i18next';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, GREY300, GREY500, WHITE } from '../../../../constants/colors';
 import {
+  AdditionalButtonContainer,
   Container,
   Greeting,
+  KeyboardHideArea,
   LoginContainer,
   SsoLoginButtonContainer,
-  AdditionalButtonContainer,
-  KeyboardHideArea,
 } from './Login.style';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import Spacer from '../../../../components/Spacer/Spacer';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { AuthStackParamList, HomeStackParamList } from '../../../../types/navigation';
+import { AuthStackParamList } from '../../../../types/navigation';
 
 import GoogleLoginIcon from '../../../../assets/icon/login_icon_google.png';
 import AppleLoginIcon from '../../../../assets/icon/login_icon_apple.png';
@@ -26,7 +26,7 @@ import { LoginFormType } from '../../../../types/common';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
 import AdditionalButton from './components/AdditionalButton';
 import useAuth from '../../../../hooks/useAuth';
-import { H1 } from '../../../../components/Typography/Typography';
+import { H1 } from '../../../../components/Typography';
 import useToast from '../../../../hooks/useToast';
 import { windowHeight } from '../../../../utils/platform';
 import Separator from '../../../../components/Separator/Separator';

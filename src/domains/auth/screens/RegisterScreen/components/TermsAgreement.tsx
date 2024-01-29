@@ -9,7 +9,7 @@ import {
 } from './TermsAgreement.style';
 import checkedIcon from '../../../../../assets/icon/checked.png';
 import uncheckedIcon from '../../../../../assets/icon/unchecked.png';
-import { Medium14 } from '../../../../../components/Typography/Typography';
+import { Medium14 } from '../../../../../components/Typography';
 import { GREY900 } from '../../../../../constants/colors';
 
 interface TermsAgreementProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Screen from '../../../../components/Screen/Screen';
-import { Bold18, Regular16 } from '../../../../components/Typography/Typography';
+import { Bold18, Regular16 } from '../../../../components/Typography';
 import { BLACK } from '../../../../constants/colors';
 import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';

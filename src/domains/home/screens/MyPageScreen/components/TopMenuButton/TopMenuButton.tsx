@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 import Spacer from '../../../../../../components/Spacer/Spacer';
-import { Medium14 } from '../../../../../../components/Typography/Typography';
+import { Medium14 } from '../../../../../../components/Typography';
 import { Container, Icon, Title } from './TopMenuButton.style';
 
 interface TopMenuButtonProps {

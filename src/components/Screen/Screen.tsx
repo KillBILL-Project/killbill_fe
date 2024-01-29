@@ -5,7 +5,7 @@ import { ImageSourcePropType } from 'react-native';
 import backButton from '../../assets/icon/back_button.png';
 
 import { Container, HeaderContainer, Left, Center, Right, Body, Header } from './Screen.style';
-import { Medium18 } from '../Typography/Typography';
+import { Medium18 } from '../Typography';
 import { BLACK } from '../../constants/colors';
 import HeaderButton from './components/HeaderButton/HeaderButton';
 

@@ -10,7 +10,7 @@ import {
   DropDownTitleIcon,
   InputTitle,
 } from './BaseDropDown.style';
-import { Medium14, Regular16 } from '../../../../components/Typography/Typography';
+import { Medium14, Regular16 } from '../../../../components/Typography';
 import { BLACK, GREY500, GREY900 } from '../../../../constants/colors';
 
 type SetSelectedItemType = (item: ItemType) => void;

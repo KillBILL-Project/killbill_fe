@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Screen from '../../../../components/Screen/Screen';
-import Scroll from './components/Scroll';
-import { Container, Test } from './NotifySettingScreen.style';
-import Spacer from '../../../../components/Spacer/Spacer';
+import { Container } from './NotifySettingScreen.style';
 
 const NotifySettingScreen = () => {
+  const [data] = useState(
+    Array(24)
+      .fill(0)
+      .map((_, index) => {
+        return {
+          value: index,
+          label: index < 10 ? `0${index}` : index,
+        };
+      }),
+  );
   return (
     <Screen title="알림 설정">
-      <Container>
-        <Scroll />
-        <Spacer width={66} />
-        <Scroll />
-        <Test />
-        <Scroll />
-      </Container>
+      <Container />
     </Screen>
   );
 };

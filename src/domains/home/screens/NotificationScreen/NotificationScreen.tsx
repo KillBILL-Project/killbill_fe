@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
-import { LayoutChangeEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import Screen from '../../../../components/Screen/Screen';
-import { Con, Container, Container2, Container3, DayIndicator } from './Notification.style';
-import {
-  Bold18,
-  Medium14,
-  Medium16,
-  Regular12,
-  Regular14,
-} from '../../../../components/Typography/Typography';
+import { Con, Container, Container2, Container3, DayIndicator } from './NotificationScreen.style';
+import { Bold18, Medium14, Regular12, Regular14 } from '../../../../components/Typography';
 import { BLACK, GREY300, GREY600 } from '../../../../constants/colors';
 import Spacer from '../../../../components/Spacer/Spacer';
 import { getDayOfWeek } from '../../../../utils/common';
@@ -63,8 +56,10 @@ const SingleNotification = ({ title, text }: NotificationsType) => {
     <Container3>
       <Regular12 color={GREY600}>{title}</Regular12>
       <Spacer height={4} />
-      {text.map(item => (
-        <Regular14 color={BLACK}>{item}</Regular14>
+      {text.map((item, index) => (
+        <Regular14 key={`a${index.toString()}`} color={BLACK}>
+          {item}
+        </Regular14>
       ))}
     </Container3>
   );
@@ -93,7 +88,7 @@ const DailyNotification = ({ day, notifications }: NotificationType) => {
   );
 };
 
-const Notification = () => {
+const NotificationScreen = () => {
   return (
     <Screen title="알림" backgroundColor={GREY300}>
       <Container>
@@ -106,4 +101,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default NotificationScreen;
