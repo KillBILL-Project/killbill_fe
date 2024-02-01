@@ -5,12 +5,18 @@ import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { AuthDetailType, ItemType, RegisterFormType, RegisterType } from '../../../../types/common';
+import {
+  AuthDetailType,
+  ItemType,
+  LoginResponse,
+  RegisterFormType,
+  RegisterType,
+} from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
 import TermsAgreement from './components/TermsAgreement';
-import useAuth from '../../../../hooks/useAuth';
 import useToast from '../../../../hooks/useToast';
+import { requestRegister } from '../../../../services/api/authService';
 
 const initialAuthDetail = {
   age: '',
@@ -32,8 +38,7 @@ const RegisterScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
   const [inProgress, setInProgress] = useState(false);
-  const { register } = useAuth();
-  const { showToast, ToastComponent } = useToast();
+  const { showToast } = useToast();
   const { t } = useTranslation();
 
   const onChangeForm = (filed: string, value: string) => {
@@ -101,7 +106,7 @@ const RegisterScreen = () => {
     const params: RegisterType = { ...registerForm, ...authDetail };
     try {
       setInProgress(true);
-      await register(params);
+      const response = await requestRegister<LoginResponse>(params);
     } finally {
       setInProgress(false);
     }
@@ -113,52 +118,49 @@ const RegisterScreen = () => {
   }, [selectedCountry]);
 
   return (
-    <>
-      {ToastComponent}
-      <Screen title={t('register.title')}>
-        <Container>
-          <RegisterContainer>
-            <BaseInput
-              title={t('register.input.email.title')}
-              placeholder={t('register.input.email.placeholder')}
-              onChangeText={text => onChangeForm('email', text)}
-              value={registerForm.email}
-            />
-            <BaseInput
-              title={t('register.input.password.title')}
-              placeholder={t('register.input.password.placeholder')}
-              onChangeText={text => onChangeForm('password', text)}
-              value={registerForm.password ? registerForm.password : ''}
-              isSecure
-            />
-            <BaseInput
-              title={t('register.input.confirmed_password.title')}
-              placeholder={t('register.input.confirmed_password.placeholder')}
-              onChangeText={text => onChangeForm('confirmedPassword', text)}
-              value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
-              isSecure
-            />
-            <AuthDetail
-              age={authDetail.age}
-              gender={authDetail.gender}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              selectedItem={selectedCountry}
-              setSelectedItem={setSelectedCountry}
-              setAuthDetail={setAuthDetail}
-              itemList={COUNTRIES}
-            />
-          </RegisterContainer>
-          <RegisterBottomContainer>
-            <TermsAgreement
-              isCheckedTermsAgreement={isCheckedTermsAgreement}
-              setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
-            />
-            <BaseButton text={t('register.button.submit')} onPress={onPressRegisterButton} />
-          </RegisterBottomContainer>
-        </Container>
-      </Screen>
-    </>
+    <Screen title={t('register.title')}>
+      <Container>
+        <RegisterContainer>
+          <BaseInput
+            title={t('register.input.email.title')}
+            placeholder={t('register.input.email.placeholder')}
+            onChangeText={text => onChangeForm('email', text)}
+            value={registerForm.email}
+          />
+          <BaseInput
+            title={t('register.input.password.title')}
+            placeholder={t('register.input.password.placeholder')}
+            onChangeText={text => onChangeForm('password', text)}
+            value={registerForm.password ? registerForm.password : ''}
+            isSecure
+          />
+          <BaseInput
+            title={t('register.input.confirmed_password.title')}
+            placeholder={t('register.input.confirmed_password.placeholder')}
+            onChangeText={text => onChangeForm('confirmedPassword', text)}
+            value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
+            isSecure
+          />
+          <AuthDetail
+            age={authDetail.age}
+            gender={authDetail.gender}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            selectedItem={selectedCountry}
+            setSelectedItem={setSelectedCountry}
+            setAuthDetail={setAuthDetail}
+            itemList={COUNTRIES}
+          />
+        </RegisterContainer>
+        <RegisterBottomContainer>
+          <TermsAgreement
+            isCheckedTermsAgreement={isCheckedTermsAgreement}
+            setIsCheckedTermsAgreement={setIsCheckedTermsAgreement}
+          />
+          <BaseButton text={t('register.button.submit')} onPress={onPressRegisterButton} />
+        </RegisterBottomContainer>
+      </Container>
+    </Screen>
   );
 };
 

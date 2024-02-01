@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
-import Screen from '../../../../components/Screen/Screen';
+import Screen from '../../../../components/Screen';
 import HeaderTabBar from '../components/HeaderTabBar';
 import { SelectType } from '../components/HeaderTabBar/HeaderTabBar';
 import {
@@ -15,7 +15,7 @@ import card from '../../../../assets/image/card_sample.png';
 import BaseIcon from '../../../../components/Icon/BaseIcon';
 import { Bold18 } from '../../../../components/Typography';
 import { GREY700 } from '../../../../constants/colors';
-import CardModal from './CardModal/CardModal';
+import CardModal from './CardModal';
 
 const selectList: SelectType[] = [
   { key: 'weeklyMission', name: '주간미션' },

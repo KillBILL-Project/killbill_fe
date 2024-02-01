@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
-import { Alert } from 'react-native';
 import api from '../services/utils/api';
 import { tokenState } from '../states';
 import { requestReissue } from '../services/api/authService';
-import { LoginResponse } from '../types/common';
+import { LoginResponse, WwoossResponse } from '../types/common';
 import UseAuth from './useAuth';
+import useToast from './useToast';
 
 const useInterceptor = () => {
+  const { showToast } = useToast();
   const accessToken = useRecoilValue(tokenState);
   const { setTokens, clearTokens } = UseAuth();
 
@@ -48,7 +49,8 @@ const useInterceptor = () => {
 
         if (error.response!.status >= 400) {
           // TODO: 에러 메세지 토스트
-          Alert.alert(error.config!.data.message);
+          const errorData = error.response?.data as WwoossResponse<unknown>;
+          showToast({ isFailed: true, message: errorData.message });
         }
 
         return Promise.reject(error);
@@ -59,7 +61,7 @@ const useInterceptor = () => {
       api.interceptors.request.eject(requestInterceptor);
       api.interceptors.response.eject(responseInterceptor);
     };
-  }, [accessToken, clearTokens, setTokens]);
+  }, [accessToken, clearTokens, setTokens, showToast]);
 };
 
 export default useInterceptor;

@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { Container, AuthDetailContainer, BaseButtonContainer } from './AuthDetailScreen.style';
+import { AuthDetailContainer, BaseButtonContainer, Container } from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
-import { AuthDetailType, ItemType, RegisterType } from '../../../../types/common';
+import { AuthDetailType, ItemType, LoginResponse, RegisterType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
 import { AuthStackParamList } from '../../../../types/navigation';
-import useAuth from '../../../../hooks/useAuth';
 import useToast from '../../../../hooks/useToast';
+import { requestRegister } from '../../../../services/api/authService';
 
 const initialAuthDetail = {
   age: '',
@@ -21,9 +21,8 @@ const AuthDetailScreen = () => {
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
-  const { register } = useAuth();
   const route = useRoute<RouteProp<AuthStackParamList, 'AuthDetail'>>();
-  const { showToast, ToastComponent } = useToast();
+  const { showToast } = useToast();
 
   const { t } = useTranslation();
 
@@ -59,7 +58,7 @@ const AuthDetailScreen = () => {
     if (!isValidForm()) return;
 
     const params: RegisterType = { ...route.params, ...authDetail };
-    await register(params);
+    const response = await requestRegister<LoginResponse>(params);
   };
 
   useEffect(() => {
@@ -68,28 +67,25 @@ const AuthDetailScreen = () => {
   }, [selectedCountry]);
 
   return (
-    <>
-      {ToastComponent}
-      <Screen title={t('auth_detail.title')} isBackButtonShown={false}>
-        <Container>
-          <AuthDetailContainer>
-            <AuthDetail
-              age={authDetail.age}
-              gender={authDetail.gender}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              selectedItem={selectedCountry}
-              setSelectedItem={setSelectedCountry}
-              itemList={COUNTRIES}
-              setAuthDetail={setAuthDetail}
-            />
-          </AuthDetailContainer>
-          <BaseButtonContainer>
-            <BaseButton text={t('auth_detail.button.submit')} onPress={onPressButton} />
-          </BaseButtonContainer>
-        </Container>
-      </Screen>
-    </>
+    <Screen title={t('auth_detail.title')} isBackButtonShown={false}>
+      <Container>
+        <AuthDetailContainer>
+          <AuthDetail
+            age={authDetail.age}
+            gender={authDetail.gender}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            selectedItem={selectedCountry}
+            setSelectedItem={setSelectedCountry}
+            itemList={COUNTRIES}
+            setAuthDetail={setAuthDetail}
+          />
+        </AuthDetailContainer>
+        <BaseButtonContainer>
+          <BaseButton text={t('auth_detail.button.submit')} onPress={onPressButton} />
+        </BaseButtonContainer>
+      </Container>
+    </Screen>
   );
 };
 

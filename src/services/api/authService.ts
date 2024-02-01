@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import Config from 'react-native-config';
 import api from '../utils/api';
 import { LoginFormType, RegisterType, WwoossResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
@@ -17,7 +18,7 @@ export const requestRegister = async <T>(
 
 export const requestReissue = async <T>(): Promise<AxiosResponse<WwoossResponse<T>>> => {
   const refreshToken = await loadRefreshToken();
-  return axios.post('http://localhost:9090/api/v1/auth/reissue', null, {
+  return axios.post(`${Config.API_URL}/api/v1/auth/reissue`, null, {
     headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
   });
 };
