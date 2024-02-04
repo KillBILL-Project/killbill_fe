@@ -1,43 +1,46 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRecoilState } from 'recoil';
 import { Container, RegisterBottomContainer, RegisterContainer } from './RegisterScreen.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import {
-  AuthDetailType,
-  ItemType,
-  LoginResponse,
-  RegisterFormType,
-  RegisterType,
-} from '../../../../types/common';
+import { ItemType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
 import TermsAgreement from './components/TermsAgreement';
 import useToast from '../../../../hooks/useToast';
 import { requestRegister } from '../../../../services/api/authService';
+import useAuth from '../../../../hooks/useAuth';
+import { inProgressState } from '../../../../states';
+import {
+  AuthDetailType,
+  LoginResponse,
+  RegisterForm,
+  RegisterRequest,
+} from '../../../../types/auth';
 
-const initialAuthDetail = {
+const initialAuthDetail: AuthDetailType = {
   age: '',
   gender: undefined,
   country: '',
 };
 
-const initialRegisterForm = {
+const initialRegisterForm: RegisterForm = {
   email: '',
   password: '',
   confirmedPassword: '',
-  loginType: undefined,
 };
 
 const RegisterScreen = () => {
-  const [registerForm, setRegisterForm] = useState<RegisterFormType>(initialRegisterForm);
+  const [registerForm, setRegisterForm] = useState<RegisterForm>(initialRegisterForm);
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isCheckedTermsAgreement, setIsCheckedTermsAgreement] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
-  const [inProgress, setInProgress] = useState(false);
+  const [inProgress, setInProgress] = useRecoilState(inProgressState);
+  const { setTokens } = useAuth();
   const { showToast } = useToast();
   const { t } = useTranslation();
 
@@ -101,12 +104,17 @@ const RegisterScreen = () => {
   const onPressRegisterButton = async () => {
     if (inProgress) return;
     if (!isValidForm()) return;
-    registerForm.loginType = 'EMAIL';
 
-    const params: RegisterType = { ...registerForm, ...authDetail };
     try {
       setInProgress(true);
+      const params: RegisterRequest = {
+        ...authDetail,
+        email: registerForm.email,
+        password: registerForm.password,
+        loginType: 'EMAIL',
+      };
       const response = await requestRegister<LoginResponse>(params);
+      await setTokens({ ...response?.data.data });
     } finally {
       setInProgress(false);
     }

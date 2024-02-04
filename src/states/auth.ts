@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { User } from '../types/states/auth';
+import { User } from '../types/auth';
 
 export const userState = atom<User | null>({
   key: 'user',

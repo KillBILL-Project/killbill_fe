@@ -4,9 +4,10 @@ import { useRecoilValue } from 'recoil';
 import api from '../services/utils/api';
 import { tokenState } from '../states';
 import { requestReissue } from '../services/api/authService';
-import { LoginResponse, WwoossResponse } from '../types/common';
+import { WwoossResponse } from '../types/common';
 import UseAuth from './useAuth';
 import useToast from './useToast';
+import { LoginResponse } from '../types/auth';
 
 const useInterceptor = () => {
   const { showToast } = useToast();

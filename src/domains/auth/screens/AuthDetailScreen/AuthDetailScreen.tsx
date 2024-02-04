@@ -3,13 +3,15 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { AuthDetailContainer, BaseButtonContainer, Container } from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
-import { AuthDetailType, ItemType, LoginResponse, RegisterType } from '../../../../types/common';
+import { ItemType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
 import Screen from '../../../../components/Screen/Screen';
 import BaseButton from '../../components/BaseButton/BaseButton';
 import { AuthStackParamList } from '../../../../types/navigation';
 import useToast from '../../../../hooks/useToast';
 import { requestRegister } from '../../../../services/api/authService';
+import { AuthDetailType, LoginResponse, RegisterRequest } from '../../../../types/auth';
+import useAuth from '../../../../hooks/useAuth';
 
 const initialAuthDetail = {
   age: '',
@@ -22,6 +24,7 @@ const AuthDetailScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
   const route = useRoute<RouteProp<AuthStackParamList, 'AuthDetail'>>();
+  const { setTokens } = useAuth();
   const { showToast } = useToast();
 
   const { t } = useTranslation();
@@ -57,8 +60,14 @@ const AuthDetailScreen = () => {
   const onPressButton = async () => {
     if (!isValidForm()) return;
 
-    const params: RegisterType = { ...route.params, ...authDetail };
+    const params: RegisterRequest = {
+      email: route.params.email,
+      loginType: route.params.loginType,
+      socialToken: route.params.authCode,
+      ...authDetail,
+    };
     const response = await requestRegister<LoginResponse>(params);
+    await setTokens({ ...response?.data.data });
   };
 
   useEffect(() => {

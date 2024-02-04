@@ -1,12 +1,9 @@
-import { LoginType } from './common';
+import { SocialRegisterParams } from './auth';
 
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
-  AuthDetail: {
-    email: string;
-    loginType: LoginType | undefined;
-  };
+  AuthDetail: SocialRegisterParams;
   ForgotPassword: undefined;
 };
 
