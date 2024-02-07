@@ -1,17 +1,19 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import _ from 'lodash';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { userState } from '../../../../states';
 import Screen from '../../../../components/Screen/Screen';
-import { Bold18, Regular16 } from '../../../../components/Typography';
-import { BLACK } from '../../../../constants/colors';
+import { Bold18, Medium16, Regular16 } from '../../../../components/Typography';
+import { BLACK, GREY600 } from '../../../../constants/colors';
 import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';
 import MenuButton from '../components/MenuButton/MenuButton';
 import { MenuType } from '../../../../types/common';
 import { MyPageParamList } from '../../../../types/navigation';
-import { Box, Container, Title } from './MyInfoScreen.style';
-import { userState } from '../../../../states';
+import { Box, Container, LogoutButton, Title } from './MyInfoScreen.style';
+import UseAuth from '../../../../hooks/useAuth';
 
 const menuList: MenuType<MyPageParamList>[] = [
   {
@@ -23,10 +25,19 @@ const menuList: MenuType<MyPageParamList>[] = [
 
 const MyInfoScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
+  const { bottom } = useSafeAreaInsets();
+  const { clearTokens } = UseAuth();
+
   const onPressMenu = (route: keyof MyPageParamList) => {
     navigate(route);
   };
+
+  const onPressLogout = async () => {
+    setUser(null);
+    await clearTokens();
+  };
+
   return (
     <Screen title="내정보">
       <Container>
@@ -42,6 +53,9 @@ const MyInfoScreen = () => {
             <MenuButton key={menu.name} title={menu.name} onPress={() => onPressMenu(menu.route)} />
           ) : null,
         )}
+        <LogoutButton bottom={bottom} onPress={onPressLogout}>
+          <Medium16 color={GREY600}>로그아웃</Medium16>
+        </LogoutButton>
       </Container>
     </Screen>
   );

@@ -3,6 +3,7 @@ import { ratioPx } from '../../../../utils/platform';
 import { GREY400 } from '../../../../constants/colors';
 
 export const Container = styled.View`
+  flex: 1;
   padding: ${ratioPx(24)};
 `;
 
@@ -19,6 +20,7 @@ export const PushToggleSwitch = styled.View``;
 export const Title = styled.View`
   margin-bottom: ${ratioPx(8)};
 `;
+
 export const Box = styled.View`
   width: ${ratioPx(327)};
   padding: ${ratioPx(12)} ${ratioPx(16)};
@@ -27,4 +29,10 @@ export const Box = styled.View`
   border-width: 1px;
   border-color: ${GREY400};
   border-radius: ${ratioPx(5)};
+`;
+
+export const SecessionButton = styled.TouchableOpacity<{ bottom: number }>`
+  align-self: center;
+  position: absolute;
+  bottom: ${({ bottom }) => ratioPx(bottom + 40)};
 `;

@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Switch } from 'react-native-switch';
 import { useRecoilState } from 'recoil';
 import { toUpper } from 'lodash';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Screen from '../../../../components/Screen/Screen';
-import { Bold18, Regular16 } from '../../../../components/Typography';
-import { BLACK, GREY500, WHITE } from '../../../../constants/colors';
+import { Bold18, Medium16, Regular16 } from '../../../../components/Typography';
+import { BLACK, GREY500, GREY600, WHITE } from '../../../../constants/colors';
 import Separator from '../../../../components/Separator/Separator';
 import { ratio, width } from '../../../../utils/platform';
 import {
@@ -13,18 +14,23 @@ import {
   PushContainer,
   PushTitle,
   PushToggleSwitch,
+  SecessionButton,
   Title,
 } from './SettingScreen.style';
 import { userState } from '../../../../states';
 import { updatePushConsent } from '../../../../services/api/authService';
+import { LogoutButton } from '../MyInfoScreen/MyInfoScreen.style';
+import { useDialog } from '../../../../states/context/DialogContext';
 
 const SettingScreen = () => {
   const [user, setUser] = useRecoilState(userState);
   const [isAgree, setIsAgree] = useState<boolean>(!!user?.pushConsent);
+  const { bottom } = useSafeAreaInsets();
+  const { showConfirm } = useDialog();
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const onSwitch = () => {
+  const onSwitchPush = () => {
     setIsAgree(prevState => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
@@ -43,6 +49,12 @@ const SettingScreen = () => {
     });
   };
 
+  const onPressSecession = async () => {
+    try {
+      await showConfirm({ alertMessage: '정말로 탈퇴하시겠습니까?', confirmText: '탈퇴하기' });
+    } catch (e) {}
+  };
+
   return (
     <Screen title="설정">
       <Container>
@@ -53,7 +65,7 @@ const SettingScreen = () => {
           <PushToggleSwitch>
             <Switch
               value={isAgree}
-              onValueChange={onSwitch}
+              onValueChange={onSwitchPush}
               circleSize={ratio * 18}
               innerCircleStyle={{ backgroundColor: WHITE }}
               backgroundActive={BLACK}
@@ -70,6 +82,9 @@ const SettingScreen = () => {
         <Box>
           <Regular16 color={BLACK}>{toUpper(user?.country)}</Regular16>
         </Box>
+        <SecessionButton bottom={bottom} onPress={onPressSecession}>
+          <Medium16 color={GREY600}>서비스 떠나기</Medium16>
+        </SecessionButton>
       </Container>
     </Screen>
   );

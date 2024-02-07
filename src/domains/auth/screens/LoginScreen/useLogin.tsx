@@ -17,7 +17,6 @@ import { inProgressState } from '../../../../states';
 import { LoginForm, LoginRequest, LoginResponse } from '../../../../types/auth';
 
 const useLogin = () => {
-  const [isCanceled, setIsCanceled] = useState(false);
   const [inProgress, setInProgress] = useRecoilState(inProgressState);
   const { top, bottom } = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -64,10 +63,10 @@ const useLogin = () => {
   const login = async (loginType: LoginType) => {
     if (inProgress) return;
     const loginRequest: LoginRequest = { email: '', loginType: 'EMAIL' };
+    let isCanceled = false;
 
     try {
       setInProgress(true);
-      setIsCanceled(false);
 
       if (loginType === 'EMAIL') {
         if (!isValidForm()) return;
@@ -87,7 +86,7 @@ const useLogin = () => {
           loginRequest.loginType = 'GOOGLE';
           loginRequest.authCode = userInfo.idToken ?? '';
         } catch (error) {
-          setIsCanceled(true);
+          isCanceled = true;
           console.log('구글 로그인 도중 문제가 발생하였습니다.');
         }
       }

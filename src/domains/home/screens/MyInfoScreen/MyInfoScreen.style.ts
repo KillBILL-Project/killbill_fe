@@ -3,6 +3,7 @@ import { ratioPx } from '../../../../utils/platform';
 import { GREY400 } from '../../../../constants/colors';
 
 export const Container = styled.View`
+  flex: 1;
   padding: ${ratioPx(24)};
 `;
 
@@ -18,4 +19,10 @@ export const Box = styled.View`
   border-width: 1px;
   border-color: ${GREY400};
   border-radius: ${ratioPx(5)};
+`;
+
+export const LogoutButton = styled.TouchableOpacity<{ bottom: number }>`
+  align-self: center;
+  position: absolute;
+  bottom: ${({ bottom }) => ratioPx(bottom + 40)};
 `;
