@@ -22,6 +22,7 @@ const Navigation = () => {
   useEffect(() => {
     if (!accessToken) return;
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   return (
