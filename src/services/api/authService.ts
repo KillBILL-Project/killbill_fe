@@ -32,3 +32,7 @@ export const updatePushConsent = async (params: {
 }): Promise<AxiosResponse<WwoossResponse<void>>> => {
   return api.patch('/user/push-consent', params);
 };
+
+export const requestWithdrawal = async () => {
+  return api.delete('/auth/withdrawal');
+};

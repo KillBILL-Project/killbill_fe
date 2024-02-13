@@ -18,15 +18,16 @@ import {
   Title,
 } from './SettingScreen.style';
 import { userState } from '../../../../states';
-import { updatePushConsent } from '../../../../services/api/authService';
-import { LogoutButton } from '../MyInfoScreen/MyInfoScreen.style';
+import { requestWithdrawal, updatePushConsent } from '../../../../services/api/authService';
 import { useDialog } from '../../../../states/context/DialogContext';
+import UseAuth from '../../../../hooks/useAuth';
 
 const SettingScreen = () => {
   const [user, setUser] = useRecoilState(userState);
   const [isAgree, setIsAgree] = useState<boolean>(!!user?.pushConsent);
   const { bottom } = useSafeAreaInsets();
   const { showConfirm } = useDialog();
+  const { clearTokens, getUser } = UseAuth();
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -38,7 +39,7 @@ const SettingScreen = () => {
         if (prevState === user?.pushConsent) {
           try {
             await updatePushConsent({ pushConsent: !prevState });
-            setUser(prev => (prev !== null ? { ...prev, pushConsent: !prevState } : null));
+            await getUser();
           } finally {
             timeoutRef.current = null;
           }
@@ -52,7 +53,12 @@ const SettingScreen = () => {
   const onPressSecession = async () => {
     try {
       await showConfirm({ alertMessage: '정말로 탈퇴하시겠습니까?', confirmText: '탈퇴하기' });
-    } catch (e) {}
+      await requestWithdrawal();
+      setUser(null);
+      await clearTokens();
+    } catch (e) {
+      // TODO
+    }
   };
 
   return (
