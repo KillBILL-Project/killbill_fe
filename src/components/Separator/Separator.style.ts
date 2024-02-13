@@ -4,7 +4,7 @@ import { GREY100 } from '../../constants/colors';
 
 interface SeparatorProps {
   color?: string;
-  length: number;
+  length: number | string;
   thickness?: number;
   margin: number;
 }
@@ -14,7 +14,7 @@ const Separator = styled.View<SeparatorProps>`
 `;
 
 export const SeparatorHorizontal = styled(Separator)`
-  width: ${({ length }) => ratioPx(length)};
+  width: ${({ length }) => (typeof length === 'number' ? ratioPx(length) : length)};
   height: ${({ thickness }) => (thickness ? ratioPx(thickness) : px(1))};
   margin-top: ${({ margin }) => ratioPx(margin)};
   margin-bottom: ${({ margin }) => ratioPx(margin)};
@@ -23,7 +23,7 @@ export const SeparatorHorizontal = styled(Separator)`
 
 export const SeparatorVertical = styled(Separator)`
   width: ${({ thickness }) => (thickness ? ratioPx(thickness) : px(1))};
-  height: ${({ length }) => ratioPx(length)};
+  height: ${({ length }) => (typeof length === 'number' ? ratioPx(length) : length)};
   margin-left: ${({ margin }) => ratioPx(margin)};
   margin-right: ${({ margin }) => ratioPx(margin)};
   justify-self: center;

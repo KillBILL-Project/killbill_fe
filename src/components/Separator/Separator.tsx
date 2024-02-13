@@ -4,7 +4,7 @@ import { SeparatorHorizontal, SeparatorVertical } from './Separator.style';
 interface SeparatorProps {
   horizontal?: boolean;
   color?: string;
-  length: number;
+  length: number | string;
   thickness?: number;
   margin: number;
 }
