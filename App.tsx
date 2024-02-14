@@ -1,15 +1,19 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navigation from './src/navigation';
 import DialogProvider from './src/states/context/DialogProvider';
 
 const App = () => {
+  const queryClient = new QueryClient();
   return (
-    <RecoilRoot>
-      <DialogProvider>
-        <Navigation />
-      </DialogProvider>
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <DialogProvider>
+          <Navigation />
+        </DialogProvider>
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 };
 
