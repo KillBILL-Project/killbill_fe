@@ -36,3 +36,7 @@ export const updatePushConsent = async (params: {
 export const requestWithdrawal = async () => {
   return api.delete('/auth/withdrawal');
 };
+
+export const requestChangePassword = async (params: { password: string }) => {
+  return api.patch('/auth/change-password', params);
+};
