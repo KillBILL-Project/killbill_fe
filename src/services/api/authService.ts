@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import api, { apiWithoutInterceptor } from '../utils/api';
+import api from '../utils/api';
 import { WwoossResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
 import { LoginRequest, RegisterRequest, User } from '../../types/auth';
@@ -18,7 +18,7 @@ export const requestRegister = async <T>(
 
 export const requestReissue = async <T>(): Promise<AxiosResponse<WwoossResponse<T>>> => {
   const refreshToken = await loadRefreshToken();
-  return apiWithoutInterceptor.post('/auth/reissue', null, {
+  return api.post('/auth/reissue', null, {
     headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
   });
 };
