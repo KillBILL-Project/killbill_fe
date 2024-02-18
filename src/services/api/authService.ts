@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import messaging from '@react-native-firebase/messaging';
 import api, { apiWithoutInterceptor } from '../utils/api';
 import { WwoossResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
@@ -39,4 +40,23 @@ export const requestWithdrawal = async () => {
 
 export const requestChangePassword = async (params: { password: string }) => {
   return api.patch('/auth/change-password', params);
+};
+
+export const requestUserPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  if (
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  ) {
+    getFcmToken();
+  }
+};
+
+export const getFcmToken = async () => {
+  const fcmToken = await messaging().getToken();
+  if (fcmToken) {
+    console.log('Your Firebase Token is:', fcmToken);
+  } else {
+    console.log('Failed to get FCM token');
+  }
 };
