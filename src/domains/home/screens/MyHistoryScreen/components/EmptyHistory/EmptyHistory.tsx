@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment/moment';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
 import {
   getTrashCanHistory,
   TrashCanHistoryResponseListType,
@@ -14,6 +15,7 @@ import { Regular14, Regular16 } from '../../../../../../components/Typography';
 import { BLACK, GREY600 } from '../../../../../../constants/colors';
 import Spacer from '../../../../../../components/Spacer';
 import { Container } from './EmptyHistory.style';
+import { inProgressState } from '../../../../../../states';
 
 interface EmptyHistoryProps {
   selected: boolean;
@@ -21,6 +23,7 @@ interface EmptyHistoryProps {
 
 const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
   const ym = useRef('');
+  const setInProgress = useSetRecoilState(inProgressState);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['empty'],
@@ -62,7 +65,7 @@ const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
     );
   };
 
-  if (isLoading) return <ActivityIndicator />;
+  useEffect(() => setInProgress(isLoading), [setInProgress, isLoading]);
 
   return (
     <Container selected={selected}>

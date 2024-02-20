@@ -1,7 +1,8 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment/moment';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
 import Separator from '../../../../../../components/Separator';
 import DateLabel from '../../../components/DateLabel';
 import HistoryItem from '../../../components/HistoryItem';
@@ -14,6 +15,7 @@ import {
   TrashLogType,
 } from '../../../../../../services/api/trashService';
 import { Container } from './ThrowHistory.style';
+import { inProgressState } from '../../../../../../states';
 
 interface ThrowHistoryProps {
   selected: boolean;
@@ -23,6 +25,7 @@ interface ThrowHistoryProps {
 
 const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
   const md = useRef('');
+  const setInProgress = useSetRecoilState(inProgressState);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['throw'],
@@ -36,6 +39,7 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
 
   const renderThrowHistory = useCallback(
     (item: TrashLogType, index: number) => {
+      console.log('item: ', item);
       if (index === 0) md.current = '';
       const currentTime = moment(item.createdAt);
       const currentMd = currentTime.format('MMDD');
@@ -49,7 +53,7 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
           ) : (
             <DateLabel month={currentTime.format('M')} day={currentTime.format('D')} />
           )}
-          <HistoryItem text={{ top: currentTime.format('D'), bottom: currentTime.format('ddd') }}>
+          <HistoryItem icon={item.trashImagePath}>
             <View style={{ justifyContent: 'center' }}>
               <Regular14 color={GREY600}>{currentTime.format('YYYY.MM.DD. hh:mm')}</Regular14>
               <Spacer width={10} />
@@ -62,7 +66,7 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
     [md],
   );
 
-  if (isLoading) return <ActivityIndicator />;
+  useEffect(() => setInProgress(isLoading), [setInProgress, isLoading]);
 
   return (
     <Container selected={selected}>
