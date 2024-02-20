@@ -1891,6 +1891,11 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
+"@react-native-community/slider@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.5.0.tgz#5c55488ee30060cd87100fb746b9d8655dbab04e"
+  integrity sha512-pyUvNTvu5IfCI5abzqRfO/dd3A009RC66RXZE6t0gyOwI/j0QDlq9VZRv3rjkpuIvNTnsYj+m5BHlh0DkSYUyA==
+
 "@react-native-google-signin/google-signin@^10.0.1":
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-10.1.1.tgz#1306aac8c32cb5deb994a1bfb05bed8172defed1"
@@ -2226,6 +2231,18 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@tanstack/query-core@5.22.2":
+  version "5.22.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.22.2.tgz#af67d41b0b4a3e846c2325f32540f39ca0d4788d"
+  integrity sha512-z3PwKFUFACMUqe1eyesCIKg3Jv1mysSrYfrEW5ww5DCDUD4zlpTKBvUDaEjsfZzL3ULrFLDM9yVUxI/fega1Qg==
+
+"@tanstack/react-query@^5.22.2":
+  version "5.22.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.22.2.tgz#e5fce278fbdd026fc1d561a4505142b9f93549d7"
+  integrity sha512-TaxJDRzJ8/NWRT4lY2jguKCrNI6MRN+67dELzPjNUlvqzTxGANlMp68l7aC7hG8Bd1uHNxHl7ihv7MT50i/43A==
+  dependencies:
+    "@tanstack/query-core" "5.22.2"
+
 "@tsconfig/react-native@^3.0.0":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@tsconfig/react-native/-/react-native-3.0.2.tgz#f7db242eee4820f5a3d0edcc86c920bb7d9ec0f2"
@@ -2263,6 +2280,11 @@
   integrity sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ==
   dependencies:
     "@babel/types" "^7.20.7"
+
+"@types/geojson@^7946.0.13":
+  version "7946.0.14"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
+  integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
 "@types/graceful-fs@^4.1.3":
   version "4.1.9"
@@ -5593,6 +5615,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lottie-react-native@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-6.6.0.tgz#080c69e4cd149adec0e5e67b320646890031c73f"
+  integrity sha512-ttS8qrtjrWc/tmAbCLjvqWpC+cfbwSPLZIWpNdiW2Z1WwqA653JSSJSPxf4c/ut2rwoIuKSBBkeaY2IvmCAQAg==
+
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -6767,6 +6794,13 @@ react-native-localize@^3.0.5:
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-3.0.5.tgz#2065bc37fda4fc13a4eab0bfbff926c6333a05c0"
   integrity sha512-tg3OzBY2654lgTrP2YYU4jMwk0ecWIoWLWCP6IAiiOgLiojo+A3NtroX84G3TpVHuCJ3mJkaTunVet5HVGS3AA==
 
+react-native-maps@^1.10.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.10.3.tgz#a669ee3a8baa01d30c5c7af7bdc498428d0e8284"
+  integrity sha512-P8/Viq5vgW9FRhvfDFQHxq02cZUcDJu6VbBZar7c/voGDbD5nrTIA0qlpiUAmrs1ikd8+7S4QjXQlorppBBMvA==
+  dependencies:
+    "@types/geojson" "^7946.0.13"
+
 react-native-material-buttons@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-native-material-buttons/-/react-native-material-buttons-0.5.0.tgz#ab2b3e3fc3f500ca713f51e9d75978aff602152a"
@@ -6825,6 +6859,13 @@ react-native-screens@^3.25.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-swiper@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
+  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-switch@^1.5.1:
   version "1.5.1"
