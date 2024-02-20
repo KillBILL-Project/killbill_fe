@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Animated, Easing, PanResponder } from 'react-native';
 import Screen from '../../../../components/Screen/Screen';
@@ -7,7 +7,6 @@ import {
   MotionContainer,
   TrashContainer,
   CategoryContainer,
-  CategoryScroll,
   EmptyContainer,
   TrashHistoryContainer,
   ScrollBar,
@@ -17,30 +16,32 @@ import {
   ScrollBarContainer,
   ItemContainer,
   PanResponderContainer,
+  FilterContainer,
 } from './HomeScreen.style';
 
-import can from '../../../../assets/image/can.png';
-import Category from './components/Category';
-import { H3 } from '../../../../components/Typography';
+import { H3 } from '../../../../components/Typography/Typography';
 import { BLACK } from '../../../../constants/colors';
 import Item from './components/Item';
-import { windowHeight, ratio } from '../../../../utils/platform';
+import { windowHeight } from '../../../../utils/platform';
 import { TAB_HEIGHT } from '../../../../constants/constants';
+import Motion from './components/Motion';
+import Filter from './components/Filter';
+import CategorySwiper from './components/CategorySwiper';
 
 const HomeScreen = () => {
   const [isShow, setIsShow] = useState(false);
   const { top, bottom } = useSafeAreaInsets();
-  const scrollBarContainerHeight = ratio * 32;
-  const trashHistoryHeaderHeight = ratio * 52;
+  const scrollBarContainerHeight = 32;
+  const trashHistoryHeaderHeight = 52;
   const inactiveTrashHistoryHeight = scrollBarContainerHeight + trashHistoryHeaderHeight;
-  const initialTopPosition =
-    windowHeight - bottom - TAB_HEIGHT - inactiveTrashHistoryHeight - ratio * 20;
+  const initialTopPosition = windowHeight - TAB_HEIGHT - bottom - inactiveTrashHistoryHeight;
 
   /* 나의 쓰레기 내역 애니메이션 시작 */
   const historyAnim = useRef(new Animated.Value(initialTopPosition)).current;
 
   const showHistory = () => {
     setIsShow(true);
+
     Animated.timing(historyAnim, {
       toValue: top,
       duration: 200,
@@ -51,6 +52,7 @@ const HomeScreen = () => {
 
   const hideHistory = () => {
     setIsShow(false);
+
     Animated.timing(historyAnim, {
       toValue: initialTopPosition,
       duration: 200,
@@ -64,20 +66,26 @@ const HomeScreen = () => {
     onPanResponderMove: (e, gestureState) => {
       const topPosition = isShow ? top : initialTopPosition;
       const position = topPosition + gestureState.dy;
-      if (position > 0 && position < initialTopPosition) historyAnim.setValue(position);
+
+      if (position > 0 && position < initialTopPosition) {
+        historyAnim.setValue(position);
+      }
     },
     onPanResponderEnd: (e, gestureState) => {
       const topPosition = isShow ? 0 : initialTopPosition;
       const position = topPosition + gestureState.dy;
       const velocity = gestureState.vy;
+
       if (velocity < -1) {
         showHistory();
         return;
       }
+
       if (velocity > 1 || position >= 290) {
         hideHistory();
         return;
       }
+
       if (position < 290) {
         showHistory();
       }
@@ -85,17 +93,22 @@ const HomeScreen = () => {
   });
   /* 나의 쓰레기 내역 애니메이션 끝 */
 
+  useLayoutEffect(() => {
+    historyAnim.setValue(initialTopPosition);
+  }, []);
+
   return (
     <Screen title="홈" isHeaderShown={false}>
       <Container>
-        <MotionContainer />
+        <MotionContainer>
+          <Motion />
+        </MotionContainer>
+        <FilterContainer>
+          <Filter />
+        </FilterContainer>
         <TrashContainer>
           <CategoryContainer>
-            <CategoryScroll>
-              {[...Array(10)].map((_, index) => (
-                <Category key={`a${index.toString()}`} isSelected={index === 1} image={can} />
-              ))}
-            </CategoryScroll>
+            <CategorySwiper />
           </CategoryContainer>
           <EmptyContainer inactiveTrashHistoryHeight={inactiveTrashHistoryHeight} />
         </TrashContainer>
@@ -105,6 +118,13 @@ const HomeScreen = () => {
       <TrashHistoryContainer
         style={{
           top: historyAnim,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: -2,
+          },
+          shadowOpacity: 0.3,
+          elevation: 5,
         }}
       >
         <PanResponderContainer {...historyPanResponder.panHandlers}>

@@ -14,9 +14,9 @@ import MyInfoScreen from '../domains/home/screens/MyInfoScreen';
 import MyHistoryScreen from '../domains/home/screens/MyHistoryScreen';
 import NotifySettingScreen from '../domains/home/screens/NotifySettingScreen';
 import NotificationScreen from '../domains/home/screens/NotificationScreen';
-import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
 import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
 import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
+import TrashLocationScreen from '../domains/home/screens/TrashLocationScreen';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -25,7 +25,11 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator tabBar={CustomTabBar} screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} />
-      <Tab.Screen name="Location" component={HomeScreen} options={{ title: '쓰레기위치' }} />
+      <Tab.Screen
+        name="Location"
+        component={TrashLocationScreen}
+        options={{ title: '쓰레기위치' }}
+      />
       <Tab.Screen name="Report" component={ReportScreen} options={{ title: '리포트' }} />
       <Tab.Screen name="MyPage" component={MyPageScreen} options={{ title: '마이페이지' }} />
     </Tab.Navigator>

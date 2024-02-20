@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { px, ratioPx } from '../../utils/platform';
-import { GREY400 } from '../../constants/colors';
+import { GREY400, WHITE } from '../../constants/colors';
 import { TAB_HEIGHT } from '../../constants/constants';
 
 interface TabBarProps {
@@ -9,6 +9,7 @@ interface TabBarProps {
 
 export const TabBar = styled.View<TabBarProps>`
   height: ${({ bottomSafeArea }) => px(TAB_HEIGHT + bottomSafeArea)};
+  background-color: ${WHITE};
   flex-direction: row;
   border-width: 1px;
   border-bottom-width: 0;
