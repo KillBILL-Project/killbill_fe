@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { toString } from 'lodash';
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../constants/constants';
 
 export const isValidEmail = (email: string) => {
@@ -31,4 +31,15 @@ export const getDayOfWeek = (date: Date) => {
 export const getDayOfWeek2 = (date: number) => {
   const days = ['월', '화', '수', '목', '금', '토', '일'];
   return days[date];
+};
+
+export const objectToQueryParam = <T extends object>(params: T) => {
+  const queryParams = new URLSearchParams();
+
+  Object.keys(params).forEach(key => {
+    const value = params[key as keyof T];
+    queryParams.append(key, String(value));
+  });
+
+  return toString(queryParams);
 };
