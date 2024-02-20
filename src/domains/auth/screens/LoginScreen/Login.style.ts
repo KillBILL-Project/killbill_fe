@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import { px, ratioPx } from '../../../../utils/platform';
 
-export const Container = styled.SafeAreaView<{ height: number }>`
+export const Container = styled.View<{ height: number }>`
+  flex: 1;
   align-items: center;
   height: ${({ height }) => px(height)};
-  justify-content: space-between;
 `;
 
 export const KeyboardHideArea = styled.Pressable`

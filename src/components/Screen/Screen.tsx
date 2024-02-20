@@ -46,7 +46,7 @@ const Screen = ({
   isBackButtonShown = true,
   rightButtonProps,
 }: ScreenProps) => {
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const { goBack, canGoBack } = useNavigation();
   const isShowToast = useRecoilValue(isShowToastState);
   const { isShowDialog, dialogProps } = useDialog();
@@ -60,8 +60,8 @@ const Screen = ({
       {isShowToast && <Toast />}
       <Container backgroundColor={backgroundColor}>
         {inProgress && <Spinner />}
-        {isHeaderShown ? (
-          <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
+        <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
+          {isHeaderShown && (
             <Header>
               <Left>
                 {canGoBack() && isBackButtonShown && (
@@ -79,9 +79,9 @@ const Screen = ({
               </Center>
               <Right>{rightButtonProps && <HeaderButton {...rightButtonProps} />}</Right>
             </Header>
-          </HeaderContainer>
-        ) : null}
-        <Body>{children}</Body>
+          )}
+        </HeaderContainer>
+        <Body paddingBottom={bottom}>{children}</Body>
       </Container>
     </>
   );

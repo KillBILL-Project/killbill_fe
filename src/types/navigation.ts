@@ -1,4 +1,5 @@
 import { SocialRegisterParams } from './auth';
+import { AlarmParams, AlarmType } from './notifications';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -9,6 +10,7 @@ export type AuthStackParamList = {
 
 export type HomeStackParamList = MyPageParamList & {
   Tab: HomeTabParamList;
+  NotifySetting: AlarmParams;
 };
 
 export type HomeTabParamList = {
@@ -24,7 +26,7 @@ export type MyPageParamList = TopMenuParamList &
   };
 
 export type TopMenuParamList = {
-  NotifySetting: undefined;
+  NotifyList: undefined;
   MyHistory: undefined;
   UserGuide: undefined;
 };

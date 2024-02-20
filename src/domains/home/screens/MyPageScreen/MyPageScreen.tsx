@@ -18,7 +18,7 @@ import { MenuType } from '../../../../types/common';
 const topMenuList: MenuType<MyPageParamList>[] = [
   {
     name: '알림 설정',
-    route: 'NotifySetting',
+    route: 'NotifyList',
   },
   {
     name: '내 히스토리',

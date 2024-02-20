@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-native';
+import { FlatList, Modal } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { SvgUri } from 'react-native-svg';
 import Screen from '../../../../components/Screen';
 import HeaderTabBar from '../components/HeaderTabBar';
 import { SelectType } from '../components/HeaderTabBar/HeaderTabBar';
-import {
-  Container,
-  New,
-  NewText,
-  PraiseCard,
-  PraiseCardName,
-  Scroll,
-} from './PraiseCardScreen.style';
-import card from '../../../../assets/image/card_sample.png';
-import BaseIcon from '../../../../components/Icon/BaseIcon';
+import { Container, New, NewText, PraiseCard, PraiseCardName } from './PraiseCardScreen.style';
 import { Bold18 } from '../../../../components/Typography';
 import { GREY700 } from '../../../../constants/colors';
 import CardModal from './CardModal';
+import {
+  getComplimentCard,
+  GetComplimentCardParams,
+} from '../../../../services/api/complimentService';
 
 const selectList: SelectType[] = [
   { key: 'weeklyMission', name: '주간미션' },
@@ -34,6 +31,23 @@ const PraiseCardScreen = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['compliment-card'],
+    queryFn: async () => {
+      const params: GetComplimentCardParams = {
+        'card-type': 'INTEGRATE',
+        page: 0,
+        size: 100,
+      };
+
+      const response = await getComplimentCard(params);
+
+      console.log('onse.data.data', response.data.data);
+
+      return response.data.data;
+    },
+  });
+
   const onPress = (key: string) => {
     setSelected(key);
   };
@@ -48,19 +62,20 @@ const PraiseCardScreen = () => {
     <>
       <Screen title="칭찬카드">
         <HeaderTabBar selectList={selectList} selectedKey={selected} onPress={onPress} />
-        <Scroll>
-          <Container>
-            {list.map((_, index) => (
+        <Container>
+          <FlatList
+            data={data?.complimentCardResponses}
+            renderItem={({ item, index }) => (
               <PraiseCard key={`a${index.toString()}`} onPress={onPressCard}>
                 <NewCard />
-                <BaseIcon size={90} icon={card} />
+                <SvgUri uri={item.cardImage} width="100%" height="100%" />
                 <PraiseCardName>
-                  <Bold18 color={GREY700}>환경운동가</Bold18>
+                  <Bold18 color={GREY700}>{item.title}</Bold18>
                 </PraiseCardName>
               </PraiseCard>
-            ))}
-          </Container>
-        </Scroll>
+            )}
+          />
+        </Container>
       </Screen>
       <Modal animationType="fade" visible={modalVisible} onRequestClose={closeModal}>
         <CardModal onPressClose={closeModal} />
