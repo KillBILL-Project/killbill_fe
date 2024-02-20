@@ -44,6 +44,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       <Stack.Screen name="MyHistory" component={MyHistoryScreen} />
       <Stack.Screen name="Notification" component={NotificationScreen} />
+      <Stack.Screen name="NotifyList" component={NotifyListScreen} />
       <Stack.Screen name="NotifySetting" component={NotifySettingScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
     </Stack.Navigator>
