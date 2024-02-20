@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useRecoilValue } from 'recoil';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
 import { tokenState } from '../states';
@@ -18,6 +19,7 @@ const Navigation = () => {
       background: 'transparent',
     },
   };
+  changeNavigationBarColor('transparent', true);
 
   useEffect(() => {
     if (!accessToken) return;
