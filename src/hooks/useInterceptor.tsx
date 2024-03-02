@@ -18,8 +18,7 @@ const useInterceptor = () => {
     const requestInterceptor = api.interceptors.request.use(
       config => {
         const requestConfig = { ...config };
-        requestConfig.headers.Authorization =
-          requestConfig.headers.Authorization ?? (accessToken ? `Bearer ${accessToken}` : null);
+        requestConfig.headers.Authorization = accessToken ? `Bearer ${accessToken}` : null;
         return requestConfig;
       },
       error => {
