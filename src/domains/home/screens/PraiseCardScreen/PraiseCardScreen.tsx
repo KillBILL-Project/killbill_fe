@@ -1,85 +1,99 @@
 import React, { useState } from 'react';
-import { FlatList, Modal } from 'react-native';
+import { FlatList, Image, Modal } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import { SvgUri } from 'react-native-svg';
+import { toString } from 'lodash';
 import Screen from '../../../../components/Screen';
-import HeaderTabBar from '../components/HeaderTabBar';
-import { SelectType } from '../components/HeaderTabBar/HeaderTabBar';
-import { Container, New, NewText, PraiseCard, PraiseCardName } from './PraiseCardScreen.style';
+import CategoryTab from '../components/CategoryTab';
+import { CardType } from '../components/CategoryTab/CategoryTab';
+import { Container, PraiseCard, PraiseCardName } from './PraiseCardScreen.style';
 import { Bold18 } from '../../../../components/Typography';
-import { GREY700 } from '../../../../constants/colors';
-import CardModal from './CardModal';
+import { PRIMARY } from '../../../../constants/colors';
+import CardModal from './components/CardModal';
 import {
+  ComplimentCardType,
   getComplimentCard,
   GetComplimentCardParams,
 } from '../../../../services/api/complimentService';
+import NewBadge from './components/NewBadge';
 
-const selectList: SelectType[] = [
-  { key: 'weeklyMission', name: '주간미션' },
-  { key: 'generalMission', name: '통합미션' },
+export const cardType: CardType[] = [
+  { category: 'WEEKLY', name: '주간미션' },
+  { category: 'INTEGRATE', name: '통합미션' },
 ];
 
-const NewCard = () => {
-  return (
-    <New>
-      <NewText>NEW</NewText>
-    </New>
-  );
-};
-
 const PraiseCardScreen = () => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selectedCardType, setSelectedCardType] = useState<CardType>({
+    category: 'WEEKLY',
+    name: '주간미션',
+  });
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCardInfo, setSelectedCardInfo] = useState<ComplimentCardType | null>(null);
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['compliment-card'],
+  const { data, isLoading } = useQuery({
+    queryKey: ['compliment-card', selectedCardType.category],
     queryFn: async () => {
       const params: GetComplimentCardParams = {
-        'card-type': 'INTEGRATE',
+        'card-type': selectedCardType.category,
         page: 0,
         size: 100,
       };
 
       const response = await getComplimentCard(params);
-
-      console.log('onse.data.data', response.data.data);
-
       return response.data.data;
     },
   });
 
-  const onPress = (key: string) => {
-    setSelected(key);
+  const onPressCardType = (param: CardType) => {
+    setSelectedCardType(param);
   };
 
-  const onPressCard = () => {
+  const onPressCard = (cardInfo: ComplimentCardType) => {
+    setSelectedCardInfo(cardInfo);
     setModalVisible(true);
   };
   const closeModal = () => setModalVisible(false);
 
-  const list = Array.from({ length: 7 });
   return (
     <>
-      <Screen title="칭찬카드">
-        <HeaderTabBar selectList={selectList} selectedKey={selected} onPress={onPress} />
+      <Screen title="칭찬카드" isBackButtonShown={false}>
+        <CategoryTab
+          selectList={cardType}
+          selectedKey={selectedCardType}
+          onPress={onPressCardType}
+        />
         <Container>
           <FlatList
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => toString(item.complimentCardId)}
             data={data?.complimentCardResponses}
             renderItem={({ item, index }) => (
-              <PraiseCard key={`a${index.toString()}`} onPress={onPressCard}>
-                <NewCard />
-                <SvgUri uri={item.cardImage} width="100%" height="100%" />
+              <PraiseCard key={`a${index.toString()}`} onPress={() => onPressCard(item)}>
+                <NewBadge />
+                <Image
+                  source={{ uri: item.cardImage }}
+                  resizeMode="contain"
+                  style={{ width: '100%', height: '100%' }}
+                />
                 <PraiseCardName>
-                  <Bold18 color={GREY700}>{item.title}</Bold18>
+                  <Bold18 color={PRIMARY}>{item.title}</Bold18>
                 </PraiseCardName>
               </PraiseCard>
             )}
+            style={{}}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingVertical: 24,
+              paddingHorizontal: 16,
+            }}
+            numColumns={2}
           />
         </Container>
       </Screen>
-      <Modal animationType="fade" visible={modalVisible} onRequestClose={closeModal}>
-        <CardModal onPressClose={closeModal} />
-      </Modal>
+      {selectedCardInfo && (
+        <Modal animationType="slide" visible={modalVisible} onRequestClose={closeModal}>
+          <CardModal cardInfo={selectedCardInfo} onPressClose={closeModal} />
+        </Modal>
+      )}
     </>
   );
 };
