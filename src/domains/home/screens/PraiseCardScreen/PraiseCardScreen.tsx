@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { toString } from 'lodash';
 import Screen from '../../../../components/Screen';
 import CategoryTab from '../components/CategoryTab';
-import { CardType } from '../components/CategoryTab/CategoryTab';
+import { CategoryType } from '../components/CategoryTab/CategoryTab';
 import { Container, PraiseCard, PraiseCardName } from './PraiseCardScreen.style';
 import { Bold18 } from '../../../../components/Typography';
 import { PRIMARY } from '../../../../constants/colors';
@@ -16,13 +16,15 @@ import {
 } from '../../../../services/api/complimentService';
 import NewBadge from './components/NewBadge';
 
-export const cardType: CardType[] = [
+export type CardCategory = 'WEEKLY' | 'INTEGRATE';
+
+export const cardType: CategoryType<CardCategory>[] = [
   { category: 'WEEKLY', name: '주간미션' },
   { category: 'INTEGRATE', name: '통합미션' },
 ];
 
 const PraiseCardScreen = () => {
-  const [selectedCardType, setSelectedCardType] = useState<CardType>({
+  const [selectedCardType, setSelectedCardType] = useState<CategoryType<CardCategory>>({
     category: 'WEEKLY',
     name: '주간미션',
   });
@@ -43,7 +45,7 @@ const PraiseCardScreen = () => {
     },
   });
 
-  const onPressCardType = (param: CardType) => {
+  const onPressCardType = (param: CategoryType<CardCategory>) => {
     setSelectedCardType(param);
   };
 
@@ -56,11 +58,7 @@ const PraiseCardScreen = () => {
   return (
     <>
       <Screen title="칭찬카드" isBackButtonShown={false}>
-        <CategoryTab
-          selectList={cardType}
-          selectedKey={selectedCardType}
-          onPress={onPressCardType}
-        />
+        <CategoryTab selectList={cardType} selected={selectedCardType} onPress={onPressCardType} />
         <Container>
           <FlatList
             showsVerticalScrollIndicator={false}
