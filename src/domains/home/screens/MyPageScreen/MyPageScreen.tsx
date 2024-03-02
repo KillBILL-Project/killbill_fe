@@ -6,7 +6,7 @@ import TopMenuButton from './components/TopMenuButton/TopMenuButton';
 import WideButton from './components/WideButton/WideButton';
 import MenuButton from '../components/MenuButton/MenuButton';
 import { Container, MenuButtonContainer, ThreeButtonContainer } from './MyPageScreen.style';
-import { MyPageParamList } from '../../../../types/navigation';
+import { HomeTabParamList, MyPageParamList } from '../../../../types/navigation';
 import checkedIcon from '../../../../assets/icon/checked.png';
 import notification from '../../../../assets/icon/notification.png';
 import Separator from '../../../../components/Separator/Separator';
@@ -55,6 +55,7 @@ const menuList: MenuType<MyPageParamList>[] = [
 
 const MyPageScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
+  const tabNavigation = useNavigation<NavigationProp<HomeTabParamList>>();
 
   const onPressMenu = (route: keyof MyPageParamList) => {
     navigate(route);
@@ -62,6 +63,10 @@ const MyPageScreen = () => {
 
   const onPressNotification = () => {
     navigate('Notification');
+  };
+
+  const onPressBanner = () => {
+    tabNavigation.navigate('Location');
   };
 
   const rightButtonProps = {
@@ -85,7 +90,7 @@ const MyPageScreen = () => {
           ))}
         </ThreeButtonContainer>
         <Spacer height={16} />
-        <WideButton />
+        <WideButton onPress={onPressBanner} />
         <Separator horizontal length={width} thickness={8} margin={24} />
         <MenuButtonContainer>
           {menuList.map(menu => (

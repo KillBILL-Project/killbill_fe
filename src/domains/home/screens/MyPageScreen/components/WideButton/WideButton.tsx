@@ -5,9 +5,13 @@ import Spacer from '../../../../../../components/Spacer/Spacer';
 import checkedIcon from '../../../../../../assets/icon/checked.png';
 import { Container, Description, Icon, TextContainer, Title } from './WideButton.style';
 
-const WideButton = () => {
+interface WideButtonProps {
+  onPress: () => void;
+}
+
+const WideButton = ({ onPress }: WideButtonProps) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <TextContainer>
         <Title>
           <Semibold18 color={WHITE}>티끌모아 태산!</Semibold18>
