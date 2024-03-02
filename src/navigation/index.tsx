@@ -1,31 +1,19 @@
-import React, { useEffect } from 'react';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { useRecoilValue } from 'recoil';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
 import { tokenState } from '../states';
 import AppFrame from '../components/common/AppFrame';
-import useAuth from '../hooks/useAuth';
+import { WHITE } from '../constants/colors';
+
+const MyTheme: Theme = {
+  ...DefaultTheme,
+  colors: { ...DefaultTheme.colors, background: WHITE },
+};
 
 const Navigation = () => {
   const accessToken = useRecoilValue(tokenState);
-  const { getUser } = useAuth();
-
-  const MyTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: 'transparent',
-    },
-  };
-  changeNavigationBarColor('transparent', true);
-
-  useEffect(() => {
-    if (!accessToken) return;
-    getUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken]);
 
   return (
     <NavigationContainer theme={MyTheme}>

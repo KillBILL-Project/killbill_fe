@@ -1,9 +1,12 @@
 import { AxiosResponse } from 'axios';
-import messaging from '@react-native-firebase/messaging';
 import api, { apiWithoutInterceptor } from '../utils/api';
 import { WwoossResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
 import { LoginRequest, RegisterRequest, User } from '../../types/auth';
+
+export interface UpdateFcmTokenParams {
+  fcmToken: string;
+}
 
 export const requestLogin = async <T>(
   params: LoginRequest,
@@ -42,21 +45,10 @@ export const requestChangePassword = async (params: { password: string }) => {
   return api.patch('/auth/change-password', params);
 };
 
-export const requestUserPermission = async () => {
-  const authStatus = await messaging().requestPermission();
-  if (
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL
-  ) {
-    getFcmToken();
-  }
+export const createLoginLog = async (): Promise<AxiosResponse<WwoossResponse<void>>> => {
+  return api.post('/compliment-condition-log/login');
 };
 
-export const getFcmToken = async () => {
-  const fcmToken = await messaging().getToken();
-  if (fcmToken) {
-    console.log('Your Firebase Token is:', fcmToken);
-  } else {
-    console.log('Failed to get FCM token');
-  }
+export const updateFcmToken = async (params: UpdateFcmTokenParams) => {
+  return api.patch('/user/fcm-token', params);
 };
