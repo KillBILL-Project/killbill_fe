@@ -1,0 +1,83 @@
+import React from 'react';
+import RNPickerSelect from 'react-native-picker-select';
+import { Image, StyleSheet } from 'react-native';
+import { toString } from 'lodash';
+import selectArrow from '../../../../../assets/icon/select_arrow.png';
+import { PickerContainer } from './Picker.style';
+import { ratio } from '../../../../../utils/platform';
+
+export interface PickerItemType {
+  value: string;
+  label: string;
+}
+
+interface BasePickerProps {
+  selectedValue: string;
+  onValueChange: (value: string) => void;
+  onClose: (value: string) => void;
+  color: string;
+}
+
+interface AssignedPickerProps extends BasePickerProps {
+  type: 'YEAR' | 'MONTH';
+}
+
+interface CustomPickerProps extends BasePickerProps {
+  type: 'CUSTOM';
+  list: PickerItemType[];
+}
+
+type PickerProps = AssignedPickerProps | CustomPickerProps;
+
+const years = [
+  { value: '2024', label: '2024년' },
+  { value: '2023', label: '2023년' },
+  { value: '2022', label: '2022년' },
+  { value: '2021', label: '2021년' },
+];
+
+const months = Array.from({ length: 13 }, (_, i) =>
+  i === 0
+    ? { value: '-1', label: '전체' }
+    : { value: i < 10 ? `0${i}` : toString(i), label: `${i}월` },
+);
+
+const styles = StyleSheet.create({
+  input: {
+    fontSize: ratio * 18,
+    fontWeight: '700',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: ratio * 28,
+  },
+  iconContainer: { position: 'relative', marginLeft: ratio * 4 },
+  icon: { width: ratio * 20, height: ratio * 20 },
+});
+
+const Picker = (props: PickerProps) => {
+  const pickerList = props.type === 'CUSTOM' ? props.list : props.type === 'MONTH' ? months : years;
+
+  return (
+    <PickerContainer>
+      <RNPickerSelect
+        items={pickerList}
+        placeholder={{}}
+        onValueChange={value => props.onValueChange(value)}
+        onClose={() => props.onClose(props.selectedValue)}
+        Icon={() => <Image source={selectArrow} style={styles.icon} />}
+        style={{
+          iconContainer: styles.iconContainer,
+          inputIOS: { ...styles.input, color: props.color },
+          inputIOSContainer: styles.inputContainer,
+          inputAndroid: styles.input,
+          inputAndroidContainer: styles.inputContainer,
+        }}
+        useNativeAndroidPickerStyle={false}
+      />
+    </PickerContainer>
+  );
+};
+
+export default Picker;

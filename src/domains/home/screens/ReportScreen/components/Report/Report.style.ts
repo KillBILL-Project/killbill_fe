@@ -8,6 +8,18 @@ export const ItemContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
+export const WeekNumber = styled.Text`
+  font-size: ${ratioPx(20)};
+  font-weight: 500;
+  line-height: ${ratioPx(30)};
+`;
+
+export const WeekText = styled.Text`
+  font-size: ${ratioPx(12)};
+  font-weight: 500;
+  line-height: ${ratioPx(18)};
+`;
+
 export const WeeklyContainer = styled.View`
   width: ${ratioPx(56)};
   height: ${ratioPx(62)};

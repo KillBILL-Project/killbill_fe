@@ -13,11 +13,9 @@ export const Header = styled.View`
   align-items: center;
   padding-left: ${ratioPx(24)};
 `;
-export const SelectYear = styled.View`
-  margin-right: ${ratioPx(18)};
-`;
-export const SelectMonth = styled.View``;
+
 export const ListContainer = styled.View`
-  margin: ${ratioPx(24)};
+  flex: 1;
 `;
+
 export const ListTitle = styled.View``;
