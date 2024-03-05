@@ -28,8 +28,14 @@ const Report = ({ report }: ReportProps) => {
   const fromDate = useMemo(() => moment(report.fromDate).format('YYYY. M. DD'), [report.fromDate]);
   const toData = useMemo(() => moment(report.toDate).format('M. DD'), [report.toDate]);
 
+  const reportTitle = `${report.weekInfo.month}월 ${report.weekInfo.weekOfMonth}주차 리포트`;
+
   return (
-    <ItemContainer onPress={() => navigation.navigate('ReportDetail')}>
+    <ItemContainer
+      onPress={() =>
+        navigation.navigate('ReportDetail', { weeklyReportId: report.weeklyReportId, reportTitle })
+      }
+    >
       <LeftIcon>
         <WeekNumber>{report.weekInfo.weekOfMonth}</WeekNumber>
         <WeekText>주차</WeekText>
@@ -39,9 +45,7 @@ const Report = ({ report }: ReportProps) => {
           <Regular12 color={GREY600}>{`${fromDate} ~ ${toData}`}</Regular12>
         </Period>
         <ReportTitle>
-          <Medium16
-            color={BLACK}
-          >{`${report.weekInfo.month}월 ${report.weekInfo.weekOfMonth}주차 리포트`}</Medium16>
+          <Medium16 color={BLACK}>{reportTitle}</Medium16>
         </ReportTitle>
       </ReportContainer>
       <ArrowContainer>

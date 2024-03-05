@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { px, ratioPx } from '../../../../utils/platform';
-import { BLACK, GREY400, WHITE } from '../../../../constants/colors';
+import { BLACK, GREY400, GREY600, PRIMARY, WHITE } from '../../../../constants/colors';
 import { AUTH_BORDER_RADIUS } from '../../../../constants/constants';
 
 export const Container = styled.View``;
@@ -31,12 +31,13 @@ export const DailyIndicatorContainer = styled.View`
   flex-direction: row;
 `;
 
-export const DailyIndicator = styled.View`
+export const DailyIndicator = styled.View<{ attended: boolean }>`
   width: ${ratioPx(26)};
   height: ${ratioPx(26)};
   border-width: 1px;
   border-radius: ${ratioPx(13)};
-  border-color: ${GREY400};
+  border-color: ${({ attended }) => (attended ? 'transparent' : GREY400)};
+  background-color: ${({ attended }) => (attended ? PRIMARY : 'transparent')};
   justify-content: center;
   align-items: center;
   margin-left: ${ratioPx(4)};
@@ -64,7 +65,17 @@ export const ChangeIndicator = styled.View`
 
 export const ChangeIndicatorIcon = styled.View``;
 
-export const WeeklyChangeAmount = styled.View``;
+export const WeeklyChangeAmount = styled.View`
+  flex-direction: row;
+  padding: ${ratioPx(4)} ${ratioPx(6)};
+`;
+
+export const WeeklyChangeAmountText = styled.Text`
+  margin-left: ${ratioPx(4)};
+  font-size: ${ratioPx(12)};
+  font-weight: 400;
+  color: ${GREY600};
+`;
 
 export const TrashSummaryContainer = styled.View`
   background-color: ${WHITE};

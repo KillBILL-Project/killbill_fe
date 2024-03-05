@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import api from '../utils/api';
 import { objectToQueryParam } from '../../utils/common';
 import { WwoossResponse } from '../../types/common';
-import { ReportResponseType } from '../../types/report';
+import { ReportDetailType, ReportResponseType } from '../../types/report';
 
 interface GetWeeklyReportParams {
   date?: string;
@@ -16,4 +16,10 @@ export const getWeeklyReport = async (
   const queryParam = objectToQueryParam(params);
 
   return api.get(`/weekly-reports?${queryParam}`);
+};
+
+export const getWeeklyReportDetail = async (
+  weeklyReportId: number,
+): Promise<AxiosResponse<WwoossResponse<ReportDetailType>>> => {
+  return api.get(`/weekly-reports/${weeklyReportId}`);
 };
