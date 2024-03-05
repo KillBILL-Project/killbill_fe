@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Screen from '../../../../components/Screen/Screen';
 import CategoryTab from '../components/CategoryTab';
 import EmptyHistory from './components/EmptyHistory';

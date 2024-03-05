@@ -20,6 +20,7 @@ export interface TrashCanHistoryType {
   createdAt: string;
   carbonSaving: number;
   refund: number;
+  isEqualDate?: boolean;
 }
 
 export interface TrashCanHistoryResponseListType {
@@ -33,6 +34,7 @@ export interface TrashLogType {
   size: number;
   trashImagePath: string;
   createdAt: string;
+  isEqualDate?: boolean;
 }
 
 export interface TrashLogResponseListType {

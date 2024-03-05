@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { Image, StyleSheet } from 'react-native';
 import { toString } from 'lodash';
@@ -57,19 +57,35 @@ const styles = StyleSheet.create({
 });
 
 const Picker = (props: PickerProps) => {
-  const pickerList = props.type === 'CUSTOM' ? props.list : props.type === 'MONTH' ? months : years;
+  const { type, color, onValueChange, selectedValue, onClose } = props;
+
+  let pickerList;
+
+  if (type === 'CUSTOM') {
+    const { list } = props;
+    pickerList = list;
+  } else if (type === 'MONTH') {
+    pickerList = months;
+  } else {
+    pickerList = years;
+  }
+
+  const memoizedIcon = useCallback(
+    () => <Image source={selectArrow} style={{ ...styles.icon, tintColor: color }} />,
+    [color],
+  );
 
   return (
     <PickerContainer>
       <RNPickerSelect
         items={pickerList}
         placeholder={{}}
-        onValueChange={value => props.onValueChange(value)}
-        onClose={() => props.onClose(props.selectedValue)}
-        Icon={() => <Image source={selectArrow} style={styles.icon} />}
+        onValueChange={value => onValueChange(value)}
+        onClose={() => onClose(selectedValue)}
+        Icon={memoizedIcon}
         style={{
           iconContainer: styles.iconContainer,
-          inputIOS: { ...styles.input, color: props.color },
+          inputIOS: { ...styles.input, color },
           inputIOSContainer: styles.inputContainer,
           inputAndroid: styles.input,
           inputAndroidContainer: styles.inputContainer,

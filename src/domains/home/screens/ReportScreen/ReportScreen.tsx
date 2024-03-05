@@ -11,6 +11,7 @@ import { getWeeklyReport } from '../../../../services/api/reportService';
 import { ReportResponseType, ReportType, WeekInfoType } from '../../../../types/report';
 import { isIOS, ratio } from '../../../../utils/platform';
 import Picker from '../components/Picker';
+import Spinner from '../../../../components/Spinner';
 
 const ReportScreen = () => {
   const [selectedYear, setSelectedYear] = useState('2024');
@@ -19,6 +20,7 @@ const ReportScreen = () => {
   const [monthForIos, setMonthForIos] = useState(selectedMonth);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['report', isIOS ? yearForIos : selectedYear, isIOS ? monthForIos : selectedMonth],
     queryFn: async ({ pageParam }): Promise<ReportResponseType> => {
       const month = isIOS ? monthForIos : selectedMonth;
@@ -35,13 +37,13 @@ const ReportScreen = () => {
         const newReport = { ...report };
 
         const isEqualMonth =
-          currentMonth?.month === report.weekInfo.month &&
-          currentMonth?.year === report.weekInfo.year;
+          currentMonth?.month === newReport.weekInfo.month &&
+          currentMonth?.year === newReport.weekInfo.year;
 
         if (!isEqualMonth) {
           // isChanged 라는 조건을 통해 달을 구분
-          report.weekInfo.isChanged = true;
-          currentMonth = { ...report.weekInfo };
+          newReport.weekInfo.isChanged = true;
+          currentMonth = { ...newReport.weekInfo };
         }
 
         return newReport;
@@ -103,8 +105,11 @@ const ReportScreen = () => {
           <FlatList
             data={data?.pages.flatMap(value => value.weeklyReportResponseList)}
             renderItem={({ item }) => render(item)}
+            onEndReachedThreshold={0.8}
+            onEndReached={() => hasNextPage && fetchNextPage()}
             keyExtractor={item => toString(item.weeklyReportId)}
             contentContainerStyle={{ flexGrow: 1, margin: ratio * 24 }}
+            ListEmptyComponent={isLoading ? <Spinner /> : null}
           />
         </ListContainer>
       </Container>
