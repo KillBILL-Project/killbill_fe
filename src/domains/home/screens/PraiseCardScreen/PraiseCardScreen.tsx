@@ -5,7 +5,7 @@ import { toString } from 'lodash';
 import Screen from '../../../../components/Screen';
 import CategoryTab from '../components/CategoryTab';
 import { CategoryType } from '../components/CategoryTab/CategoryTab';
-import { Container, PraiseCard, PraiseCardName } from './PraiseCardScreen.style';
+import { Container } from './PraiseCardScreen.style';
 import { Bold18 } from '../../../../components/Typography';
 import { PRIMARY } from '../../../../constants/colors';
 import CardModal from './components/CardModal';
@@ -15,6 +15,7 @@ import {
   GetComplimentCardParams,
 } from '../../../../services/api/complimentService';
 import NewBadge from './components/NewBadge';
+import PraiseCard from '../components/PraiseCard';
 
 export type CardCategory = 'WEEKLY' | 'INTEGRATE';
 
@@ -53,6 +54,7 @@ const PraiseCardScreen = () => {
     setSelectedCardInfo(cardInfo);
     setModalVisible(true);
   };
+
   const closeModal = () => setModalVisible(false);
 
   return (
@@ -65,17 +67,7 @@ const PraiseCardScreen = () => {
             keyExtractor={item => toString(item.complimentCardId)}
             data={data?.complimentCardResponses}
             renderItem={({ item, index }) => (
-              <PraiseCard key={`a${index.toString()}`} onPress={() => onPressCard(item)}>
-                <NewBadge />
-                <Image
-                  source={{ uri: item.cardImage }}
-                  resizeMode="contain"
-                  style={{ width: '100%', height: '100%' }}
-                />
-                <PraiseCardName>
-                  <Bold18 color={PRIMARY}>{item.title}</Bold18>
-                </PraiseCardName>
-              </PraiseCard>
+              <PraiseCard item={item} index={index} onPressCard={onPressCard} />
             )}
             style={{}}
             contentContainerStyle={{

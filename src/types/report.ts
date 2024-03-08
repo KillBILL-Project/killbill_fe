@@ -1,3 +1,5 @@
+import { ComplimentCardType } from '../services/api/complimentService';
+
 export interface WeekInfoType {
   year: number;
   weekOfMonth: number;
@@ -40,4 +42,5 @@ export interface ReportDetailType {
       trashCount: number;
     },
   ];
+  complimentCardIconList: ComplimentCardType[];
 }

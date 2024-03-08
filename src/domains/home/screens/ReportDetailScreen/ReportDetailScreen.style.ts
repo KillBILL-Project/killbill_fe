@@ -3,12 +3,13 @@ import { px, ratioPx } from '../../../../utils/platform';
 import { BLACK, GREY400, GREY600, PRIMARY, WHITE } from '../../../../constants/colors';
 import { AUTH_BORDER_RADIUS } from '../../../../constants/constants';
 
-export const Container = styled.View``;
+export const Container = styled.ScrollView``;
 
 export const Header = styled.View`
   position: absolute;
+  top: -200px;
   width: 100%;
-  height: ${ratioPx(93)};
+  height: ${ratioPx(293)};
   background-color: ${BLACK};
 `;
 
@@ -94,8 +95,8 @@ export const TrashAmountTitle = styled.View``;
 export const TrashAmount = styled.View``;
 
 export const TrashCategoryChart = styled.View`
-  height: 200px;
-  margin: 16px 0;
+  height: ${ratioPx(200)};
+  margin: ${ratioPx(16)} 0;
 `;
 
 export const TrashChangeGuide = styled.View`
