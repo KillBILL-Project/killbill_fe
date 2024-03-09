@@ -46,7 +46,7 @@ const Screen = ({
   isBackButtonShown = true,
   rightButtonProps,
 }: ScreenProps) => {
-  const { top, bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const { goBack, canGoBack } = useNavigation();
   const isShowToast = useRecoilValue(isShowToastState);
   const { isShowDialog, dialogProps } = useDialog();
@@ -81,7 +81,7 @@ const Screen = ({
             </Header>
           )}
         </HeaderContainer>
-        <Body paddingBottom={bottom}>{children}</Body>
+        <Body>{children}</Body>
       </Container>
     </>
   );

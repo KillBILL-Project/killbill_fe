@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { WHITE } from '../../constants/colors';
-import { px, ratioPx } from '../../utils/platform';
+import { px } from '../../utils/platform';
 import { HEADER_HEIGHT } from '../../constants/constants';
 
 interface ContainerProps {
@@ -12,10 +12,6 @@ interface HeaderProps {
   topSafeArea: number;
 }
 
-interface BodyProps {
-  paddingBottom: number;
-}
-
 export const Container = styled.View<ContainerProps>`
   flex: 1;
   background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
@@ -24,7 +20,6 @@ export const Container = styled.View<ContainerProps>`
 export const HeaderContainer = styled.View<HeaderProps>`
   padding-top: ${({ topSafeArea }) => px(topSafeArea)};
   background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
-  padding-top: ${({ topSafeArea }) => px(topSafeArea)};
 `;
 
 export const Header = styled.View`
@@ -55,7 +50,6 @@ export const Right = styled.View`
   z-index: 1;
 `;
 
-export const Body = styled.View<BodyProps>`
+export const Body = styled.View`
   flex: 1;
-  padding-bottom: ${({ paddingBottom }) => ratioPx(paddingBottom)};
 `;
