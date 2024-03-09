@@ -1,4 +1,4 @@
-package com.killbill_fe;
+package com.wwooss;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -14,7 +14,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "killbill_fe";
+    return "wwooss";
   }
 
   /**

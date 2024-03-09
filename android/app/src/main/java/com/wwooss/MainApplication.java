@@ -1,4 +1,4 @@
-package com.killbill_fe;
+package com.wwooss;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
