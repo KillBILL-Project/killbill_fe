@@ -12,9 +12,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		374E73B82B11DDEE00EA754E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 374E73B72B11DDEE00EA754E /* GoogleService-Info.plist */; };
-		7726BD5BBE97520EF125D95E /* Pods_killbill_fe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDD56CD765ADCCEAD46228B /* Pods_killbill_fe.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		E90AD79CC6EBC985281B4DA9 /* Pods_killbill_fe_killbill_feTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED99359D29CB32299799C64 /* Pods_killbill_fe_killbill_feTests.framework */; };
+		D208AF63CF85EF262BF56C77 /* libPods-killbill_fe-killbill_feTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A564194AC2F2A2506FE1D7F /* libPods-killbill_fe-killbill_feTests.a */; };
+		EA75A8C87836F4484D04DFA7 /* libPods-killbill_fe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC4BFE75CFCD842D7D246D4 /* libPods-killbill_fe.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +44,7 @@
 		00E356EE1AD99517003FC87E /* killbill_feTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = killbill_feTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* killbill_feTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = killbill_feTests.m; sourceTree = "<group>"; };
+		0A564194AC2F2A2506FE1D7F /* libPods-killbill_fe-killbill_feTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-killbill_fe-killbill_feTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* killbill_fe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = killbill_fe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = killbill_fe/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = killbill_fe/AppDelegate.mm; sourceTree = "<group>"; };
@@ -53,11 +54,10 @@
 		374E73B72B11DDEE00EA754E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37BD54BA2B85D96B0083A960 /* killbill_fe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = killbill_fe.entitlements; path = killbill_fe/killbill_fe.entitlements; sourceTree = "<group>"; };
 		3D4B1E879092011F9B3E35CE /* Pods-killbill_fe-killbill_feTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-killbill_fe-killbill_feTests.debug.xcconfig"; path = "Target Support Files/Pods-killbill_fe-killbill_feTests/Pods-killbill_fe-killbill_feTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3EC4BFE75CFCD842D7D246D4 /* libPods-killbill_fe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-killbill_fe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		576B192C25A4B35259A61DF3 /* Pods-killbill_fe-killbill_feTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-killbill_fe-killbill_feTests.release.xcconfig"; path = "Target Support Files/Pods-killbill_fe-killbill_feTests/Pods-killbill_fe-killbill_feTests.release.xcconfig"; sourceTree = "<group>"; };
 		6991241753D9A20648DD0390 /* Pods-killbill_fe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-killbill_fe.release.xcconfig"; path = "Target Support Files/Pods-killbill_fe/Pods-killbill_fe.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = killbill_fe/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8BDD56CD765ADCCEAD46228B /* Pods_killbill_fe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_killbill_fe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CED99359D29CB32299799C64 /* Pods_killbill_fe_killbill_feTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_killbill_fe_killbill_feTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F51C1B301DDB84BE5AB1B4B5 /* Pods-killbill_fe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-killbill_fe.debug.xcconfig"; path = "Target Support Files/Pods-killbill_fe/Pods-killbill_fe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E90AD79CC6EBC985281B4DA9 /* Pods_killbill_fe_killbill_feTests.framework in Frameworks */,
+				D208AF63CF85EF262BF56C77 /* libPods-killbill_fe-killbill_feTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7726BD5BBE97520EF125D95E /* Pods_killbill_fe.framework in Frameworks */,
+				EA75A8C87836F4484D04DFA7 /* libPods-killbill_fe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				8BDD56CD765ADCCEAD46228B /* Pods_killbill_fe.framework */,
-				CED99359D29CB32299799C64 /* Pods_killbill_fe_killbill_feTests.framework */,
+				3EC4BFE75CFCD842D7D246D4 /* libPods-killbill_fe.a */,
+				0A564194AC2F2A2506FE1D7F /* libPods-killbill_fe-killbill_feTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,7 +557,6 @@
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/GoogleSignIn/GoogleSignIn.modulemap\"",
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/GoogleUtilities/GoogleUtilities.modulemap\"",
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RCTTypeSafety/RCTTypeSafety.modulemap\"",
-					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RNReanimated/RNReanimated.modulemap\"",
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React/React-Core.modulemap\"",
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/ReactCommon/ReactCommon.modulemap\"",
 					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React_Codegen/React-Codegen.modulemap\"",

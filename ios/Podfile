@@ -34,8 +34,8 @@ target 'killbill_fe' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
-  use_frameworks! :linkage => :static
-  $RNGoogleMobileAdsAsStaticFramework = true
+#   use_frameworks! :linkage => :static
+#   $RNGoogleMobileAdsAsStaticFramework = true
 
   use_react_native!(
     :path => config[:reactNativePath],
