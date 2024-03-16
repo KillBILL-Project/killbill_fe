@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import { WwoossResponse } from '../../types/common';
+import { ApiResponse } from '../../types/common';
 import api from '../utils/api';
 import { objectToQueryParam } from '../../utils/common';
 
@@ -45,14 +44,14 @@ export interface TrashLogResponseListType {
 
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
-): Promise<AxiosResponse<WwoossResponse<TrashCanHistoryResponseListType>>> => {
+): ApiResponse<TrashCanHistoryResponseListType> => {
   const queryParam = objectToQueryParam(params);
   return api.get(`/trash-can-histories?${queryParam}`);
 };
 
 export const getTrashLog = async (
   params: GetTrashLogParams,
-): Promise<AxiosResponse<WwoossResponse<TrashLogResponseListType>>> => {
+): ApiResponse<TrashLogResponseListType> => {
   const queryParam = objectToQueryParam(params);
 
   return api.get(`/trash-log?${queryParam}`);

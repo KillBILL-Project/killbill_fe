@@ -17,7 +17,7 @@ import { inProgressState } from '../../../../states';
 const defaultAlarm = {
   dayOfWeek: [],
   meridiem: '오전',
-  hour: '12',
+  hour: '0',
   minute: '00',
 };
 

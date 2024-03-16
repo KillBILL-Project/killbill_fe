@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
 import api from '../utils/api';
-import { WwoossResponse } from '../../types/common';
+import { ApiResponse } from '../../types/common';
 import { AlarmType } from '../../types/notifications';
 
 /**
@@ -13,7 +12,7 @@ import { AlarmType } from '../../types/notifications';
  *   sendMinute: number
  * }
  */
-export const getAlarm = (): Promise<AxiosResponse<WwoossResponse<AlarmType[]>>> => {
+export const getAlarm = (): ApiResponse<AlarmType[]> => {
   return api.get('/alarm');
 };
 
@@ -26,7 +25,7 @@ export const getAlarm = (): Promise<AxiosResponse<WwoossResponse<AlarmType[]>>> 
  *   "sendMinute": number
  * }
  */
-export const createAlarm = (params: AlarmType): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const createAlarm = (params: AlarmType): ApiResponse<void> => {
   return api.post('/alarm', params);
 };
 
@@ -39,23 +38,20 @@ export const createAlarm = (params: AlarmType): Promise<AxiosResponse<WwoossResp
  *   "sendMinute": number
  * }
  */
-export const updateAlarm = (params: AlarmType): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const updateAlarm = (params: AlarmType): ApiResponse<void> => {
   return api.patch(`/alarm/${params.alarmId}`, params);
 };
 
 /**
  * 알람 삭제
  */
-export const deleteAlarm = (alarmId: number): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const deleteAlarm = (alarmId: number): ApiResponse<void> => {
   return api.delete(`/alarm/${alarmId}`);
 };
 
 /**
  * 알람 ON/OFF
  */
-export const switchAlarm = (
-  alarmId: number,
-  isOn: boolean,
-): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const switchAlarm = (alarmId: number, isOn: boolean): ApiResponse<void> => {
   return api.patch(`/alarm/${alarmId}/on-off`, { isOn });
 };

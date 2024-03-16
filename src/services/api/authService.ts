@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
 import api, { apiWithoutInterceptor } from '../utils/api';
-import { WwoossResponse } from '../../types/common';
+import { ApiResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
 import { LoginRequest, RegisterRequest, User } from '../../types/auth';
 
@@ -8,32 +7,26 @@ export interface UpdateFcmTokenParams {
   fcmToken: string;
 }
 
-export const requestLogin = async <T>(
-  params: LoginRequest,
-): Promise<AxiosResponse<WwoossResponse<T>>> => {
+export const requestLogin = async <T>(params: LoginRequest): ApiResponse<T> => {
   return api.post('/auth/login', params);
 };
 
-export const requestRegister = async <T>(
-  params: RegisterRequest,
-): Promise<AxiosResponse<WwoossResponse<T>>> => {
+export const requestRegister = async <T>(params: RegisterRequest): ApiResponse<T> => {
   return api.post('/auth/register', params);
 };
 
-export const requestReissue = async <T>(): Promise<AxiosResponse<WwoossResponse<T>>> => {
+export const requestReissue = async <T>(): ApiResponse<T> => {
   const refreshToken = await loadRefreshToken();
   return apiWithoutInterceptor.post('/auth/reissue', null, {
     headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
   });
 };
 
-export const getUserInfo = async (): Promise<AxiosResponse<WwoossResponse<User>>> => {
+export const getUserInfo = async (): ApiResponse<User> => {
   return api.get('/user');
 };
 
-export const updatePushConsent = async (params: {
-  pushConsent: boolean;
-}): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const updatePushConsent = async (params: { pushConsent: boolean }): ApiResponse<void> => {
   return api.patch('/user/push-consent', params);
 };
 
@@ -45,7 +38,7 @@ export const requestChangePassword = async (params: { password: string }) => {
   return api.patch('/auth/change-password', params);
 };
 
-export const createLoginLog = async (): Promise<AxiosResponse<WwoossResponse<void>>> => {
+export const createLoginLog = async (): ApiResponse<void> => {
   return api.post('/compliment-condition-log/login');
 };
 

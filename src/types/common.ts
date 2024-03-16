@@ -1,4 +1,5 @@
 import { ParamListBase } from '@react-navigation/native';
+import { AxiosResponse } from 'axios';
 
 export type Gender = 'M' | 'F' | undefined;
 export type LoginType = 'EMAIL' | 'GOOGLE' | 'APPLE';
@@ -21,3 +22,5 @@ export interface MenuType<T extends ParamListBase> {
   route: keyof T;
   loginType?: LoginType[];
 }
+
+export type ApiResponse<T> = Promise<AxiosResponse<WwoossResponse<T>>>;

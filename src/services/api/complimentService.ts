@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
 import api from '../utils/api';
-import { WwoossResponse } from '../../types/common';
+import { ApiResponse } from '../../types/common';
 import { objectToQueryParam } from '../../utils/common';
 
 export interface GetComplimentCardParams {
@@ -32,15 +31,13 @@ export interface ComplimentCardResponse {
  */
 export const getComplimentCard = (
   params: GetComplimentCardParams,
-): Promise<AxiosResponse<WwoossResponse<ComplimentCardResponse>>> => {
+): ApiResponse<ComplimentCardResponse> => {
   const queryParam = objectToQueryParam(params);
 
   return api.get(`/compliment-card?${queryParam}`);
 };
 
 // 칭찬 카드 상세 조회
-export const getComplimentCardDetail = (
-  complimentCardId: number,
-): Promise<AxiosResponse<WwoossResponse<any>>> => {
+export const getComplimentCardDetail = (complimentCardId: number): ApiResponse<any> => {
   return api.get(`/compliment-card/${complimentCardId}`);
 };
