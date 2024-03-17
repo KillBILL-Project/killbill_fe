@@ -17,7 +17,7 @@ export const requestRegister = async <T>(params: RegisterRequest): ApiResponse<T
 
 export const requestReissue = async <T>(): ApiResponse<T> => {
   const refreshToken = await loadRefreshToken();
-  return apiWithoutInterceptor.post('/auth/reissue', null, {
+  return api.post('/auth/reissue', null, {
     headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },
   });
 };

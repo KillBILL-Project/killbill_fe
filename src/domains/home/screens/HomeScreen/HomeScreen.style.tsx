@@ -21,19 +21,18 @@ export const Container = styled.View`
 `;
 
 export const MotionContainer = styled.View`
-  background-color: gray;
+  background-color: ${GREY500};
   width: 100%;
+  height: 400px;
   flex: 1;
 `;
 
 export const TrashContainer = styled.View`
-  background-color: bisque;
   width: 100%;
-  flex: 1;
+  height: 250px;
 `;
 
 export const CategoryContainer = styled.View`
-  background-color: aquamarine;
   flex: 1;
 `;
 
@@ -57,7 +56,6 @@ export const TrashHistoryContainer = styled(Animated.View)`
   height: 100%;
   border-top-left-radius: ${ratioPx(15)};
   border-top-right-radius: ${ratioPx(15)};
-  overflow: hidden;
 `;
 
 export const ScrollBarContainer = styled.View<ScrollBarContainerProps>`
@@ -88,4 +86,11 @@ export const TrashCount = styled.View``;
 export const ItemContainer = styled.View`
   flex: 1;
   padding: 0 ${ratioPx(12)};
+`;
+
+export const FilterContainer = styled.View`
+  width: 100%;
+  padding: 14px 33px 6px 32px;
+  border-bottom-width: 1px;
+  border-bottom-color: #f0f0f6;
 `;

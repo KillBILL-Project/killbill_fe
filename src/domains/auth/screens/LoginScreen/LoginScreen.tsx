@@ -18,11 +18,11 @@ import BaseButton from '../../components/BaseButton/BaseButton';
 import { AuthStackParamList } from '../../../../types/navigation';
 
 import GoogleLoginIcon from '../../../../assets/icon/login_icon_google.png';
-import AppleLoginIcon from '../../../../assets/icon/login_icon_apple.png';
 import AdditionalButton from './components/AdditionalButton';
 import { H1 } from '../../../../components/Typography';
 import Separator from '../../../../components/Separator/Separator';
 import useLogin from './useLogin';
+import AppleLoginButton from './components/AppleLoginButton';
 
 const LoginScreen = () => {
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
@@ -31,7 +31,6 @@ const LoginScreen = () => {
   const { login, safeAreaHeight, loginForm, onChangeForm } = useLogin();
 
   const onPressEmailLoginButton = async () => login('EMAIL');
-  const onPressAppleLoginButton = async () => login('APPLE');
   const onPressGoogleLoginButton = async () => login('GOOGLE');
 
   const onPressRegisterButton = () => navigate('Register');
@@ -80,14 +79,7 @@ const LoginScreen = () => {
             </AdditionalButtonContainer>
           </LoginContainer>
           <SsoLoginButtonContainer>
-            <BaseButton
-              onPress={onPressAppleLoginButton}
-              text={t('login.button.apple_login')}
-              backgroundColor={BLACK}
-              color={WHITE}
-              icon={AppleLoginIcon}
-              marginBottom={12}
-            />
+            <AppleLoginButton login={login} />
             <BaseButton
               onPress={onPressGoogleLoginButton}
               text={t('login.button.google_login')}

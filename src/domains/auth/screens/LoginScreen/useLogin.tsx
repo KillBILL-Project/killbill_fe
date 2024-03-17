@@ -15,6 +15,8 @@ import { AuthStackParamList } from '../../../../types/navigation';
 import useAuth from '../../../../hooks/useAuth';
 import { inProgressState } from '../../../../states';
 import { LoginForm, LoginRequest, LoginResponse } from '../../../../types/auth';
+import appleAuth from '@invertase/react-native-apple-authentication';
+import { Alert } from 'react-native';
 
 const useLogin = () => {
   const [inProgress, setInProgress] = useRecoilState(inProgressState);
@@ -60,6 +62,73 @@ const useLogin = () => {
     return true;
   }, [showToast, validationList]);
 
+  const getErrorMessage = (error: any): string => {
+    try {
+      const appleError = appleAuth.Error;
+      let errorMessage: string;
+
+      switch (error.code) {
+        case appleError.CANCELED:
+          errorMessage = 'The user canceled the authorization attempt';
+          break;
+        case appleError.FAILED:
+          errorMessage = 'The authorization attempt failed.';
+          break;
+        case appleError.INVALID_RESPONSE:
+          errorMessage = 'The authorization request received an invalid response.';
+          break;
+        case appleError.UNKNOWN:
+          errorMessage = 'The authorization attempt failed for an unknown reason.';
+          break;
+        case appleError.NOT_HANDLED:
+          errorMessage = "The authorization request wasn't handled.";
+          break;
+        default:
+          errorMessage = error.message;
+          break;
+      }
+
+      return errorMessage;
+    } catch (e) {
+      throw new Error(`onError : ${error.message}`);
+    }
+  };
+
+  const appleLogin: () => Promise<null | LoginRequest> = async () => {
+    try {
+      const operation = appleAuth.Operation;
+      const scope = appleAuth.Scope;
+      const state = appleAuth.State;
+
+      const responseObject = await appleAuth.performRequest({
+        requestedOperation: operation.LOGIN,
+        requestedScopes: [scope.EMAIL],
+      });
+      console.log('testtest', responseObject);
+
+      const credentialState = await appleAuth.getCredentialStateForUser(responseObject.user);
+      if (credentialState === state.AUTHORIZED) {
+        if (responseObject.identityToken == null) {
+          Alert.alert('token 없음');
+          return null;
+        }
+        const loginRequest: LoginRequest = {
+          email: responseObject.email ?? '',
+          loginType: 'APPLE',
+          authCode: responseObject.identityToken,
+        };
+        return loginRequest;
+      }
+
+      Alert.alert('Login 실패');
+      return null;
+    } catch (error: any) {
+      const errorMessage = getErrorMessage(error);
+      console.error('apple login : ', errorMessage);
+      return null;
+    }
+  };
+
   const login = async (loginType: LoginType) => {
     if (inProgress) return;
     const loginRequest: LoginRequest = { email: '', loginType: 'EMAIL' };
@@ -92,6 +161,12 @@ const useLogin = () => {
       }
 
       if (loginType === 'APPLE') {
+        const loginResult = await appleLogin();
+        if (loginResult === null) return;
+
+        loginRequest.authCode = loginResult.authCode;
+        loginRequest.loginType = loginResult.loginType;
+        loginRequest.email = loginResult.email;
       }
 
       try {
