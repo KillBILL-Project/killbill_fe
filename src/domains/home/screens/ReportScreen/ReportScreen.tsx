@@ -1,38 +1,80 @@
 import React, { useState } from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+import { FlatList } from 'react-native';
+import { toString } from 'lodash';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import Screen from '../../../../components/Screen/Screen';
 import { BLACK, MAIN, WHITE } from '../../../../constants/colors';
 import { Bold16 } from '../../../../components/Typography';
-import {
-  Container,
-  Header,
-  ListContainer,
-  ListTitle,
-  SelectMonth,
-  SelectYear,
-} from './ReportScreen.style';
-import Item from './components/Item/Item';
-
-const years = [
-  { value: 2024, label: '2024년' },
-  { value: 2023, label: '2023년' },
-  { value: 2022, label: '2022년' },
-  { value: 2021, label: '2021년' },
-];
-
-const months = [
-  { value: 12, label: '12월' },
-  { value: 11, label: '11월' },
-  { value: 10, label: '10월' },
-  { value: 9, label: '9월' },
-];
+import { Container, Header, ListContainer, ListTitle } from './ReportScreen.style';
+import Report from './components/Report/Report';
+import { getWeeklyReport } from '../../../../services/api/reportService';
+import { ReportResponseType, ReportType, WeekInfoType } from '../../../../types/report';
+import { isIOS, ratio } from '../../../../utils/platform';
+import Picker from '../components/Picker';
+import Spinner from '../../../../components/Spinner';
 
 const ReportScreen = () => {
-  const [selectedYear, setSelectedYear] = useState(2024);
-  const [selectedMonth, setSelectedMonth] = useState(12);
+  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedMonth, setSelectedMonth] = useState('-1');
+  const [yearForIos, setYearForIos] = useState(selectedYear);
+  const [monthForIos, setMonthForIos] = useState(selectedMonth);
 
-  const onChangeYear = (value: number) => setSelectedYear(value);
-  const onChangeMonth = (value: number) => setSelectedMonth(value);
+  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: ['report', isIOS ? yearForIos : selectedYear, isIOS ? monthForIos : selectedMonth],
+    queryFn: async ({ pageParam }): Promise<ReportResponseType> => {
+      const month = isIOS ? monthForIos : selectedMonth;
+      const year = isIOS ? yearForIos : selectedYear;
+      const date = month === '-1' ? year : `${year}-${month}`;
+
+      const response = await getWeeklyReport({ page: pageParam, date });
+      let currentMonth: WeekInfoType;
+
+      const reportResponse = response.data.data;
+      const { weeklyReportResponseList } = reportResponse;
+
+      const newWeeklyReportResponseList = weeklyReportResponseList.map(report => {
+        const newReport = { ...report };
+
+        const isEqualMonth =
+          currentMonth?.month === newReport.weekInfo.month &&
+          currentMonth?.year === newReport.weekInfo.year;
+
+        if (!isEqualMonth) {
+          // isChanged 라는 조건을 통해 달을 구분
+          newReport.weekInfo.isChanged = true;
+          currentMonth = { ...newReport.weekInfo };
+        }
+
+        return newReport;
+      });
+
+      return {
+        hasNext: reportResponse.hasNext,
+        weeklyReportResponseList: newWeeklyReportResponseList,
+      };
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length : undefined),
+  });
+
+  const onChangeYear = (value: string) => setSelectedYear(value);
+  const onCloseYear = () => setYearForIos(selectedYear);
+  const onChangeMonth = (value: string) => setSelectedMonth(value);
+  const onCloseMonth = () => setMonthForIos(selectedMonth);
+
+  const render = (item: ReportType) => {
+    if (!item.weekInfo.isChanged) return <Report report={item} />;
+
+    return (
+      <>
+        <ListTitle>
+          <Bold16 color={BLACK}>{`${item.weekInfo.year}년 ${item.weekInfo.month}월`}</Bold16>
+        </ListTitle>
+        <Report report={item} />
+      </>
+    );
+  };
 
   return (
     <Screen
@@ -44,46 +86,31 @@ const ReportScreen = () => {
     >
       <Container>
         <Header>
-          <SelectYear>
-            <RNPickerSelect
-              onValueChange={value => onChangeYear(value)}
-              items={years}
-              placeholder={{}}
-              style={{
-                inputIOS: {
-                  fontSize: 16,
-                  color: WHITE,
-                },
-                inputAndroid: {
-                  fontSize: 16,
-                  color: WHITE,
-                },
-              }}
-            />
-          </SelectYear>
-          <SelectMonth>
-            <RNPickerSelect
-              onValueChange={value => onChangeMonth(value)}
-              items={months}
-              placeholder={{}}
-              style={{
-                inputIOS: {
-                  fontSize: 16,
-                  color: WHITE,
-                },
-                inputAndroid: {
-                  fontSize: 16,
-                  color: WHITE,
-                },
-              }}
-            />
-          </SelectMonth>
+          <Picker
+            type="YEAR"
+            color={WHITE}
+            selectedValue={selectedYear}
+            onValueChange={onChangeYear}
+            onClose={onCloseYear}
+          />
+          <Picker
+            type="MONTH"
+            color={WHITE}
+            selectedValue={selectedYear}
+            onValueChange={onChangeMonth}
+            onClose={onCloseMonth}
+          />
         </Header>
         <ListContainer>
-          <ListTitle>
-            <Bold16 color={BLACK}>2023년 9월</Bold16>
-          </ListTitle>
-          <Item />
+          <FlatList
+            data={data?.pages.flatMap(value => value.weeklyReportResponseList)}
+            renderItem={({ item }) => render(item)}
+            onEndReachedThreshold={0.8}
+            onEndReached={() => hasNextPage && fetchNextPage()}
+            keyExtractor={item => toString(item.weeklyReportId)}
+            contentContainerStyle={{ flexGrow: 1, margin: ratio * 24 }}
+            ListEmptyComponent={isLoading ? <Spinner /> : null}
+          />
         </ListContainer>
       </Container>
     </Screen>

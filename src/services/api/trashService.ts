@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
-import { WwoossResponse } from '../../types/common';
+import { ApiResponse } from '../../types/common';
 import api from '../utils/api';
+import { objectToQueryParam } from '../../utils/common';
 
 interface GetTrashCanHistoryParams {
   date?: string;
@@ -19,6 +19,7 @@ export interface TrashCanHistoryType {
   createdAt: string;
   carbonSaving: number;
   refund: number;
+  isEqualDate?: boolean;
 }
 
 export interface TrashCanHistoryResponseListType {
@@ -32,6 +33,7 @@ export interface TrashLogType {
   size: number;
   trashImagePath: string;
   createdAt: string;
+  isEqualDate?: boolean;
 }
 
 export interface TrashLogResponseListType {
@@ -42,26 +44,15 @@ export interface TrashLogResponseListType {
 
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
-): Promise<AxiosResponse<WwoossResponse<TrashCanHistoryResponseListType>>> => {
-  const queryParams = new URLSearchParams();
-
-  Object.keys(params).forEach(key => {
-    const value = params[key as keyof GetTrashCanHistoryParams];
-    queryParams.append(key, String(value));
-  });
-
-  return api.get(`/trash-can-histories?${queryParams.toString()}`);
+): ApiResponse<TrashCanHistoryResponseListType> => {
+  const queryParam = objectToQueryParam(params);
+  return api.get(`/trash-can-histories?${queryParam}`);
 };
 
 export const getTrashLog = async (
   params: GetTrashLogParams,
-): Promise<AxiosResponse<WwoossResponse<TrashLogResponseListType>>> => {
-  const queryParams = new URLSearchParams();
+): ApiResponse<TrashLogResponseListType> => {
+  const queryParam = objectToQueryParam(params);
 
-  Object.keys(params).forEach(key => {
-    const value = params[key as keyof GetTrashCanHistoryParams];
-    queryParams.append(key, String(value));
-  });
-
-  return api.get(`/trash-log?${queryParams.toString()}`);
+  return api.get(`/trash-log?${queryParam}`);
 };

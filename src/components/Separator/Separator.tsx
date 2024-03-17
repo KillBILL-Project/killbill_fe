@@ -6,14 +6,46 @@ interface SeparatorProps {
   color?: string;
   length: number | string;
   thickness?: number;
-  margin: number;
+  margin?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginLeft?: number;
+  marginRight?: number;
 }
 
-const Separator = ({ horizontal, color, length, thickness, margin }: SeparatorProps) => {
+const Separator = ({
+  horizontal,
+  color,
+  length,
+  thickness,
+  margin,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
+}: SeparatorProps) => {
   return horizontal ? (
-    <SeparatorHorizontal color={color} length={length} thickness={thickness} margin={margin} />
+    <SeparatorHorizontal
+      color={color}
+      length={length}
+      thickness={thickness}
+      margin={margin}
+      marginTop={marginTop}
+      marginBottom={marginBottom}
+      marginLeft={marginLeft}
+      marginRight={marginRight}
+    />
   ) : (
-    <SeparatorVertical color={color} length={length} thickness={thickness} margin={margin} />
+    <SeparatorVertical
+      color={color}
+      length={length}
+      thickness={thickness}
+      margin={margin}
+      marginTop={marginTop}
+      marginBottom={marginBottom}
+      marginLeft={marginLeft}
+      marginRight={marginRight}
+    />
   );
 };
 

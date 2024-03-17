@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
 import { px, ratioPx } from '../../../../../../utils/platform';
 import { BLACK, GREY500, WHITE } from '../../../../../../constants/colors';
-import { AUTH_BORDER_RADIUS } from '../../../../../../constants/constants';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   padding: ${ratioPx(16)};
   background-color: ${WHITE};
   border-radius: ${px(15)};
@@ -14,6 +13,12 @@ export const TimeContainer = styled.View`
   flex-direction: row;
   align-items: flex-end;
   margin-bottom: ${ratioPx(21)};
+`;
+
+export const TimeTest = styled.Text`
+  font-size: 34px;
+  font-weight: 700;
+  color: ${BLACK};
 `;
 
 export const CycleContainer = styled.View`

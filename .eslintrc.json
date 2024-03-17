@@ -9,6 +9,7 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     "airbnb",
     "airbnb/hooks",
     "airbnb-typescript",

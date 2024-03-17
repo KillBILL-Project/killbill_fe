@@ -60,8 +60,8 @@ const Screen = ({
       {isShowToast && <Toast />}
       <Container backgroundColor={backgroundColor}>
         {inProgress && <Spinner />}
-        {isHeaderShown ? (
-          <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
+        <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
+          {isHeaderShown && (
             <Header>
               <Left>
                 {canGoBack() && isBackButtonShown && (
@@ -79,8 +79,8 @@ const Screen = ({
               </Center>
               <Right>{rightButtonProps && <HeaderButton {...rightButtonProps} />}</Right>
             </Header>
-          </HeaderContainer>
-        ) : null}
+          )}
+        </HeaderContainer>
         <Body>{children}</Body>
       </Container>
     </>

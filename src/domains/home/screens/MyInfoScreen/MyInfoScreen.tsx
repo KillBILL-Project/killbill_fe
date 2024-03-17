@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useRecoilState } from 'recoil';
-import _ from 'lodash';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { includes } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { userState } from '../../../../states';
+import { isInitialLaunchState, userState } from '../../../../states';
 import Screen from '../../../../components/Screen/Screen';
 import { Bold18, Medium16, Regular16 } from '../../../../components/Typography';
 import { BLACK, GREY600 } from '../../../../constants/colors';
@@ -14,6 +14,7 @@ import { MenuType } from '../../../../types/common';
 import { MyPageParamList } from '../../../../types/navigation';
 import { Box, Container, LogoutButton, Title } from './MyInfoScreen.style';
 import UseAuth from '../../../../hooks/useAuth';
+import { ReportDetailParams } from '../../../../types/report';
 
 const menuList: MenuType<MyPageParamList>[] = [
   {
@@ -28,13 +29,19 @@ const MyInfoScreen = () => {
   const [user, setUser] = useRecoilState(userState);
   const { bottom } = useSafeAreaInsets();
   const { clearTokens } = UseAuth();
+  const setIsInitialLaunch = useSetRecoilState(isInitialLaunchState);
 
-  const onPressMenu = (route: keyof MyPageParamList) => {
-    navigate(route);
+  const onPressMenu = (route: keyof MyPageParamList, param?: ReportDetailParams) => {
+    if (route !== 'ReportDetail') {
+      navigate(route);
+      return;
+    }
+    if (param) navigate(route, param);
   };
 
   const onPressLogout = async () => {
     setUser(null);
+    setIsInitialLaunch(true);
     await clearTokens();
   };
 
@@ -49,7 +56,7 @@ const MyInfoScreen = () => {
         </Box>
         <Separator horizontal length={width} thickness={8} margin={24} />
         {menuList.map(menu =>
-          !menu.loginType || _.includes(menu.loginType, user?.loginType) ? (
+          !menu.loginType || includes(menu.loginType, user?.loginType) ? (
             <MenuButton key={menu.name} title={menu.name} onPress={() => onPressMenu(menu.route)} />
           ) : null,
         )}

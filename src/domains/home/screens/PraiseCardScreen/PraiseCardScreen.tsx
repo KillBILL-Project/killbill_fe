@@ -1,70 +1,89 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-native';
+import { FlatList, Image, Modal } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { toString } from 'lodash';
 import Screen from '../../../../components/Screen';
-import HeaderTabBar from '../components/HeaderTabBar';
-import { SelectType } from '../components/HeaderTabBar/HeaderTabBar';
-import {
-  Container,
-  New,
-  NewText,
-  PraiseCard,
-  PraiseCardName,
-  Scroll,
-} from './PraiseCardScreen.style';
-import card from '../../../../assets/image/card_sample.png';
-import BaseIcon from '../../../../components/Icon/BaseIcon';
+import CategoryTab from '../components/CategoryTab';
+import { CategoryType } from '../components/CategoryTab/CategoryTab';
+import { Container } from './PraiseCardScreen.style';
 import { Bold18 } from '../../../../components/Typography';
-import { GREY700 } from '../../../../constants/colors';
-import CardModal from './CardModal';
+import { PRIMARY } from '../../../../constants/colors';
+import CardModal from './components/CardModal';
+import {
+  ComplimentCardType,
+  getComplimentCard,
+  GetComplimentCardParams,
+} from '../../../../services/api/complimentService';
+import NewBadge from './components/NewBadge';
+import PraiseCard from '../components/PraiseCard';
 
-const selectList: SelectType[] = [
-  { key: 'weeklyMission', name: '주간미션' },
-  { key: 'generalMission', name: '통합미션' },
+export type CardCategory = 'WEEKLY' | 'INTEGRATE';
+
+export const cardType: CategoryType<CardCategory>[] = [
+  { category: 'WEEKLY', name: '주간미션' },
+  { category: 'INTEGRATE', name: '통합미션' },
 ];
 
-const NewCard = () => {
-  return (
-    <New>
-      <NewText>NEW</NewText>
-    </New>
-  );
-};
-
 const PraiseCardScreen = () => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selectedCardType, setSelectedCardType] = useState<CategoryType<CardCategory>>({
+    category: 'WEEKLY',
+    name: '주간미션',
+  });
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCardInfo, setSelectedCardInfo] = useState<ComplimentCardType | null>(null);
 
-  const onPress = (key: string) => {
-    setSelected(key);
+  const { data, isLoading } = useQuery({
+    queryKey: ['compliment-card', selectedCardType.category],
+    queryFn: async () => {
+      const params: GetComplimentCardParams = {
+        'card-type': selectedCardType.category,
+        page: 0,
+        size: 100,
+      };
+
+      const response = await getComplimentCard(params);
+      return response.data.data;
+    },
+  });
+
+  const onPressCardType = (param: CategoryType<CardCategory>) => {
+    setSelectedCardType(param);
   };
 
-  const onPressCard = () => {
+  const onPressCard = (cardInfo: ComplimentCardType) => {
+    setSelectedCardInfo(cardInfo);
     setModalVisible(true);
   };
+
   const closeModal = () => setModalVisible(false);
 
-  const list = Array.from({ length: 7 });
   return (
     <>
-      <Screen title="칭찬카드">
-        <HeaderTabBar selectList={selectList} selectedKey={selected} onPress={onPress} />
-        <Scroll>
-          <Container>
-            {list.map((_, index) => (
-              <PraiseCard key={`a${index.toString()}`} onPress={onPressCard}>
-                <NewCard />
-                <BaseIcon size={90} icon={card} />
-                <PraiseCardName>
-                  <Bold18 color={GREY700}>환경운동가</Bold18>
-                </PraiseCardName>
-              </PraiseCard>
-            ))}
-          </Container>
-        </Scroll>
+      <Screen title="칭찬카드" isBackButtonShown={false}>
+        <CategoryTab selectList={cardType} selected={selectedCardType} onPress={onPressCardType} />
+        <Container>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => toString(item.complimentCardId)}
+            data={data?.complimentCardResponses}
+            renderItem={({ item, index }) => (
+              <PraiseCard item={item} index={index} onPressCard={onPressCard} />
+            )}
+            style={{}}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingVertical: 24,
+              paddingHorizontal: 16,
+            }}
+            numColumns={2}
+          />
+        </Container>
       </Screen>
-      <Modal animationType="fade" visible={modalVisible} onRequestClose={closeModal}>
-        <CardModal onPressClose={closeModal} />
-      </Modal>
+      {selectedCardInfo && (
+        <Modal animationType="slide" visible={modalVisible} onRequestClose={closeModal}>
+          <CardModal cardInfo={selectedCardInfo} onPressClose={closeModal} />
+        </Modal>
+      )}
     </>
   );
 };

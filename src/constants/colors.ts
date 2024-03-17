@@ -1,5 +1,5 @@
 export const PRIMARY = '#AFFC41';
-export const MAIN = '#241023';
+export const MAIN = '#000000';
 export const SECONDARY2 = '#B7B1B7';
 export const SECONDARY3 = '#8D838C';
 export const LINK = '#477BFF';

@@ -18,12 +18,11 @@ export const Container = styled.View<ContainerProps>`
 `;
 
 export const HeaderContainer = styled.View<HeaderProps>`
-  height: ${({ topSafeArea }) => px(topSafeArea + HEADER_HEIGHT)};
-  background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
   padding-top: ${({ topSafeArea }) => px(topSafeArea)};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
 `;
 
-export const Header = styled.SafeAreaView`
+export const Header = styled.View`
   height: ${px(HEADER_HEIGHT)};
   flex-direction: row;
   align-items: center;

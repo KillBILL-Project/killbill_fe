@@ -1,14 +1,15 @@
 import styled from 'styled-components/native';
 import { px, ratioPx } from '../../../../utils/platform';
-import { BLACK, GREY400, WHITE } from '../../../../constants/colors';
+import { BLACK, GREY400, GREY600, PRIMARY, WHITE } from '../../../../constants/colors';
 import { AUTH_BORDER_RADIUS } from '../../../../constants/constants';
 
-export const Container = styled.View``;
+export const Container = styled.ScrollView``;
 
 export const Header = styled.View`
   position: absolute;
+  top: -200px;
   width: 100%;
-  height: ${ratioPx(93)};
+  height: ${ratioPx(293)};
   background-color: ${BLACK};
 `;
 
@@ -31,12 +32,13 @@ export const DailyIndicatorContainer = styled.View`
   flex-direction: row;
 `;
 
-export const DailyIndicator = styled.View`
+export const DailyIndicator = styled.View<{ attended: boolean }>`
   width: ${ratioPx(26)};
   height: ${ratioPx(26)};
   border-width: 1px;
   border-radius: ${ratioPx(13)};
-  border-color: ${GREY400};
+  border-color: ${({ attended }) => (attended ? 'transparent' : GREY400)};
+  background-color: ${({ attended }) => (attended ? PRIMARY : 'transparent')};
   justify-content: center;
   align-items: center;
   margin-left: ${ratioPx(4)};
@@ -64,7 +66,17 @@ export const ChangeIndicator = styled.View`
 
 export const ChangeIndicatorIcon = styled.View``;
 
-export const WeeklyChangeAmount = styled.View``;
+export const WeeklyChangeAmount = styled.View`
+  flex-direction: row;
+  padding: ${ratioPx(4)} ${ratioPx(6)};
+`;
+
+export const WeeklyChangeAmountText = styled.Text`
+  margin-left: ${ratioPx(4)};
+  font-size: ${ratioPx(12)};
+  font-weight: 400;
+  color: ${GREY600};
+`;
 
 export const TrashSummaryContainer = styled.View`
   background-color: ${WHITE};
@@ -83,8 +95,8 @@ export const TrashAmountTitle = styled.View``;
 export const TrashAmount = styled.View``;
 
 export const TrashCategoryChart = styled.View`
-  height: 200px;
-  margin: 16px 0;
+  height: ${ratioPx(200)};
+  margin: ${ratioPx(16)} 0;
 `;
 
 export const TrashChangeGuide = styled.View`
