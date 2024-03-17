@@ -17,6 +17,7 @@ import NotificationScreen from '../domains/home/screens/NotificationScreen';
 import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
 import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
 import TrashLocationScreen from '../domains/home/screens/TrashLocationScreen';
+import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();

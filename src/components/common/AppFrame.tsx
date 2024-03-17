@@ -6,11 +6,8 @@ import { createLoginLog } from '../../services/api/authService';
 import { tokenState } from '../../states';
 import useAuth from '../../hooks/useAuth';
 import { setFcmToken } from '../../utils/push-notification';
-import { setAlertManager } from '../../states/alert/AlertManager';
-import { useDialog } from '../../states/context/DialogContext';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
-  const { showAlert, hideAlert } = useDialog();
   const accessToken = useRecoilValue(tokenState);
   const { getUser } = useAuth();
 
@@ -37,10 +34,6 @@ const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
-
-  useEffect(() => {
-    setAlertManager(showAlert, hideAlert);
-  }, [hideAlert, showAlert]);
 
   return children;
 };
