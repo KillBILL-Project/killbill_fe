@@ -3,8 +3,8 @@ import { ratioPx } from '../../../../../../utils/platform';
 import { MAIN } from '../../../../../../constants/colors';
 
 export const CategoryImage = styled.Image`
-  width: ${ratioPx(95)};
-  height: ${ratioPx(95)};
+  width: ${ratioPx(52)};
+  height: ${ratioPx(52)};
 `;
 
 export const FirstCircle = styled.View`
