@@ -2,9 +2,9 @@ import styled from 'styled-components/native';
 import { ratioPx } from '../../../../../../utils/platform';
 import { MAIN } from '../../../../../../constants/colors';
 
-export const CategoryImage = styled.Image`
-  width: ${ratioPx(52)};
-  height: ${ratioPx(52)};
+export const CategoryImage = styled.Image<{ imageSize: number }>`
+  width: ${props => props.imageSize}px;
+  height: ${props => props.imageSize}px;
 `;
 
 export const FirstCircle = styled.View`

@@ -1,10 +1,33 @@
 import React from 'react';
-import { View, ImageBackground, Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { useSetRecoilState } from 'recoil';
 import indicatorBar from '../../../../../assets/image/home_indicator_bar.png';
 import { Tooltip, TooltipContainer } from './Filter.style';
+import { trashFilterState } from '../../../../../states/trash';
+
+const filterData: any = {
+  0: {
+    id: 'SMALL',
+    title: '작은',
+  },
+  1: {
+    id: 'MEDIUM',
+    title: '중간',
+  },
+  2: {
+    id: 'BIG',
+    title: '큰',
+  },
+};
 
 const Filter = () => {
+  const setTrashFilter = useSetRecoilState(trashFilterState);
+
+  const handleOnChange = (value: number) => {
+    setTrashFilter(filterData[value].id);
+  };
+
   return (
     <View style={{ paddingTop: 28, paddingBottom: 22, position: 'relative' }}>
       <ImageBackground
@@ -23,11 +46,12 @@ const Filter = () => {
         maximumValue={2}
         step={1}
         value={2}
+        onValueChange={value => handleOnChange(value)}
       />
       <TooltipContainer>
-        <Tooltip>작은</Tooltip>
-        <Tooltip>중간</Tooltip>
-        <Tooltip>큰</Tooltip>
+        {Object.values(filterData).map(value => (
+          <Tooltip>{value.title}</Tooltip>
+        ))}
       </TooltipContainer>
     </View>
   );
