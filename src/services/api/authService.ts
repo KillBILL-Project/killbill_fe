@@ -1,4 +1,4 @@
-import api, { apiWithoutInterceptor } from '../utils/api';
+import api from '../utils/api';
 import { ApiResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
 import { LoginRequest, RegisterRequest, User } from '../../types/auth';

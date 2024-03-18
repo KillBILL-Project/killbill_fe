@@ -17,10 +17,7 @@ const Navigation = () => {
 
   return (
     <NavigationContainer theme={MyTheme}>
-      {/* <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame> */}
-      <AppFrame>
-        <HomeNavigation />
-      </AppFrame>
+      <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
     </NavigationContainer>
   );
 };

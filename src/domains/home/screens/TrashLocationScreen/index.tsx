@@ -25,11 +25,14 @@ const TrashLocationScreen = () => {
 
   useEffect(() => {
     // 위치 권한 요청
-    Geolocation.requestAuthorization();
+    Geolocation.requestAuthorization(
+      () => {},
+      () => {},
+    );
 
     // 위치 가져오기
     Geolocation.getCurrentPosition(
-      position => {
+      (position: { coords: any }) => {
         const { latitude, longitude }: any = position.coords;
         setRegion({
           latitude,
@@ -38,7 +41,7 @@ const TrashLocationScreen = () => {
           longitudeDelta: 0.0421,
         });
       },
-      error => Alert.alert(error.message),
+      (error: { message: string }) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }, []);
