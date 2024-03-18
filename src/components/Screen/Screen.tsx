@@ -30,6 +30,7 @@ interface ScreenProps {
   headerColor?: string;
   titleColor?: string;
   children?: React.ReactNode;
+  isTopSafeArea?: boolean;
   isHeaderShown?: boolean;
   isBackButtonShown?: boolean;
   rightButtonProps?: RightButtonProps;
@@ -42,6 +43,7 @@ const Screen = ({
   backButtonColor,
   headerColor,
   titleColor,
+  isTopSafeArea = true,
   isHeaderShown = true,
   isBackButtonShown = true,
   rightButtonProps,
@@ -60,7 +62,7 @@ const Screen = ({
       {isShowToast && <Toast />}
       <Container backgroundColor={backgroundColor}>
         {inProgress && <Spinner />}
-        <HeaderContainer backgroundColor={headerColor} topSafeArea={top}>
+        <HeaderContainer backgroundColor={headerColor} topSafeArea={isTopSafeArea ? top : 0}>
           {isHeaderShown && (
             <Header>
               <Left>

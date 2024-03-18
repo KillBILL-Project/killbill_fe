@@ -101,7 +101,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <Screen title="홈" isHeaderShown={false}>
+    <Screen title="홈" isHeaderShown={false} isTopSafeArea={false}>
       <Container>
         <MotionContainer>
           <Motion motionRef={motionRef} />
