@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import MapView from 'react-native-maps';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 import Screen from '../../../../components/Screen/Screen';
 import notification from '../../../../assets/icon/notification.png';
 import { MyPageParamList } from '../../../../types/navigation';
 
 const TrashLocationScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
+
+  const [region, setRegion] = useState<any>(null);
 
   const onPressNotification = () => {
     navigate('Notification');
@@ -19,6 +22,26 @@ const TrashLocationScreen = () => {
     size: 24,
     onPress: onPressNotification,
   };
+
+  useEffect(() => {
+    // 위치 권한 요청
+    Geolocation.requestAuthorization();
+
+    // 위치 가져오기
+    Geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude }: any = position.coords;
+        setRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }, []);
 
   return (
     <Screen title="쓰레기 위치" isBackButtonShown={false} rightButtonProps={rightButtonProps}>
@@ -90,15 +113,7 @@ const TrashLocationScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.394726159,
-          longitude: 127.111209047,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+      <MapView style={{ flex: 1 }} region={region} />
     </Screen>
   );
 };

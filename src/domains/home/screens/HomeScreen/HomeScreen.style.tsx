@@ -83,7 +83,7 @@ export const Title = styled.View``;
 
 export const TrashCount = styled.View``;
 
-export const ItemContainer = styled.View`
+export const ItemContainer = styled.ScrollView`
   flex: 1;
   padding: 0 ${ratioPx(12)};
 `;
