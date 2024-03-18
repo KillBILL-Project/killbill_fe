@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { FlatList, View } from 'react-native';
 import {
   CategoryImage,
   FirstCircle,
@@ -23,11 +23,29 @@ const data = [
   { id: 6, image: etc },
 ];
 
-const CategorySwiper = () => {
-  const renderItem = ({ item }) => {
+const CategorySwiper = ({ motionRef }: any) => {
+  const [selectId, setSelectId] = useState(data[0].id);
+  const [selectAble, setSelectAble] = useState(true);
+
+  const flatListRef = useRef<FlatList>(null);
+
+  const renderItem = ({ item, index }: any) => {
     return (
-      <>
-        {item.id === 3 ? (
+      <View
+        onTouchEnd={() => {
+          if (!selectAble) {
+            return;
+          }
+
+          if (item.id !== selectId) {
+            setSelectId(item.id);
+          }
+
+          flatListRef.current?.scrollToIndex({ animated: true, index, viewPosition: 0.5 });
+          motionRef.current?.play();
+        }}
+      >
+        {item.id === selectId ? (
           <ThirdCircle>
             <SecondCircle>
               <FirstCircle>
@@ -40,15 +58,19 @@ const CategorySwiper = () => {
             <CategoryImage source={item.image} />
           </UnselectedCircle>
         )}
-      </>
+      </View>
     );
   };
 
   return (
     <FlatList
+      ref={flatListRef}
       data={data}
       renderItem={renderItem}
+      keyExtractor={item => item.id}
       horizontal
+      onScrollBeginDrag={() => setSelectAble(false)} // 스크롤 시작 시 호출
+      onScrollEndDrag={() => setSelectAble(true)}
       contentContainerStyle={{
         gap: 16,
         alignItems: 'center',

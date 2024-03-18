@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Animated, Easing, PanResponder } from 'react-native';
+import LottieView from 'lottie-react-native';
 import Screen from '../../../../components/Screen/Screen';
 import {
   Container,
@@ -35,6 +36,8 @@ const HomeScreen = () => {
   const trashHistoryHeaderHeight = 52;
   const inactiveTrashHistoryHeight = scrollBarContainerHeight + trashHistoryHeaderHeight;
   const initialTopPosition = windowHeight - TAB_HEIGHT - bottom - inactiveTrashHistoryHeight;
+
+  const motionRef = useRef<LottieView>(null);
 
   /* 나의 쓰레기 내역 애니메이션 시작 */
   const historyAnim = useRef(new Animated.Value(initialTopPosition)).current;
@@ -101,14 +104,14 @@ const HomeScreen = () => {
     <Screen title="홈" isHeaderShown={false}>
       <Container>
         <MotionContainer>
-          <Motion />
+          <Motion motionRef={motionRef} />
         </MotionContainer>
         <FilterContainer>
           <Filter />
         </FilterContainer>
         <TrashContainer>
           <CategoryContainer>
-            <CategorySwiper />
+            <CategorySwiper motionRef={motionRef} />
           </CategoryContainer>
           <EmptyContainer inactiveTrashHistoryHeight={inactiveTrashHistoryHeight} />
         </TrashContainer>

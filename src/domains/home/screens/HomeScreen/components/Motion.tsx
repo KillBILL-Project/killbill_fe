@@ -1,12 +1,10 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { ImageBackground, TouchableOpacity, Text } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
 import LottieView from 'lottie-react-native';
 import homeBackground from '../../../../../assets/image/home_background.png';
 import trashMotion from '../../../../../assets/lottie/trash_motion.json';
 
-const Motion = () => {
-  const motionRef = useRef<LottieView>(null);
-
+const Motion = ({ motionRef }: any) => {
   useLayoutEffect(() => {
     motionRef.current?.play();
   }, [motionRef]);
@@ -22,7 +20,7 @@ const Motion = () => {
         renderMode="AUTOMATIC"
       />
       <TouchableOpacity
-        onPress={() => motionRef.current?.play()}
+        onPress={() => Alert.alert('개발 중입니다.')}
         style={{
           position: 'absolute',
           bottom: 13,
@@ -34,6 +32,9 @@ const Motion = () => {
           paddingHorizontal: 12,
           paddingVertical: 6,
           borderRadius: 16,
+          borderWidth: 1,
+          borderStyle: 'solid',
+          borderColor: '#E5E5EA',
         }}
       >
         <Text>비우기</Text>
