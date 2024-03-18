@@ -13,6 +13,7 @@ import bag from '../../../../../assets/image/bag.png';
 import etc from '../../../../../assets/image/etc.png';
 import glass from '../../../../../assets/image/glass.png';
 import paper from '../../../../../assets/image/paper.png';
+import useThrowTrashMutation from '../../../../../hooks/mutation/trash/useThrowTrashMutation';
 
 const data = [
   { id: 1, image: bag },
@@ -26,6 +27,7 @@ const data = [
 const CategorySwiper = ({ motionRef }: any) => {
   const [selectId, setSelectId] = useState(data[0].id);
   const [selectAble, setSelectAble] = useState(true);
+  const { mutate } = useThrowTrashMutation();
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -36,11 +38,10 @@ const CategorySwiper = ({ motionRef }: any) => {
           if (!selectAble) {
             return;
           }
-
           if (item.id !== selectId) {
             setSelectId(item.id);
           }
-
+          mutate(1);
           flatListRef.current?.scrollToIndex({ animated: true, index, viewPosition: 0.5 });
           motionRef.current?.play();
         }}

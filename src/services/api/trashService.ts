@@ -56,3 +56,8 @@ export const getTrashLog = async (
 
   return api.get(`/trash-log?${queryParam}`);
 };
+
+export const requestThrowTrash = async (trashInfoId: number) => {
+  const data = await api.post('/trash-can-contents', { trashInfoId });
+  return data;
+};

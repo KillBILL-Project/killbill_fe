@@ -31,6 +31,7 @@ const useInterceptor = () => {
         return { ...response };
       },
       async (error: AxiosError) => {
+        console.error('error : ', error);
         if (error.response!.status === 401) {
           const reissueResponse = await requestReissue<LoginResponse>();
           if (reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
