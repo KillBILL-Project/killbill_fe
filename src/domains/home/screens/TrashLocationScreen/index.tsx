@@ -34,6 +34,7 @@ const TrashLocationScreen = () => {
     Geolocation.getCurrentPosition(
       (position: { coords: any }) => {
         const { latitude, longitude }: any = position.coords;
+
         setRegion({
           latitude,
           longitude,
