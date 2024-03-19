@@ -43,3 +43,14 @@ export const objectToQueryParam = <T extends object>(params: T) => {
 
   return toString(queryParams);
 };
+
+export const convertTimeFullDate = (date: string) => {
+  return `${new Intl.DateTimeFormat('ko').format(new Date(date))} ${new Intl.DateTimeFormat(
+    'en-GB',
+    {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false,
+    },
+  ).format(new Date(date))}`; // '2023. 5. 16. 15: 00'
+};

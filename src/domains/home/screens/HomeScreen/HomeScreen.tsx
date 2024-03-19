@@ -1,6 +1,6 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Animated, Easing, PanResponder } from 'react-native';
+import { Animated, Easing, PanResponder, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
 import Screen from '../../../../components/Screen/Screen';
 import {
@@ -28,8 +28,11 @@ import { TAB_HEIGHT } from '../../../../constants/constants';
 import Motion from './components/Motion';
 import Filter from './components/Filter';
 import CategorySwiper from './components/CategorySwiper';
+import { useTrashLogQuery } from '../../../../hooks/queries/trash/useTrashLogQuery';
 
 const HomeScreen = () => {
+  const { data, isSuccess } = useTrashLogQuery();
+
   const [isShow, setIsShow] = useState(false);
   const { top, bottom } = useSafeAreaInsets();
   const scrollBarContainerHeight = 32;
@@ -139,14 +142,18 @@ const HomeScreen = () => {
               <H3 color={BLACK}>나의 쓰레기 내역</H3>
             </Title>
             <TrashCount>
-              <H3 color={BLACK}>3개</H3>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                {data?.data?.data?.totalCount}개
+              </Text>
             </TrashCount>
           </TrashHistoryHeader>
         </PanResponderContainer>
         <ItemContainer>
-          {[...Array(10)].map((_, index) => (
-            <Item key={`b${index.toString()}`} />
-          ))}
+          {data?.data?.data?.trashLogResponseList.map(
+            (log: any, index: { toString: () => any }) => (
+              <Item data={log} key={`b${index.toString()}`} />
+            ),
+          )}
         </ItemContainer>
       </TrashHistoryContainer>
     </Screen>
