@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import MapView from 'react-native-maps';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Screen from '../../../../components/Screen/Screen';
 import notification from '../../../../assets/icon/notification.png';
 import { MyPageParamList } from '../../../../types/navigation';
+import myLocationIcon from '../../../../assets/icon/my_location.png';
+import moveMyLocationIcon from '../../../../assets/icon/move_my_location.png';
 
 const TrashLocationScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
 
   const [region, setRegion] = useState<any>(null);
+  const mapViewRef = useRef<MapView>(null);
 
   const onPressNotification = () => {
     navigate('Notification');
@@ -117,7 +120,21 @@ const TrashLocationScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <MapView style={{ flex: 1 }} region={region} />
+      <MapView ref={mapViewRef} style={{ flex: 1 }} region={region}>
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 39, right: 24 }}
+          onPress={() =>
+            mapViewRef?.current?.setCamera({
+              center: { latitude: region.latitude, longitude: region.longitude },
+            })
+          }
+        >
+          <Image source={moveMyLocationIcon} style={{ height: 40, width: 40 }} />
+        </TouchableOpacity>
+        <Marker coordinate={region}>
+          <Image source={myLocationIcon} style={{ height: 16, width: 16 }} />
+        </Marker>
+      </MapView>
     </Screen>
   );
 };
