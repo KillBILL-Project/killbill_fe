@@ -3,7 +3,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { includes } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { isInitialLaunchState, userState } from '../../../../states';
+import { userState } from '../../../../states';
 import Screen from '../../../../components/Screen/Screen';
 import { Bold18, Medium16, Regular16 } from '../../../../components/Typography';
 import { BLACK, GREY600 } from '../../../../constants/colors';
@@ -29,7 +29,6 @@ const MyInfoScreen = () => {
   const [user, setUser] = useRecoilState(userState);
   const { bottom } = useSafeAreaInsets();
   const { clearTokens } = UseAuth();
-  const setIsInitialLaunch = useSetRecoilState(isInitialLaunchState);
 
   const onPressMenu = (route: keyof MyPageParamList, param?: ReportDetailParams) => {
     if (route !== 'ReportDetail') {
@@ -41,7 +40,6 @@ const MyInfoScreen = () => {
 
   const onPressLogout = async () => {
     setUser(null);
-    setIsInitialLaunch(true);
     await clearTokens();
   };
 
