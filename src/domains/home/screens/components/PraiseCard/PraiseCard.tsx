@@ -1,5 +1,5 @@
-import { Image } from 'react-native';
 import React from 'react';
+import FastImage from 'react-native-fast-image';
 import NewBadge from '../../PraiseCardScreen/components/NewBadge';
 import { Bold18 } from '../../../../../components/Typography';
 import { PRIMARY } from '../../../../../constants/colors';
@@ -21,9 +21,9 @@ const PraiseCard = ({ item, index, size, onPressCard }: PraiseCardProps) => {
       onPress={() => onPressCard(item)}
     >
       <NewBadge />
-      <Image
+      <FastImage
         source={{ uri: item.cardImage }}
-        resizeMode="contain"
+        resizeMode={FastImage.resizeMode.contain}
         style={{ width: '100%', height: '100%' }}
       />
       <PraiseCardName>
