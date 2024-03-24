@@ -61,3 +61,8 @@ export const requestThrowTrash = async (trashInfoId: number) => {
   const data = await api.post('/trash-can-contents', { trashInfoId });
   return data;
 };
+
+export const requestEmptyTrash = async () => {
+  const data = await api.delete('/trash-can-contents');
+  return data;
+};

@@ -18,6 +18,7 @@ import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
 import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
 import TrashLocationScreen from '../domains/home/screens/TrashLocationScreen';
 import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
+import EmptyTrashScreen from '../domains/home/screens/EmptyTrashScreen';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -52,6 +53,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="NotifyList" component={NotifyListScreen} />
       <Stack.Screen name="NotifySetting" component={NotifySettingScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+      <Stack.Screen name="EmptyTrash" component={EmptyTrashScreen} />
     </Stack.Navigator>
   );
 };

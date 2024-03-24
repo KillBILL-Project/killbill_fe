@@ -1,10 +1,25 @@
 import React, { useLayoutEffect } from 'react';
-import { ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
+import { ImageBackground, TouchableOpacity, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import homeBackground from '../../../../../assets/image/home_background.png';
 import trashMotion from '../../../../../assets/lottie/trash_motion.json';
+import { useDialog } from '../../../../../states/context/DialogContext';
+import { MenuParamList } from '../../../../../types/navigation';
 
 const Motion = ({ motionRef }: any) => {
+  const { showConfirm } = useDialog();
+  const { navigate } = useNavigation<NavigationProp<MenuParamList>>();
+
+  const handleEmptyTrash = async () => {
+    await showConfirm({
+      alertMessage: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
+      confirmText: '비울게요',
+    });
+
+    navigate('EmptyTrash');
+  };
+
   useLayoutEffect(() => {
     motionRef.current?.play();
   }, [motionRef]);
@@ -20,7 +35,7 @@ const Motion = ({ motionRef }: any) => {
         renderMode="AUTOMATIC"
       />
       <TouchableOpacity
-        onPress={() => Alert.alert('개발 중입니다.')}
+        onPress={handleEmptyTrash}
         style={{
           position: 'absolute',
           bottom: 13,

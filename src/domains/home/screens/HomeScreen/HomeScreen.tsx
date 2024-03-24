@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Animated, Easing, PanResponder, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
@@ -31,7 +31,7 @@ import CategorySwiper from './components/CategorySwiper';
 import { useTrashLogQuery } from '../../../../hooks/queries/trash/useTrashLogQuery';
 
 const HomeScreen = () => {
-  const { data, isSuccess } = useTrashLogQuery();
+  const { data } = useTrashLogQuery();
 
   const [isShow, setIsShow] = useState(false);
   const { top, bottom } = useSafeAreaInsets();

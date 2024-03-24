@@ -40,4 +40,5 @@ export type MenuParamList = {
   MyInfo: undefined;
   ReportDetail: ReportDetailParams;
   ResetPassword: undefined;
+  EmptyTrash: undefined;
 };
