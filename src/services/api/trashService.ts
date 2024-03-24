@@ -66,3 +66,8 @@ export const requestEmptyTrash = async () => {
   const data = await api.delete('/trash-can-contents');
   return data;
 };
+
+export const requestTrashCanContentsCount = async (): Promise<number> => {
+  const { data } = await api.get('/trash-can-contents/total-count');
+  return data.data;
+};

@@ -6,12 +6,24 @@ import homeBackground from '../../../../../assets/image/home_background.png';
 import trashMotion from '../../../../../assets/lottie/trash_motion.json';
 import { useDialog } from '../../../../../states/context/DialogContext';
 import { MenuParamList } from '../../../../../types/navigation';
+import TrashCount from './TrashCount';
+import useTrashCanContentsCount from '../../../../../hooks/queries/trash/useTrashCanContentsCount';
 
 const Motion = ({ motionRef }: any) => {
   const { showConfirm } = useDialog();
+  const { data: count } = useTrashCanContentsCount();
+
   const { navigate } = useNavigation<NavigationProp<MenuParamList>>();
 
   const handleEmptyTrash = async () => {
+    if (!count) {
+      await showConfirm({
+        alertMessage: '비울 쓰레기가 없습니다.',
+        confirmText: '확인',
+      });
+      return;
+    }
+
     await showConfirm({
       alertMessage: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
       confirmText: '비울게요',
@@ -34,6 +46,7 @@ const Motion = ({ motionRef }: any) => {
         style={{ width: '100%', height: '100%' }}
         renderMode="AUTOMATIC"
       />
+      <TrashCount count={count} />
       <TouchableOpacity
         onPress={handleEmptyTrash}
         style={{

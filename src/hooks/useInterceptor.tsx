@@ -32,9 +32,10 @@ const useInterceptor = () => {
       },
       async (error: AxiosError) => {
         console.error('error : ', error);
-        if (error.response!.status === 401) {
+        if (+error.response!.status === 401) {
+          console.log('401');
           const reissueResponse = await requestReissue<LoginResponse>();
-          if (reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
+          if (+reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
             // TODO: 로그아웃 처리
             await clearTokens();
             return Promise.reject(error);
