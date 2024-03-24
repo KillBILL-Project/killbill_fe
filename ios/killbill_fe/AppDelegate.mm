@@ -13,7 +13,7 @@
 // }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+  {
    [GMSServices provideAPIKey:@"${Bundle.main.infoDictionary['GOOGLE_MAPS_IOS_API_KEY']}"];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
