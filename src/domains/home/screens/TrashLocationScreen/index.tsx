@@ -8,12 +8,12 @@ import notification from '../../../../assets/icon/notification.png';
 import { MyPageParamList } from '../../../../types/navigation';
 import myLocationIcon from '../../../../assets/icon/my_location.png';
 import moveMyLocationIcon from '../../../../assets/icon/move_my_location.png';
+import GoogleMap from './components/GoogleMap';
 
 const TrashLocationScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
 
   const [region, setRegion] = useState<any>(null);
-  const mapViewRef = useRef<MapView>(null);
 
   const onPressNotification = () => {
     navigate('Notification');
@@ -120,21 +120,7 @@ const TrashLocationScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <MapView ref={mapViewRef} style={{ flex: 1 }} region={region}>
-        <TouchableOpacity
-          style={{ position: 'absolute', top: 39, right: 24 }}
-          onPress={() =>
-            mapViewRef?.current?.setCamera({
-              center: { latitude: region.latitude, longitude: region.longitude },
-            })
-          }
-        >
-          <Image source={moveMyLocationIcon} style={{ height: 40, width: 40 }} />
-        </TouchableOpacity>
-        <Marker coordinate={region}>
-          <Image source={myLocationIcon} style={{ height: 16, width: 16 }} />
-        </Marker>
-      </MapView>
+      <GoogleMap />
     </Screen>
   );
 };
