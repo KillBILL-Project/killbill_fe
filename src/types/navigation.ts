@@ -41,4 +41,5 @@ export type MenuParamList = {
   ReportDetail: ReportDetailParams;
   ResetPassword: undefined;
   EmptyTrash: undefined;
+  WebView: undefined;
 };

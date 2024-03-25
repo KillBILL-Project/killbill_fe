@@ -12,6 +12,7 @@ import notification from '../../../../assets/icon/notification.png';
 import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';
 import { MenuType } from '../../../../types/common';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 // TODO: 아이콘 추가
 
@@ -49,12 +50,12 @@ const menuList: MenuType<MyPageParamList>[] = [
   },
   {
     name: '자주묻는질문',
-    route: 'Faq',
+    route: 'WebView',
   },
 ];
 
 const MyPageScreen = () => {
-  const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
+  const { navigate } = useNavigation<StackNavigationProp<MyPageParamList>>();
   const tabNavigation = useNavigation<NavigationProp<HomeTabParamList>>();
 
   const onPressMenu = (route: keyof MyPageParamList) => {
