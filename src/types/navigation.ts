@@ -1,6 +1,7 @@
 import { SocialRegisterParams } from './auth';
-import { AlarmParams, AlarmType } from './notifications';
+import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
+import { UserGuideDetailParams } from '../constants/userGuide';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -36,7 +37,7 @@ export type MenuParamList = {
   Faq: undefined;
   PraiseCard: undefined;
   Setting: undefined;
-  UserGuide: undefined;
+  UserGuideDetail: UserGuideDetailParams;
   MyInfo: undefined;
   ReportDetail: ReportDetailParams;
   ResetPassword: undefined;

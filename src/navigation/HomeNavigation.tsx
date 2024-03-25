@@ -19,6 +19,7 @@ import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
 import TrashLocationScreen from '../domains/home/screens/TrashLocationScreen';
 import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
 import EmptyTrashScreen from '../domains/home/screens/EmptyTrashScreen';
+import UserGuideDetailScreen from '../domains/home/screens/UserGuideDetailScreen';
 import WebViewScreen from '../domains/home/screens/WebViewScreen';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
@@ -48,6 +49,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="PraiseCard" component={PraiseCardScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="UserGuide" component={UserGuideScreen} />
+      <Stack.Screen name="UserGuideDetail" component={UserGuideDetailScreen} />
       <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       <Stack.Screen name="MyHistory" component={MyHistoryScreen} />
       <Stack.Screen name="Notification" component={NotificationScreen} />

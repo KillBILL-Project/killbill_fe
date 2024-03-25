@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import Screen from '../../../../components/Screen/Screen';
 import Spacer from '../../../../components/Spacer/Spacer';
 import TopMenuButton from './components/TopMenuButton/TopMenuButton';
@@ -7,25 +8,30 @@ import WideButton from './components/WideButton/WideButton';
 import MenuButton from '../components/MenuButton/MenuButton';
 import { Container, MenuButtonContainer, ThreeButtonContainer } from './MyPageScreen.style';
 import { HomeTabParamList, MyPageParamList } from '../../../../types/navigation';
-import checkedIcon from '../../../../assets/icon/checked.png';
 import notification from '../../../../assets/icon/notification.png';
 import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';
 import { MenuType } from '../../../../types/common';
-import { StackNavigationProp } from '@react-navigation/stack';
+
+import alarmSetting from '../../../../assets/icon/my_page/alarm_setting.png';
+import myHistory from '../../../../assets/icon/my_page/my_history.png';
+import userGuide from '../../../../assets/icon/my_page/user_guide.png';
 
 // TODO: 아이콘 추가
 
 const topMenuList: MenuType<MyPageParamList>[] = [
   {
+    icon: alarmSetting,
     name: '알림 설정',
     route: 'NotifyList',
   },
   {
+    icon: myHistory,
     name: '내 히스토리',
     route: 'MyHistory',
   },
   {
+    icon: userGuide,
     name: '이용가이드',
     route: 'UserGuide',
   },
@@ -86,7 +92,7 @@ const MyPageScreen = () => {
               key={menu.route}
               title={menu.name}
               onPress={() => onPressMenu(menu.route)}
-              icon={checkedIcon}
+              icon={menu.icon}
             />
           ))}
         </ThreeButtonContainer>
