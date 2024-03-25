@@ -1,6 +1,7 @@
 import React from 'react';
 import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { useRecoilValue } from 'recoil';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
 import { tokenState } from '../states';
@@ -17,7 +18,9 @@ const Navigation = () => {
 
   return (
     <NavigationContainer theme={MyTheme}>
-      <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+      <SafeAreaProvider>
+        <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+      </SafeAreaProvider>
     </NavigationContainer>
   );
 };
