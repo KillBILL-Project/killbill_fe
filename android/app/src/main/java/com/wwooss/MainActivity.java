@@ -17,6 +17,12 @@ public class MainActivity extends ReactActivity {
     return "killbill_fe";
   }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+      SplashScreen.show(this);
+      super.onCreate(null);
+    }
+
   /**
    * React Navigation
    */
