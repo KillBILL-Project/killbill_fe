@@ -1,7 +1,7 @@
 import api from '../utils/api';
 import { ApiResponse } from '../../types/common';
 import { loadRefreshToken } from '../storage/encryptedStorage';
-import { LoginRequest, RegisterRequest, User } from '../../types/auth';
+import { LoginRequest, LoginResponse, RegisterRequest, User } from '../../types/auth';
 
 export interface UpdateFcmTokenParams {
   fcmToken: string;
@@ -15,7 +15,7 @@ export const requestRegister = async <T>(params: RegisterRequest): ApiResponse<T
   return api.post('/auth/register', params);
 };
 
-export const requestReissue = async <T>(): ApiResponse<T> => {
+export const requestReissue = async (): ApiResponse<LoginResponse> => {
   const refreshToken = await loadRefreshToken();
   return api.post('/auth/reissue', null, {
     headers: { Authorization: refreshToken ? `Bearer ${refreshToken}` : null },

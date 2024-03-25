@@ -7,7 +7,6 @@ import { requestReissue } from '../services/api/authService';
 import { WwoossResponse } from '../types/common';
 import UseAuth from './useAuth';
 import useToast from './useToast';
-import { LoginResponse } from '../types/auth';
 
 const useInterceptor = () => {
   const { showToast } = useToast();
@@ -18,7 +17,9 @@ const useInterceptor = () => {
     const requestInterceptor = api.interceptors.request.use(
       config => {
         const requestConfig = { ...config };
-        requestConfig.headers.Authorization = accessToken ? `Bearer ${accessToken}` : null;
+        if (config.url !== '/auth/reissue') {
+          requestConfig.headers.Authorization = accessToken ? `Bearer ${accessToken}` : null;
+        }
         return requestConfig;
       },
       error => {
@@ -36,7 +37,7 @@ const useInterceptor = () => {
         if (response && +response.status === 401 && !config?.isRetryRequest) {
           config.isRetryRequest = true;
           console.log('401');
-          const reissueResponse = await requestReissue<LoginResponse>();
+          const reissueResponse = await requestReissue();
           if (+reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
             // TODO: 로그아웃 처리
             await clearTokens();

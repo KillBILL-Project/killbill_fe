@@ -6,8 +6,11 @@ import { createLoginLog } from '../../services/api/authService';
 import { tokenState } from '../../states';
 import useAuth from '../../hooks/useAuth';
 import { requestUserPermission, setFcmToken } from '../../utils/push-notification';
+import useReissueMutation from '../../hooks/mutation/auth/useReissueMutation';
+import { loadRefreshToken } from '../../services/storage/encryptedStorage';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
+  const { mutate: reissueMutate } = useReissueMutation();
   const accessToken = useRecoilValue(tokenState);
   const { getUser } = useAuth();
 
@@ -26,6 +29,15 @@ const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
       // TODO
     }
   };
+
+  useEffect(() => {
+    if (accessToken) return;
+
+    loadRefreshToken().then(refreshToken => {
+      if (!refreshToken) return;
+      reissueMutate();
+    });
+  }, [accessToken]);
 
   useEffect(() => {
     if (!accessToken) return;
