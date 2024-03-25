@@ -1908,6 +1908,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-3.2.0.tgz#d5350339deeb775a748b5cbba2e25cf1352e7a28"
   integrity sha512-WkOjeDRBOdbor6YlKusEPkBx64x+Qf4enldF2tvCHyaXr0YcqdWXPZMMePIXUvQvyyuP5atnfPT5D2Q9VSx5mQ==
 
+"@react-native-community/push-notification-ios@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.11.0.tgz#d8ec4acfb52260cb779ed0379b9e197db7841b83"
+  integrity sha512-nfkUs8P2FeydOCR4r7BNmtGxAxI22YuGP6RmqWt6c8EEMUpqvIhNKWkRSFF3pHjkgJk2tpRb9wQhbezsqTyBvA==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/slider@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.5.0.tgz#5c55488ee30060cd87100fb746b9d8655dbab04e"

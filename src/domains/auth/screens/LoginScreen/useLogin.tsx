@@ -104,7 +104,6 @@ const useLogin = () => {
         requestedOperation: operation.LOGIN,
         requestedScopes: [scope.EMAIL],
       });
-      console.log('testtest', responseObject);
 
       const credentialState = await appleAuth.getCredentialStateForUser(responseObject.user);
       if (credentialState === state.AUTHORIZED) {

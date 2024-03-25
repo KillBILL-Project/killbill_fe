@@ -17,8 +17,10 @@ export const requestUserPermission = async () => {
 };
 
 export const setFcmToken = async () => {
-  if (await requestUserPermission()) {
+  try {
     const fcmToken = await getFcmToken();
-    await updateFcmToken({ fcmToken });
+    updateFcmToken({ fcmToken });
+  } catch (e) {
+    console.error('firebase token error', e);
   }
 };

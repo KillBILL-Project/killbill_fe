@@ -30,9 +30,11 @@ const useInterceptor = () => {
       (response: AxiosResponse) => {
         return { ...response };
       },
-      async (error: AxiosError) => {
+      async error => {
         console.error('error : ', error);
-        if (+error.response!.status === 401) {
+        const { config, response } = error;
+        if (response && +response.status === 401 && !config?.isRetryRequest) {
+          config.isRetryRequest = true;
           console.log('401');
           const reissueResponse = await requestReissue<LoginResponse>();
           if (+reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
@@ -44,7 +46,7 @@ const useInterceptor = () => {
           await setTokens(reissueResponse.data.data);
 
           return api({
-            ...error.config,
+            ...config,
             headers: { Authorization: `Bearer ${reissueResponse.data.data.accessToken}` },
           });
         }

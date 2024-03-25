@@ -20,6 +20,7 @@ import {
   RegisterForm,
   RegisterRequest,
 } from '../../../../types/auth';
+import { getFcmToken } from '../../../../utils/push-notification';
 
 const initialAuthDetail: AuthDetailType = {
   age: '',
@@ -107,10 +108,12 @@ const RegisterScreen = () => {
 
     try {
       setInProgress(true);
+      const fcmToken = await getFcmToken();
       const params: RegisterRequest = {
         ...authDetail,
         email: registerForm.email,
         password: registerForm.password,
+        fcmToken,
         loginType: 'EMAIL',
       };
       const response = await requestRegister<LoginResponse>(params);
