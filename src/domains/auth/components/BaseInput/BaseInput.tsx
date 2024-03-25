@@ -1,4 +1,5 @@
 import React from 'react';
+import { KeyboardTypeOptions } from 'react-native/Libraries/Components/TextInput/TextInput';
 import { BaseTextInput, Container, InputTitle } from './BaseInput.style';
 import { GREY500, GREY800 } from '../../../../constants/colors';
 import { Medium14 } from '../../../../components/Typography';
@@ -8,16 +9,25 @@ interface BaseInputProps {
   placeholder: string;
   onChangeText: (text: string) => void;
   isSecure?: boolean;
+  keyboardType?: KeyboardTypeOptions;
   value: string;
 }
 
-const BaseInput = ({ title, placeholder, onChangeText, value, isSecure }: BaseInputProps) => {
+const BaseInput = ({
+  title,
+  placeholder,
+  onChangeText,
+  value,
+  isSecure,
+  keyboardType,
+}: BaseInputProps) => {
   return (
     <Container>
       <InputTitle>
         <Medium14 color={GREY800}>{title}</Medium14>
       </InputTitle>
       <BaseTextInput
+        keyboardType={keyboardType}
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={value}

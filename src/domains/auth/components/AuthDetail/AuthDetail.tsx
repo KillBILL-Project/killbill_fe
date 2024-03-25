@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import BaseInput from '../BaseInput/BaseInput';
 import { Container, GenderButton, GenderSelectContainer, InputTitle } from './AuthDetail.style';
 import BaseDropDown from '../BaseDropDown/BaseDropDown';
-import { AuthDetailType, Gender, ItemType } from '../../../../types/common';
+import { Gender, ItemType } from '../../../../types/common';
 import { EXCLUDED_NUMERIC_PATTERN } from '../../../../constants/constants';
 import { Medium14, Semibold18 } from '../../../../components/Typography';
 import { BLACK, GREY600, WHITE } from '../../../../constants/colors';
+import { AuthDetailType } from '../../../../types/auth';
 
 export interface DropDownProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ const AuthDetail = ({
 }: AuthDetailProps) => {
   const { t } = useTranslation();
   const setGender = (selectedGender: Gender) => {
-    setAuthDetail(prevState => ({ ...prevState, gender: selectedGender }));
+    setAuthDetail((prevState: any) => ({ ...prevState, gender: selectedGender }));
   };
   const onChangeAge = (enteredAge: string) => {
     setAuthDetail(prevState => {
@@ -59,6 +60,7 @@ const AuthDetail = ({
         placeholder={t('auth_detail.input.age.placeholder')}
         onChangeText={onChangeAge}
         value={age}
+        keyboardType="numeric"
       />
       <Container>
         <InputTitle>

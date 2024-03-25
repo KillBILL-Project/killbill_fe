@@ -62,7 +62,6 @@ const AuthDetailScreen = () => {
     if (!isValidForm()) return;
     const fcmToken = await getFcmToken();
     const pushConsent = await requestUserPermission();
-    console.log('pushConsent', pushConsent);
 
     const params: RegisterRequest = {
       email: route.params.email,
