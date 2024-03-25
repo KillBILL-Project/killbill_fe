@@ -26,6 +26,7 @@ export interface LoginRequest {
 export interface RegisterRequest extends AuthDetailType {
   email: string;
   fcmToken: string;
+  pushConsent: boolean;
   password?: string;
   loginType: LoginType;
   socialToken?: string;

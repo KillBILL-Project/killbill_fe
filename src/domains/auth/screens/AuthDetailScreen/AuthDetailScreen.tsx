@@ -12,7 +12,7 @@ import useToast from '../../../../hooks/useToast';
 import { requestRegister } from '../../../../services/api/authService';
 import { AuthDetailType, LoginResponse, RegisterRequest } from '../../../../types/auth';
 import useAuth from '../../../../hooks/useAuth';
-import { getFcmToken } from '../../../../utils/push-notification';
+import { getFcmToken, requestUserPermission } from '../../../../utils/push-notification';
 
 const initialAuthDetail = {
   age: '',
@@ -61,12 +61,15 @@ const AuthDetailScreen = () => {
   const onPressButton = async () => {
     if (!isValidForm()) return;
     const fcmToken = await getFcmToken();
+    const pushConsent = await requestUserPermission();
+    console.log('pushConsent', pushConsent);
 
     const params: RegisterRequest = {
       email: route.params.email,
       loginType: route.params.loginType,
       socialToken: route.params.authCode,
       fcmToken,
+      pushConsent,
       ...authDetail,
     };
     const response = await requestRegister<LoginResponse>(params);
