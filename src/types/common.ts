@@ -1,5 +1,6 @@
 import { ParamListBase } from '@react-navigation/native';
 import { AxiosResponse } from 'axios';
+import { ImageSourcePropType } from 'react-native';
 
 export type Gender = 'M' | 'F' | undefined;
 export type LoginType = 'EMAIL' | 'GOOGLE' | 'APPLE';
@@ -18,6 +19,7 @@ export interface ItemType {
 }
 
 export interface MenuType<T extends ParamListBase> {
+  icon?: ImageSourcePropType;
   name: string;
   route: keyof T;
   loginType?: LoginType[];

@@ -1,9 +1,11 @@
 import React from 'react';
+import { Image } from 'react-native';
 import { Regular14, Semibold18 } from '../../../../../../components/Typography';
 import { WHITE } from '../../../../../../constants/colors';
 import Spacer from '../../../../../../components/Spacer/Spacer';
-import checkedIcon from '../../../../../../assets/icon/checked.png';
-import { Container, Description, Icon, TextContainer, Title } from './WideButton.style';
+import { Container, Description, TextContainer, Title } from './WideButton.style';
+import findRefund from '../../../../../../assets/icon/my_page/find_refund.png';
+import { ratio } from '../../../../../../utils/platform';
 
 interface WideButtonProps {
   onPress: () => void;
@@ -21,7 +23,11 @@ const WideButton = ({ onPress }: WideButtonProps) => {
           <Regular14 color={WHITE}>환급금을 찾아볼까요?</Regular14>
         </Description>
       </TextContainer>
-      <Icon source={checkedIcon} width={61} height={61} />
+      <Image
+        source={findRefund}
+        style={{ width: ratio * 61, height: ratio * 61 }}
+        resizeMode="contain"
+      />
     </Container>
   );
 };

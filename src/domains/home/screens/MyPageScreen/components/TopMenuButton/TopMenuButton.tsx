@@ -1,8 +1,9 @@
 import React from 'react';
-import { ImageSourcePropType } from 'react-native';
+import { Image, ImageSourcePropType } from 'react-native';
 import Spacer from '../../../../../../components/Spacer/Spacer';
 import { Medium14 } from '../../../../../../components/Typography';
-import { Container, Icon, Title } from './TopMenuButton.style';
+import { Container, Title } from './TopMenuButton.style';
+import { ratio } from '../../../../../../utils/platform';
 
 interface TopMenuButtonProps {
   title: string;
@@ -13,8 +14,16 @@ interface TopMenuButtonProps {
 const TopMenuButton = ({ title, icon, onPress }: TopMenuButtonProps) => {
   return (
     <Container onPress={onPress}>
-      <Icon source={icon} />
-      <Spacer height={6} />
+      <Image
+        source={icon}
+        style={{
+          width: ratio * 24,
+          height: ratio * 24,
+          marginVertical: ratio * 6,
+          marginHorizontal: ratio * 40,
+        }}
+        resizeMode="contain"
+      />
       <Title>
         <Medium14 color="#1C1C1E">{title}</Medium14>
       </Title>
