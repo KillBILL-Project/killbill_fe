@@ -4,6 +4,8 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
+
+import org.devio.rn.splashscreen.SplashScreen;
 import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
@@ -17,17 +19,12 @@ public class MainActivity extends ReactActivity {
     return "killbill_fe";
   }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-      SplashScreen.show(this);
-      super.onCreate(null);
-    }
-
   /**
    * React Navigation
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    SplashScreen.show(this);
     super.onCreate(null);
   }
 
