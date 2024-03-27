@@ -1,3 +1,155 @@
 {
-  "Hello": "Hello"
+  "alert": {
+    "confirm_text": "OK"
+  },
+  "auth_detail": {
+    "button": {
+      "submit": "Submit"
+    },
+    "input": {
+      "age": {
+        "placeholder": "Enter Age",
+        "title": "Age"
+      },
+      "country": {
+        "placeholder": "Select Country",
+        "title": "Country"
+      },
+      "gender": {
+        "button": {
+          "man": "Male",
+          "woman": "Female"
+        },
+        "title": "Gender"
+      }
+    },
+    "validation": {
+      "invalid_age": "Please enter your age.",
+      "invalid_country": "Please select a country.",
+      "invalid_gender": "Please select a gender.",
+      "title": "Complete Your Profile"
+    }
+  },
+  "confirm": {
+    "cancel_text": "Cancel",
+    "confirm_text": "Confirm"
+  },
+  "forgot_password": {
+    "alert": {
+      "sent_email": [
+        "A temporary password has been sent",
+        "to the email address you entered."
+      ]
+    },
+    "button": {
+      "submit": "Submit"
+    },
+    "info_message": [
+      "Please enter the email",
+      "to verify your password."
+    ],
+    "input": {
+      "email": {
+        "placeholder": "Please enter your email.",
+        "title": "Email"
+      }
+    },
+    "title": "Forgot Password",
+    "validation": {
+      "invalid_email": "The email format is incorrect."
+    }
+  },
+  "login": {
+    "button": {
+      "apple_login": "Sign in with Apple",
+      "find_password": "Forgot Password?",
+      "google_login": "Sign in with Google",
+      "login": "Sign In",
+      "register": "Sign Up"
+    },
+    "greeting": [
+      "Welcome.",
+      "We're glad to see you."
+    ],
+    "input": {
+      "email": {
+        "placeholder": "Enter Email",
+        "title": "Email"
+      },
+      "password": {
+        "placeholder": "Enter Password",
+        "title": "Password"
+      }
+    },
+    "validation": {
+      "invalid_email": "The email format is incorrect.",
+      "invalid_password": "Please check your password."
+    }
+  },
+  "register": {
+    "button": {
+      "submit": "Sign Up"
+    },
+    "input": {
+      "confirmed_password": {
+        "placeholder": "Confirm Password",
+        "title": "Confirm Password"
+      },
+      "email": {
+        "placeholder": "Enter Email",
+        "title": "Email"
+      },
+      "password": {
+        "placeholder": "Enter Password",
+        "title": "Password"
+      }
+    },
+    "title": "Sign Up",
+    "validation": {
+      "invalid_age": "Please enter your age.",
+      "invalid_country": "Please select a country.",
+      "invalid_email": "The email format is incorrect.",
+      "invalid_gender": "Please select a gender.",
+      "invalid_password": "Please check your password.",
+      "not_equal_password": "The passwords do not match.",
+      "required_terms": "Agreement to terms is required."
+    }
+  },
+  "reset_password": {
+    "alert": {
+      "reset_password": [
+        "Your password has been reset.",
+        "Please log in again."
+      ]
+    },
+    "button": {
+      "submit": "Submit"
+    },
+    "input": {
+      "confirmed_password": {
+        "placeholder": "8 characters including uppercase, numbers, symbols",
+        "title": "Confirm Password"
+      },
+      "password": {
+        "placeholder": "8 characters including uppercase, numbers, symbols",
+        "title": "New Password"
+      }
+    },
+    "title": "Reset Password",
+    "validation": {
+      "invalid_password": "Please check your password.",
+      "not_equal_password": "The passwords do not match."
+    }
+  },
+  "terms_agreement": {
+    "button": {
+      "detail": "Details >"
+    },
+    "terms": [
+      "Agree to Terms of Service*"
+    ]
+  },
+  "use_popup": {
+    "confirm_text": "OK"
+  }
 }
