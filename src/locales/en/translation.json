@@ -23,11 +23,11 @@
         "title": "Gender"
       }
     },
+    "title": "Complete Your Profile",
     "validation": {
       "invalid_age": "Please enter your age.",
       "invalid_country": "Please select a country.",
-      "invalid_gender": "Please select a gender.",
-      "title": "Complete Your Profile"
+      "invalid_gender": "Please select a gender."
     }
   },
   "confirm": {

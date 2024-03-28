@@ -23,11 +23,11 @@
         "title": "성별"
       }
     },
+    "title": "추가정보 입력",
     "validation": {
       "invalid_age": "나이를 입력해주세요.",
       "invalid_country": "국가를 선택해주세요.",
-      "invalid_gender": "성별을 선택해주세요.",
-      "title": "추가정보 입력"
+      "invalid_gender": "성별을 선택해주세요."
     }
   },
   "confirm": {
@@ -73,7 +73,7 @@
     ],
     "input": {
       "email": {
-        "placeholder": "이메일 주소 입력.",
+        "placeholder": "이메일 주소 입력",
         "title": "이메일"
       },
       "password": {
