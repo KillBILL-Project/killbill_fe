@@ -1,4 +1,5 @@
 import { useSetRecoilState } from 'recoil';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { tokenState, userState } from '../states';
 import { removeRefreshToken, saveRefreshToken } from '../services/storage/encryptedStorage';
 import { LoginResponse } from '../types/auth';
@@ -8,6 +9,7 @@ interface UseAuthType {
   setTokens: (params: LoginResponse) => Promise<void>;
   clearTokens: () => Promise<void>;
   getUser: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const useAuth = (): UseAuthType => {
@@ -33,7 +35,15 @@ const useAuth = (): UseAuthType => {
     setUser({ ...userInfo });
   };
 
-  return { setTokens, clearTokens, getUser };
+  const logout = async () => {
+    setUser(null);
+    await clearTokens();
+    if (await GoogleSignin.isSignedIn()) {
+      await GoogleSignin.signOut();
+    }
+  };
+
+  return { setTokens, clearTokens, getUser, logout };
 };
 
 export default useAuth;

@@ -26,9 +26,9 @@ const menuList: MenuType<MyPageParamList>[] = [
 
 const MyInfoScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
-  const [user, setUser] = useRecoilState(userState);
+  const [user] = useRecoilState(userState);
   const { bottom } = useSafeAreaInsets();
-  const { clearTokens } = UseAuth();
+  const { logout } = UseAuth();
 
   const onPressMenu = (route: keyof MyPageParamList, param?: ReportDetailParams) => {
     if (route !== 'ReportDetail') {
@@ -39,8 +39,7 @@ const MyInfoScreen = () => {
   };
 
   const onPressLogout = async () => {
-    setUser(null);
-    await clearTokens();
+    await logout();
   };
   return (
     <Screen title="내정보">

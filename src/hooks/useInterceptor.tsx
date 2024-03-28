@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
+import SplashScreen from 'react-native-splash-screen';
 import api from '../services/utils/api';
 import { tokenState } from '../states';
 import { requestReissue } from '../services/api/authService';
-import { WwoossResponse } from '../types/common';
 import UseAuth from './useAuth';
 import useToast from './useToast';
 
 const useInterceptor = () => {
   const { showToast } = useToast();
   const accessToken = useRecoilValue(tokenState);
-  const { setTokens, clearTokens } = UseAuth();
+  const { setTokens, clearTokens, logout } = UseAuth();
 
   useEffect(() => {
     const requestInterceptor = api.interceptors.request.use(
@@ -34,28 +34,31 @@ const useInterceptor = () => {
       async error => {
         console.error('error : ', error);
         const { config, response } = error;
-        if (response && +response.status === 401 && !config?.isRetryRequest) {
-          config.isRetryRequest = true;
-          console.log('401');
-          const reissueResponse = await requestReissue();
-          if (+reissueResponse.status === 401 || !reissueResponse.data.data?.accessToken) {
-            // TODO: 로그아웃 처리
-            await clearTokens();
-            return Promise.reject(error);
-          }
 
-          await setTokens(reissueResponse.data.data);
-
-          return api({
-            ...config,
-            headers: { Authorization: `Bearer ${reissueResponse.data.data.accessToken}` },
-          });
+        if (config.url === '/auth/reissue') {
+          SplashScreen.hide();
+          await logout();
+          return Promise.reject(error);
         }
 
-        if (error.response!.status >= 400) {
-          // TODO: 에러 메세지 토스트
-          const errorData = error.response?.data as WwoossResponse<unknown>;
-          showToast({ isFailed: true, message: errorData.message });
+        if (config.url !== '/auth/reissue' && response && +response.status === 401) {
+          try {
+            const reissueResponse = await requestReissue();
+
+            if (!reissueResponse.data.data?.accessToken) {
+              await logout();
+              return await Promise.reject(error);
+            }
+
+            await setTokens(reissueResponse.data.data);
+
+            return await api({
+              ...config,
+              headers: { Authorization: `Bearer ${reissueResponse.data.data.accessToken}` },
+            });
+          } catch (e) {
+            return Promise.reject(e);
+          }
         }
 
         return Promise.reject(error);
@@ -66,7 +69,7 @@ const useInterceptor = () => {
       api.interceptors.request.eject(requestInterceptor);
       api.interceptors.response.eject(responseInterceptor);
     };
-  }, [accessToken, clearTokens, setTokens, showToast]);
+  }, [accessToken, clearTokens, logout, setTokens, showToast]);
 };
 
 export default useInterceptor;
