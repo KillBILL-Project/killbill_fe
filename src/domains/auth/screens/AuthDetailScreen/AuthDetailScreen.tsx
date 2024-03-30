@@ -64,7 +64,6 @@ const AuthDetailScreen = () => {
     const pushConsent = await requestUserPermission();
 
     const params: RegisterRequest = {
-      email: route.params.email,
       loginType: route.params.loginType,
       socialToken: route.params.authCode,
       fcmToken,

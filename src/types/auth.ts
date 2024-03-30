@@ -17,14 +17,14 @@ export interface LoginForm {
 }
 
 export interface LoginRequest {
-  email: string;
+  email?: string;
   password?: string;
   loginType: LoginType;
   authCode?: string;
 }
 
 export interface RegisterRequest extends AuthDetailType {
-  email: string;
+  email?: string;
   fcmToken: string;
   pushConsent: boolean;
   password?: string;
@@ -39,7 +39,6 @@ export interface RegisterForm {
 }
 
 export interface SocialRegisterParams {
-  email: string;
   loginType: LoginType;
   authCode: string;
 }

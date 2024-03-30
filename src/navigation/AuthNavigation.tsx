@@ -5,6 +5,7 @@ import RegisterScreen from '../domains/auth/screens/RegisterScreen';
 import AuthDetailScreen from '../domains/auth/screens/AuthDetailScreen';
 import ForgotPasswordScreen from '../domains/auth/screens/ForgotPasswordScreen';
 import { AuthStackParamList } from '../types/navigation';
+import WebViewScreen from '../domains/home/screens/WebViewScreen';
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -15,6 +16,7 @@ const AuthNavigation = () => {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="AuthDetail" component={AuthDetailScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen name="WebView" component={WebViewScreen} />
     </Stack.Navigator>
   );
 };
