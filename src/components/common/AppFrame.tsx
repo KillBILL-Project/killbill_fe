@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth';
 import { requestUserPermission, setFcmToken } from '../../utils/push-notification';
 import useReissueMutation from '../../hooks/mutation/auth/useReissueMutation';
 import { loadRefreshToken } from '../../services/storage/encryptedStorage';
+import GlobalVariableManager from '../../services/utils/GlobalVariableManager';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   const { mutate: reissueMutate } = useReissueMutation();
@@ -32,22 +33,22 @@ const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (accessToken) return;
+    if (!accessToken) {
+      loadRefreshToken().then(refreshToken => {
+        if (!refreshToken) {
+          SplashScreen.hide();
+          return;
+        }
+        reissueMutate();
+      });
+    }
 
-    loadRefreshToken().then(refreshToken => {
-      if (!refreshToken) {
+    if (accessToken && !GlobalVariableManager.initialized) {
+      initializeApp().finally(() => {
+        GlobalVariableManager.setInitialized(true);
         SplashScreen.hide();
-        return;
-      }
-      reissueMutate();
-    });
-  }, [accessToken]);
-
-  useEffect(() => {
-    if (!accessToken) return;
-    initializeApp().finally(() => {
-      SplashScreen.hide();
-    });
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
