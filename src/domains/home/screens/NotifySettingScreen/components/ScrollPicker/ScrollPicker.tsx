@@ -36,9 +36,8 @@ const ScrollPicker = ({ itemList, value, setValue, fontSize, fontWeight }: Scrol
   };
 
   useEffect(() => {
-    value != null && setSelectedIndex(itemList.indexOf(value));
-    console.log(value);
-  }, [value]);
+    if (value != null) setSelectedIndex(itemList.indexOf(value));
+  }, [itemList, value]);
 
   return (
     <Container height={SCROLL_HEIGHT}>
