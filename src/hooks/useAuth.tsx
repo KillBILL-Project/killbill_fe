@@ -1,5 +1,4 @@
 import { useSetRecoilState } from 'recoil';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { tokenState, userState } from '../states';
 import { removeRefreshToken, saveRefreshToken } from '../services/storage/encryptedStorage';
 import { LoginResponse } from '../types/auth';
@@ -26,21 +25,16 @@ const useAuth = (): UseAuthType => {
     await removeRefreshToken();
   };
 
-  const getUser = async () => {
-    const response = await getUserInfo();
-    const userInfo = response.data.data;
-    if (!userInfo) {
-      // TODO: 유저정보가 없을리 없지만 없다면 로그인화면으로 보내야하나?
-    }
-    setUser({ ...userInfo });
-  };
-
   const logout = async () => {
     setUser(null);
     await clearTokens();
-    if (await GoogleSignin.isSignedIn()) {
-      await GoogleSignin.signOut();
-    }
+  };
+
+  const getUser = async () => {
+    const response = await getUserInfo();
+    const userInfo = response.data.data;
+
+    setUser({ ...userInfo });
   };
 
   return { setTokens, clearTokens, getUser, logout };
