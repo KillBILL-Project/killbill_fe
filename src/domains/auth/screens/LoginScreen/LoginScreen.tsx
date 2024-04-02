@@ -23,6 +23,7 @@ import { H1 } from '../../../../components/Typography';
 import Separator from '../../../../components/Separator/Separator';
 import useLogin from './useLogin';
 import AppleLoginButton from './components/AppleLoginButton';
+import { isIOS } from '../../../../utils/platform';
 
 const LoginScreen = () => {
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
@@ -79,7 +80,7 @@ const LoginScreen = () => {
             </AdditionalButtonContainer>
           </LoginContainer>
           <SsoLoginButtonContainer>
-            <AppleLoginButton login={login} />
+            {isIOS && <AppleLoginButton login={login} />}
             <BaseButton
               onPress={onPressGoogleLoginButton}
               text={t('login.button.google_login')}
