@@ -35,15 +35,15 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>GOOGLE_MAPS_IOS_API_KEY</key>
-    <string>${GOOGLE_MAPS_IOS_API_KEY}</string>
+	<key>GOOGLE_MAPS_IOS_API_KEY</key>
+	<string>${GOOGLE_MAPS_IOS_API_KEY}</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>위치 정보를 수집하여 `내 위치` 기능에 활용하며, 사용자가 언제든지 권한을 비활성화할 수 있습니다.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

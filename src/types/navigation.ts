@@ -8,6 +8,7 @@ export type AuthStackParamList = {
   Register: undefined;
   AuthDetail: SocialRegisterParams;
   ForgotPassword: undefined;
+  WebView: { url: string };
 };
 
 export type HomeStackParamList = MyPageParamList & {
@@ -42,5 +43,5 @@ export type MenuParamList = {
   ReportDetail: ReportDetailParams;
   ResetPassword: undefined;
   EmptyTrash: undefined;
-  WebView: undefined;
+  WebView: { url: string };
 };

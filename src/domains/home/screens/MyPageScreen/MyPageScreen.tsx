@@ -65,6 +65,13 @@ const MyPageScreen = () => {
   const tabNavigation = useNavigation<NavigationProp<HomeTabParamList>>();
 
   const onPressMenu = (route: keyof MyPageParamList) => {
+    if (route === 'WebView') {
+      navigate(route, {
+        url: 'https://wwooss.notion.site/FAQ-980b6ce2ce7047c2922902aba31a4a6e?pvs=74',
+      });
+      return;
+    }
+    // @ts-ignore
     navigate(route);
   };
 

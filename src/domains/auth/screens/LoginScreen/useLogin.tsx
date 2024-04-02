@@ -106,16 +106,18 @@ const useLogin = () => {
       });
 
       const credentialState = await appleAuth.getCredentialStateForUser(responseObject.user);
+
       if (credentialState === state.AUTHORIZED) {
         if (responseObject.identityToken == null) {
           Alert.alert('token 없음');
           return null;
         }
+
         const loginRequest: LoginRequest = {
-          email: responseObject.email ?? '',
           loginType: 'APPLE',
           authCode: responseObject.identityToken,
         };
+
         return loginRequest;
       }
 
@@ -130,7 +132,7 @@ const useLogin = () => {
 
   const login = async (loginType: LoginType) => {
     if (inProgress) return;
-    const loginRequest: LoginRequest = { email: '', loginType: 'EMAIL' };
+    const loginRequest: LoginRequest = { loginType: 'EMAIL' };
     let isCanceled = false;
 
     try {
@@ -150,7 +152,6 @@ const useLogin = () => {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
 
-          loginRequest.email = userInfo.user.email;
           loginRequest.loginType = 'GOOGLE';
           loginRequest.authCode = userInfo.idToken ?? '';
         } catch (error) {
@@ -165,7 +166,6 @@ const useLogin = () => {
 
         loginRequest.authCode = loginResult.authCode;
         loginRequest.loginType = loginResult.loginType;
-        loginRequest.email = loginResult.email;
       }
 
       try {
@@ -179,7 +179,6 @@ const useLogin = () => {
             showToast({ isFailed: true, message: e.response?.data.message });
           } else {
             navigate('AuthDetail', {
-              email: loginRequest.email,
               loginType: loginRequest.loginType,
               authCode: loginRequest.authCode!,
             });

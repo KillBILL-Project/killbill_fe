@@ -10,6 +10,8 @@ import { requestUserPermission, setFcmToken } from '../../utils/push-notificatio
 import useReissueMutation from '../../hooks/mutation/auth/useReissueMutation';
 import { loadRefreshToken } from '../../services/storage/encryptedStorage';
 import GlobalVariableManager from '../../services/utils/GlobalVariableManager';
+import { loadRefreshToken, removeRefreshToken } from '../../services/storage/encryptedStorage';
+import Config from 'react-native-config';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   const { mutate: reissueMutate } = useReissueMutation();
