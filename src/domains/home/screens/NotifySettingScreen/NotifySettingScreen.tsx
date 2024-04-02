@@ -53,11 +53,10 @@ const NotifySettingScreen = () => {
         return Promise.reject(new Error('선택된 요일이 없습니다.'));
       }
 
-      if (alarmParams.alarmId) {
-        await updateAlarm(alarmParams);
-      } else {
-        await createAlarm(alarmParams);
-      }
+      if (alarmParams.alarmId) await updateAlarm(alarmParams);
+      else await createAlarm(alarmParams);
+
+      return Promise.resolve();
     },
   });
 
