@@ -8,10 +8,8 @@ import { tokenState } from '../../states';
 import useAuth from '../../hooks/useAuth';
 import { requestUserPermission, setFcmToken } from '../../utils/push-notification';
 import useReissueMutation from '../../hooks/mutation/auth/useReissueMutation';
-import { loadRefreshToken } from '../../services/storage/encryptedStorage';
 import GlobalVariableManager from '../../services/utils/GlobalVariableManager';
-import { loadRefreshToken, removeRefreshToken } from '../../services/storage/encryptedStorage';
-import Config from 'react-native-config';
+import { loadRefreshToken } from '../../services/storage/encryptedStorage';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   const { mutate: reissueMutate } = useReissueMutation();
