@@ -3,6 +3,8 @@ import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
 import { UserGuideDetailParams } from '../constants/userGuide';
 
+// --- Auth Navigation
+
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
@@ -11,10 +13,16 @@ export type AuthStackParamList = {
   WebView: { url: string };
 };
 
-export type HomeStackParamList = MyPageParamList & {
-  Tab: HomeTabParamList;
-  NotifySetting: AlarmParams;
-};
+// --- Home Navigation
+
+export type HomeStackParamList = MyPageParamList &
+  AlarmListParamList &
+  MyInfoParamList &
+  UserGuideParamList &
+  ReportParamList &
+  HomeParamList & {
+    Tab: HomeTabParamList;
+  };
 
 export type HomeTabParamList = {
   Home: undefined;
@@ -23,25 +31,34 @@ export type HomeTabParamList = {
   MyPage: undefined;
 };
 
-export type MyPageParamList = TopMenuParamList &
-  MenuParamList & {
-    Notification: undefined;
-  };
-
-export type TopMenuParamList = {
-  NotifyList: undefined;
+export type MyPageParamList = {
+  AlarmList: undefined;
   MyHistory: undefined;
   UserGuide: undefined;
+  PraiseCard: undefined;
+  MyInfo: undefined;
+  Setting: undefined;
+  Faq: undefined;
+  Notification: undefined;
+  WebView: { url: string };
 };
 
-export type MenuParamList = {
-  Faq: undefined;
-  PraiseCard: undefined;
-  Setting: undefined;
-  UserGuideDetail: UserGuideDetailParams;
-  MyInfo: undefined;
-  ReportDetail: ReportDetailParams;
+export type AlarmListParamList = {
+  AlarmSetting: AlarmParams;
+};
+
+export type MyInfoParamList = {
   ResetPassword: undefined;
+};
+
+export type UserGuideParamList = {
+  UserGuideDetail: UserGuideDetailParams;
+};
+
+export type ReportParamList = {
+  ReportDetail: ReportDetailParams;
+};
+
+export type HomeParamList = {
   EmptyTrash: undefined;
-  WebView: { url: string };
 };

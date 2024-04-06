@@ -23,7 +23,7 @@ const topMenuList: MenuType<MyPageParamList>[] = [
   {
     icon: alarmSetting,
     name: '알림 설정',
-    route: 'NotifyList',
+    route: 'AlarmList',
   },
   {
     icon: myHistory,
@@ -71,7 +71,6 @@ const MyPageScreen = () => {
       });
       return;
     }
-    // @ts-ignore
     navigate(route);
   };
 
@@ -99,7 +98,7 @@ const MyPageScreen = () => {
               key={menu.route}
               title={menu.name}
               onPress={() => onPressMenu(menu.route)}
-              icon={menu.icon}
+              icon={menu.icon!}
             />
           ))}
         </ThreeButtonContainer>

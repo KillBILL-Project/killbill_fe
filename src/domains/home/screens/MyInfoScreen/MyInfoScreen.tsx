@@ -11,12 +11,11 @@ import Separator from '../../../../components/Separator/Separator';
 import { width } from '../../../../utils/platform';
 import MenuButton from '../components/MenuButton/MenuButton';
 import { MenuType } from '../../../../types/common';
-import { MyPageParamList } from '../../../../types/navigation';
+import { MyInfoParamList } from '../../../../types/navigation';
 import { Box, Container, LogoutButton, Title } from './MyInfoScreen.style';
 import UseAuth from '../../../../hooks/useAuth';
-import { ReportDetailParams } from '../../../../types/report';
 
-const menuList: MenuType<MyPageParamList>[] = [
+const menuList: MenuType<MyInfoParamList>[] = [
   {
     name: '비밀번호 재설정',
     route: 'ResetPassword',
@@ -25,17 +24,13 @@ const menuList: MenuType<MyPageParamList>[] = [
 ];
 
 const MyInfoScreen = () => {
-  const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
+  const { navigate } = useNavigation<NavigationProp<MyInfoParamList>>();
   const [user] = useRecoilState(userState);
   const { bottom } = useSafeAreaInsets();
   const { logout } = UseAuth();
 
-  const onPressMenu = (route: keyof MyPageParamList, param?: ReportDetailParams) => {
-    if (route !== 'ReportDetail') {
-      navigate(route);
-      return;
-    }
-    if (param) navigate(route, param);
+  const onPressMenu = (route: keyof MyInfoParamList) => {
+    navigate(route);
   };
 
   const onPressLogout = async () => {

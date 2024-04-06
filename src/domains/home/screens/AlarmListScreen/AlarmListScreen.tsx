@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { toString } from 'lodash';
 import { useSetRecoilState } from 'recoil';
 import Screen from '../../../../components/Screen/Screen';
-import { Container, Footer } from './NotifyListScreen.style';
-import Notify from './components/Notify/Notify';
+import { Container, Footer } from './AlarmListScreen.style';
+import Alarm from './components/Alarm/Alarm';
 import BaseButton from '../../../auth/components/BaseButton/BaseButton';
 import { MAIN, WHITE } from '../../../../constants/colors';
 import { HomeStackParamList } from '../../../../types/navigation';
@@ -21,7 +21,7 @@ const defaultAlarm = {
   minute: '00',
 };
 
-const NotifyListScreen = () => {
+const AlarmListScreen = () => {
   const setInProgress = useSetRecoilState(inProgressState);
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
 
@@ -51,7 +51,7 @@ const NotifyListScreen = () => {
   useEffect(() => setInProgress(isLoading), [setInProgress, isLoading]);
 
   const onPressAddAlarm = () => {
-    navigate('NotifySetting', defaultAlarm);
+    navigate('AlarmSetting', defaultAlarm);
   };
 
   return (
@@ -59,7 +59,7 @@ const NotifyListScreen = () => {
       <Container>
         <FlatList
           data={data}
-          renderItem={({ item }) => <Notify {...item} />}
+          renderItem={({ item }) => <Alarm {...item} />}
           keyExtractor={(item, index) => toString(index) + item.hour + item.minute}
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 60 }}
           showsVerticalScrollIndicator={false}
@@ -77,4 +77,4 @@ const NotifyListScreen = () => {
   );
 };
 
-export default NotifyListScreen;
+export default AlarmListScreen;

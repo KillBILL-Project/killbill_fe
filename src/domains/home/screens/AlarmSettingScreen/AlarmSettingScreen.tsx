@@ -14,7 +14,7 @@ import {
   WeeklyPicker,
   WeeklyPickerContainer,
   WeeklyPickerTitle,
-} from './NotifySettingScreen.style';
+} from './AlarmSettingScreen.style';
 import ScrollPicker from './components/ScrollPicker';
 import Spacer from '../../../../components/Spacer';
 import { Bold16 } from '../../../../components/Typography';
@@ -32,8 +32,8 @@ const meridiems = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => `${i}`);
 const minutes = Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : `${i}`));
 
-const NotifySettingScreen = () => {
-  const { params } = useRoute<RouteProp<HomeStackParamList, 'NotifySetting'>>();
+const AlarmSettingScreen = () => {
+  const { params } = useRoute<RouteProp<HomeStackParamList, 'AlarmSetting'>>();
   const [alarm, setAlarm] = useState<AlarmParams>({ ...params });
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const { showToast } = useToast();
@@ -155,4 +155,4 @@ const NotifySettingScreen = () => {
   );
 };
 
-export default NotifySettingScreen;
+export default AlarmSettingScreen;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Medium14 } from '../../../../../../components/Typography';
 import { GREY500, WHITE } from '../../../../../../constants/colors';
 import { Container } from './DailyButton.style';

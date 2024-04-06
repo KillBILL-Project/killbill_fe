@@ -12,12 +12,12 @@ import SettingScreen from '../domains/home/screens/SettingScreen';
 import UserGuideScreen from '../domains/home/screens/UserGuideScreen';
 import MyInfoScreen from '../domains/home/screens/MyInfoScreen';
 import MyHistoryScreen from '../domains/home/screens/MyHistoryScreen';
-import NotifySettingScreen from '../domains/home/screens/NotifySettingScreen';
+import AlarmSettingScreen from '../domains/home/screens/AlarmSettingScreen';
 import NotificationScreen from '../domains/home/screens/NotificationScreen';
 import ResetPasswordScreen from '../domains/auth/screens/ResetPasswordScreen';
 import { HomeStackParamList, HomeTabParamList } from '../types/navigation';
 import TrashLocationScreen from '../domains/home/screens/TrashLocationScreen';
-import NotifyListScreen from '../domains/home/screens/NotifyListScreen';
+import AlarmListScreen from '../domains/home/screens/AlarmListScreen';
 import EmptyTrashScreen from '../domains/home/screens/EmptyTrashScreen';
 import UserGuideDetailScreen from '../domains/home/screens/UserGuideDetailScreen';
 import WebViewScreen from '../domains/home/screens/WebViewScreen';
@@ -53,8 +53,8 @@ const HomeNavigation = () => {
       <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       <Stack.Screen name="MyHistory" component={MyHistoryScreen} />
       <Stack.Screen name="Notification" component={NotificationScreen} />
-      <Stack.Screen name="NotifyList" component={NotifyListScreen} />
-      <Stack.Screen name="NotifySetting" component={NotifySettingScreen} />
+      <Stack.Screen name="AlarmList" component={AlarmListScreen} />
+      <Stack.Screen name="AlarmSetting" component={AlarmSettingScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
       <Stack.Screen name="EmptyTrash" component={EmptyTrashScreen} />
       <Stack.Screen name="WebView" component={WebViewScreen} />

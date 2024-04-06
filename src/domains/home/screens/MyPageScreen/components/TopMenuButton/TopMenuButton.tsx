@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, ImageSourcePropType } from 'react-native';
-import Spacer from '../../../../../../components/Spacer/Spacer';
 import { Medium14 } from '../../../../../../components/Typography';
 import { Container, Title } from './TopMenuButton.style';
 import { ratio } from '../../../../../../utils/platform';
