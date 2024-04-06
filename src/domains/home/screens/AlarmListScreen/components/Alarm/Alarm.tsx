@@ -8,7 +8,7 @@ import {
   SelectedDay,
   TimeContainer,
   TimeTest,
-} from './Notify.style';
+} from './Alarm.style';
 import { Bold12, Regular16, Regular18 } from '../../../../../../components/Typography';
 import { BLACK, GREY500, WHITE } from '../../../../../../constants/colors';
 import Spacer from '../../../../../../components/Spacer/Spacer';
@@ -16,11 +16,11 @@ import { styles, weekly } from '../../../../../../constants/constants';
 import { HomeStackParamList } from '../../../../../../types/navigation';
 import { AlarmParams } from '../../../../../../types/notifications';
 
-const Notify = ({ alarmId, hour, minute, meridiem, dayOfWeek }: AlarmParams) => {
+const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek }: AlarmParams) => {
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
 
   const onPress = () => {
-    navigate('NotifySetting', { alarmId, hour, minute, meridiem, dayOfWeek });
+    navigate('AlarmSetting', { alarmId, hour, minute, meridiem, dayOfWeek });
   };
 
   return (
@@ -50,4 +50,4 @@ const Notify = ({ alarmId, hour, minute, meridiem, dayOfWeek }: AlarmParams) => 
   );
 };
 
-export default Notify;
+export default Alarm;

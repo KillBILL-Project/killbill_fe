@@ -8,16 +8,16 @@ export const Container = styled.View`
 
 export const TimePickerContainer = styled(LinearGradient)`
   width: 100%;
-  height: 292px;
+  height: ${ratioPx(236)};
 `;
 
 export const TimePicker = styled.View`
   position: absolute;
   flex-direction: row;
   bottom: 0;
-  margin-bottom: 32px;
-  margin-left: 56px;
-  margin-right: 51px;
+  margin-bottom: ${ratioPx(32)};
+  margin-left: ${ratioPx(56)};
+  margin-right: ${ratioPx(51)};
 `;
 
 export const MeridiemScroll = styled.View`
@@ -30,7 +30,7 @@ export const TimeScroll = styled.View`
 `;
 
 export const WeeklyPickerContainer = styled.View`
-  margin: 36px 24px;
+  margin: ${ratioPx(36)} ${ratioPx(24)};
   flex-direction: row;
   align-items: center;
 `;

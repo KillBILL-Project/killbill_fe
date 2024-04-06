@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ImageSourcePropType, View } from 'react-native';
+import { Image } from 'react-native';
 import {
   ButtonContainer,
   Container,

@@ -5,7 +5,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import homeBackground from '../../../../../assets/image/home_background.png';
 import trashMotion from '../../../../../assets/lottie/trash_motion.json';
 import { useDialog } from '../../../../../states/context/DialogContext';
-import { MenuParamList } from '../../../../../types/navigation';
+import { HomeParamList } from '../../../../../types/navigation';
 import TrashCount from './TrashCount';
 import useTrashCanContentsCount from '../../../../../hooks/queries/trash/useTrashCanContentsCount';
 
@@ -13,7 +13,7 @@ const Motion = ({ motionRef }: any) => {
   const { showConfirm } = useDialog();
   const { data: count } = useTrashCanContentsCount();
 
-  const { navigate } = useNavigation<NavigationProp<MenuParamList>>();
+  const { navigate } = useNavigation<NavigationProp<HomeParamList>>();
 
   const handleEmptyTrash = async () => {
     if (!count) {

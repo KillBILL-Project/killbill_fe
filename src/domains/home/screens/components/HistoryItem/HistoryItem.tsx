@@ -1,7 +1,5 @@
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Image, View } from 'react-native';
-import { HomeStackParamList } from '../../../../../types/navigation';
 import { BottomText, Container, Content, LeftIcon, RightIcon, TopText } from './HistoryItem.style';
 import { Medium14 } from '../../../../../components/Typography';
 import { BLACK } from '../../../../../constants/colors';
@@ -17,10 +15,10 @@ type DateLabelProps = IconType & {
 };
 
 const HistoryItem = ({ icon, text, children, touchable = false }: DateLabelProps) => {
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  // const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
 
   return (
-    <Container disabled={!touchable} onPress={() => navigation.navigate('ReportDetail')}>
+    <Container disabled={!touchable} onPress={() => {}}>
       <LeftIcon>
         {icon && (
           <View

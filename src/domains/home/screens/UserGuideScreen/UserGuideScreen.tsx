@@ -7,10 +7,10 @@ import { UserGuideList, userGuideCategoryArray } from '../../../../constants/use
 import Screen from '../../../../components/Screen';
 import Separator from '../../../../components/Separator';
 import { GREY100 } from '../../../../constants/colors';
-import { MenuParamList } from '../../../../types/navigation';
+import { UserGuideParamList } from '../../../../types/navigation';
 
 const UserGuideScreen = () => {
-  const { navigate } = useNavigation<NavigationProp<MenuParamList>>();
+  const { navigate } = useNavigation<NavigationProp<UserGuideParamList>>();
 
   const onPressCategory = (category: UserGuideList) => {
     navigate('UserGuideDetail', { category });
@@ -20,15 +20,11 @@ const UserGuideScreen = () => {
     <Screen title="이용가이드">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <Container>
-          {userGuideCategoryArray.map((category, index) => (
-            <>
-              <UserGuideCategory
-                key={`userGuide${index.toString()}`}
-                category={category}
-                onPress={() => onPressCategory(category)}
-              />
+          {userGuideCategoryArray.map(category => (
+            <React.Fragment key={category}>
+              <UserGuideCategory category={category} onPress={() => onPressCategory(category)} />
               <Separator horizontal length="100%" color={GREY100} margin={16} />
-            </>
+            </React.Fragment>
           ))}
         </Container>
       </ScrollView>
