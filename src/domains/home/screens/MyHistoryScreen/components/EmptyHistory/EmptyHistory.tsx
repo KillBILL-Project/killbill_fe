@@ -48,7 +48,7 @@ const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
       const trashCanHistoryResponse = response.data.data;
       const { trashCanHistoryResponseList } = trashCanHistoryResponse;
 
-      let currentDate = moment().format('YYYYMM');
+      let currentDate = '';
 
       const newTrashCanHistoryResponseList = trashCanHistoryResponseList.map(trashCanHistory => {
         const newTrashCanHistory = { ...trashCanHistory };

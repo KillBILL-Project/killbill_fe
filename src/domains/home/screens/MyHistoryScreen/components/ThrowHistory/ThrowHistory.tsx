@@ -47,11 +47,11 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
       const trashLogResponse = response.data.data;
       const { trashLogResponseList } = trashLogResponse;
 
-      let currentDate = moment().format('YYYYMM');
+      let currentDate = '';
 
       const newTrashLogResponseList = trashLogResponseList.map(trashLog => {
         const newTrashLog = { ...trashLog };
-        const createdDate = moment(trashLog.createdAt).format('YYYYMM');
+        const createdDate = moment(trashLog.createdAt).format('YYYYMMDD');
         if (createdDate === currentDate) newTrashLog.isEqualDate = true;
         if (createdDate !== currentDate) currentDate = createdDate;
         return newTrashLog;
