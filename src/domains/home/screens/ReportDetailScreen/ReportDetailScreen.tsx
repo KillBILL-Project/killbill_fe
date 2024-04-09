@@ -3,7 +3,7 @@ import { FlatList, Image, processColor, Text, View } from 'react-native';
 import { BarChart } from 'react-native-charts-wrapper';
 import { useQuery } from '@tanstack/react-query';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { findIndex, toString } from 'lodash';
+import { findIndex, round, toString } from 'lodash';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import Screen from '../../../../components/Screen/Screen';
 import {
@@ -42,12 +42,13 @@ import {
 import Spacer from '../../../../components/Spacer/Spacer';
 import Separator from '../../../../components/Separator/Separator';
 import { styles } from '../../../../constants/constants';
-import { MenuParamList } from '../../../../types/navigation';
+import { ReportParamList } from '../../../../types/navigation';
 import { getWeeklyReportDetail } from '../../../../services/api/reportService';
 import Spinner from '../../../../components/Spinner';
 import { TrashCategory } from '../../../../types/report';
 import { ratio } from '../../../../utils/platform';
 
+import unchanged from '../../../../assets/icon/unchanged.png';
 import increaseArrow from '../../../../assets/icon/arrow_increase.png';
 import decreaseArrow from '../../../../assets/icon/arrow_decrease.png';
 import PraiseCard from '../components/PraiseCard';
@@ -60,7 +61,7 @@ const day = Array.from({ length: 7 }, (_, i) => ({
 const trashCategory: TrashCategory[] = ['유리', '종이', '플라스틱', '캔', '비닐', '기타'];
 
 const ReportDetailScreen = () => {
-  const { params } = useRoute<RouteProp<MenuParamList, 'ReportDetail'>>();
+  const { params } = useRoute<RouteProp<ReportParamList, 'ReportDetail'>>();
   const { weeklyReportId, reportTitle } = params;
 
   const { data, isLoading } = useQuery({
@@ -111,13 +112,19 @@ const ReportDetailScreen = () => {
                 <Medium14 color={BLACK}>탄소절감량(Beta)</Medium14>
               </WeeklyChangeTitle>
               <WeeklyTotalAmount>
-                <Bold12 color={BLACK}>{`${data.weeklyCarbonSaving ?? 0}gCO2`}</Bold12>
+                <Bold12 color={BLACK}>{`${round(data.weeklyCarbonSaving, 2) ?? 0}gCO2`}</Bold12>
               </WeeklyTotalAmount>
               <ChangeIndicator>
                 <ChangeIndicatorIcon />
                 <WeeklyChangeAmount>
                   <Image
-                    source={data.wowCarbonSaving > 0 ? increaseArrow : decreaseArrow}
+                    source={
+                      data.wowCarbonSaving === 0
+                        ? unchanged
+                        : data.wowCarbonSaving > 0
+                        ? increaseArrow
+                        : decreaseArrow
+                    }
                     style={{ width: 14, height: 14 }}
                   />
                   <WeeklyChangeAmountText>{data.wowCarbonSaving ?? 0}</WeeklyChangeAmountText>
@@ -136,7 +143,13 @@ const ReportDetailScreen = () => {
                 <ChangeIndicatorIcon />
                 <WeeklyChangeAmount>
                   <Image
-                    source={data.wowRefund > 0 ? increaseArrow : decreaseArrow}
+                    source={
+                      data.wowRefund === 0
+                        ? unchanged
+                        : data.wowCarbonSaving > 0
+                        ? increaseArrow
+                        : decreaseArrow
+                    }
                     style={{ width: 14, height: 14 }}
                   />
                   <WeeklyChangeAmountText>{data.wowRefund ?? 0}</WeeklyChangeAmountText>
@@ -170,7 +183,13 @@ const ReportDetailScreen = () => {
                       }),
                       label: '',
                       config: {
-                        drawValues: false,
+                        drawValues:
+                          Math.max(
+                            ...data.weeklyTrashCountByCategoryList.map(item => item.trashCount),
+                          ) > 15,
+                        valueFormatter: '0',
+                        valueTextSize: ratio * 10,
+                        valueTextColor: processColor(GREY600),
                         highlightColor: processColor(PRIMARY),
                         color: processColor(TRACK_BG),
                         highlightAlpha: 255,
@@ -203,6 +222,9 @@ const ReportDetailScreen = () => {
                     textColor: processColor(GREY600),
                     fontWeight: '400',
                     spaceBottom: 0.05,
+                    valueFormatterPattern: '0',
+                    granularityEnabled: true,
+                    granularity: 1,
                   },
                 }}
               />
