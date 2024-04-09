@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'moment/locale/ko';
 import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { isEmpty, toNumber } from 'lodash';
@@ -60,11 +60,6 @@ const AlarmSettingScreen = () => {
     },
   });
 
-  if (isSuccess) {
-    queryClient.invalidateQueries({ queryKey: ['alarm'] });
-    navigation.goBack();
-  }
-
   const setAlarmProps = <K extends keyof AlarmParams>(key: K) => {
     return (value: AlarmParams[K]) => {
       setAlarm(prevState => ({ ...prevState, [key]: value }));
@@ -85,6 +80,15 @@ const AlarmSettingScreen = () => {
   );
 
   const onPressSaveAlarm = () => mutate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      (async () => {
+        await queryClient.invalidateQueries({ queryKey: ['alarm'] });
+        navigation.goBack();
+      })();
+    }
+  }, [isSuccess, navigation, queryClient]);
 
   return (
     <Screen
