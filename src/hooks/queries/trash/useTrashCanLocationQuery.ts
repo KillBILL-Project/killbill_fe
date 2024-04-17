@@ -3,7 +3,7 @@ import api from '../../../services/utils/api';
 
 export const useTrashCanLocationQuery = ({ lat, lng, distance }: any) => {
   return useQuery({
-    queryKey: ['trash-can-location'],
+    queryKey: ['trash-can-location', lat, lng, distance],
     queryFn: () => api.get(`trash-can?lat=${+lat}&lng=${+lng}&distance=${distance}`),
     enabled: false,
     retry: 0,

@@ -5,7 +5,6 @@ import Screen from '../../../../components/Screen/Screen';
 import notification from '../../../../assets/icon/notification.png';
 import { MyPageParamList } from '../../../../types/navigation';
 import GoogleMap from './components/GoogleMap';
-import TrashList from './TrashList';
 
 const TrashLocationScreen = () => {
   const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
