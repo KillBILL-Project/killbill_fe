@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
   input: {
     fontSize: ratio * 18,
     fontWeight: '700',
+    lineHeight: ratio * 28,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: ratio * 28,
+    height: ratio * 60,
   },
   iconContainer: { position: 'relative', marginLeft: ratio * 4 },
   icon: { width: ratio * 20, height: ratio * 20 },
@@ -87,7 +88,7 @@ const Picker = (props: PickerProps) => {
           iconContainer: styles.iconContainer,
           inputIOS: { ...styles.input, color },
           inputIOSContainer: styles.inputContainer,
-          inputAndroid: styles.input,
+          inputAndroid: { ...styles.input, color },
           inputAndroidContainer: styles.inputContainer,
         }}
         useNativeAndroidPickerStyle={false}

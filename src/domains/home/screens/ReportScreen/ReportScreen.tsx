@@ -12,6 +12,7 @@ import { ReportResponseType, ReportType, WeekInfoType } from '../../../../types/
 import { isIOS, ratio } from '../../../../utils/platform';
 import Picker from '../components/Picker';
 import Spinner from '../../../../components/Spinner';
+import NoTrash from '../../../../components/NoTrash';
 
 const ReportScreen = () => {
   const [selectedYear, setSelectedYear] = useState('2024');
@@ -109,7 +110,7 @@ const ReportScreen = () => {
             onEndReached={() => hasNextPage && fetchNextPage()}
             keyExtractor={item => toString(item.weeklyReportId)}
             contentContainerStyle={{ flexGrow: 1, margin: ratio * 24 }}
-            ListEmptyComponent={isLoading ? <Spinner /> : null}
+            ListEmptyComponent={isLoading ? <Spinner /> : <NoTrash />}
           />
         </ListContainer>
       </Container>

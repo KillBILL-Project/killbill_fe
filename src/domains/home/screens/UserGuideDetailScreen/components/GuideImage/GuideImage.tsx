@@ -3,7 +3,7 @@ import { Image, ImageSourcePropType } from 'react-native';
 import { Container } from './GuideImage.style';
 
 interface GuideImageProps {
-  image?: ImageSourcePropType;
+  image: ImageSourcePropType;
 }
 
 const GuideImage = ({ image }: GuideImageProps) => {

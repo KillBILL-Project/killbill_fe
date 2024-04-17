@@ -104,7 +104,7 @@ const MyPageScreen = () => {
         </ThreeButtonContainer>
         <Spacer height={16} />
         <WideButton onPress={onPressBanner} />
-        <Separator horizontal length={width} thickness={8} margin={24} />
+        <Separator horizontal length={width} thickness={8} marginTop={24} marginBottom={24} />
         <MenuButtonContainer>
           {menuList.map(menu => (
             <MenuButton key={menu.name} title={menu.name} onPress={() => onPressMenu(menu.route)} />

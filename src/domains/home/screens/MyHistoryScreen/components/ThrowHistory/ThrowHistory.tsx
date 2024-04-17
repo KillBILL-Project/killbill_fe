@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment/moment';
 import { FlatList, View } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useSetRecoilState } from 'recoil';
 import Separator from '../../../../../../components/Separator';
 import DateLabel from '../../../components/DateLabel';
 import HistoryItem from '../../../components/HistoryItem';
@@ -11,10 +10,10 @@ import { BLACK, GREY600 } from '../../../../../../constants/colors';
 import Spacer from '../../../../../../components/Spacer';
 import { getTrashLog, TrashLogResponseListType } from '../../../../../../services/api/trashService';
 import { Container } from './ThrowHistory.style';
-import { inProgressState } from '../../../../../../states';
 import { isIOS, ratio } from '../../../../../../utils/platform';
 import Picker from '../../../components/Picker';
 import Spinner from '../../../../../../components/Spinner';
+import NoTrash from '../../../../../../components/NoTrash';
 
 interface ThrowHistoryProps {
   selected: boolean;
@@ -32,8 +31,6 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
   const onCloseYear = () => setYearForIos(selectedYear);
   const onChangeMonth = (value: string) => setSelectedMonth(value);
   const onCloseMonth = () => setMonthForIos(selectedMonth);
-
-  const setInProgress = useSetRecoilState(inProgressState);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     // eslint-disable-next-line @tanstack/query/exhaustive-deps
@@ -62,8 +59,6 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length : undefined),
   });
-
-  useEffect(() => setInProgress(isLoading), [setInProgress, isLoading]);
 
   return (
     <Container selected={selected}>
@@ -110,7 +105,7 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
           </View>
         }
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={isLoading ? <Spinner /> : null}
+        ListEmptyComponent={isLoading ? <Spinner /> : <NoTrash />}
       />
     </Container>
   );
