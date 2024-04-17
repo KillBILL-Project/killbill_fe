@@ -2,13 +2,14 @@ import { Alert, Image, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region, UrlTile } from 'react-native-maps';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import myLocationIcon from '../../../../../assets/icon/my_location.png';
 import marker from '../../../../../assets/icon/marker.png';
 import { useTrashCanLocationQuery } from '../../../../../hooks/queries/trash/useTrashCanLocationQuery';
 import TrashList from '../TrashList';
 import RefetchByCurrentPoint from './RefetchByCurrentPoint';
 import MyLocation from './MyLocation';
 import { MapWrapper } from './TrashLocation.style';
+import { useRecoilValue } from 'recoil';
+import { selectedTrashType } from '../../../../../states';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -20,6 +21,7 @@ interface ILocation {
 const EARTH_RADIUS = 6371;
 
 const GoogleMap = () => {
+  const trashType = useRecoilValue(selectedTrashType);
   const mapViewRef = useRef<MapView>(null);
   const [mapRegion, setMapRegion] = useState<ILocation | undefined>(undefined);
   const [distanceToTop, setDistanceToTop] = useState(0);
@@ -28,7 +30,9 @@ const GoogleMap = () => {
     lat: mapRegion?.latitude,
     lng: mapRegion?.longitude,
     distance: distanceToTop,
+    trashType,
   });
+
   const calculateDistanceToTop = useCallback((region: Region) => {
     if (!region) return;
 
@@ -61,6 +65,10 @@ const GoogleMap = () => {
       () => {},
     );
   }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [trashType]);
 
   return (
     <>
