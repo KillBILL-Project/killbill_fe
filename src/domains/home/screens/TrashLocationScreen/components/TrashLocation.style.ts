@@ -50,6 +50,6 @@ export const TrashTypeText = styled.Text`
   line-height: 21px;
 `;
 export const TrashTypeListWrapper = styled.ScrollView`
-  padding: ${ratioPx(24)} ${ratioPx(12)};
-  flex: 1;
+  padding: 0 ${ratioPx(12)};
+  flex: 2;
 `;

@@ -1,4 +1,3 @@
-import { Text, TouchableOpacity, View } from 'react-native';
 import React, { memo } from 'react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';

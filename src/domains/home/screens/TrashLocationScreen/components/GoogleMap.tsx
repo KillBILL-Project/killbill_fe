@@ -1,4 +1,4 @@
-import { Alert, Image, View } from 'react-native';
+import { Alert, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region, UrlTile } from 'react-native-maps';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
