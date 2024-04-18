@@ -1,61 +1,42 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import moment from 'moment/moment';
-import { includes } from 'lodash';
+import { ScrollView } from 'react-native';
 import Screen from '../../../../components/Screen/Screen';
 import { Container } from './NotificationScreen.style';
 import { GREY300 } from '../../../../constants/colors';
-import {
-  getNotificationList,
-  NotificationType,
-} from '../../../../services/api/notificationService';
 import NotificationDate from './components/DailyNotification';
+import { useNotificationListQuery } from '../../../../hooks/queries/notification/useNotificationListQuery';
 
+let removeIndex = -1;
 const NotificationScreen = () => {
-  const { data } = useInfiniteQuery({
-    queryKey: ['notification'],
-    queryFn: async ({ pageParam }) => {
-      const response = await getNotificationList({ page: pageParam });
-      const notificationResponse = response.data.data;
-      const notificationList = notificationResponse.notificationResponses;
+  const { data, hasNextPage, fetchNextPage } = useNotificationListQuery();
 
-      const sortedDate: string[] = [];
-      const notificationByDate: { [key: string]: NotificationType[] } = {};
-
-      notificationList.forEach(item => {
-        const date = moment(item.createdAt).format('YYYYMMDD');
-
-        if (includes(sortedDate, date)) {
-          notificationByDate[date].push({ ...item });
-        } else {
-          sortedDate.push(date);
-          notificationByDate[date] = [{ ...item }];
-        }
-      });
-
-      const sortedNotificationList = sortedDate.map(item => ({
-        date: item,
-        notificationList: notificationByDate[item],
-      }));
-
-      return {
-        hasNext: notificationResponse.hasNext,
-        sortedNotificationList,
-      };
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length : undefined),
-  });
+  const notificationList = data?.pages.flatMap(item => item.notificationByDates);
 
   return (
     <Screen title="알림" backgroundColor={GREY300}>
       <Container>
-        <FlatList
-          keyExtractor={item => item.date}
-          data={data?.pages.flatMap(item => item.sortedNotificationList)}
-          renderItem={({ item }) => <NotificationDate {...item} />}
-        />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          onTouchEnd={() => {
+            if (hasNextPage) fetchNextPage();
+          }}
+        >
+          {notificationList?.map((notificationData, index) => {
+            const { notificationResponses, date } = notificationData;
+            if (
+              index + 1 !== notificationList?.length &&
+              notificationList[index + 1].date === date
+            ) {
+              removeIndex = index + 1;
+              notificationResponses.push(...notificationList[index + 1].notificationResponses);
+            }
+
+            if (removeIndex === index) {
+              return <React.Fragment key={`no-value-${index}`} />;
+            }
+            return <NotificationDate notificationData={notificationData} key={`${date}`} />;
+          })}
+        </ScrollView>
       </Container>
     </Screen>
   );

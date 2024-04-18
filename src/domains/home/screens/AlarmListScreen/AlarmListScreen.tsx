@@ -13,6 +13,7 @@ import { HomeStackParamList } from '../../../../types/navigation';
 import { getAlarm } from '../../../../services/api/alarmService';
 import { AlarmParams } from '../../../../types/notifications';
 import { inProgressState } from '../../../../states';
+import NoData from '../../../../components/common/NoData';
 
 const defaultAlarm = {
   dayOfWeek: [],
@@ -58,6 +59,7 @@ const AlarmListScreen = () => {
     <Screen title="알림 설정">
       <Container>
         <FlatList
+          ListEmptyComponent={<NoData />}
           data={data}
           renderItem={({ item }) => <Alarm {...item} />}
           keyExtractor={(item, index) => toString(index) + item.hour + item.minute}

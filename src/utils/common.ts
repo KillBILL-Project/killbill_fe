@@ -54,3 +54,8 @@ export const convertTimeFullDate = (date: string) => {
     },
   ).format(new Date(date))}`; // '2023. 5. 16. 15: 00'
 };
+
+export const flat = <T>(array?: T[][]): T[] => {
+  if (!array) return [];
+  return Array.prototype.concat(...array);
+};

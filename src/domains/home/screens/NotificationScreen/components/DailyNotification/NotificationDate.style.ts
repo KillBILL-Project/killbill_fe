@@ -34,12 +34,12 @@ export const Day = styled.Text`
 export const ContentContainer = styled.View`
   width: 100%;
   justify-content: center;
+  border-bottom-width: 1px;
+  border-bottom-color: ${GREY400};
 `;
 
 export const Content = styled.View`
   padding: ${ratioPx(20)} 0;
   justify-content: center;
   flex: 1;
-  border-bottom-width: 1px;
-  border-bottom-color: ${GREY400};
 `;
