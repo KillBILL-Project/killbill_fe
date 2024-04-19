@@ -262,7 +262,7 @@ const ReportDetailScreen = () => {
             />
           </View>
           <Separator length="100%" horizontal thickness={8} />
-          <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
+          {/* <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} /> */}
         </Container>
       )}
     </Screen>

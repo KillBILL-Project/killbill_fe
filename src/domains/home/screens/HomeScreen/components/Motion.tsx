@@ -54,7 +54,7 @@ const Motion = ({ motionRef }: any) => {
           bottom: 13,
           left: 32,
           backgroundColor: '#fff',
-          width: 61,
+          width: 75,
           height: 32,
           justifyContent: 'center',
           paddingHorizontal: 12,
@@ -63,6 +63,7 @@ const Motion = ({ motionRef }: any) => {
           borderWidth: 1,
           borderStyle: 'solid',
           borderColor: '#E5E5EA',
+          alignItems: 'center',
         }}
       >
         <Text>비우기</Text>
