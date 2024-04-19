@@ -38,9 +38,11 @@ export interface RegisterForm {
   confirmedPassword?: string;
 }
 
-export interface SocialRegisterParams {
+export interface RegisterParams {
+  email?: string;
+  password?: string;
   loginType: LoginType;
-  authCode: string;
+  authCode?: string;
 }
 
 export interface User {

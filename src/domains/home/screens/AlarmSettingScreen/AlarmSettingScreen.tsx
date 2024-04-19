@@ -5,8 +5,9 @@ import { isEmpty, toNumber } from 'lodash';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Screen from '../../../../components/Screen/Screen';
 import {
+  BottomContainer,
+  ButtonContainer,
   Container,
-  Footer,
   MeridiemScroll,
   TimePicker,
   TimePickerContainer,
@@ -136,25 +137,27 @@ const AlarmSettingScreen = () => {
             </TimeScroll>
           </TimePicker>
         </TimePickerContainer>
-        <WeeklyPickerContainer>
-          <WeeklyPickerTitle>
-            <Bold16 color={BLACK}>매주</Bold16>
-          </WeeklyPickerTitle>
-          <WeeklyPicker>
-            {weekly.map(item => (
-              <DailyButton
-                key={item.value}
-                day={item.text}
-                isSelected={alarm.dayOfWeek.includes(item.value)}
-                onPress={() => onPressDailyButton(item.value)}
-              />
-            ))}
-          </WeeklyPicker>
-        </WeeklyPickerContainer>
+        <BottomContainer>
+          <WeeklyPickerContainer>
+            <WeeklyPickerTitle>
+              <Bold16 color={BLACK}>매주</Bold16>
+            </WeeklyPickerTitle>
+            <WeeklyPicker>
+              {weekly.map(item => (
+                <DailyButton
+                  key={item.value}
+                  day={item.text}
+                  isSelected={alarm.dayOfWeek.includes(item.value)}
+                  onPress={() => onPressDailyButton(item.value)}
+                />
+              ))}
+            </WeeklyPicker>
+          </WeeklyPickerContainer>
+          <ButtonContainer>
+            <BaseButton text="저장" onPress={onPressSaveAlarm} />
+          </ButtonContainer>
+        </BottomContainer>
       </Container>
-      <Footer>
-        <BaseButton text="저장" onPress={onPressSaveAlarm} />
-      </Footer>
     </Screen>
   );
 };

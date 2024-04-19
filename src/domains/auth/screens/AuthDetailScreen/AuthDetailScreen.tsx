@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { AuthDetailContainer, BaseButtonContainer, Container } from './AuthDetailScreen.style';
+import {
+  AuthDetailContainer,
+  BaseButtonContainer,
+  Container,
+  SkipButton,
+  SkipButtonText,
+} from './AuthDetailScreen.style';
 import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import { ItemType } from '../../../../types/common';
 import { COUNTRIES } from '../../../../constants/constants';
@@ -10,7 +16,7 @@ import BaseButton from '../../components/BaseButton/BaseButton';
 import { AuthStackParamList } from '../../../../types/navigation';
 import useToast from '../../../../hooks/useToast';
 import { requestRegister } from '../../../../services/api/authService';
-import { AuthDetailType, LoginResponse, RegisterRequest } from '../../../../types/auth';
+import { AuthDetailType, RegisterRequest } from '../../../../types/auth';
 import useAuth from '../../../../hooks/useAuth';
 import { getFcmToken, requestUserPermission } from '../../../../utils/push-notification';
 
@@ -19,6 +25,8 @@ const initialAuthDetail = {
   gender: undefined,
   country: '',
 };
+
+// TODO 나중에 입력하기 추가
 
 const AuthDetailScreen = () => {
   const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
@@ -48,29 +56,36 @@ const AuthDetailScreen = () => {
     [authDetail.age, authDetail.country, authDetail.gender, t],
   );
 
-  const isValidForm = useCallback(() => {
-    for (const element of validationList) {
-      if (!element.validation) {
-        showToast({ message: element.message, isFailed: true });
-        return false;
+  const isValidForm = useCallback(
+    (isSkipping?: boolean) => {
+      if (!isSkipping) {
+        for (const element of validationList) {
+          if (!element.validation) {
+            showToast({ message: element.message, isFailed: true });
+            return false;
+          }
+        }
       }
-    }
-    return true;
-  }, [showToast, validationList]);
+      return true;
+    },
+    [showToast, validationList],
+  );
 
-  const onPressButton = async () => {
-    if (!isValidForm()) return;
+  const onPressButton = async ({ isSkipping }: { isSkipping?: boolean }) => {
+    if (!isValidForm(isSkipping)) return;
     const fcmToken = await getFcmToken();
     const pushConsent = await requestUserPermission();
 
     const params: RegisterRequest = {
+      email: route.params.email,
+      password: route.params.password,
       loginType: route.params.loginType,
       socialToken: route.params.authCode,
       fcmToken,
       pushConsent,
       ...authDetail,
     };
-    const response = await requestRegister<LoginResponse>(params);
+    const response = await requestRegister(params);
     await setTokens({ ...response?.data.data });
   };
 
@@ -95,8 +110,15 @@ const AuthDetailScreen = () => {
           />
         </AuthDetailContainer>
         <BaseButtonContainer>
-          <BaseButton text={t('auth_detail.button.submit')} onPress={onPressButton} />
+          <BaseButton
+            marginBottom={0}
+            text={t('auth_detail.button.submit')}
+            onPress={() => onPressButton({})}
+          />
         </BaseButtonContainer>
+        <SkipButton onPress={() => onPressButton({ isSkipping: true })}>
+          <SkipButtonText>건너뛰기</SkipButtonText>
+        </SkipButton>
       </Container>
     </Screen>
   );

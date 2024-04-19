@@ -12,6 +12,7 @@ import MyLocation from './MyLocation';
 import { MapWrapper } from './TrashLocation.style';
 import { selectedTrashType } from '../../../../../states';
 import { isIOS } from '../../../../../utils/platform';
+import { useDialog } from '../../../../../states/context/DialogContext';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -27,6 +28,7 @@ const GoogleMap = () => {
   const mapViewRef = useRef<MapView>(null);
   const [mapRegion, setMapRegion] = useState<ILocation | undefined>(undefined);
   const [distanceToTop, setDistanceToTop] = useState(0);
+  const { showConfirm } = useDialog();
 
   const { data, refetch } = useTrashCanLocationQuery({
     lat: mapRegion?.latitude,
@@ -59,27 +61,36 @@ const GoogleMap = () => {
   }, []);
 
   const requestLocationAuthorization = async () => {
-    const permission = isIOS
-      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    Geolocation.requestAuthorization(
+      /* 권한 있을 때 */
+      () => {
+        handleMoveMyLocation();
+      },
+      /* 권한 없을 때 */
+      async () => {
+        const permission = isIOS
+          ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+          : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
-    const result = await request(permission);
+        const result = await request(permission);
 
-    if (result === 'blocked') {
-      openSettings().catch(() => console.warn('cannot open settings'));
-    }
+        if (result === 'blocked') {
+          // TODO 백드롭 연하게 하고, 등등 아 몰라 안드로이드 이동방법 알려주기
+          showConfirm({
+            alertMessage: '분리수거 로봇 위치를 찾기 위해서는 위치 접근 권한이 필요합니다.',
+            confirmText: '설정',
+            cancelText: '취소',
+          }).then(() => {
+            openSettings();
+          });
+        }
+      },
+    );
   };
 
   useEffect(() => {
     // 위치 권한 요청
-    Geolocation.requestAuthorization(
-      () => {
-        handleMoveMyLocation();
-      },
-      () => {
-        requestLocationAuthorization();
-      },
-    );
+    requestLocationAuthorization();
   }, []);
 
   useEffect(() => {

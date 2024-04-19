@@ -15,11 +15,11 @@ interface BaseTouchableProps {
 export const BaseTouchable = styled.TouchableOpacity<BaseTouchableProps>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   height: ${px(AUTH_HEIGHT)};
-  width: ${px(INPUT_WIDTH)};
+  width: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-bottom: ${({ marginBottom }) => (marginBottom ? ratioPx(marginBottom) : px(INPUT_MARGIN))};
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? ratioPx(marginBottom) : 0)};
   position: relative;
   border-radius: ${px(AUTH_BORDER_RADIUS)};
   border-width: ${({ borderColor }) => (borderColor ? '1px' : 0)};

@@ -6,6 +6,8 @@ import Config from 'react-native-config';
 import { AxiosError } from 'axios';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useRecoilState } from 'recoil';
+import appleAuth from '@invertase/react-native-apple-authentication';
+import { Alert } from 'react-native';
 import { LoginType } from '../../../../types/common';
 import useToast from '../../../../hooks/useToast';
 import { windowHeight } from '../../../../utils/platform';
@@ -15,8 +17,6 @@ import { AuthStackParamList } from '../../../../types/navigation';
 import useAuth from '../../../../hooks/useAuth';
 import { inProgressState } from '../../../../states';
 import { LoginForm, LoginRequest, LoginResponse } from '../../../../types/auth';
-import appleAuth from '@invertase/react-native-apple-authentication';
-import { Alert } from 'react-native';
 
 const useLogin = () => {
   const [inProgress, setInProgress] = useRecoilState(inProgressState);
@@ -26,6 +26,7 @@ const useLogin = () => {
 
   const { showToast } = useToast();
   const { setTokens } = useAuth();
+  const { getUser } = useAuth();
 
   const [loginForm, setLoginForm] = useState<LoginForm>({
     email: '',
@@ -173,6 +174,7 @@ const useLogin = () => {
 
         const response = await requestLogin<LoginResponse>(loginRequest);
         await setTokens({ ...response?.data.data });
+        getUser();
       } catch (e: unknown) {
         if (e instanceof AxiosError && e.response?.status === 404) {
           if (loginType === 'EMAIL') {

@@ -1,32 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRecoilState } from 'recoil';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Container, RegisterBottomContainer, RegisterContainer } from './RegisterScreen.style';
 import Screen from '../../../../components/Screen/Screen';
 import BaseInput from '../../components/BaseInput/BaseInput';
-import AuthDetail from '../../components/AuthDetail/AuthDetail';
 import BaseButton from '../../components/BaseButton/BaseButton';
-import { ItemType } from '../../../../types/common';
-import { COUNTRIES } from '../../../../constants/constants';
 import { isValidEmail, isValidPassword } from '../../../../utils/common';
 import TermsAgreement from './components/TermsAgreement';
 import useToast from '../../../../hooks/useToast';
-import { requestRegister } from '../../../../services/api/authService';
-import useAuth from '../../../../hooks/useAuth';
-import { inProgressState } from '../../../../states';
-import {
-  AuthDetailType,
-  LoginResponse,
-  RegisterForm,
-  RegisterRequest,
-} from '../../../../types/auth';
-import { getFcmToken, requestUserPermission } from '../../../../utils/push-notification';
-
-const initialAuthDetail: AuthDetailType = {
-  age: '',
-  gender: undefined,
-  country: '',
-};
+import { RegisterForm } from '../../../../types/auth';
+import { AuthStackParamList } from '../../../../types/navigation';
 
 const initialRegisterForm: RegisterForm = {
   email: '',
@@ -36,13 +19,10 @@ const initialRegisterForm: RegisterForm = {
 
 const RegisterScreen = () => {
   const [registerForm, setRegisterForm] = useState<RegisterForm>(initialRegisterForm);
-  const [authDetail, setAuthDetail] = useState<AuthDetailType>(initialAuthDetail);
   const [isCheckedTermsAgreement, setIsCheckedTermsAgreement] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<ItemType | undefined>(undefined);
-  const [inProgress, setInProgress] = useRecoilState(inProgressState);
-  const { setTokens } = useAuth();
   const { showToast } = useToast();
+  const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
+
   const { t } = useTranslation();
 
   const onChangeForm = (filed: string, value: string) => {
@@ -64,26 +44,11 @@ const RegisterScreen = () => {
         message: t('register.validation.not_equal_password'),
       },
       {
-        validation: authDetail.age !== '' && !Number.isNaN(Number(authDetail.age)),
-        message: t('register.validation.invalid_age'),
-      },
-      {
-        validation: authDetail.gender !== undefined,
-        message: t('register.validation.invalid_gender'),
-      },
-      {
-        validation: authDetail.country !== '',
-        message: t('register.validation.invalid_country'),
-      },
-      {
         validation: isCheckedTermsAgreement,
         message: t('register.validation.required_terms'),
       },
     ],
     [
-      authDetail.age,
-      authDetail.country,
-      authDetail.gender,
       isCheckedTermsAgreement,
       registerForm.confirmedPassword,
       registerForm.email,
@@ -103,36 +68,18 @@ const RegisterScreen = () => {
   }, [showToast, validationList]);
 
   const onPressRegisterButton = async () => {
-    if (inProgress) return;
     if (!isValidForm()) return;
 
-    try {
-      setInProgress(true);
-      const fcmToken = await getFcmToken();
-      const pushConsent = await requestUserPermission();
-      const params: RegisterRequest = {
-        ...authDetail,
-        email: registerForm.email,
-        password: registerForm.password,
-        fcmToken,
-        pushConsent,
-        loginType: 'EMAIL',
-      };
-      const response = await requestRegister<LoginResponse>(params);
-      await setTokens({ ...response?.data.data });
-    } finally {
-      setInProgress(false);
-    }
+    navigate('AuthDetail', {
+      email: registerForm.email,
+      password: registerForm.password,
+      loginType: 'EMAIL',
+    });
   };
-
-  useEffect(() => {
-    if (selectedCountry)
-      setAuthDetail(prevState => ({ ...prevState, country: selectedCountry.value }));
-  }, [selectedCountry]);
 
   return (
     <Screen title={t('register.title')}>
-      <Container>
+      <Container contentContainerStyle={{ flexGrow: 1 }}>
         <RegisterContainer>
           <BaseInput
             title={t('register.input.email.title')}
@@ -153,16 +100,6 @@ const RegisterScreen = () => {
             onChangeText={text => onChangeForm('confirmedPassword', text)}
             value={registerForm.confirmedPassword ? registerForm.confirmedPassword : ''}
             isSecure
-          />
-          <AuthDetail
-            age={authDetail.age}
-            gender={authDetail.gender}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            selectedItem={selectedCountry}
-            setSelectedItem={setSelectedCountry}
-            setAuthDetail={setAuthDetail}
-            itemList={COUNTRIES}
           />
         </RegisterContainer>
         <RegisterBottomContainer>

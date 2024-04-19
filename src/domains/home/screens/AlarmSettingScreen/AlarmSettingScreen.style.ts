@@ -29,9 +29,14 @@ export const TimeScroll = styled.View`
   flex-direction: row;
 `;
 
+export const BottomContainer = styled.View`
+  flex: 1;
+  padding: ${ratioPx(36)} ${ratioPx(24)};
+`;
+
 export const WeeklyPickerContainer = styled.View`
-  margin: ${ratioPx(36)} ${ratioPx(24)};
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -43,8 +48,8 @@ export const WeeklyPicker = styled.View`
   flex-direction: row;
 `;
 
-export const Footer = styled.View`
-  justify-content: center;
+export const ButtonContainer = styled.View`
+  flex: 1;
+  justify-content: flex-end;
   align-items: center;
-  margin-top: ${ratioPx(36)};
 `;
