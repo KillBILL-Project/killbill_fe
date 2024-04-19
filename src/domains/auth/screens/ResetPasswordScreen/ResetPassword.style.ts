@@ -5,7 +5,7 @@ import { ratioPx } from '../../../../utils/platform';
 export const Container = styled.View`
   flex: 1;
   background-color: ${WHITE};
-  padding-bottom: ${ratioPx(24)};
+  padding: ${ratioPx(24)};
 `;
 
 export const ResetPasswordContainer = styled.View`
