@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View } from 'react-native';
 import Screen from '../../../../components/Screen/Screen';
 import notification from '../../../../assets/icon/notification.png';
 import { MyPageParamList } from '../../../../types/navigation';

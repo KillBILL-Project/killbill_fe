@@ -2,14 +2,16 @@ import { Alert, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region, UrlTile } from 'react-native-maps';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
+import { useRecoilValue } from 'recoil';
+import { openSettings, PERMISSIONS, request } from 'react-native-permissions';
 import marker from '../../../../../assets/icon/marker.png';
 import { useTrashCanLocationQuery } from '../../../../../hooks/queries/trash/useTrashCanLocationQuery';
 import TrashList from '../TrashList';
 import RefetchByCurrentPoint from './RefetchByCurrentPoint';
 import MyLocation from './MyLocation';
 import { MapWrapper } from './TrashLocation.style';
-import { useRecoilValue } from 'recoil';
 import { selectedTrashType } from '../../../../../states';
+import { isIOS } from '../../../../../utils/platform';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -56,13 +58,27 @@ const GoogleMap = () => {
     );
   }, []);
 
+  const requestLocationAuthorization = async () => {
+    const permission = isIOS
+      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+    const result = await request(permission);
+
+    if (result === 'blocked') {
+      openSettings().catch(() => console.warn('cannot open settings'));
+    }
+  };
+
   useEffect(() => {
     // 위치 권한 요청
     Geolocation.requestAuthorization(
       () => {
         handleMoveMyLocation();
       },
-      () => {},
+      () => {
+        requestLocationAuthorization();
+      },
     );
   }, []);
 

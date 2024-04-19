@@ -43,7 +43,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치 정보를 수집하여 `내 위치` 기능에 활용하며, 사용자가 언제든지 권한을 비활성화할 수 있습니다.</string>
+	<string>지도에서 내 위치를 확인하여 내 주변 분리수거 로봇 위치 찾기 기능을 이용하기 위해 권한이 필요합니다. (필수권한)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
