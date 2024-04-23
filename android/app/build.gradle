@@ -82,9 +82,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.wwooss"
+    namespace "com.wwooss.at"
     defaultConfig {
-        applicationId "com.wwooss"
+        applicationId "com.wwooss.at"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 6

@@ -11,7 +11,6 @@ import {
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  ItemContainer,
   PanResponderContainer,
   ScrollBar,
   ScrollBarContainer,
@@ -20,7 +19,6 @@ import {
 } from '../HomeScreen/HomeScreen.style';
 import { windowHeight } from '../../../../utils/platform';
 import { TAB_HEIGHT } from '../../../../constants/constants';
-import Item from '../HomeScreen/components/Item';
 
 const TrashList = ({ data }: any) => {
   const [isShow, setIsShow] = useState(false);

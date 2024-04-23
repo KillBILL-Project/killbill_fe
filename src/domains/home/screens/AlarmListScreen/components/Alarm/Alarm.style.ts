@@ -6,7 +6,7 @@ export const Container = styled.TouchableOpacity`
   padding: ${ratioPx(16)};
   background-color: ${WHITE};
   border-radius: ${px(15)};
-  margin: ${ratioPx(16)} ${ratioPx(16)} 0;
+  margin: ${ratioPx(4)} ${ratioPx(4)} ${ratioPx(12)};
 `;
 
 export const TimeContainer = styled.View`

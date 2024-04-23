@@ -6,8 +6,7 @@ import { PieChart } from 'react-native-chart-kit';
 import Screen from '../../../../components/Screen/Screen';
 import useEmptyTrashMutation from '../../../../hooks/mutation/trash/useEmptyTrashMutation';
 import { trashMeta } from '../../../../constants/data';
-import { width } from '../../../../utils/platform';
-import { HomeTabParamList, MenuParamList } from '../../../../types/navigation';
+import { HomeTabParamList } from '../../../../types/navigation';
 
 const TopContainer = styled.View`
   align-items: center;

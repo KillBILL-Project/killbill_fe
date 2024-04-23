@@ -1,4 +1,4 @@
-package com.wwooss;
+package com.wwooss.at;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -5,7 +5,7 @@ import { ratioPx } from '../../../../utils/platform';
 export const Container = styled.ScrollView`
   flex: 1;
   background-color: ${WHITE};
-  padding-top: ${ratioPx(24)};
+  padding: ${ratioPx(24)};
 `;
 
 export const RegisterContainer = styled.View`

@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'moment/locale/ko';
 import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { isEmpty, toNumber } from 'lodash';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Screen from '../../../../components/Screen/Screen';
 import {
+  BottomContainer,
+  ButtonContainer,
   Container,
-  Footer,
   MeridiemScroll,
   TimePicker,
   TimePickerContainer,
@@ -60,11 +61,6 @@ const AlarmSettingScreen = () => {
     },
   });
 
-  if (isSuccess) {
-    queryClient.invalidateQueries({ queryKey: ['alarm'] });
-    navigation.goBack();
-  }
-
   const setAlarmProps = <K extends keyof AlarmParams>(key: K) => {
     return (value: AlarmParams[K]) => {
       setAlarm(prevState => ({ ...prevState, [key]: value }));
@@ -85,6 +81,15 @@ const AlarmSettingScreen = () => {
   );
 
   const onPressSaveAlarm = () => mutate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      (async () => {
+        await queryClient.invalidateQueries({ queryKey: ['alarm'] });
+        navigation.goBack();
+      })();
+    }
+  }, [isSuccess, navigation, queryClient]);
 
   return (
     <Screen
@@ -132,25 +137,27 @@ const AlarmSettingScreen = () => {
             </TimeScroll>
           </TimePicker>
         </TimePickerContainer>
-        <WeeklyPickerContainer>
-          <WeeklyPickerTitle>
-            <Bold16 color={BLACK}>매주</Bold16>
-          </WeeklyPickerTitle>
-          <WeeklyPicker>
-            {weekly.map(item => (
-              <DailyButton
-                key={item.value}
-                day={item.text}
-                isSelected={alarm.dayOfWeek.includes(item.value)}
-                onPress={() => onPressDailyButton(item.value)}
-              />
-            ))}
-          </WeeklyPicker>
-        </WeeklyPickerContainer>
+        <BottomContainer>
+          <WeeklyPickerContainer>
+            <WeeklyPickerTitle>
+              <Bold16 color={BLACK}>매주</Bold16>
+            </WeeklyPickerTitle>
+            <WeeklyPicker>
+              {weekly.map(item => (
+                <DailyButton
+                  key={item.value}
+                  day={item.text}
+                  isSelected={alarm.dayOfWeek.includes(item.value)}
+                  onPress={() => onPressDailyButton(item.value)}
+                />
+              ))}
+            </WeeklyPicker>
+          </WeeklyPickerContainer>
+          <ButtonContainer>
+            <BaseButton text="저장" onPress={onPressSaveAlarm} />
+          </ButtonContainer>
+        </BottomContainer>
       </Container>
-      <Footer>
-        <BaseButton text="저장" onPress={onPressSaveAlarm} />
-      </Footer>
     </Screen>
   );
 };

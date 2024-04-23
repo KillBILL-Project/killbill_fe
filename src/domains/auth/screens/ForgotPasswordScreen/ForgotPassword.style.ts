@@ -6,6 +6,7 @@ export const Container = styled.View`
   flex: 1;
   padding-top: ${ratioPx(24)};
   justify-content: space-between;
+  padding: ${ratioPx(24)};
 `;
 
 export const InputContainer = styled.View`

@@ -1,7 +1,9 @@
 import api from '../utils/api';
-import { ApiResponse } from '../../types/common';
-import { objectToQueryParam } from '../../utils/common';
 
+export interface NotificationByDateType {
+  date: string;
+  notificationResponses: NotificationType[];
+}
 export interface NotificationType {
   createdAt: string;
   deepLink: string;
@@ -11,22 +13,14 @@ export interface NotificationType {
   isEqualDate?: boolean;
 }
 
-export interface GetNotificationListParams {
-  page?: number;
-  size?: number;
-  direction?: 'DESC' | 'ASC';
-}
-
 export interface NotificationResponseType {
   hasNext: boolean;
-  notificationResponses: NotificationType[];
+  notificationByDates: NotificationByDateType[];
 }
 
 export const getNotificationList = async (
-  params: GetNotificationListParams,
-): ApiResponse<NotificationResponseType> => {
-  const defaultParams: GetNotificationListParams = { direction: 'DESC' };
-
-  const queryParam = objectToQueryParam<GetNotificationListParams>({ ...defaultParams, ...params });
-  return api.get(`/notification?${queryParam}`);
+  page = 0,
+): Promise<NotificationResponseType & { nextPage: number }> => {
+  const { data } = await api.get(`/notification?size=15&page=${page}`);
+  return { ...data.data, nextPage: page + 1 };
 };

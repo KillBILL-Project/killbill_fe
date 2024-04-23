@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import { NotificationType } from '../../../../../../services/api/notificationService';
 import DailyNotification from '../NotificationContent';
 import {
   Container,
@@ -11,13 +10,10 @@ import {
   Day,
 } from './NotificationDate.style';
 import { getDayOfWeek } from '../../../../../../utils/common';
+import { NotificationByDateType } from '../../../../../../services/api/notificationService';
 
-interface NotificationContentProps {
-  date: string;
-  notificationList: NotificationType[];
-}
-
-const NotificationDate = ({ date, notificationList }: NotificationContentProps) => {
+const NotificationDate = ({ notificationData }: { notificationData: NotificationByDateType }) => {
+  const { date, notificationResponses } = notificationData;
   return (
     <Container>
       <DateContainer>
@@ -25,11 +21,13 @@ const NotificationDate = ({ date, notificationList }: NotificationContentProps) 
         <Day>{getDayOfWeek(moment(date).day())}</Day>
       </DateContainer>
       <ContentContainer>
-        {notificationList.map(item => (
-          <Content key={String(item.notificationId)}>
-            <DailyNotification title={item.title} message={item.message} />
-          </Content>
-        ))}
+        {notificationResponses.map(item => {
+          return (
+            <Content key={String(item.notificationId)}>
+              <DailyNotification title={item.title} message={item.message} />
+            </Content>
+          );
+        })}
       </ContentContainer>
     </Container>
   );

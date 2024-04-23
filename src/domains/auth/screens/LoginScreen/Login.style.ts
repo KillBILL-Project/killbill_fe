@@ -9,6 +9,7 @@ export const Container = styled.SafeAreaView<{ height: number }>`
 
 export const KeyboardHideArea = styled.Pressable`
   flex: 1;
+  padding: ${ratioPx(24)};
 `;
 
 export const LoginContainer = styled.View`

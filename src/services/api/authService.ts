@@ -11,7 +11,7 @@ export const requestLogin = async <T>(params: LoginRequest): ApiResponse<T> => {
   return api.post('/auth/login', params);
 };
 
-export const requestRegister = async <T>(params: RegisterRequest): ApiResponse<T> => {
+export const requestRegister = async (params: RegisterRequest): ApiResponse<LoginResponse> => {
   return api.post('/auth/register', params);
 };
 

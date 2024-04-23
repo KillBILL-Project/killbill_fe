@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814003006035:android:3845bdec69c0a3e4cbf4a6",
+        "mobilesdk_app_id": "1:814003006035:android:7e60420506e16e6dcbf4a6",
         "android_client_info": {
-          "package_name": "com.wwooss"
+          "package_name": "com.wwooss.at"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "814003006035-7hhspbqgrqs6qtc89i95jdm68bsev6n7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wwooss",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
         {
           "client_id": "814003006035-rgcdonjib30t4r7vkm37ld58d0m7k9lt.apps.googleusercontent.com",
           "client_type": 3

@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Modal } from 'react-native';
+import { FlatList, Modal } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { toString } from 'lodash';
 import Screen from '../../../../components/Screen';
 import CategoryTab from '../components/CategoryTab';
 import { CategoryType } from '../components/CategoryTab/CategoryTab';
 import { Container } from './PraiseCardScreen.style';
-import { Bold18 } from '../../../../components/Typography';
-import { PRIMARY } from '../../../../constants/colors';
 import CardModal from './components/CardModal';
 import {
   ComplimentCardType,
   getComplimentCard,
   GetComplimentCardParams,
 } from '../../../../services/api/complimentService';
-import NewBadge from './components/NewBadge';
 import PraiseCard from '../components/PraiseCard';
 
 export type CardCategory = 'WEEKLY' | 'INTEGRATE';
@@ -32,7 +29,7 @@ const PraiseCardScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCardInfo, setSelectedCardInfo] = useState<ComplimentCardType | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['compliment-card', selectedCardType.category],
     queryFn: async () => {
       const params: GetComplimentCardParams = {
@@ -59,7 +56,7 @@ const PraiseCardScreen = () => {
 
   return (
     <>
-      <Screen title="칭찬카드" isBackButtonShown={false}>
+      <Screen title="칭찬카드">
         <CategoryTab selectList={cardType} selected={selectedCardType} onPress={onPressCardType} />
         <Container>
           <FlatList

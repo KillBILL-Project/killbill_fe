@@ -1,4 +1,4 @@
-import { SocialRegisterParams } from './auth';
+import { RegisterParams } from './auth';
 import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
 import { UserGuideDetailParams } from '../constants/userGuide';
@@ -8,7 +8,7 @@ import { UserGuideDetailParams } from '../constants/userGuide';
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
-  AuthDetail: SocialRegisterParams;
+  AuthDetail: RegisterParams;
   ForgotPassword: undefined;
   WebView: { url: string };
 };

@@ -1,43 +1,55 @@
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region, UrlTile } from 'react-native-maps';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import Config from 'react-native-config';
-import myLocationIcon from '../../../../../assets/icon/my_location.png';
+import { useRecoilValue } from 'recoil';
+import { openSettings, PERMISSIONS, request } from 'react-native-permissions';
 import marker from '../../../../../assets/icon/marker.png';
-import moveMyLocationIcon from '../../../../../assets/icon/move_my_location.png';
 import { useTrashCanLocationQuery } from '../../../../../hooks/queries/trash/useTrashCanLocationQuery';
 import TrashList from '../TrashList';
+import RefetchByCurrentPoint from './RefetchByCurrentPoint';
+import MyLocation from './MyLocation';
+import { MapWrapper } from './TrashLocation.style';
+import { selectedTrashType } from '../../../../../states';
+import { isIOS } from '../../../../../utils/platform';
+import { useDialog } from '../../../../../states/context/DialogContext';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+const EARTH_RADIUS = 6371;
+
 const GoogleMap = () => {
+  const trashType = useRecoilValue(selectedTrashType);
   const mapViewRef = useRef<MapView>(null);
-  const [mapRegion, setMapRegion] = useState({ latitude: 0, longitude: 0 });
+  const [mapRegion, setMapRegion] = useState<ILocation | undefined>(undefined);
   const [distanceToTop, setDistanceToTop] = useState(0);
+  const { showConfirm } = useDialog();
 
   const { data, refetch } = useTrashCanLocationQuery({
-    lat: mapRegion.latitude,
-    lng: mapRegion.longitude,
+    lat: mapRegion?.latitude,
+    lng: mapRegion?.longitude,
     distance: distanceToTop,
+    trashType,
   });
 
-  const calculateDistanceToTop = (region: Region) => {
-    if (region) {
-      const topLatitude = region.latitude + region.latitudeDelta / 2;
-      const earthRadius = 6371; // 지구의 반지름(km)
-      const latDifferenceInRadians = (topLatitude - region.latitude) * (Math.PI / 180);
-      const distanceInKm = earthRadius * latDifferenceInRadians;
-      setDistanceToTop(distanceInKm);
+  const calculateDistanceToTop = useCallback((region: Region) => {
+    if (!region) return;
 
-      console.log(distanceInKm);
-    }
-  };
+    const topLatitude = region.latitude + region.latitudeDelta / 2;
+    const latDifferenceInRadians = (topLatitude - region.latitude) * (Math.PI / 180);
+    const distanceInKm = EARTH_RADIUS * latDifferenceInRadians;
+    setDistanceToTop(distanceInKm);
+  }, []);
 
-  const handleMoveMyLocation = () => {
+  const handleMoveMyLocation = useCallback(() => {
     Geolocation.getCurrentPosition(
-      (position: { coords: any }) => {
-        const { latitude, longitude }: any = position.coords;
+      (position: { coords: ILocation }) => {
+        const { latitude, longitude } = position.coords;
 
         mapViewRef.current?.setCamera({
           center: { latitude, longitude },
@@ -46,109 +58,76 @@ const GoogleMap = () => {
       (error: { message: string }) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+  }, []);
+
+  const requestLocationAuthorization = async () => {
+    Geolocation.requestAuthorization(
+      /* 권한 있을 때 */
+      () => {
+        handleMoveMyLocation();
+      },
+      /* 권한 없을 때 */
+      async () => {
+        const permission = isIOS
+          ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+          : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+        const result = await request(permission);
+
+        if (result === 'blocked') {
+          // TODO 백드롭 연하게 하고, 등등 아 몰라 안드로이드 이동방법 알려주기
+          showConfirm({
+            alertMessage: '분리수거 로봇 위치를 찾기 위해서는 위치 접근 권한이 필요합니다.',
+            confirmText: '설정',
+            cancelText: '취소',
+          }).then(() => {
+            openSettings();
+          });
+        }
+      },
+    );
   };
 
   useEffect(() => {
     // 위치 권한 요청
-    Geolocation.requestAuthorization(
-      () => {},
-      () => {},
-    );
+    requestLocationAuthorization();
   }, []);
 
   useEffect(() => {
-    console.log(Config.API_URL);
-    console.log(data?.data?.data);
-  }, [data]);
+    refetch();
+  }, [trashType]);
 
   return (
     <>
-      <MapView
-        ref={mapViewRef}
-        style={{ flex: 1 }}
-        provider={PROVIDER_GOOGLE}
-        showsUserLocation
-        showsMyLocationButton
-        loadingEnabled
-        showsBuildings
-        showsIndoors
-        mapType="standard"
-        initialRegion={{
-          latitude: 37.59162086254019,
-          longitude: 126.98785062349218,
-          latitudeDelta: 0.0622,
-          longitudeDelta: 0.0221,
-        }}
-        onRegionChangeComplete={region => {
-          setMapRegion(region);
-          calculateDistanceToTop(region);
-        }}
-      >
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity
-            style={{
-              position: 'relative',
-              top: 10,
-              backgroundColor: '#fff',
-              paddingVertical: 5,
-              paddingHorizontal: 10,
-              borderRadius: 10,
-              width: 120,
-            }}
-            onPress={() => refetch()}
-          >
-            <Text style={{ textAlign: 'center' }}>현 지도에서 검색</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          style={{ position: 'absolute', top: 39, right: 24 }}
-          onPress={handleMoveMyLocation}
+      <MapWrapper>
+        <MapView
+          ref={mapViewRef}
+          style={{ flex: 1 }}
+          provider={PROVIDER_GOOGLE}
+          showsUserLocation
+          showsMyLocationButton={false}
+          loadingEnabled
+          showsBuildings
+          showsIndoors
+          mapType="standard"
+          onRegionChangeComplete={region => {
+            setMapRegion(region);
+            calculateDistanceToTop(region);
+          }}
         >
-          <Image source={moveMyLocationIcon} style={{ height: 40, width: 40 }} />
-        </TouchableOpacity>
-
-        <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
-
-        <Marker coordinate={{ latitude: 0, longitude: 0 }}>
-          <Image source={myLocationIcon} style={{ height: 16, width: 16 }} />
-        </Marker>
-        {data?.data?.data?.map((item: { lat: number; lng: number; trashCanId: string }) => (
-          <Marker key={item.trashCanId} coordinate={{ latitude: item.lat, longitude: item.lng }}>
-            <Image source={marker} />
-          </Marker>
-        ))}
-      </MapView>
+          <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
+          {data?.data?.data?.map((item: { lat: number; lng: number; trashCanId: string }) => (
+            <Marker key={item.trashCanId} coordinate={{ latitude: item.lat, longitude: item.lng }}>
+              <Image source={marker} />
+            </Marker>
+          ))}
+        </MapView>
+        <RefetchByCurrentPoint refetch={refetch} />
+        <MyLocation handleMoveMyLocation={handleMoveMyLocation} />
+      </MapWrapper>
       <TrashList data={data?.data?.data} />
     </>
   );
 };
-
-// const getGeoCode = (
-//   location: LocationType | undefined,
-//   setName: React.Dispatch<React.SetStateAction<string>>,
-// ) => {
-//   try {
-//     if (!location) return;
-//     const { latitude, longitude } = location;
-//     const apiKey = Platform.select({
-//       ios: Config.GOOGLE_MAPS_API_KEY_IOS,
-//       android: Config.GOOGLE_MAPS_API_KEY_ANDROID,
-//     });
-//     const url = `${GEOCODE_PREFIX}=${latitude},${longitude}&key=${apiKey}&language=ko`;
-//
-//     axios
-//       .get(url)
-//       .then(response => {
-//         const { data } = response;
-//         setName(data.results[0].formatted_address);
-//       })
-//       .catch(error => {
-//         throw new Error(`getGeoCode : ${error}`);
-//       });
-//   } catch (e) {
-//     throw new Error(`getGeoCodding: ${e}`);
-//   }
-// };
 
 export default GoogleMap;

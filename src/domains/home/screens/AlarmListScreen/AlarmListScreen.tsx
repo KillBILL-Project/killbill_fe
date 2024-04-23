@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { toString } from 'lodash';
 import { useSetRecoilState } from 'recoil';
 import Screen from '../../../../components/Screen/Screen';
-import { Container, Footer } from './AlarmListScreen.style';
+import { Container } from './AlarmListScreen.style';
 import Alarm from './components/Alarm/Alarm';
 import BaseButton from '../../../auth/components/BaseButton/BaseButton';
 import { MAIN, WHITE } from '../../../../constants/colors';
@@ -13,6 +13,8 @@ import { HomeStackParamList } from '../../../../types/navigation';
 import { getAlarm } from '../../../../services/api/alarmService';
 import { AlarmParams } from '../../../../types/notifications';
 import { inProgressState } from '../../../../states';
+import NoData from '../../../../components/common/NoData';
+import { ratio } from '../../../../utils/platform';
 
 const defaultAlarm = {
   dayOfWeek: [],
@@ -58,21 +60,23 @@ const AlarmListScreen = () => {
     <Screen title="알림 설정">
       <Container>
         <FlatList
+          ListEmptyComponent={<NoData />}
           data={data}
           renderItem={({ item }) => <Alarm {...item} />}
           keyExtractor={(item, index) => toString(index) + item.hour + item.minute}
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 60 }}
+          contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            <BaseButton
+              text="알림 추가"
+              color={WHITE}
+              backgroundColor={MAIN}
+              onPress={onPressAddAlarm}
+            />
+          }
+          ListFooterComponentStyle={{ flex: 1, justifyContent: 'flex-end', marginTop: ratio * 24 }}
         />
       </Container>
-      <Footer>
-        <BaseButton
-          text="알림 추가"
-          color={WHITE}
-          backgroundColor={MAIN}
-          onPress={onPressAddAlarm}
-        />
-      </Footer>
     </Screen>
   );
 };

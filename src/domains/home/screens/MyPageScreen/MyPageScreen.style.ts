@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import { px, ratioPx, width } from '../../../../utils/platform';
-import { GREY100 } from '../../../../constants/colors';
+import { ratioPx } from '../../../../utils/platform';
 
 const externalPadding = 24;
 
