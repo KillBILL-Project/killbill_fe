@@ -50,9 +50,10 @@ const CardModal = ({ cardInfo, onPressClose }: CardModalProps) => {
             </Content>
           </CardContainer>
           <ButtonContainer>
-            <Button>
-              <Bold18 color={PRIMARY}>공유</Bold18>
-            </Button>
+            {/* 공유기능 넣으면 살리기 */}
+            {/* <Button> */}
+            {/*   <Bold18 color={PRIMARY}>공유</Bold18> */}
+            {/* </Button> */}
             <Button backgroundColor={PRIMARY} onPress={onPressClose}>
               <Bold18 color={BLACK}>확인</Bold18>
             </Button>

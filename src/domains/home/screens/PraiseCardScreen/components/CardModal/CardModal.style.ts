@@ -39,10 +39,12 @@ export const TitleText = styled.Text`
 
 export const Content = styled.View``;
 
+// justify-content: space-between; 공유 기능 넣으면 변경
+
 export const ButtonContainer = styled.View`
   width: 100%;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const Button = styled.TouchableOpacity<ButtonProps>`
