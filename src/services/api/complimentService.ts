@@ -1,6 +1,7 @@
 import api from '../utils/api';
 import { ApiResponse } from '../../types/common';
 import { objectToQueryParam } from '../../utils/common';
+import { CardCategory } from '../../domains/home/screens/PraiseCardScreen/PraiseCardScreen';
 
 export interface GetComplimentCardParams {
   'card-type': 'WEEKLY' | 'INTEGRATE';
@@ -23,18 +24,26 @@ export interface ComplimentCardResponse {
 
 /**
  * 칭찬 카드 조회
- * @param params
  * {
  *   card-type: WEEKLY | INTEGRATE
  *   page: number
  * }
+ * @param cardCategory
+ * @param page
  */
-export const getComplimentCard = (
-  params: GetComplimentCardParams,
-): ApiResponse<ComplimentCardResponse> => {
-  const queryParam = objectToQueryParam(params);
+export const getComplimentCard = async (
+  cardCategory: CardCategory,
+  page = 0,
+): Promise<ComplimentCardResponse & { nextPage: number }> => {
+  const { data } = await api.get(`/compliment-card`, {
+    params: {
+      'card-type': cardCategory,
+      page,
+      size: 15,
+    },
+  });
 
-  return api.get(`/compliment-card?${queryParam}`);
+  return { ...data.data, nextPage: page + 1 };
 };
 
 // 칭찬 카드 상세 조회
