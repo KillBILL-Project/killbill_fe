@@ -116,7 +116,7 @@ const TrashList = ({ data }: any) => {
         <TrashHistoryHeader trashHistoryHeaderHeight={trashHistoryHeaderHeight}>
           <View style={{ width: '100%', alignItems: 'center' }}>
             <Text style={{ fontSize: 18, fontWeight: '700', color: '#767676' }}>
-              내 근처 분리수거 {data ? data.length : 0}곳
+              내 근처 분리수거 {data?.length ?? 0}곳
             </Text>
           </View>
         </TrashHistoryHeader>

@@ -23,16 +23,17 @@ interface ILocation {
 
 const EARTH_RADIUS = 6371;
 
+let location: ILocation | undefined;
+
 const GoogleMap = () => {
   const trashType = useRecoilValue(selectedTrashType);
   const mapViewRef = useRef<MapView>(null);
-  const [mapRegion, setMapRegion] = useState<ILocation | undefined>(undefined);
   const [distanceToTop, setDistanceToTop] = useState(0);
   const { showConfirm } = useDialog();
 
   const { data, refetch } = useTrashCanLocationQuery({
-    lat: mapRegion?.latitude,
-    lng: mapRegion?.longitude,
+    lat: location?.latitude,
+    lng: location?.longitude,
     distance: distanceToTop,
     trashType,
   });
@@ -94,6 +95,7 @@ const GoogleMap = () => {
   }, []);
 
   useEffect(() => {
+    if (!location) return;
     refetch();
   }, [trashType]);
 
@@ -111,16 +113,21 @@ const GoogleMap = () => {
           showsIndoors
           mapType="standard"
           onRegionChangeComplete={region => {
-            setMapRegion(region);
+            location = region;
             calculateDistanceToTop(region);
           }}
         >
           <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
-          {data?.data?.data?.map((item: { lat: number; lng: number; trashCanId: string }) => (
-            <Marker key={item.trashCanId} coordinate={{ latitude: item.lat, longitude: item.lng }}>
-              <Image source={marker} />
-            </Marker>
-          ))}
+          {data?.data?.data?.map((item: { lat: number; lng: number; trashCanId: string }) => {
+            return (
+              <Marker
+                key={item.trashCanId}
+                coordinate={{ latitude: item.lat, longitude: item.lng }}
+              >
+                <Image source={marker} />
+              </Marker>
+            );
+          })}
         </MapView>
         <RefetchByCurrentPoint refetch={refetch} />
         <MyLocation handleMoveMyLocation={handleMoveMyLocation} />
