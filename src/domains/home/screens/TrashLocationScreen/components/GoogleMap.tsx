@@ -62,7 +62,7 @@ const GoogleMap = () => {
     );
   }, []);
 
-  const requestLocationAuthorization = async () => {
+  const requestLocationAuthorization = useCallback(async () => {
     Geolocation.requestAuthorization(
       /* 권한 있을 때 */
       () => {
@@ -88,7 +88,7 @@ const GoogleMap = () => {
         }
       },
     );
-  };
+  }, []);
 
   useEffect(() => {
     // 위치 권한 요청
