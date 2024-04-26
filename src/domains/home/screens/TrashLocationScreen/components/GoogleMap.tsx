@@ -13,6 +13,7 @@ import { MapWrapper } from './TrashLocation.style';
 import { selectedTrashType } from '../../../../../states';
 import { isIOS } from '../../../../../utils/platform';
 import { useDialog } from '../../../../../states/context/DialogContext';
+import { ITrashCanLocation } from '../../../../../services/api/trashService';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -118,7 +119,7 @@ const GoogleMap = () => {
           }}
         >
           <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
-          {data?.data?.data?.map((item: { lat: number; lng: number; trashCanId: string }) => {
+          {data?.map((item: ITrashCanLocation) => {
             return (
               <Marker
                 key={item.trashCanId}
@@ -132,7 +133,7 @@ const GoogleMap = () => {
         <RefetchByCurrentPoint refetch={refetch} />
         <MyLocation handleMoveMyLocation={handleMoveMyLocation} />
       </MapWrapper>
-      <TrashList data={data?.data?.data} />
+      <TrashList trashInfoList={data} />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
 import { SearchPosition, SearchText, Wrapper } from './TrashLocation.style';
+import { ITrashCanLocation } from '../../../../../services/api/trashService';
 
 interface IRefetch {
   refetch: (
     options?: RefetchOptions | undefined,
-  ) => Promise<QueryObserverResult<AxiosResponse<any, any>, Error>>;
+  ) => Promise<QueryObserverResult<ITrashCanLocation[], Error>>;
 }
 
 const RefetchByCurrentPoint = ({ refetch }: IRefetch) => {

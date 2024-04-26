@@ -42,6 +42,14 @@ export interface TrashLogResponseListType {
   trashLogResponseList: TrashLogType[];
 }
 
+export interface ITrashCanLocation {
+  trashCanId: number;
+  lng: number;
+  lat: number;
+  address: string;
+  trashType: string[];
+}
+
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
 ): ApiResponse<TrashCanHistoryResponseListType> => {
@@ -69,5 +77,17 @@ export const requestEmptyTrash = async () => {
 
 export const requestTrashCanContentsCount = async (): Promise<number> => {
   const { data } = await api.get('/trash-can-contents/total-count');
+  return data.data;
+};
+
+export const requestTrashCanLocation = async (
+  lat: number,
+  lng: number,
+  distance: number,
+  trashType: string,
+): Promise<ITrashCanLocation[]> => {
+  const { data } = await api.get(
+    `trash-can?lat=${+lat}&lng=${+lng}&distance=${distance}&trashType=${trashType}`,
+  );
   return data.data;
 };
