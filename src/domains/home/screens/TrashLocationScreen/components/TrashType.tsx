@@ -12,11 +12,27 @@ interface ITrashType {
 const TrashType = ({ trashType, name }: ITrashType) => {
   const [selected, setSelected] = useRecoilState(selectedTrashType);
   const onPress = useCallback(() => {
-    setSelected(trashType);
-  }, []);
+    if (trashType === null) {
+      setSelected(null);
+      return;
+    }
+    if (selected === null) {
+      setSelected([trashType]);
+      return;
+    }
+
+    const alreadySelected = selected.find(type => type === trashType);
+    const newList = alreadySelected
+      ? selected.filter(type => type !== trashType)
+      : [...selected, trashType];
+    setSelected(newList.length === 0 ? null : newList);
+  }, [selected, trashType]);
+
+  const isSelected =
+    trashType === null ? selected === null : !!selected?.find(trash => trash === trashType);
 
   return (
-    <TrashTypeButton isSelected={selected === trashType} onPress={onPress}>
+    <TrashTypeButton isSelected={isSelected} onPress={onPress}>
       <TrashTypeText>{name}</TrashTypeText>
     </TrashTypeButton>
   );

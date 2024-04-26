@@ -5,7 +5,7 @@ export const trashFilterState = atom<any>({
   default: 'BIG',
 });
 
-export const selectedTrashType = atom<string | null>({
+export const selectedTrashType = atom<string[] | null>({
   key: 'selectedTrashType',
   default: null,
 });
