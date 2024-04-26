@@ -84,10 +84,12 @@ export const requestTrashCanLocation = async (
   lat: number,
   lng: number,
   distance: number,
-  trashType: string[],
+  trashType: string[] | null,
 ): Promise<ITrashCanLocation[]> => {
-  const { data } = await api.get(
-    `trash-can?lat=${+lat}&lng=${+lng}&distance=${distance}&trashType=${trashType.toString()}`,
-  );
+  let url = `trash-can?lat=${+lat}&lng=${+lng}&distance=${distance}`;
+  if (trashType) {
+    url += `&trashType=${trashType.toString()}`;
+  }
+  const { data } = await api.get(url);
   return data.data;
 };
