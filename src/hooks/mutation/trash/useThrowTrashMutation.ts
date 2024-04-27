@@ -7,11 +7,10 @@ const useThrowTrashMutation = () => {
   const { isError, isIdle, mutate } = useMutation({
     mutationFn: requestThrowTrash,
     mutationKey: ['throw-thrash'],
-    onError: (error: Error) => {
-      console.log('errrorerrrorerrror', error);
-    },
+    onError: (error: Error) => {},
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['trashLog'] });
+      queryClient.refetchQueries({ queryKey: ['trashLog'] });
+      queryClient.refetchQueries({ queryKey: ['useTrashCanContentsCount'] });
     },
   });
   return { mutate, isError, isIdle };
