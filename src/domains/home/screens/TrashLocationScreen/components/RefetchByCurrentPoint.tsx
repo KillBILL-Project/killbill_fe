@@ -13,7 +13,7 @@ const RefetchByCurrentPoint = ({ refetch }: IRefetch) => {
   return (
     <Wrapper top={10}>
       <SearchPosition onPress={() => refetch()}>
-        <SearchText>현 위치에서 검색</SearchText>
+        <SearchText>현 지도에서 검색</SearchText>
       </SearchPosition>
     </Wrapper>
   );

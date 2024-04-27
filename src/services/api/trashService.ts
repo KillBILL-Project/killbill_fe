@@ -50,6 +50,24 @@ export interface ITrashCanLocation {
   trashType: string[];
 }
 
+export interface ITrashLogList {
+  hasNext: boolean;
+  totalCount: number;
+  trashLogResponseList: ITrashLog[];
+}
+
+export interface ITrashLog {
+  trashLogId: number;
+
+  trashCategoryName: string;
+
+  size: string;
+
+  trashImagePath: string;
+
+  createdAt: string;
+}
+
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
 ): ApiResponse<TrashCanHistoryResponseListType> => {
@@ -92,4 +110,12 @@ export const requestTrashCanLocation = async (
   }
   const { data } = await api.get(url);
   return data.data;
+};
+
+export const requestTrashLog = async (
+  size: number,
+  page = 0,
+): Promise<ITrashLogList & { nextPage: number }> => {
+  const { data } = await api.get(`trash-log?size=${size}&page=${page}`);
+  return { ...data.data, nextPage: page + 1 };
 };

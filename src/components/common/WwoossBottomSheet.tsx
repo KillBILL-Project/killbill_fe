@@ -8,6 +8,7 @@ export type TBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
   footerBottom?: React.FC<BottomSheetFooterProps>;
   openPoint?: number | string;
+  maxOpenPoint?: number | string;
   enableContentPanningGesture?: boolean;
   enableHandlePanningGesture?: boolean;
   showBackdrop?: boolean;
@@ -20,13 +21,14 @@ const WwoossBottomSheet: React.FC<TBottomSheetProps> = ({
   bottomSheetRef,
   footerBottom = undefined,
   openPoint = '15%',
+  maxOpenPoint = '40%',
   enableHandlePanningGesture = true,
   enableContentPanningGesture = true,
   showBackdrop = false,
   showHandler = true,
   showRadius = true,
 }) => {
-  const snapPoints = useMemo(() => [openPoint, '40%'], []);
+  const snapPoints = useMemo(() => [openPoint, maxOpenPoint], []);
 
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -39,7 +41,16 @@ const WwoossBottomSheet: React.FC<TBottomSheetProps> = ({
     <BottomSheet
       keyboardBehavior="interactive"
       onClose={() => {}}
-      backgroundStyle={{ borderRadius: showRadius ? 15 : 0 }}
+      backgroundStyle={{
+        borderRadius: showRadius ? 15 : 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: -2,
+        },
+        shadowOpacity: 0.3,
+        elevation: 5,
+      }}
       handleIndicatorStyle={{
         backgroundColor: 'grey',
         width: 40,

@@ -1,6 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import api from '../../../services/utils/api';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { requestTrashLog } from '../../../services/api/trashService';
 
 export const useTrashLogQuery = () => {
-  return useQuery({ queryKey: ['trashLog'], queryFn: () => api.get(`trash-log?size=1000`) });
+  return useInfiniteQuery({
+    queryKey: ['trash-log-list'],
+    queryFn: ({ pageParam }) => requestTrashLog(15, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: lastPage => {
+      const { hasNext } = lastPage;
+      const { nextPage } = lastPage;
+
+      return hasNext ? nextPage : null;
+    },
+  });
 };
