@@ -539,7 +539,7 @@
 				CODE_SIGN_ENTITLEMENTS = killbill_fe/killbill_fe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.04.25;
+				CURRENT_PROJECT_VERSION = 2024.04.27;
 				DEVELOPMENT_TEAM = Q4K44P5984;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = killbill_fe/Info.plist;
@@ -620,7 +620,7 @@
 					"\"${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
 					/usr/lib/swift,
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				NEW_SETTING = "";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -672,7 +672,7 @@
 				CODE_SIGN_ENTITLEMENTS = killbill_fe/killbill_fe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.04.25;
+				CURRENT_PROJECT_VERSION = 2024.04.27;
 				DEVELOPMENT_TEAM = Q4K44P5984;
 				INFOPLIST_FILE = killbill_fe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -752,7 +752,7 @@
 					"\"${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
 					/usr/lib/swift,
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				NEW_SETTING = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -870,7 +870,8 @@
 					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -975,7 +976,8 @@
 					"-ld_classic",
 					"-Wl",
 					"-ld_classic",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
