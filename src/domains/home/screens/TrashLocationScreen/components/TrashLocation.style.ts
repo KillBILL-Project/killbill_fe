@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { ratioPx } from '../../../../../utils/platform';
 import { GREY700 } from '../../../../../constants/colors';
+import { Medium14, Semibold12, Semibold18 } from '../../../../../components/Typography';
 
 export const Wrapper = styled.View<{ top: number }>`
   position: absolute;
@@ -27,7 +28,7 @@ export const SearchText = styled.Text`
   text-align: center;
 `;
 
-export const MapWrapper = styled.View`
+export const MapWrapper = styled.TouchableOpacity`
   position: relative;
   flex: 15;
 `;
@@ -71,7 +72,7 @@ export const TrashCanListWrapper = styled.View`
   padding-right: ${ratioPx(24)};
 `;
 
-export const TrashCanLocationWrapper = styled.View`
+export const TrashCanLocationWrapper = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
@@ -83,3 +84,24 @@ export const TrashCanLocationText = styled.Text`
   font-size: ${ratioPx(16)};
   font-weight: 600;
 `;
+
+export const TrashCanDetailWrapper = styled.View`
+  padding: ${ratioPx(20)};
+`;
+
+export const TrashCanAddress = styled(Semibold18)``;
+
+export const PlaceNameWrapper = styled.View`
+  flex-direction: row;
+  padding-top: ${ratioPx(7)};
+`;
+export const TrashCanPlaceName = styled(Medium14)``;
+
+export const CopyTextButton = styled.TouchableOpacity`
+  padding-top: ${ratioPx(2)};
+  justify-content: center;
+  align-items: center;
+  padding-left: ${ratioPx(12)};
+`;
+
+export const CopyText = styled(Semibold12)``;

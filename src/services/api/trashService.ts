@@ -47,6 +47,7 @@ export interface ITrashCanLocation {
   lng: number;
   lat: number;
   address: string;
+  placeName: string;
   trashType: string[];
 }
 

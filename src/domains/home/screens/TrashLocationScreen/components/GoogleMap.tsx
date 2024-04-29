@@ -2,18 +2,20 @@ import { Alert, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region, UrlTile } from 'react-native-maps';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { openSettings, PERMISSIONS, request } from 'react-native-permissions';
 import marker from '../../../../../assets/icon/marker.png';
+import selectedMarker from '../../../../../assets/icon/selectedMarker.png';
 import { useTrashCanLocationQuery } from '../../../../../hooks/queries/trash/useTrashCanLocationQuery';
 import TrashList from '../TrashList';
 import RefetchByCurrentPoint from './RefetchByCurrentPoint';
 import MyLocation from './MyLocation';
 import { MapWrapper } from './TrashLocation.style';
-import { selectedTrashType } from '../../../../../states';
-import { isIOS } from '../../../../../utils/platform';
+import { activeTrashCanDetail, selectedTrashType } from '../../../../../states';
+import { isIOS, ratio, ratioPx } from '../../../../../utils/platform';
 import { useDialog } from '../../../../../states/context/DialogContext';
 import { ITrashCanLocation } from '../../../../../services/api/trashService';
+import TrashCanDetail from '../TrashCanDetail';
 
 const URL_TEMPLATE = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -27,6 +29,7 @@ const EARTH_RADIUS = 6371;
 let location: ILocation | undefined;
 
 const GoogleMap = () => {
+  const [activeDetail, setTrashCanDetail] = useRecoilState(activeTrashCanDetail);
   const trashType = useRecoilValue(selectedTrashType);
   const mapViewRef = useRef<MapView>(null);
   const [distanceToTop, setDistanceToTop] = useState(0);
@@ -90,6 +93,18 @@ const GoogleMap = () => {
     );
   }, []);
 
+  const blurTrashCanDetail = useCallback(() => {
+    setTrashCanDetail(null);
+  }, []);
+
+  const pressMark = useCallback((trashCan: ITrashCanLocation) => {
+    const { lng, lat } = trashCan;
+    setTrashCanDetail(trashCan);
+    mapViewRef.current?.setCamera({
+      center: { latitude: lat, longitude: lng },
+    });
+  }, []);
+
   useEffect(() => {
     // 위치 권한 요청
     requestLocationAuthorization();
@@ -102,7 +117,7 @@ const GoogleMap = () => {
 
   return (
     <>
-      <MapWrapper>
+      <MapWrapper activeOpacity={1} onPress={blurTrashCanDetail}>
         <MapView
           ref={mapViewRef}
           style={{ flex: 1 }}
@@ -120,12 +135,18 @@ const GoogleMap = () => {
         >
           <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
           {data?.map((item: ITrashCanLocation) => {
+            const isSelected = item.trashCanId === activeDetail?.trashCanId;
             return (
               <Marker
+                onPress={() => pressMark(item)}
                 key={item.trashCanId}
                 coordinate={{ latitude: item.lat, longitude: item.lng }}
               >
-                <Image source={marker} />
+                <Image
+                  source={isSelected ? selectedMarker : marker}
+                  width={ratio * 43}
+                  height={ratio * 36}
+                />
               </Marker>
             );
           })}
@@ -133,7 +154,7 @@ const GoogleMap = () => {
         <RefetchByCurrentPoint refetch={refetch} />
         <MyLocation handleMoveMyLocation={handleMoveMyLocation} />
       </MapWrapper>
-      <TrashList trashInfoList={data} />
+      {activeDetail ? <TrashCanDetail /> : <TrashList trashInfoList={data} />}
     </>
   );
 };
