@@ -1,4 +1,4 @@
-package com.wwooss.at;
+package com.wwooss.io;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

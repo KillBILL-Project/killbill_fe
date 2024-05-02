@@ -82,12 +82,12 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.wwooss.at"
+    namespace "com.wwooss.io"
     defaultConfig {
-        applicationId "com.wwooss.at"
+        applicationId "com.wwooss.io"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 17
+        versionCode 1
         versionName "1.0.0"
     }
     signingConfigs {

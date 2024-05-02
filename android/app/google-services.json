@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814003006035:android:7e60420506e16e6dcbf4a6",
+        "mobilesdk_app_id": "1:814003006035:android:408d982c0391c1c5cbf4a6",
         "android_client_info": {
-          "package_name": "com.wwooss.at"
+          "package_name": "com.wwooss.io"
         }
       },
       "oauth_client": [

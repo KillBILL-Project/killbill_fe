@@ -1,8 +1,6 @@
 import React from 'react';
 import WebView from 'react-native-webview';
 import { SafeAreaView } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { HomeStackParamList } from '../../../../types/navigation';
 
 const WebViewScreen = ({
   route: {
