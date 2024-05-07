@@ -1,19 +1,19 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import NewBadge from '../../PraiseCardScreen/components/NewBadge';
+import NewBadge from '../../ComplimentCardScreen/components/NewBadge';
 import { Bold18 } from '../../../../../components/Typography';
 import { PRIMARY } from '../../../../../constants/colors';
 import { ComplimentCardType } from '../../../../../services/api/complimentService';
-import { Container, PraiseCardName } from './PraiseCard.style';
+import { Container, ComplimentCardName } from './ComplimentCard.style';
 
-interface PraiseCardProps {
+interface ComplimentCardProps {
   item: ComplimentCardType;
   index: number;
   size?: 'large' | 'small';
   onPressCard: (cardInfo: ComplimentCardType) => void;
 }
 
-const PraiseCard = ({ item, index, size, onPressCard }: PraiseCardProps) => {
+const ComplimentCard = ({ item, index, size, onPressCard }: ComplimentCardProps) => {
   return (
     <Container
       key={`a${index.toString()}`}
@@ -26,11 +26,11 @@ const PraiseCard = ({ item, index, size, onPressCard }: PraiseCardProps) => {
         resizeMode={FastImage.resizeMode.contain}
         style={{ width: '100%', height: '100%' }}
       />
-      <PraiseCardName>
+      <ComplimentCardName>
         <Bold18 color={PRIMARY}>{item.title}</Bold18>
-      </PraiseCardName>
+      </ComplimentCardName>
     </Container>
   );
 };
 
-export default PraiseCard;
+export default ComplimentCard;

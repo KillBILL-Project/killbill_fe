@@ -1,10 +1,16 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '../../../../../../utils/platform';
-import { PRIMARY } from '../../../../../../constants/colors';
+import { ratioPx } from '../../../../utils/platform';
+import { PRIMARY } from '../../../../constants/colors';
 
 interface ButtonProps {
   backgroundColor?: string;
 }
+
+export const BackgroundContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`;
 
 export const Container = styled.View`
   flex: 1;
@@ -48,7 +54,7 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity<ButtonProps>`
-  width: ${ratioPx(159.5)};
+  width: 100%;
   height: ${ratioPx(56)};
   border-radius: ${ratioPx(10)};
   border-color: ${PRIMARY};

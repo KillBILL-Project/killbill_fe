@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { WHITE } from '../../constants/colors';
 import { px } from '../../utils/platform';
 import { HEADER_HEIGHT } from '../../constants/constants';
@@ -9,7 +10,6 @@ interface ContainerProps {
 
 interface HeaderProps {
   backgroundColor?: string;
-  topSafeArea: number;
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -17,8 +17,7 @@ export const Container = styled.View<ContainerProps>`
   background-color: ${({ backgroundColor }) => backgroundColor ?? WHITE};
 `;
 
-export const HeaderContainer = styled.View<HeaderProps>`
-  padding-top: ${({ topSafeArea }) => px(topSafeArea)};
+export const HeaderContainer = styled(SafeAreaView)<HeaderProps>`
   background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
 `;
 
@@ -50,6 +49,6 @@ export const Right = styled.View`
   z-index: 1;
 `;
 
-export const Body = styled.View`
+export const Body = styled(SafeAreaView)`
   flex: 1;
 `;

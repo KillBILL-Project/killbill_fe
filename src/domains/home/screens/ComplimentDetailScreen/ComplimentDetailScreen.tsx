@@ -1,9 +1,11 @@
 import React from 'react';
-import { Image, View } from 'react-native';
-import { Bold18, Medium16 } from '../../../../../../components/Typography';
-import { BLACK, GREY700, MAIN, PRIMARY, WHITE } from '../../../../../../constants/colors';
+import { Image } from 'react-native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Bold18, Medium16 } from '../../../../components/Typography';
+import { BLACK, PRIMARY, WHITE } from '../../../../constants/colors';
 
 import {
+  BackgroundContainer,
   Button,
   ButtonContainer,
   CardContainer,
@@ -12,27 +14,25 @@ import {
   Content,
   Title,
   TitleText,
-} from './CardModal.style';
-import { ComplimentCardType } from '../../../../../../services/api/complimentService';
-import Screen from '../../../../../../components/Screen';
+} from './ComplimentDetail.style';
+import Screen from '../../../../components/Screen';
+import { CardDetailParamList } from '../../../../types/navigation';
 
-interface CardModalProps {
-  cardInfo: ComplimentCardType;
-  onPressClose: () => void;
-}
+const ComplimentDetailScreen = () => {
+  const { goBack } = useNavigation();
+  const { params: cardInfo } = useRoute<RouteProp<CardDetailParamList, 'CardDetail'>>();
 
-const CardModal = ({ cardInfo, onPressClose }: CardModalProps) => {
   return (
     <>
-      <View style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <BackgroundContainer>
         <Image
           source={{ uri: cardInfo.cardImage }}
           resizeMode="cover"
           style={{ height: '100%' }}
           blurRadius={16}
         />
-      </View>
-      <Screen backgroundColor="transparent">
+      </BackgroundContainer>
+      <Screen backgroundColor="transparent" backButtonColor={WHITE}>
         <Container>
           <CardContainer>
             <CardImage>
@@ -54,7 +54,7 @@ const CardModal = ({ cardInfo, onPressClose }: CardModalProps) => {
             {/* <Button> */}
             {/*   <Bold18 color={PRIMARY}>공유</Bold18> */}
             {/* </Button> */}
-            <Button backgroundColor={PRIMARY} onPress={onPressClose}>
+            <Button backgroundColor={PRIMARY} onPress={() => goBack()}>
               <Bold18 color={BLACK}>확인</Bold18>
             </Button>
           </ButtonContainer>
@@ -64,4 +64,4 @@ const CardModal = ({ cardInfo, onPressClose }: CardModalProps) => {
   );
 };
 
-export default CardModal;
+export default ComplimentDetailScreen;

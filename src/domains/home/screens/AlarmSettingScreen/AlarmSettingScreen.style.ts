@@ -31,7 +31,7 @@ export const TimeScroll = styled.View`
 
 export const BottomContainer = styled.View`
   flex: 1;
-  padding: ${ratioPx(36)} ${ratioPx(24)};
+  padding: ${ratioPx(36)} ${ratioPx(24)} ${ratioPx(24)};
 `;
 
 export const WeeklyPickerContainer = styled.View`

@@ -2,6 +2,7 @@ import { RegisterParams } from './auth';
 import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
 import { UserGuideDetailParams } from '../constants/userGuide';
+import { ComplimentCardType } from '../services/api/complimentService';
 
 // --- Auth Navigation
 
@@ -22,7 +23,7 @@ export type HomeStackParamList = MyPageParamList &
   ReportParamList &
   HomeParamList & {
     Tab: HomeTabParamList;
-  };
+  } & CardDetailParamList;
 
 export type HomeTabParamList = {
   Home: undefined;
@@ -35,7 +36,7 @@ export type MyPageParamList = {
   AlarmList: undefined;
   MyHistory: undefined;
   UserGuide: undefined;
-  PraiseCard: undefined;
+  ComplimentCard: undefined;
   MyInfo: undefined;
   Setting: undefined;
   Faq: undefined;
@@ -61,4 +62,8 @@ export type ReportParamList = {
 
 export type HomeParamList = {
   EmptyTrash: undefined;
+};
+
+export type CardDetailParamList = {
+  CardDetail: ComplimentCardType;
 };
