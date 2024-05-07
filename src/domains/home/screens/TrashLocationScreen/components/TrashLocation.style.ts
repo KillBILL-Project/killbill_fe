@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { ratioPx } from '../../../../../utils/platform';
-import { GREY700 } from '../../../../../constants/colors';
+import { BTN_BG_LIGHT, GREY700 } from '../../../../../constants/colors';
 import { Medium14, Semibold12, Semibold18 } from '../../../../../components/Typography';
 
 export const Wrapper = styled.View<{ top: number }>`
@@ -95,6 +95,12 @@ export const PlaceNameWrapper = styled.View`
   flex-direction: row;
   padding-top: ${ratioPx(7)};
 `;
+
+export const TrashImage = styled.Image`
+  margin-right: ${ratioPx(4)};
+  background-color: ${BTN_BG_LIGHT};
+`;
+
 export const TrashCanPlaceName = styled(Medium14)``;
 
 export const CopyTextButton = styled.TouchableOpacity`
