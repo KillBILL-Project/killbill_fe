@@ -18,7 +18,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   overflow: hidden;
 `;
 
-export const PraiseCardName = styled.View`
+export const ComplimentCardName = styled.View`
   position: absolute;
   bottom: 0;
   width: 100%;

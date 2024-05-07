@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageSourcePropType } from 'react-native';
 import { useRecoilValue } from 'recoil';
 import { Body, Center, Container, Header, HeaderContainer, Left, Right } from './Screen.style';
@@ -48,7 +47,6 @@ const Screen = ({
   isBackButtonShown = true,
   rightButtonProps,
 }: ScreenProps) => {
-  const { top } = useSafeAreaInsets();
   const { goBack, canGoBack } = useNavigation();
   const isShowToast = useRecoilValue(isShowToastState);
   const { isShowDialog, dialogProps } = useDialog();
@@ -62,7 +60,10 @@ const Screen = ({
       {isShowToast && <Toast />}
       <Container backgroundColor={backgroundColor}>
         {inProgress && <Spinner />}
-        <HeaderContainer backgroundColor={headerColor} topSafeArea={isTopSafeArea ? top : 0}>
+        <HeaderContainer
+          backgroundColor={headerColor}
+          edges={{ top: isTopSafeArea ? 'additive' : 'off' }}
+        >
           {isHeaderShown && (
             <Header>
               <Left>
@@ -83,7 +84,7 @@ const Screen = ({
             </Header>
           )}
         </HeaderContainer>
-        <Body>{children}</Body>
+        <Body edges={['bottom']}>{children}</Body>
       </Container>
     </>
   );

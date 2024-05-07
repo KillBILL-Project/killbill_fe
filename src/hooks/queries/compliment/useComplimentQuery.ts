@@ -1,8 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getComplimentCard } from '../../../services/api/complimentService';
-import { CardCategory } from '../../../domains/home/screens/PraiseCardScreen/PraiseCardScreen';
+import { CardCategory, getComplimentCard } from '../../../services/api/complimentService';
 
-const usePraiseQuery = (cardCategory: CardCategory) => {
+const useComplimentQuery = (cardCategory: CardCategory) => {
   return useInfiniteQuery({
     queryKey: ['compliment-card', cardCategory],
     queryFn: ({ pageParam }) => getComplimentCard(cardCategory, pageParam),
@@ -15,4 +14,4 @@ const usePraiseQuery = (cardCategory: CardCategory) => {
   });
 };
 
-export default usePraiseQuery;
+export default useComplimentQuery;

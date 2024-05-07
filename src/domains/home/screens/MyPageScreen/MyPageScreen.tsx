@@ -40,7 +40,7 @@ const topMenuList: MenuType<MyPageParamList>[] = [
 const menuList: MenuType<MyPageParamList>[] = [
   {
     name: '칭찬카드',
-    route: 'PraiseCard',
+    route: 'ComplimentCard',
   },
   {
     name: '내정보',
