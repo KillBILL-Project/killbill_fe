@@ -9,8 +9,8 @@ const useThrowTrashMutation = () => {
     mutationKey: ['throw-thrash'],
     onError: (error: Error) => {},
     onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ['trashLog'] });
       queryClient.refetchQueries({ queryKey: ['useTrashCanContentsCount'] });
+      queryClient.refetchQueries({ queryKey: ['trash-log-list'] });
     },
   });
   return { mutate, isError, isIdle };

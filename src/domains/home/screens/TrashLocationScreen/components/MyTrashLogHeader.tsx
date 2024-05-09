@@ -1,8 +1,8 @@
+import { Text } from 'react-native';
+import React from 'react';
 import { Title, TrashCount, TrashHistoryHeader } from '../../HomeScreen/HomeScreen.style';
 import { H3 } from '../../../../../components/Typography';
 import { BLACK } from '../../../../../constants/colors';
-import { Text } from 'react-native';
-import React from 'react';
 
 const MyTrashLogHeader = ({ totalCount }: { totalCount: number }) => {
   return (
