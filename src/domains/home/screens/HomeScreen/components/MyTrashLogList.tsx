@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
+import { FlatList, ListRenderItem } from 'react-native';
 import Item from './Item';
 import { useTrashLogQuery } from '../../../../../hooks/queries/trash/useTrashLogQuery';
-import { FlatList, ListRenderItem } from 'react-native';
 import { ITrashLog } from '../../../../../services/api/trashService';
 import MyTrashLogHeader from '../../TrashLocationScreen/components/MyTrashLogHeader';
 import NoData from '../../../../../components/common/NoData';

@@ -49,6 +49,7 @@ export interface ITrashCanLocation {
   address: string;
   placeName: string;
   trashType: string[];
+  trashImages: string[];
 }
 
 export interface ITrashLogList {

@@ -10,7 +10,7 @@ const TrashCanLocation = ({
 }) => {
   return (
     <TrashCanLocationWrapper onPress={() => onPress(trashInfo)}>
-      <TrashCanLocationText>{trashInfo.address}</TrashCanLocationText>
+      <TrashCanLocationText>{trashInfo.placeName}</TrashCanLocationText>
     </TrashCanLocationWrapper>
   );
 };

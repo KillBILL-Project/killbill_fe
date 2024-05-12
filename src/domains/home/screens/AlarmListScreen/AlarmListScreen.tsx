@@ -64,7 +64,7 @@ const AlarmListScreen = () => {
           data={data}
           renderItem={({ item }) => <Alarm {...item} />}
           keyExtractor={(item, index) => toString(index) + item.hour + item.minute}
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{ flexGrow: 1, padding: ratio * 24 }}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             <BaseButton
@@ -74,7 +74,7 @@ const AlarmListScreen = () => {
               onPress={onPressAddAlarm}
             />
           }
-          ListFooterComponentStyle={{ flex: 1, justifyContent: 'flex-end', marginTop: ratio * 24 }}
+          ListFooterComponentStyle={{ flex: 1, justifyContent: 'flex-end', marginTop: ratio * 12 }}
         />
       </Container>
     </Screen>

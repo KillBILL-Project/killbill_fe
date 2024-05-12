@@ -14,6 +14,7 @@ import { isIOS, ratio } from '../../../../../../utils/platform';
 import Picker from '../../../components/Picker';
 import Spinner from '../../../../../../components/Spinner';
 import NoTrash from '../../../../../../components/NoTrash';
+import { convertTimeFullDate } from '../../../../../../utils/common';
 
 interface ThrowHistoryProps {
   selected: boolean;
@@ -75,7 +76,7 @@ const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
               )}
               <HistoryItem icon={item.trashImagePath}>
                 <View style={{ justifyContent: 'center' }}>
-                  <Regular14 color={GREY600}>{createdAt.format('YYYY.MM.DD. hh:mm')}</Regular14>
+                  <Regular14 color={GREY600}>{convertTimeFullDate(item.createdAt)}</Regular14>
                   <Spacer width={10} />
                   <Regular16 color={BLACK}>{item.trashCategoryName}</Regular16>
                 </View>

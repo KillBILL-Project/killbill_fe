@@ -7,7 +7,7 @@ import ReportScreen from '../domains/home/screens/ReportScreen';
 import ReportDetailScreen from '../domains/home/screens/ReportDetailScreen';
 import MyPageScreen from '../domains/home/screens/MyPageScreen';
 import FaqScreen from '../domains/home/screens/FaqScreen';
-import PraiseCardScreen from '../domains/home/screens/PraiseCardScreen';
+import ComplimentCardScreen from '../domains/home/screens/ComplimentCardScreen';
 import SettingScreen from '../domains/home/screens/SettingScreen';
 import UserGuideScreen from '../domains/home/screens/UserGuideScreen';
 import MyInfoScreen from '../domains/home/screens/MyInfoScreen';
@@ -21,6 +21,7 @@ import AlarmListScreen from '../domains/home/screens/AlarmListScreen';
 import EmptyTrashScreen from '../domains/home/screens/EmptyTrashScreen';
 import UserGuideDetailScreen from '../domains/home/screens/UserGuideDetailScreen';
 import WebViewScreen from '../domains/home/screens/WebViewScreen';
+import ComplimentDetailScreen from '../domains/home/screens/ComplimentDetailScreen';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -46,7 +47,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="Tab" component={TabNavigation} />
       <Stack.Screen name="ReportDetail" component={ReportDetailScreen} />
       <Stack.Screen name="Faq" component={FaqScreen} />
-      <Stack.Screen name="PraiseCard" component={PraiseCardScreen} />
+      <Stack.Screen name="ComplimentCard" component={ComplimentCardScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="UserGuide" component={UserGuideScreen} />
       <Stack.Screen name="UserGuideDetail" component={UserGuideDetailScreen} />
@@ -57,6 +58,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="AlarmSetting" component={AlarmSettingScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
       <Stack.Screen name="EmptyTrash" component={EmptyTrashScreen} />
+      <Stack.Screen name="CardDetail" component={ComplimentDetailScreen} />
       <Stack.Screen name="WebView" component={WebViewScreen} />
     </Stack.Navigator>
   );
