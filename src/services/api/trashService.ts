@@ -1,6 +1,7 @@
-import { ApiResponse } from '../../types/common';
+import { ApiResponse, WwoossResponse } from '../../types/common';
 import api from '../utils/api';
 import { objectToQueryParam } from '../../utils/common';
+import { TrashCategory } from '../../utils/trash';
 
 interface GetTrashCanHistoryParams {
   date?: string;
@@ -70,6 +71,28 @@ export interface ITrashLog {
   createdAt: string;
 }
 
+export interface CarbonSavingType {
+  carbonSaving: number;
+  trashCategoryName: TrashCategory;
+}
+
+export interface RefundType {
+  refund: number;
+  trashCategoryName: TrashCategory;
+}
+
+export interface TrashChartItemType extends CarbonSavingType {
+  color: string;
+}
+
+export interface TrashCanContentsType {
+  carbonSavingByTrashCategoryList: CarbonSavingType[];
+  refundByTrashCategoryList: RefundType[];
+  totalCarbonSaving: number;
+  totalRefund: number;
+  trashCanHistoryId: number;
+}
+
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
 ): ApiResponse<TrashCanHistoryResponseListType> => {
@@ -90,8 +113,8 @@ export const requestThrowTrash = async (trashInfoId: number) => {
   return data;
 };
 
-export const requestEmptyTrash = async () => {
-  const data = await api.delete('/trash-can-contents');
+export const requestEmptyTrash = async (): Promise<WwoossResponse<TrashCanContentsType>> => {
+  const { data } = await api.delete('/trash-can-contents');
   return data;
 };
 
