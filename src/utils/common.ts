@@ -1,4 +1,4 @@
-import _, { toString } from 'lodash';
+import _, { round, toString } from 'lodash';
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../constants/constants';
 
 export const isValidEmail = (email: string) => {
@@ -58,4 +58,15 @@ export const convertTimeFullDate = (date: string) => {
 export const flat = <T>(array?: T[][]): T[] => {
   if (!array) return [];
   return Array.prototype.concat(...array);
+};
+
+export const calculatePercentage = (
+  num1: number,
+  num2: number,
+  includePercentageSymbol?: boolean,
+): string => {
+  if (num2 === 0) return includePercentageSymbol ? '0' : '0%';
+
+  const percentage = round((num1 / num2) * 100);
+  return includePercentageSymbol ? `${percentage}` : `${percentage}%`;
 };
