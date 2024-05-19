@@ -129,7 +129,7 @@ const EmptyTrashScreen = () => {
                   <RefundContainer>
                     <RefundTitleContainer>
                       <Bold16 color={BLACK}>예상환급금</Bold16>
-                      <Bold16 color={BLACK}>{`${totalRefund}원`}</Bold16>
+                      <Bold16 color={BLACK}>{`${totalRefund.toLocaleString()}원`}</Bold16>
                     </RefundTitleContainer>
                     {emptyTrashData.refundByTrashCategoryList.map(
                       (refundTrashCategory: RefundType) => (
@@ -137,7 +137,9 @@ const EmptyTrashScreen = () => {
                           <Regular16 color={GREY700}>
                             {trashMeta[refundTrashCategory.trashCategoryName].name}
                           </Regular16>
-                          <Regular16 color={GREY700}>{`${refundTrashCategory.refund}원`}</Regular16>
+                          <Regular16
+                            color={GREY700}
+                          >{`${refundTrashCategory.refund.toLocaleString()}원`}</Regular16>
                         </RefundContents>
                       ),
                     )}
