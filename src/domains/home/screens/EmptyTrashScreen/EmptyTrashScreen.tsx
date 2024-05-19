@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import Screen from '../../../../components/Screen/Screen';
 import useEmptyTrashMutation from '../../../../hooks/mutation/trash/useEmptyTrashMutation';
 import { trashMeta } from '../../../../constants/data';
@@ -149,12 +150,13 @@ const EmptyTrashScreen = () => {
               </Contents>
             )}
           </BottomArea>
-        </Container>
-        {/* <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} /> */}
-        <View style={{ margin: 24 }}>
           <BaseButton text="확인" onPress={goBack} />
-        </View>
+        </Container>
       </ScrollView>
+      <BannerAd
+        unitId="ca-app-pub-6467079030703763/7907740481"
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
     </Screen>
   );
 };
