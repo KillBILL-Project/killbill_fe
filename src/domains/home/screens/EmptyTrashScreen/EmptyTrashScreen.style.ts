@@ -33,6 +33,7 @@ export const CompleteText = styled.Text`
 
 export const BottomArea = styled.View`
   flex: 1;
+  margin-bottom: ${ratioPx(24)};
 `;
 
 export const CarbonSavingRateContainer = styled.View`
