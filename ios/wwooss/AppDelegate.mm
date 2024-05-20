@@ -47,7 +47,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     [FIRApp configure];
   }
    [[UIApplication sharedApplication] registerForRemoteNotifications];
-  self.moduleName = @"killbill_fe";
+  self.moduleName = @"wwooss";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};

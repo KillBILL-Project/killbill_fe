@@ -1,13 +1,7 @@
 import api from '../utils/api';
 import { ApiResponse } from '../../types/common';
-import { objectToQueryParam } from '../../utils/common';
-import { CardCategory } from '../../domains/home/screens/PraiseCardScreen/PraiseCardScreen';
 
-export interface GetComplimentCardParams {
-  'card-type': 'WEEKLY' | 'INTEGRATE';
-  page: number;
-  size?: number;
-}
+export type CardCategory = 'WEEKLY' | 'INTEGRATE';
 
 export interface ComplimentCardType {
   complimentCardId: number;

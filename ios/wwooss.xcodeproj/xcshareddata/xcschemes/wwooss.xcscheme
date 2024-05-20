@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "killbill_fe.app"
-               BlueprintName = "killbill_fe"
-               ReferencedContainer = "container:killbill_fe.xcodeproj">
+               BuildableName = "wwooss.app"
+               BlueprintName = "wwooss"
+               ReferencedContainer = "container:wwooss.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "killbill_feTests.xctest"
-               BlueprintName = "killbill_feTests"
-               ReferencedContainer = "container:killbill_fe.xcodeproj">
+               BuildableName = "wwoossTests.xctest"
+               BlueprintName = "wwoossTests"
+               ReferencedContainer = "container:wwooss.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "killbill_fe.app"
-            BlueprintName = "killbill_fe"
-            ReferencedContainer = "container:killbill_fe.xcodeproj">
+            BuildableName = "wwooss.app"
+            BlueprintName = "wwooss"
+            ReferencedContainer = "container:wwooss.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "killbill_fe.app"
-            BlueprintName = "killbill_fe"
-            ReferencedContainer = "container:killbill_fe.xcodeproj">
+            BuildableName = "wwooss.app"
+            BlueprintName = "wwooss"
+            ReferencedContainer = "container:wwooss.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

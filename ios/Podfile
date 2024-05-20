@@ -60,7 +60,7 @@ setup_permissions([
 platform :ios, 14
 prepare_react_native_project!
 
-target 'killbill_fe' do
+target 'wwooss' do
   config = use_native_modules!
 
  # React Native Maps dependencies
@@ -96,7 +96,7 @@ target 'killbill_fe' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'killbill_feTests' do
+  target 'wwoossTests' do
     inherit! :complete
     # Pods for testing
   end

@@ -1,5 +1,5 @@
 {
-  "name": "killbill_fe",
+  "name": "wwooss",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -21,7 +21,7 @@
     "@react-native-firebase/app": "^18.8.0",
     "@react-native-firebase/messaging": "^18.8.0",
     "@react-native-google-signin/google-signin": "^10.0.1",
-    "@react-native-picker/picker": "^2.6.1",
+    "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
@@ -29,6 +29,7 @@
     "@tanstack/react-query": "^5.22.2",
     "@types/styled-components": "^5.1.34",
     "axios": "^1.5.1",
+    "d3-shape": "^3.2.0",
     "i18next": "^23.7.14",
     "intl-pluralrules": "^2.0.1",
     "lodash": "^4.17.21",
@@ -73,6 +74,7 @@
     "@react-native/metro-config": "^0.72.11",
     "@tanstack/eslint-plugin-query": "^5.20.1",
     "@tsconfig/react-native": "^3.0.0",
+    "@types/d3-shape": "^3.1.6",
     "@types/lodash": "^4.14.202",
     "@types/react": "^18.0.24",
     "@types/react-native-charts-wrapper": "^0.5.11",

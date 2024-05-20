@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import SplashScreen from 'react-native-splash-screen';
+import { MobileAds } from 'react-native-google-mobile-ads';
 import useInterceptor from '../../hooks/useInterceptor';
 import { createLoginLog } from '../../services/api/authService';
 import { tokenState } from '../../states';
@@ -51,6 +52,12 @@ const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
+
+  useEffect(() => {
+    MobileAds()
+      .initialize()
+      .then(adapterStatuses => {});
+  });
 
   return children;
 };
