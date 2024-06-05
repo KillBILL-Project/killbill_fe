@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import LottieView from 'lottie-react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
 import Screen from '../../../../components/Screen/Screen';
 import {
   Container,
@@ -13,11 +14,14 @@ import {
 import Motion from './components/Motion';
 import Filter from './components/Filter';
 import CategorySwiper from './components/CategorySwiper';
-import BottomSheet from '@gorhom/bottom-sheet';
 import WwoossBottomSheet from '../../../../components/common/WwoossBottomSheet';
 import MyTrashLogList from './components/MyTrashLogList';
+import ScrollLoopPicker from '../../../../components/ScrollLoopPicker';
+
+const l = [...Array(1)].flatMap(() => Array.from({ length: 12 }, (_, i) => i + 1));
 
 const HomeScreen = () => {
+  const [value, setValue] = useState(2);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const scrollBarContainerHeight = 32;
@@ -37,7 +41,14 @@ const HomeScreen = () => {
         </FilterContainer>
         <TrashContainer>
           <CategoryContainer>
-            <CategorySwiper motionRef={motionRef} />
+            {/* <CategorySwiper motionRef={motionRef} /> */}
+            <ScrollLoopPicker
+              horizontal
+              items={l}
+              visibleItemCount={3}
+              value={value}
+              setValue={setValue}
+            />
           </CategoryContainer>
           <EmptyContainer inactiveTrashHistoryHeight={inactiveTrashHistoryHeight} />
         </TrashContainer>

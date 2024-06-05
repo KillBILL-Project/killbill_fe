@@ -2,6 +2,7 @@ import React from 'react';
 import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { useRecoilValue } from 'recoil';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
 import { tokenState } from '../states';
@@ -19,7 +20,9 @@ const Navigation = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <SafeAreaProvider>
-        <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </NavigationContainer>
   );
