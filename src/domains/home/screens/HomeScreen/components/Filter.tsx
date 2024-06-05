@@ -4,7 +4,7 @@ import Slider from '@react-native-community/slider';
 import { useSetRecoilState } from 'recoil';
 import indicatorBar from '../../../../../assets/image/home_indicator_bar.png';
 import { Tooltip, TooltipContainer } from './Filter.style';
-import { trashFilterState } from '../../../../../states/trash';
+import { trashFilterState } from '../../../../../states';
 
 const filterData: any = {
   0: {
@@ -45,7 +45,7 @@ const Filter = () => {
         minimumValue={0}
         maximumValue={2}
         step={1}
-        value={2}
+        value={1}
         onValueChange={value => handleOnChange(value)}
       />
       <TooltipContainer>
