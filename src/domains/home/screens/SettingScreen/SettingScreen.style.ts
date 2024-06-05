@@ -31,8 +31,8 @@ export const Box = styled.View`
   border-radius: ${ratioPx(5)};
 `;
 
-export const SecessionButton = styled.TouchableOpacity<{ bottom: number }>`
+export const SecessionButton = styled.TouchableOpacity`
   align-self: center;
   position: absolute;
-  bottom: ${({ bottom }) => ratioPx(bottom + 40)};
+  bottom: ${ratioPx(40)};
 `;

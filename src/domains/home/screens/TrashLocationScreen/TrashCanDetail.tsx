@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import Clipboard from '@react-native-clipboard/clipboard';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef } from 'react';
-import { Image, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { activeTrashCanDetail } from '../../../../states';
 import {
   CopyText,

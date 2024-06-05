@@ -1,7 +1,7 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useCallback, useRef } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import WwoossBottomSheet from '../../../../components/common/WwoossBottomSheet';
-import { ScrollView } from 'react-native';
 import { ITrashCanLocation } from '../../../../services/api/trashService';
 import TrashCanTotalCount from './components/TrashCanTotalCount';
 import { TrashCanListWrapper } from './components/TrashLocation.style';
@@ -21,6 +21,7 @@ const TrashList = ({ trashInfoList }: { trashInfoList?: ITrashCanLocation[] }) =
     <WwoossBottomSheet bottomSheetRef={bottomSheetRef}>
       <TrashCanListWrapper>
         <TrashCanTotalCount count={trashInfoList?.length} />
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 40 }}

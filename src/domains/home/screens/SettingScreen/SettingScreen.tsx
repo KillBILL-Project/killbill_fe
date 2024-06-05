@@ -1,13 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { Switch } from 'react-native-switch';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { toUpper } from 'lodash';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Screen from '../../../../components/Screen/Screen';
 import { Bold18, Medium16, Regular16 } from '../../../../components/Typography';
 import { BLACK, GREY500, GREY600, WHITE } from '../../../../constants/colors';
 import Separator from '../../../../components/Separator/Separator';
-import { ratio, width } from '../../../../utils/platform';
+import { width } from '../../../../utils/platform';
 import {
   Box,
   Container,
@@ -18,36 +16,20 @@ import {
   Title,
 } from './SettingScreen.style';
 import { userState } from '../../../../states';
-import { requestWithdrawal, updatePushConsent } from '../../../../services/api/authService';
+import { requestWithdrawal } from '../../../../services/api/authService';
 import { useDialog } from '../../../../states/context/DialogContext';
 import UseAuth from '../../../../hooks/useAuth';
+import Switch from '../../../../components/Switch';
+import useNotification from '../../../../hooks/useNotification';
 
 const SettingScreen = () => {
+  const { checkPermission, pushConsent } = useNotification();
   const [user, setUser] = useRecoilState(userState);
-  const [isAgree, setIsAgree] = useState<boolean>(!!user?.pushConsent);
-  const { bottom } = useSafeAreaInsets();
   const { showConfirm } = useDialog();
-  const { clearTokens, getUser } = UseAuth();
+  const { clearTokens } = UseAuth();
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const onSwitchPush = () => {
-    setIsAgree(prevState => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-      timeoutRef.current = setTimeout(async () => {
-        if (prevState === user?.pushConsent) {
-          try {
-            await updatePushConsent({ pushConsent: !prevState });
-            await getUser();
-          } finally {
-            timeoutRef.current = null;
-          }
-        }
-      }, 500);
-
-      return !prevState;
-    });
+  const onSwitchPress = () => {
+    checkPermission();
   };
 
   const onPressSecession = async () => {
@@ -70,14 +52,14 @@ const SettingScreen = () => {
           </PushTitle>
           <PushToggleSwitch>
             <Switch
-              value={isAgree}
-              onValueChange={onSwitchPush}
-              circleSize={ratio * 18}
-              innerCircleStyle={{ backgroundColor: WHITE }}
+              value={pushConsent}
+              onValueChange={onSwitchPress}
+              width={46}
+              height={24}
+              circleMargin={2.5}
+              circleColor={WHITE}
               backgroundActive={BLACK}
               backgroundInactive={GREY500}
-              activeText=""
-              inActiveText=""
             />
           </PushToggleSwitch>
         </PushContainer>
@@ -88,7 +70,7 @@ const SettingScreen = () => {
         <Box>
           <Regular16 color={BLACK}>{toUpper(user?.country)}</Regular16>
         </Box>
-        <SecessionButton bottom={bottom} onPress={onPressSecession}>
+        <SecessionButton onPress={onPressSecession}>
           <Medium16 color={GREY600}>서비스 떠나기</Medium16>
         </SecessionButton>
       </Container>

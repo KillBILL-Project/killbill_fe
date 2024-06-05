@@ -137,7 +137,9 @@ const ReportDetailScreen = () => {
                       }
                       style={{ width: 14, height: 14 }}
                     />
-                    <WeeklyChangeAmountText>{data.wowCarbonSaving ?? 0}</WeeklyChangeAmountText>
+                    <WeeklyChangeAmountText>
+                      {round(data.weeklyCarbonSaving, 2) ?? 0}
+                    </WeeklyChangeAmountText>
                   </WeeklyChangeAmount>
                 </ChangeIndicator>
               </WeeklyChange>

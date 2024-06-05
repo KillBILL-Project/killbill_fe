@@ -18,7 +18,7 @@ import useToast from '../../../../hooks/useToast';
 import { requestRegister } from '../../../../services/api/authService';
 import { AuthDetailType, RegisterRequest } from '../../../../types/auth';
 import useAuth from '../../../../hooks/useAuth';
-import { getFcmToken, requestUserPermission } from '../../../../utils/push-notification';
+import { checkNotification, getFcmToken } from '../../../../utils/push-notification';
 
 const initialAuthDetail = {
   age: '',
@@ -74,7 +74,7 @@ const AuthDetailScreen = () => {
   const onPressButton = async ({ isSkipping }: { isSkipping?: boolean }) => {
     if (!isValidForm(isSkipping)) return;
     const fcmToken = await getFcmToken();
-    const pushConsent = await requestUserPermission();
+    const pushConsent = await checkNotification();
 
     const params: RegisterRequest = {
       email: route.params.email,

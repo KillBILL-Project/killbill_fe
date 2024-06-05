@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   Container,
@@ -15,22 +14,23 @@ import useToast from '../../../../hooks/useToast';
 import { useDialog } from '../../../../states/context/DialogContext';
 import { requestChangePassword } from '../../../../services/api/authService';
 import { MyPageParamList } from '../../../../types/navigation';
+import UseAuth from '../../../../hooks/useAuth';
 
 const ResetPasswordScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const { showAlert } = useDialog();
   const { showToast } = useToast();
+  const { logout } = UseAuth();
   const { t } = useTranslation();
-  const { navigate } = useNavigation<NavigationProp<MyPageParamList>>();
 
   const onChangePassword = (enteredPassword: string) => setPassword(enteredPassword);
   const onChangeConfirmedPassword = (enteredPassword: string) =>
     setConfirmedPassword(enteredPassword);
 
   const alertMessage = [
-    t('forgot_password.alert.reset_password.0'),
-    t('forgot_password.alert.reset_password.1'),
+    t('reset_password.alert.reset_password.0'),
+    t('reset_password.alert.reset_password.1'),
   ];
 
   const validationList = useMemo(
@@ -64,7 +64,7 @@ const ResetPasswordScreen = () => {
     try {
       await requestChangePassword({ password });
       await showAlert({ alertMessage });
-      navigate('MyInfo');
+      logout();
     } catch (e) {
       showToast({ message: '일시적인 오류가 발생했습니다. 다시 시도해주세요.', isFailed: true });
     }
