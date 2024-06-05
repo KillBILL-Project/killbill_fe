@@ -92,7 +92,7 @@
     },
     "input": {
       "confirmed_password": {
-        "placeholder": "대소문자, 숫자, 기호 포함 8자리 이상",
+        "placeholder": "영문, 숫자, 기호 포함 8자리 이상",
         "title": "비밀번호 확인"
       },
       "email": {
@@ -100,7 +100,7 @@
         "title": "이메일"
       },
       "password": {
-        "placeholder": "대소문자, 숫자, 기호 포함 8자리 이상",
+        "placeholder": "영문, 숫자, 기호 포함 8자리 이상",
         "title": "비밀번호"
       }
     },
@@ -110,7 +110,7 @@
       "invalid_country": "국가를 선택해주세요.",
       "invalid_email": "이메일 형식이 올바르지 않습니다.",
       "invalid_gender": "성별을 선택해주세요.",
-      "invalid_password": "비밀번호를 확인해주세요.",
+      "invalid_password": "비밀번호는 영문, 숫자, 기호 포함\n8자리 이상으로 이루어져야 합니다.",
       "not_equal_password": "비밀번호가 일치하지 않습니다.",
       "required_terms": "약관 동의가 필요합니다."
     }
@@ -127,17 +127,17 @@
     },
     "input": {
       "confirmed_password": {
-        "placeholder": "대소문자, 숫자, 기호 포함 8자리",
+        "placeholder": "영문, 숫자, 기호 포함 8자리",
         "title": "비밀번호 확인"
       },
       "password": {
-        "placeholder": "대소문자, 숫자, 기호 포함 8자리",
+        "placeholder": "영문, 숫자, 기호 포함 8자리",
         "title": "변경할 비밀번호"
       }
     },
     "title": "비밀번호 재설정",
     "validation": {
-      "invalid_password": "비밀번호는 대소문자, 숫자, 기호 포함 8자리 이상으로 이루어져야 합니다.",
+      "invalid_password": "비밀번호는 영문, 숫자, 기호 포함 8자리 이상으로 이루어져야 합니다.",
       "not_equal_password": "비밀번호가 일치하지 않습니다."
     }
   },
