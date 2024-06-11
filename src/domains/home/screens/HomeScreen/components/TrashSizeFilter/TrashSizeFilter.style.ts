@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '../../../../../utils/platform';
+import { ratioPx } from '../../../../../../utils/platform';
 
 export const TooltipContainer = styled.View`
   flex-direction: row;

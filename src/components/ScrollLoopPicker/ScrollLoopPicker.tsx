@@ -1,5 +1,6 @@
 import React, {
   Dispatch,
+  ReactElement,
   SetStateAction,
   useCallback,
   useEffect,
@@ -14,7 +15,6 @@ import { floor, random } from 'lodash';
 import { FlatList, Text, View } from 'react-native';
 import { LayoutChangeEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import { Container } from './ScrollLoopPicker.style';
-import { width } from '../../utils/platform';
 
 // 이 컴포넌트의 한계점 = 무조건 화면이 n등분 되어야만 아이템이 가운데 올 수 있음.
 
@@ -33,7 +33,14 @@ interface LoopScrollProps {
   setValue: Dispatch<SetStateAction<any>>;
   onSelected?: (selectedValue?: any) => void;
   horizontal?: boolean;
-  itemComponent?: (item?: any, index?: number, selected?: boolean) => React.ReactElement;
+  itemComponent?: (item: any, index: number, selected: boolean) => React.ReactElement | null;
+  children?: ReactElement;
+}
+
+export interface LayoutType {
+  width: number;
+  height: number;
+  offset: number;
 }
 
 const ScrollLoopPicker = React.memo(
@@ -53,22 +60,19 @@ const ScrollLoopPicker = React.memo(
     visibleItemCount = 5,
     chosenIndex = floor(visibleItemCount / 2),
     itemComponent,
+    children,
   }: LoopScrollProps) => {
     console.log('-----re-render-----');
 
     const [ready, setReady] = useState(false);
+    const [sIndex, setSIndex] = useState<number | null>(null);
 
     const flatListRef = useRef<FlatList>(null);
     const scroll = useSharedValue(0);
 
-    const selectedIndex = useRef<number | null>();
     const selectedValue = useRef<number | undefined>(value);
 
-    const layout = useRef<{
-      width: number;
-      height: number;
-      offset: number;
-    }>({
+    const layout = useRef<LayoutType>({
       width: 0,
       height: 0,
       offset: 0,
@@ -85,12 +89,16 @@ const ScrollLoopPicker = React.memo(
           const currentItem = viewableItems[centerIndex]?.item;
           const currentIndex = viewableItems[centerIndex]?.index;
 
-          if (selectedIndex.current !== currentIndex && currentItem) {
-            selectedValue.current = currentItem;
-            selectedIndex.current = currentIndex;
-            console.log('Selected Value:', selectedValue.current);
-            console.log('Selected Index:', selectedIndex.current);
-          }
+          setSIndex(prevState => {
+            if (prevState !== currentIndex && currentItem) {
+              selectedValue.current = currentItem;
+              setSIndex(currentIndex);
+              console.log('Selected Value:', selectedValue.current);
+              console.log('Selected Index:', currentIndex);
+              return currentIndex;
+            }
+            return prevState;
+          });
         }
       },
       [],
@@ -113,21 +121,36 @@ const ScrollLoopPicker = React.memo(
       return items.length * 5 + itemIndex + chosenIndex;
     }, []);
 
-    const renderItem = ({ item, index }) => {
-      const selected = index === selectedIndex;
+    const renderItem = ({ item, index }: { item: any; index: number }) => {
+      const selected = sIndex === index;
+      if (selected) console.log('sIndex', sIndex);
       const isSelectedItemStyle = selected && selectedItemStyle;
       const isSelectedItemTextStyle = selected && selectedItemTextStyle;
 
       if (itemComponent) {
         return (
-          <View style={{ width: width / 3, justifyContent: 'center', alignItems: 'center' }}>
+          <View
+            style={{ width: layout.current.offset, justifyContent: 'center', alignItems: 'center' }}
+          >
             {itemComponent(item, index, selected)}
           </View>
         );
       }
 
+      if (children) {
+        return (
+          <View
+            style={{ width: layout.current.offset, justifyContent: 'center', alignItems: 'center' }}
+          >
+            {children}
+          </View>
+        );
+      }
+
       return (
-        <View style={{ width: width / 3, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{ width: layout.current.offset, justifyContent: 'center', alignItems: 'center' }}
+        >
           <View style={[itemStyle, isSelectedItemStyle && selectedItemStyle]}>
             <Text style={[itemTextStyle, isSelectedItemTextStyle && selectedItemTextStyle]}>
               {item}
@@ -143,12 +166,14 @@ const ScrollLoopPicker = React.memo(
     }, []);
 
     const onLayout = (event: LayoutChangeEvent) => {
+      const approxWidth =
+        event.nativeEvent.layout.width - (event.nativeEvent.layout.width % visibleItemCount);
+      const approxHeight =
+        event.nativeEvent.layout.height - (event.nativeEvent.layout.height % visibleItemCount);
       layout.current = {
-        width: event.nativeEvent.layout.width,
-        height: event.nativeEvent.layout.height,
-        offset: horizontal
-          ? event.nativeEvent.layout.width / visibleItemCount
-          : event.nativeEvent.layout.height / visibleItemCount,
+        width: approxWidth,
+        height: approxHeight,
+        offset: horizontal ? approxWidth / visibleItemCount : approxHeight / visibleItemCount,
       };
     };
 

@@ -42,3 +42,12 @@ export const UnselectedCircle = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+export const CenteredLine = styled.View`
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  width: 100%;
+  background-color: #ddd;
+  z-index: -1;
+`;
