@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CountText, CountWrapper } from './Filter.style';
+import { CountText, CountWrapper } from './TrashSizeFilter/TrashSizeFilter.style';
 
 const TrashCount: React.FC<{ count?: number }> = ({ count }) => {
   const { top } = useSafeAreaInsets();

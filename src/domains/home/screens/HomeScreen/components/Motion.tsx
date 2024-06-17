@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { RefObject, useLayoutEffect } from 'react';
 import { ImageBackground, TouchableOpacity, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import { HomeParamList } from '../../../../../types/navigation';
 import TrashCount from './TrashCount';
 import useTrashCanContentsCount from '../../../../../hooks/queries/trash/useTrashCanContentsCount';
 
-const Motion = ({ motionRef }: any) => {
+const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
   const { showConfirm } = useDialog();
   const { data: count } = useTrashCanContentsCount();
 

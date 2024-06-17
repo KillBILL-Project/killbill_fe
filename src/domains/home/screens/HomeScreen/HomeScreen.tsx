@@ -1,29 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import LottieView from 'lottie-react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
 import Screen from '../../../../components/Screen/Screen';
 import {
   Container,
-  MotionContainer,
-  TrashContainer,
-  CategoryContainer,
   EmptyContainer,
   FilterContainer,
+  MotionContainer,
+  TrashContainer,
 } from './HomeScreen.style';
 
 import Motion from './components/Motion';
-import Filter from './components/Filter';
-import CategorySwiper from './components/CategorySwiper';
-import BottomSheet from '@gorhom/bottom-sheet';
+import TrashSizeFilter from './components/TrashSizeFilter/TrashSizeFilter';
 import WwoossBottomSheet from '../../../../components/common/WwoossBottomSheet';
 import MyTrashLogList from './components/MyTrashLogList';
+import CategoryScroll from './components/CategoryScroll';
 
 const HomeScreen = () => {
+  const [trashSize, setTrashSize] = useState(1);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const scrollBarContainerHeight = 32;
   const trashHistoryHeaderHeight = 52;
   const inactiveTrashHistoryHeight = scrollBarContainerHeight + trashHistoryHeaderHeight;
-
   const motionRef = useRef<LottieView>(null);
 
   return (
@@ -33,16 +32,13 @@ const HomeScreen = () => {
           <Motion motionRef={motionRef} />
         </MotionContainer>
         <FilterContainer>
-          <Filter />
+          <TrashSizeFilter trashSize={trashSize} setTrashSize={setTrashSize} />
         </FilterContainer>
         <TrashContainer>
-          <CategoryContainer>
-            <CategorySwiper motionRef={motionRef} />
-          </CategoryContainer>
+          <CategoryScroll trashSize={trashSize} motionRef={motionRef} />
           <EmptyContainer inactiveTrashHistoryHeight={inactiveTrashHistoryHeight} />
         </TrashContainer>
       </Container>
-
       <WwoossBottomSheet bottomSheetRef={bottomSheetRef} openPoint="10%" maxOpenPoint="90%">
         <MyTrashLogList />
       </WwoossBottomSheet>
