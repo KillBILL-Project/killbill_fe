@@ -41,6 +41,11 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+    <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
+    <!-- <key>NSAllowsArbitraryLoads</key> -->
+    <!-- <false/> -->
+    <!-- <key>NSAllowsLocalNetworking</key> -->
+    <!-- <true/> -->
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>지도에서 내 위치를 확인하여 내 주변 분리수거 로봇 위치 찾기 기능을 이용하기 위해 권한이 필요합니다. (필수권한)</string>
@@ -53,7 +58,7 @@
 	<string>LaunchScreen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
