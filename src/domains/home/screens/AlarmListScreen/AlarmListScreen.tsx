@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { toString } from 'lodash';
+import { sortBy, toString } from 'lodash';
 import { useSetRecoilState } from 'recoil';
 import Screen from '../../../../components/Screen/Screen';
 import { Container } from './AlarmListScreen.style';
@@ -32,8 +32,9 @@ const AlarmListScreen = () => {
     queryFn: async () => {
       const response = await getAlarm();
       const alarmList = response.data.data;
+      const sortedAlarmList = sortBy(alarmList, ['sendHour', 'sendMinute']);
 
-      return alarmList.map((alarm): AlarmParams => {
+      return sortedAlarmList.map((alarm): AlarmParams => {
         const isPm = alarm.sendHour > 11;
         const meridiem = isPm ? '오후' : '오전';
         const hour = isPm ? toString(alarm.sendHour - 12) : toString(alarm.sendHour);
