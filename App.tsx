@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Navigation from './src/navigation';
 import DialogProvider from './src/states/context/DialogProvider';
 
-const App = () => {
+const App = (): React.JSX.Element => {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
