@@ -69,6 +69,8 @@ export const ChangeIndicatorIcon = styled.View``;
 export const WeeklyChangeAmount = styled.View`
   flex-direction: row;
   padding: ${ratioPx(4)} ${ratioPx(6)};
+  justify-content: center;
+  align-items: center;
 `;
 
 export const WeeklyChangeAmountText = styled.Text`
