@@ -93,7 +93,6 @@ const ReportDetailScreen = () => {
       titleColor={WHITE}
       backButtonColor={WHITE}
     >
-      {/* TODO: data 가 없는 케이스 작성 */}
       {isLoading || !data ? (
         <Spinner />
       ) : (
@@ -106,10 +105,10 @@ const ReportDetailScreen = () => {
                   <Medium14 color={BLACK}>출석체크</Medium14>
                 </AttendanceTitle>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                  {day.map(item => {
+                  {day.map((item, key) => {
                     const attended = data.attendanceRecord.includes(item.value) ?? false;
                     return (
-                      <DailyIndicator attended={attended}>
+                      <DailyIndicator key={`DailyIndicator${key}`} attended={attended}>
                         <Regular12 color={attended ? BLACK : GREY500}>{item.name}</Regular12>
                       </DailyIndicator>
                     );
