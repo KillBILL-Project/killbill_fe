@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { Animated } from 'react-native';
 import { px, ratioPx } from '../../../../utils/platform';
 import { GREY500 } from '../../../../constants/colors';
 
@@ -25,17 +24,6 @@ export const TrashContainer = styled.View`
   height: 250px;
 `;
 
-export const CategoryContainer = styled.View`
-  flex: 1;
-`;
-
-export const CategoryScroll = styled(Animated.View)`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  overflow-x: hidden;
-`;
-
 export const EmptyContainer = styled.View<EmptyContainerProps>`
   height: ${({ inactiveTrashHistoryHeight }) => px(inactiveTrashHistoryHeight)};
 `;
@@ -52,7 +40,7 @@ export const TrashCount = styled.View``;
 
 export const FilterContainer = styled.View`
   width: 100%;
-  padding: 14px 33px 6px 32px;
+  padding: 0 32px;
   border-bottom-width: 1px;
   border-bottom-color: #f0f0f6;
 `;

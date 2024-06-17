@@ -36,7 +36,7 @@ export const trashSizeMeta: TrashSizeType[] = [
 
 const TrashSizeFilter = ({ trashSize, setTrashSize }: TrashSizeFilterProps) => {
   return (
-    <View style={{ paddingTop: 28, paddingBottom: 22, position: 'relative' }}>
+    <View style={{ paddingTop: 34, paddingBottom: 13, position: 'relative' }}>
       <ImageBackground
         source={indicatorBar}
         style={{
@@ -45,7 +45,7 @@ const TrashSizeFilter = ({ trashSize, setTrashSize }: TrashSizeFilterProps) => {
         }}
       />
       <Slider
-        style={{ width: '100%', height: 40, position: 'absolute', top: 17 }}
+        style={{ width: '100%', height: 40, position: 'absolute', top: 23 }}
         thumbTintColor="#000000"
         minimumTrackTintColor="#FFFFFF00"
         maximumTrackTintColor="#FFFFFF00"
