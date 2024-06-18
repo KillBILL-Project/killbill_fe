@@ -4,6 +4,8 @@ import Animated, {
   interpolate,
   interpolateColor,
   useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
@@ -17,8 +19,24 @@ import {
   TrashCategoryProps,
 } from '../../../../../../types/home';
 import { styles } from './TrashCategory.style';
+import { Gesture } from 'react-native-gesture-handler';
 
-const TrashCategory = ({ index, selectedIndex, image, trashSize = 2 }: TrashCategoryProps) => {
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
+
+const TrashCategory = ({
+  index,
+  selectedIndex,
+  image,
+  trashSize = 2,
+  changeX,
+}: TrashCategoryProps) => {
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+
+  const panAnimatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+  }));
+
   const firstCircleAnimatedStyle = useAnimatedStyle(() => {
     const color = interpolateColor(
       selectedIndex.value,
@@ -106,8 +124,8 @@ const TrashCategory = ({ index, selectedIndex, image, trashSize = 2 }: TrashCate
       <Animated.View style={[styles.circle, secondCircleAnimatedStyle]}>
         <Animated.View style={[styles.circle, thirdCircleAnimatedStyle]}>
           <Animated.View style={[imageAnimatedStyle]}>
-            <FastImage
-              style={styles.fastImage}
+            <AnimatedFastImage
+              style={[styles.fastImage, panAnimatedStyles]}
               source={{
                 uri: image,
                 priority: FastImage.priority.high,

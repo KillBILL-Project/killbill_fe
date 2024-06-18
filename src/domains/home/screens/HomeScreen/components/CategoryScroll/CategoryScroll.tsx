@@ -27,6 +27,7 @@ const CategoryScroll = ({ trashSize, motionRef }: CategoryScrollProps) => {
   const zeroPoint = wholeWidth / 2;
 
   const offset = useSharedValue<number>(-ITEM_SIZE / 2);
+  const changeX = useSharedValue(0);
 
   const selectedIndex = useDerivedValue(() => {
     const v = offset.value - zeroPoint;
@@ -67,6 +68,7 @@ const CategoryScroll = ({ trashSize, motionRef }: CategoryScrollProps) => {
       const nextOffset = offset.value + event.changeX;
       if (nextOffset > -zeroPoint && nextOffset < zeroPoint) {
         offset.value = nextOffset;
+        changeX.value = event.changeX;
       }
     })
     .onFinalize(event => {
@@ -116,6 +118,7 @@ const CategoryScroll = ({ trashSize, motionRef }: CategoryScrollProps) => {
                       selectedIndex={selectedIndex}
                       image={value.trashImagePath}
                       trashSize={trashSize}
+                      changeX={changeX}
                     />
                   </TouchableOpacity>
                 );

@@ -28,12 +28,9 @@ const HomeScreen = () => {
   return (
     <Screen title="홈" isHeaderShown={false} isTopSafeArea={false}>
       <Container>
-        <MotionContainer>
+        <MotionContainer style={{ marginBottom: 30 }}>
           <Motion motionRef={motionRef} />
         </MotionContainer>
-        <FilterContainer>
-          <TrashSizeFilter trashSize={trashSize} setTrashSize={setTrashSize} />
-        </FilterContainer>
         <TrashContainer>
           <CategoryScroll trashSize={trashSize} motionRef={motionRef} />
           <EmptyContainer inactiveTrashHistoryHeight={inactiveTrashHistoryHeight} />
