@@ -16,6 +16,26 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "alias": {
+          "@assets": "./src/assets",
+          "@components": "./src/components",
+          "@constants": "./src/constants",
+          "@domains": "./src/domains",
+          "@hooks": "./src/hooks",
+          "@locales": "./src/locales",
+          "@navigation": "./src/navigation",
+          "@services": "./src/services",
+          "@states": "./src/states",
+          "@types": "./src/types",
+          "@utils": "./src/utils"
+        }
+      }
+    }
+  },
   "rules": {
     "import/no-extraneous-dependencies": "warn",
     "no-restricted-exports": ["error", { "restrictDefaultExports": { "defaultFrom": false } }],
@@ -32,5 +52,5 @@
     "no-nested-ternary": 0,
     "react/jsx-props-no-spreading": "warn",
     "react/no-array-index-key": "warn"
-  }
+  },
 }

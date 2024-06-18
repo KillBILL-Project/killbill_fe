@@ -1,6 +1,19 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "types": ["styled-components-react-native"]
+    "types": ["styled-components-react-native"],
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@components/*":["src/components/*"],
+      "@constants/*": ["src/constants/*"],
+      "@domains/*":["src/domains/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@locales/*":["src/locales/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@services/*":["src/services/*"],
+      "@states/*": ["src/states/*"],
+      "@types/*":["src/types/*"],
+      "@utils/*": ["src/utils/*"]
+    }
   }
 }
