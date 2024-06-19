@@ -1,6 +1,6 @@
-import api from '../utils/api';
-import { ApiResponse } from '../../types/common';
-import { AlarmType } from '../../types/notifications';
+import { ApiResponse } from '@type/common';
+import { AlarmType } from '@type/notifications';
+import api from '@services/utils/api';
 
 /**
  * 알람 목록 가져오기

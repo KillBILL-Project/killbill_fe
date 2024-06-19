@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '../../../services/utils/api';
-import { TrashCategoryEn } from '../../../utils/trash';
-import { WwoossResponse } from '../../../types/common';
+import { TrashCategoryEn } from '@utils/trash';
+import { WwoossResponse } from '@type/common';
+import api from '@services/utils/api';
 
 export interface TrashInfoType {
   refund: number;

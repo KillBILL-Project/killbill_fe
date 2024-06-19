@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useMemo, useState } from 'react';
+import { DialogProps, ShowAlertProps, ShowConfirmProps } from '@type/notifications';
 import DialogContext from './DialogContext';
-import { DialogProps, ShowAlertProps, ShowConfirmProps } from '../../types/notifications';
 
 interface PromiseType {
   resolve: (value?: unknown) => void;

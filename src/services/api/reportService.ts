@@ -1,7 +1,7 @@
-import api from '../utils/api';
-import { objectToQueryParam } from '../../utils/common';
-import { ApiResponse } from '../../types/common';
-import { ReportDetailType, ReportResponseType } from '../../types/report';
+import { objectToQueryParam } from '@utils/common';
+import { ApiResponse } from '@type/common';
+import { ReportDetailType, ReportResponseType } from '@type/report';
+import api from '@services/utils/api';
 
 interface GetWeeklyReportParams {
   date?: string;

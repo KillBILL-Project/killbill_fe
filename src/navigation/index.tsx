@@ -3,11 +3,11 @@ import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/nati
 import { useRecoilValue } from 'recoil';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { WHITE } from '@constants/colors';
+import { tokenState } from '@states/auth';
+import AppFrame from '@components/common/AppFrame';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
-import { tokenState } from '../states';
-import AppFrame from '../components/common/AppFrame';
-import { WHITE } from '../constants/colors';
 
 const MyTheme: Theme = {
   ...DefaultTheme,

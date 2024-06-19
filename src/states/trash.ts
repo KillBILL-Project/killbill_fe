@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { ITrashCanLocation } from '../services/api/trashService';
+import { ITrashCanLocation } from '@services/api/trashService';
 
 export const trashFilterState = atom<any>({
   key: 'trashFilter ',

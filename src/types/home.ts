@@ -1,8 +1,7 @@
 import { SharedValue } from 'react-native-reanimated';
 import LottieView from 'lottie-react-native';
 import { RefObject } from 'react';
-import { ratio, scale } from '../utils/platform';
-import { round } from 'lodash';
+import { scale } from '@utils/platform';
 
 export interface CategoryScrollProps {
   trashSize: number;
