@@ -2,7 +2,7 @@ import React from 'react';
 import { G, Path, Svg, Text } from 'react-native-svg';
 import { arc, pie, PieArcDatum } from 'd3-shape';
 import { GREY700 } from '@constants/colors';
-import { ratio, scale } from '@utils/platform';
+import { scale } from '@utils/platform';
 import { Container } from './styles';
 
 export interface PieChartData {
@@ -19,15 +19,15 @@ export interface PieChartProps {
 }
 
 const PieChart: React.FC<PieChartProps> = ({ data, size, innerRadius = 0, centerText = '' }) => {
-  const ratioSize = ratio * size;
-  const ratioInnerRaduis = ratio * innerRadius;
+  const ratioSize = scale(size);
+  const ratioInnerRadius = scale(innerRadius);
 
   const pieGenerator = pie<PieChartData>()
     .value(d => d.value)
     .sort(null);
 
   const arcGenerator = arc<PieArcDatum<PieChartData>>()
-    .innerRadius(ratioInnerRaduis)
+    .innerRadius(ratioInnerRadius)
     .outerRadius(ratioSize / 2);
 
   const arcs = pieGenerator(data);
