@@ -4,7 +4,6 @@ import Animated, {
   interpolate,
   interpolateColor,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -19,9 +18,6 @@ import {
 } from '@type/home';
 import { trashSizeMeta } from '@screens/home/Home/TrashSizeFilter';
 import { styles } from './styles';
-} from '../../../../../../types/home';
-import { styles } from './TrashCategory.style';
-import { Gesture } from 'react-native-gesture-handler';
 
 const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 

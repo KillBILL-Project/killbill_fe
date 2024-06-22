@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react';
+import React, { RefObject, useLayoutEffect, useState } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -7,9 +7,9 @@ import trashMotion from '@assets/lottie/trash_motion.json';
 import { useDialog } from '@states/context/DialogContext';
 import { HomeParamList } from '@type/navigation';
 import useTrashCanContentsCount from '@hooks/queries/trash/useTrashCanContentsCount';
-import { scale } from '@utils/platform';
 import { Regular14 } from '@components/Typography';
 import { BLACK } from '@constants/colors';
+import { scale } from '@utils/platform';
 
 const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
   const { showConfirm } = useDialog();
@@ -35,6 +35,10 @@ const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
     navigate('EmptyTrash');
   };
 
+  useLayoutEffect(() => {
+    motionRef.current?.play();
+  }, [motionRef]);
+
   return (
     <ImageBackground
       source={homeBackground}
@@ -52,6 +56,7 @@ const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
         <LottieView
           ref={motionRef}
           source={trashMotion}
+          onAnimationFinish={() => {}}
           loop={false}
           resizeMode="contain"
           style={{ width: '150%', height: '100%', minHeight: scale(315) }}
@@ -63,13 +68,17 @@ const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
         {motionHeight !== 0 && (
           <View
             style={{
-              bottom: motionHeight * 0.18,
+              bottom: motionHeight * 0.12,
               position: 'absolute',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: motionHeight * 0.08, fontWeight: '900' }}>5 개</Text>
+            {count && (
+              <Text
+                style={{ fontSize: motionHeight * 0.07, fontWeight: '700' }}
+              >{`${count ?? 0} 개`}</Text>
+            )}
           </View>
         )}
       </View>
