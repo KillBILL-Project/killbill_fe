@@ -1,5 +1,5 @@
-import api from '../utils/api';
-import { ApiResponse } from '../../types/common';
+import { ApiResponse } from '@type/common';
+import api from '@services/utils/api';
 
 export type CardCategory = 'WEEKLY' | 'INTEGRATE';
 

@@ -1,5 +1,5 @@
 import _, { round, toString } from 'lodash';
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../constants/constants';
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from '@constants/constants';
 
 export const isValidEmail = (email: string) => {
   return EMAIL_PATTERN.test(email);

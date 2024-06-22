@@ -2,11 +2,12 @@ import React from 'react';
 import { DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import { useRecoilValue } from 'recoil';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { WHITE } from '@constants/colors';
+import { tokenState } from '@states/auth';
+import AppFrame from '@components/common/AppFrame';
 import AuthNavigation from './AuthNavigation';
 import HomeNavigation from './HomeNavigation';
-import { tokenState } from '../states';
-import AppFrame from '../components/common/AppFrame';
-import { WHITE } from '../constants/colors';
 
 const MyTheme: Theme = {
   ...DefaultTheme,
@@ -19,7 +20,9 @@ const Navigation = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <SafeAreaProvider>
-        <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AppFrame>{accessToken ? <HomeNavigation /> : <AuthNavigation />}</AppFrame>
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </NavigationContainer>
   );

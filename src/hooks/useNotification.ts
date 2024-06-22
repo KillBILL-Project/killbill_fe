@@ -2,9 +2,9 @@ import { AppState } from 'react-native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { openSettings } from 'react-native-permissions';
-import { checkNotification } from '../utils/push-notification';
-import { userState } from '../states';
-import { updatePushConsent } from '../services/api/authService';
+import { updatePushConsent } from '@services/api/authService';
+import { checkNotification } from '@utils/push-notification';
+import { userState } from '@states/auth';
 import UseAuth from './useAuth';
 
 const useNotification = () => {

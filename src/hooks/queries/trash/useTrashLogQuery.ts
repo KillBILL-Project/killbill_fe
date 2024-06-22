@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { requestTrashLog } from '../../../services/api/trashService';
+import { requestTrashLog } from '@services/api/trashService';
 
 export const useTrashLogQuery = () => {
   return useInfiniteQuery({

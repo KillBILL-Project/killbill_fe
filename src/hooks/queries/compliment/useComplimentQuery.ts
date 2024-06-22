@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { CardCategory, getComplimentCard } from '../../../services/api/complimentService';
+import { CardCategory, getComplimentCard } from '@services/api/complimentService';
 
 const useComplimentQuery = (cardCategory: CardCategory) => {
   return useInfiniteQuery({

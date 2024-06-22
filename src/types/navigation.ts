@@ -1,8 +1,8 @@
+import { UserGuideDetailParams } from '@constants/userGuide';
+import { ComplimentCardType } from '@services/api/complimentService';
 import { RegisterParams } from './auth';
 import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
-import { UserGuideDetailParams } from '../constants/userGuide';
-import { ComplimentCardType } from '../services/api/complimentService';
 
 // --- Auth Navigation
 

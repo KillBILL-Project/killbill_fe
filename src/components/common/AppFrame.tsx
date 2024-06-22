@@ -3,14 +3,14 @@ import { useRecoilValue } from 'recoil';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import SplashScreen from 'react-native-splash-screen';
 import { MobileAds } from 'react-native-google-mobile-ads';
-import useInterceptor from '../../hooks/useInterceptor';
-import { createLoginLog } from '../../services/api/authService';
-import { tokenState } from '../../states';
-import useAuth from '../../hooks/useAuth';
-import { requestUserPermission, setFcmToken } from '../../utils/push-notification';
-import useReissueMutation from '../../hooks/mutation/auth/useReissueMutation';
-import GlobalVariableManager from '../../services/utils/GlobalVariableManager';
-import { loadRefreshToken } from '../../services/storage/encryptedStorage';
+import { createLoginLog } from '@services/api/authService';
+import { requestUserPermission, setFcmToken } from '@utils/push-notification';
+import { loadRefreshToken } from '@services/storage/encryptedStorage';
+import GlobalVariableManager from '@services/utils/GlobalVariableManager';
+import useInterceptor from '@hooks/useInterceptor';
+import useAuth from '@hooks/useAuth';
+import useReissueMutation from '@hooks/mutation/auth/useReissueMutation';
+import { tokenState } from '@states/auth';
 
 const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   const { mutate: reissueMutate } = useReissueMutation();
@@ -28,9 +28,7 @@ const AppFrame: React.FC<{ children: ReactElement }> = ({ children }) => {
   const initializeApp = async () => {
     try {
       await Promise.all([setFcmToken(), getUser(), createLoginLog()]);
-    } catch (error) {
-      // TODO
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

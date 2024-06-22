@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { requestTrashCanContentsCount } from '../../../services/api/trashService';
+import { requestTrashCanContentsCount } from '@services/api/trashService';
 
 const useTrashCanContentsCount = () => {
   return useQuery<number, Error>({

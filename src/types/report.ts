@@ -1,4 +1,4 @@
-import { ComplimentCardType } from '../services/api/complimentService';
+import { ComplimentCardType } from '@services/api/complimentService';
 
 export interface WeekInfoType {
   year: number;

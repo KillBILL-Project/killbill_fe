@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { requestReissue } from '../../../services/api/authService';
-import UseAuth from '../../useAuth';
+import { requestReissue } from '@services/api/authService';
+import UseAuth from '@hooks/useAuth';
 
 const useReissueMutation = () => {
   const { setTokens } = UseAuth();

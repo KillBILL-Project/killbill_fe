@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { isFailedState, isShowToastState, toastMessageState } from '../states';
+import { isFailedState, isShowToastState, toastMessageState } from '@states/notification';
 
 interface ShowToastProps {
   isFailed?: boolean;

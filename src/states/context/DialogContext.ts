@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
-import { DialogProps, ShowAlertProps, ShowConfirmProps } from '../../types/notifications';
+import { DialogProps, ShowAlertProps, ShowConfirmProps } from '@type/notifications';
 
 interface DialogContextProps {
   isShowDialog: boolean;

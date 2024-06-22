@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getNotificationList } from '../../../services/api/notificationService';
+import { getNotificationList } from '@services/api/notificationService';
 
 export const useNotificationListQuery = () => {
   return useInfiniteQuery({

@@ -1,7 +1,7 @@
-import api from '../utils/api';
-import { ApiResponse } from '../../types/common';
-import { loadRefreshToken } from '../storage/encryptedStorage';
-import { LoginRequest, LoginResponse, RegisterRequest, User } from '../../types/auth';
+import { ApiResponse } from '@type/common';
+import { LoginRequest, LoginResponse, RegisterRequest, User } from '@type/auth';
+import { loadRefreshToken } from '@services/storage/encryptedStorage';
+import api from '@services/utils/api';
 
 export interface UpdateFcmTokenParams {
   fcmToken: string;

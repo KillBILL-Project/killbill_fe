@@ -1,7 +1,7 @@
-import { ApiResponse, WwoossResponse } from '../../types/common';
-import api from '../utils/api';
-import { objectToQueryParam } from '../../utils/common';
-import { TrashCategory } from '../../utils/trash';
+import { ApiResponse, WwoossResponse } from '@type/common';
+import { objectToQueryParam } from '@utils/common';
+import { TrashCategory } from '@utils/trash';
+import api from '@services/utils/api';
 
 interface GetTrashCanHistoryParams {
   date?: string;

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { requestEmptyTrash } from '../../../services/api/trashService';
+import { requestEmptyTrash } from '@services/api/trashService';
 
 const useEmptyTrashMutation = () => {
   const query = useQueryClient();
