@@ -6,27 +6,24 @@ import { BLACK, MAIN, WHITE } from '@constants/colors';
 import { Bold16 } from '@components/Typography';
 import { getWeeklyReport } from '@services/api/reportService';
 import { ReportResponseType, ReportType, WeekInfoType } from '@type/report';
-import { isIOS, scale } from '@utils/platform';
+import { scale } from '@utils/platform';
 import Screen from '@components/Screen';
 import Spinner from '@components/Spinner';
 import NoTrash from '@components/NoTrash';
-import Picker from '@components/Picker';
+import { months } from '@screens/home/MyHistory';
+import DatePicker from '@components/DatePicker';
 import { Container, Header, ListContainer, ListTitle } from './styles';
 import ReportItem from './ReportItem';
 
 const ReportScreen = () => {
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const [selectedMonth, setSelectedMonth] = useState('-1');
-  const [yearForIos, setYearForIos] = useState(selectedYear);
-  const [monthForIos, setMonthForIos] = useState(selectedMonth);
+  const [year, setYear] = useState('2024');
+  const [month, setMonth] = useState(months[0]);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     // eslint-disable-next-line @tanstack/query/exhaustive-deps
-    queryKey: ['report', isIOS ? yearForIos : selectedYear, isIOS ? monthForIos : selectedMonth],
+    queryKey: ['report', year, month],
     queryFn: async ({ pageParam }): Promise<ReportResponseType> => {
-      const month = isIOS ? monthForIos : selectedMonth;
-      const year = isIOS ? yearForIos : selectedYear;
-      const date = month === '-1' ? year : `${year}-${month}`;
+      const date = month.value === '-1' ? year : `${year}-${month.value}`;
 
       const response = await getWeeklyReport({ page: pageParam, date });
       let currentMonth: WeekInfoType;
@@ -59,11 +56,6 @@ const ReportScreen = () => {
     getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length : undefined),
   });
 
-  const onChangeYear = (value: string) => setSelectedYear(value);
-  const onCloseYear = () => setYearForIos(selectedYear);
-  const onChangeMonth = (value: string) => setSelectedMonth(value);
-  const onCloseMonth = () => setMonthForIos(selectedMonth);
-
   const render = (item: ReportType) => {
     if (!item.weekInfo.isChanged) return <ReportItem report={item} />;
 
@@ -87,19 +79,13 @@ const ReportScreen = () => {
     >
       <Container>
         <Header>
-          <Picker
-            type="YEAR"
+          <DatePicker
+            year={year}
+            setYear={setYear}
+            month={month}
+            setMonth={setMonth}
             color={WHITE}
-            selectedValue={selectedYear}
-            onValueChange={onChangeYear}
-            onClose={onCloseYear}
-          />
-          <Picker
-            type="MONTH"
-            color={WHITE}
-            selectedValue={selectedYear}
-            onValueChange={onChangeMonth}
-            onClose={onCloseMonth}
+            paddingVertical={16}
           />
         </Header>
         <ListContainer>
