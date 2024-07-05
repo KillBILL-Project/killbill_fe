@@ -5,14 +5,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { BLACK, GREY600 } from '@constants/colors';
 import { getTrashCanHistory, TrashCanHistoryResponseListType } from '@services/api/trashService';
 import { Regular14, Regular16 } from '@components/Typography';
-import { isIOS, scale } from '@utils/platform';
+import { scale } from '@utils/platform';
 import DateLabel from '@components/DateLabel';
 import HistoryItem from '@components/HistoryItem';
-import Picker from '@components/Picker';
 import Separator from '@components/Separator';
 import Spacer from '@components/Spacer';
 import Spinner from '@components/Spinner';
 import NoTrash from '@components/NoTrash';
+import { months } from '@screens/home/MyHistory';
+import DatePicker from '@components/DatePicker';
 import { Container } from './styles';
 
 interface EmptyHistoryProps {
@@ -20,23 +21,14 @@ interface EmptyHistoryProps {
 }
 
 const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const [selectedMonth, setSelectedMonth] = useState('-1');
-  const [yearForIos, setYearForIos] = useState(selectedYear);
-  const [monthForIos, setMonthForIos] = useState(selectedMonth);
-
-  const onChangeYear = (value: string) => setSelectedYear(value);
-  const onCloseYear = () => setYearForIos(selectedYear);
-  const onChangeMonth = (value: string) => setSelectedMonth(value);
-  const onCloseMonth = () => setMonthForIos(selectedMonth);
+  const [year, setYear] = useState('2024');
+  const [month, setMonth] = useState(months[0]);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     // eslint-disable-next-line @tanstack/query/exhaustive-deps
-    queryKey: ['empty', isIOS ? yearForIos : selectedYear, isIOS ? monthForIos : selectedMonth],
+    queryKey: ['empty', year, month],
     queryFn: async ({ pageParam }): Promise<TrashCanHistoryResponseListType> => {
-      const month = isIOS ? monthForIos : selectedMonth;
-      const year = isIOS ? yearForIos : selectedYear;
-      const date = month === '-1' ? year : `${year}-${month}`;
+      const date = month.value === '-1' ? year : `${year}-${month.value}`;
 
       const response = await getTrashCanHistory({ page: pageParam, date });
       const trashCanHistoryResponse = response.data.data;
@@ -64,6 +56,7 @@ const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
 
   return (
     <Container selected={selected}>
+      <DatePicker year={year} setYear={setYear} month={month} setMonth={setMonth} />
       <FlatList
         data={data?.pages.flatMap(value => value.trashCanHistoryResponseList)}
         renderItem={({ item }) => {
@@ -93,25 +86,7 @@ const EmptyHistory = ({ selected }: EmptyHistoryProps) => {
         }}
         onEndReachedThreshold={0.8}
         onEndReached={() => hasNextPage && fetchNextPage()}
-        contentContainerStyle={{ flexGrow: 1, padding: scale(24) }}
-        ListHeaderComponent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: scale(16) }}>
-            <Picker
-              type="YEAR"
-              color={BLACK}
-              selectedValue={selectedYear}
-              onValueChange={onChangeYear}
-              onClose={onCloseYear}
-            />
-            <Picker
-              type="MONTH"
-              color={BLACK}
-              selectedValue={selectedMonth}
-              onValueChange={onChangeMonth}
-              onClose={onCloseMonth}
-            />
-          </View>
-        }
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: scale(24) }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={isLoading ? <Spinner /> : <NoTrash />}
       />
