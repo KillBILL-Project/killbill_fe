@@ -2,6 +2,7 @@ import { SharedValue } from 'react-native-reanimated';
 import LottieView from 'lottie-react-native';
 import { RefObject } from 'react';
 import { scale } from '@utils/platform';
+import { ImageSourcePropType } from 'react-native';
 
 export interface CategoryScrollProps {
   trashSize: number;
@@ -12,7 +13,7 @@ export interface TrashCategoryProps {
   index: number;
   selectedIndex: SharedValue<number>;
   changeX: SharedValue<number>;
-  image: string;
+  image: ImageSourcePropType;
   trashSize: number;
 }
 

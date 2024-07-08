@@ -17,8 +17,9 @@ export const getTrashInfo = async (): Promise<TrashInfoType[]> => {
 };
 
 export const useTrashInfoQuery = () => {
-  return useQuery({
+  const { data: trashInfo } = useQuery({
     queryKey: ['trashInfo'],
     queryFn: getTrashInfo,
   });
+  return { trashInfo };
 };

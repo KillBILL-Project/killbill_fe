@@ -74,11 +74,9 @@ const Motion = ({ motionRef }: { motionRef: RefObject<LottieView> }) => {
               alignItems: 'center',
             }}
           >
-            {count && (
-              <Text
-                style={{ fontSize: motionHeight * 0.07, fontWeight: '700' }}
-              >{`${count ?? 0} 개`}</Text>
-            )}
+            <Text style={{ fontSize: motionHeight * 0.07, fontWeight: '700' }}>
+              {`${count ?? 0} 개`}
+            </Text>
           </View>
         )}
       </View>

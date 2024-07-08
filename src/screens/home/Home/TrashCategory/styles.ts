@@ -9,5 +9,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  fastImage: { width: '100%', height: '100%' },
+  animatedImage: {
+    shadowColor: '#666',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.9,
+    shadowRadius: 2,
+    elevation: 2,
+  },
 });

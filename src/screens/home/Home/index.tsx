@@ -1,16 +1,9 @@
 import React, { useRef, useState } from 'react';
 import LottieView from 'lottie-react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import TrashSizeFilter from '@screens/home/Home/TrashSizeFilter';
 import Screen from '@components/Screen';
 import WwoossBottomSheet from '@components/common/WwoossBottomSheet';
-import {
-  Container,
-  EmptyContainer,
-  FilterContainer,
-  MotionContainer,
-  TrashContainer,
-} from './styles';
+import { Container, EmptyContainer, MotionContainer, TrashContainer } from './styles';
 
 import Motion from './Motion';
 import MyTrashLogList from './MyTrashLogList';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -7,7 +8,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import FastImage from 'react-native-fast-image';
 import { MAIN } from '@constants/colors';
 import {
   COMMON_CIRCLE_SIZE,
@@ -17,9 +17,8 @@ import {
   TrashCategoryProps,
 } from '@type/home';
 import { trashSizeMeta } from '@screens/home/Home/TrashSizeFilter';
+import { ratio } from '@utils/platform';
 import { styles } from './styles';
-
-const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 const TrashCategory = ({
   index,
@@ -30,10 +29,6 @@ const TrashCategory = ({
 }: TrashCategoryProps) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
-
-  const panAnimatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
-  }));
 
   const firstCircleAnimatedStyle = useAnimatedStyle(() => {
     const color = interpolateColor(
@@ -106,7 +101,7 @@ const TrashCategory = ({
     const imageSize = interpolate(
       selectedIndex.value,
       [index - 1, index, index + 1],
-      [size, size + 15, size],
+      [ratio * 70, ratio * 95, ratio * 70],
       Extrapolation.CLAMP,
     );
     const sizeValue = withTiming(imageSize, { duration: 200 });
@@ -121,13 +116,10 @@ const TrashCategory = ({
     <Animated.View style={[styles.circle, firstCircleAnimatedStyle]}>
       <Animated.View style={[styles.circle, secondCircleAnimatedStyle]}>
         <Animated.View style={[styles.circle, thirdCircleAnimatedStyle]}>
-          <Animated.View style={[imageAnimatedStyle]}>
-            <AnimatedFastImage
-              style={[styles.fastImage, panAnimatedStyles]}
-              source={{
-                uri: image,
-                priority: FastImage.priority.high,
-              }}
+          <Animated.View style={[{ justifyContent: 'center', alignItems: 'center' }]}>
+            <Animated.Image
+              style={[styles.animatedImage, imageAnimatedStyle]}
+              source={image}
               resizeMode="contain"
             />
           </Animated.View>
