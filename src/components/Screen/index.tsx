@@ -21,6 +21,7 @@ interface RightButtonProps {
   icon: ImageSourcePropType;
   padding: number;
   size: number;
+  color: string;
   onPress: () => void;
 }
 
