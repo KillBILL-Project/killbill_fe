@@ -117,11 +117,7 @@ const TrashCategory = ({
       <Animated.View style={[styles.circle, secondCircleAnimatedStyle]}>
         <Animated.View style={[styles.circle, thirdCircleAnimatedStyle]}>
           <Animated.View style={[{ justifyContent: 'center', alignItems: 'center' }]}>
-            <Animated.Image
-              style={[styles.animatedImage, imageAnimatedStyle]}
-              source={image}
-              resizeMode="contain"
-            />
+            <Animated.Image style={imageAnimatedStyle} source={image} resizeMode="contain" />
           </Animated.View>
         </Animated.View>
       </Animated.View>
