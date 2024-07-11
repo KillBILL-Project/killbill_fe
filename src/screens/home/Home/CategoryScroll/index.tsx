@@ -9,15 +9,15 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector, PanGesture } from 'react-native-gesture-handler';
 import { TouchableOpacity, View } from 'react-native';
-import { CategoryScrollProps, ITEM_SIZE, SELECT_ITEM_SIZE } from '@type/home';
 import useThrowTrashMutation from '@hooks/mutation/trash/useThrowTrashMutation';
 import TrashCategory from '@screens/home/Home/TrashCategory';
 import { trashCategory } from '@constants/trash';
 import { useTrashInfoQuery } from '@hooks/queries/trash/useTrashInfoQuery';
 import { find } from 'lodash';
+import { CategoryScrollProps, ITEM_SIZE, SELECT_ITEM_SIZE } from '@screens/home/Home/constant';
 import { Column, Container, Row } from './styles';
 
-const CategoryScroll = ({ trashSize, motionRef }: CategoryScrollProps) => {
+const CategoryScroll = ({ trashSize, playMotion }: CategoryScrollProps) => {
   const { trashInfo } = useTrashInfoQuery();
   const { mutate } = useThrowTrashMutation();
   const trashCategoryList = Array.from({ length: 10 }).flatMap(() => trashCategory);
@@ -57,11 +57,8 @@ const CategoryScroll = ({ trashSize, motionRef }: CategoryScrollProps) => {
         trashInfo,
         info => info.size === 'MEDIUM' && info.trashCategoryName === selectedTrashCategory.name,
       );
-      selectedTrashInfo && mutate(selectedTrashInfo.trashInfoId);
-      if (motionRef.current) {
-        motionRef.current.reset();
-        motionRef.current.play();
-      }
+      if (selectedTrashInfo) mutate(selectedTrashInfo.trashInfoId);
+      playMotion();
     }
     setOffset(index);
   };

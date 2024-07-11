@@ -71,7 +71,7 @@ const EmptyTrashScreen = () => {
   }, [emptyTrashData]);
 
   return (
-    <Screen title="쓰레기 비우기" isHeaderShown={false}>
+    <Screen title="쓰레기 비우기" isHeaderShown={false} isTopSafeArea={false}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <TopBlackArea />
         <Container>
