@@ -3,21 +3,19 @@ import { Image, ImageBackground, Text, View } from 'react-native';
 import { width } from '@utils/platform';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { EmptyTrashButton, styles } from '@screens/home/Home/styles';
-import useTrashCanContentsCount from '@hooks/queries/trash/useTrashCanContentsCount';
-import homeBackground from '@assets/image/home_background.png';
 import { Regular14 } from '@components/Typography';
 import { BLACK } from '@constants/colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeParamList } from '@type/navigation';
 import { useDialog } from '@states/context/DialogContext';
 import { motionArray } from '@screens/home/Home/constant';
+import useTrashCanContentsCount from '@hooks/queries/trash/useTrashCanContentsCount';
+import homeBackground from '@assets/image/home_background.png';
 
 const useMotion = () => {
-  const { data: count } = useTrashCanContentsCount();
-  const interval = useRef<NodeJS.Timeout | null>(null);
-
   const { navigate } = useNavigation<NavigationProp<HomeParamList>>();
   const { showConfirm } = useDialog();
+  const interval = useRef<NodeJS.Timeout | null>(null);
 
   const motionIndex = useSharedValue(0);
   const countLocation = useSharedValue(0);
@@ -57,7 +55,7 @@ const useMotion = () => {
         return;
       }
       reset();
-    }, 50);
+    }, 30);
   }, [reset, motionIndex]);
 
   const open = useCallback(() => {
@@ -72,24 +70,26 @@ const useMotion = () => {
     }, 50);
   }, [motionIndex]);
 
-  const handleEmptyTrash = useCallback(async () => {
-    if (!count) {
+  const Motion = () => {
+    const { data: count } = useTrashCanContentsCount();
+
+    const handleEmptyTrash = async () => {
+      if (!count) {
+        await showConfirm({
+          alertMessage: '비울 쓰레기가 없습니다.',
+          confirmText: '확인',
+        });
+        return;
+      }
+
       await showConfirm({
-        alertMessage: '비울 쓰레기가 없습니다.',
-        confirmText: '확인',
+        alertMessage: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
+        confirmText: '비울게요',
       });
-      return;
-    }
 
-    await showConfirm({
-      alertMessage: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
-      confirmText: '비울게요',
-    });
+      navigate('EmptyTrash');
+    };
 
-    navigate('EmptyTrash');
-  }, [count, navigate, showConfirm]);
-
-  const Motion = useCallback(() => {
     return (
       <ImageBackground source={homeBackground} style={styles.imageBackground}>
         <Animated.View style={[styles.imageRowContainer, motionTranslateAnimatedStyle]}>
@@ -119,7 +119,7 @@ const useMotion = () => {
         </EmptyTrashButton>
       </ImageBackground>
     );
-  }, [motionTranslateAnimatedStyle, countAnimatedStyle, count, handleEmptyTrash, setCountLocation]);
+  };
 
   return { Motion, play, reset, open, close };
 };
