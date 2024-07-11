@@ -9,15 +9,15 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { MAIN } from '@constants/colors';
+import { trashSizeMeta } from '@screens/home/Home/TrashSizeFilter';
+import { ratio } from '@utils/platform';
 import {
   COMMON_CIRCLE_SIZE,
   FIRST_CIRCLE_SIZE,
   SECOND_CIRCLE_SIZE,
   THIRD_CIRCLE_SIZE,
   TrashCategoryProps,
-} from '@type/home';
-import { trashSizeMeta } from '@screens/home/Home/TrashSizeFilter';
-import { ratio } from '@utils/platform';
+} from '@screens/home/Home/constant';
 import { styles } from './styles';
 
 const TrashCategory = ({
