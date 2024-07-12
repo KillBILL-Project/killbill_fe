@@ -36,6 +36,7 @@ import {
   TrashContainer,
   TrashRateChartContainer,
   TrashRateContainer,
+  AdSection,
 } from './styles';
 
 const EmptyTrashScreen = () => {
@@ -151,13 +152,16 @@ const EmptyTrashScreen = () => {
               </Contents>
             )}
           </BottomArea>
+
+          <AdSection>
+            <BannerAd
+              unitId="ca-app-pub-6467079030703763/7907740481"
+              size={BannerAdSize.LARGE_BANNER}
+            />
+          </AdSection>
           <BaseButton text="확인" onPress={goBack} />
         </Container>
       </ScrollView>
-      <BannerAd
-        unitId="ca-app-pub-6467079030703763/7907740481"
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
     </Screen>
   );
 };
