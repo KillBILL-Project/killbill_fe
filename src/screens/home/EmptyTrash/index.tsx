@@ -18,6 +18,7 @@ import Screen from '@components/Screen';
 import Spacer from '@components/Spacer';
 import BaseButton from '@components/BaseButton';
 import {
+  AdSection,
   BottomArea,
   CarbonSavingRateContainer,
   CompleteText,
@@ -36,7 +37,6 @@ import {
   TrashContainer,
   TrashRateChartContainer,
   TrashRateContainer,
-  AdSection,
 } from './styles';
 
 const EmptyTrashScreen = () => {
@@ -152,7 +152,6 @@ const EmptyTrashScreen = () => {
               </Contents>
             )}
           </BottomArea>
-
           <AdSection>
             <BannerAd
               unitId="ca-app-pub-6467079030703763/7907740481"
