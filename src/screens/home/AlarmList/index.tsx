@@ -19,7 +19,7 @@ import { Container } from './styles';
 const defaultAlarm = {
   dayOfWeek: [],
   meridiem: '오전',
-  hour: '0',
+  hour: '1',
   minute: '00',
 };
 

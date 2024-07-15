@@ -26,7 +26,7 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek }: AlarmParams) => {
   return (
     <Container style={styles.shadow} onPress={onPress}>
       <TimeContainer>
-        <TimeTest>{`${hour}:${minute}`}</TimeTest>
+        <TimeTest>{`${hour == '0' ? '12' : hour}:${minute}`}</TimeTest>
         <Spacer width={8} />
         <Regular18 color={BLACK}>{meridiem}</Regular18>
       </TimeContainer>
