@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import 'moment/locale/ko';
 import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { isEmpty, toNumber } from 'lodash';
@@ -11,7 +11,6 @@ import { AlarmParams, AlarmType } from '@type/notifications';
 import { createAlarm, updateAlarm } from '@services/api/alarmService';
 import { scale } from '@utils/platform';
 import useToast from '@hooks/useToast';
-import Spacer from '@components/Spacer';
 import Screen from '@components/Screen';
 import BaseButton from '@components/BaseButton';
 import { hours, meridiems, minutes } from '@screens/home/AlarmSetting/constant';
@@ -37,7 +36,7 @@ const AlarmSettingScreen = () => {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
 
-  const { mutate, isSuccess } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async () => {
       const alarmParams: AlarmType = {
         alarmId: alarm.alarmId,
@@ -55,6 +54,11 @@ const AlarmSettingScreen = () => {
       else await createAlarm(alarmParams);
 
       return Promise.resolve();
+    },
+    mutationKey: ['mutate-alarm'],
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['alarm'] });
+      navigation.goBack();
     },
   });
 
@@ -86,15 +90,6 @@ const AlarmSettingScreen = () => {
 
   const onPressSaveAlarm = () => mutate();
 
-  useEffect(() => {
-    if (isSuccess) {
-      (async () => {
-        await queryClient.invalidateQueries({ queryKey: ['alarm'] });
-        navigation.goBack();
-      })();
-    }
-  }, [isSuccess, navigation, queryClient]);
-
   return (
     <Screen
       title="알림 설정"
@@ -121,13 +116,11 @@ const AlarmSettingScreen = () => {
                 setValue={setAlarmProps('hour')}
                 fontStyle={{ fontSize: scale(40), fontWeight: '500' }}
               />
-              <Spacer width={32} />
               <ScrollPicker
                 itemList={[':']}
                 setValue={() => {}}
                 fontStyle={{ fontSize: scale(40), fontWeight: '500' }}
               />
-              <Spacer width={32} />
               <ScrollPicker
                 itemList={minutes}
                 value={alarm.minute}

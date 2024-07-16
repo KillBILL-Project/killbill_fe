@@ -27,6 +27,7 @@ export const MeridiemScroll = styled.View`
 
 export const TimeScroll = styled.View`
   flex-direction: row;
+  gap: ${ratioPx(32)};
 `;
 
 export const BottomContainer = styled.View`
