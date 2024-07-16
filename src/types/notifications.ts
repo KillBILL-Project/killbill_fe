@@ -27,6 +27,7 @@ export interface AlarmType {
 export interface AlarmParams {
   alarmId?: number;
   dayOfWeek: number[];
+  isOn?: boolean;
   meridiem: string;
   hour: string;
   minute: string;

@@ -24,8 +24,6 @@ interface ScrollPickerProps {
 const ScrollPicker = ({ itemList, value, setValue, fontStyle }: ScrollPickerProps) => {
   const items = ['', ...itemList, ''];
 
-  console.log(itemList, value, typeof value);
-
   const [isScroll, setIsScroll] = useState(false);
   const offsetY = useSharedValue(value ? indexOf(itemList, value) * -ITEM_HEIGHT : 0);
 

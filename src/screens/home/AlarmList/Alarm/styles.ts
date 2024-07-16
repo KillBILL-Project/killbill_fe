@@ -9,16 +9,38 @@ export const Container = styled.TouchableOpacity`
   margin: ${ratioPx(4)} ${ratioPx(4)} ${ratioPx(12)};
 `;
 
-export const TimeContainer = styled.View`
+export const TimeRow = styled.View`
   flex-direction: row;
   align-items: flex-end;
-  margin-bottom: ${ratioPx(21)};
+  gap: ${ratioPx(8)};
 `;
 
 export const TimeTest = styled.Text`
   font-size: 34px;
   font-weight: 700;
   color: ${BLACK};
+`;
+
+export const TopSection = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: ${ratioPx(21)};
+`;
+
+export const SettingRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: ${ratioPx(6)};
+`;
+
+export const AlarmToggleSwitch = styled.View``;
+
+export const SeeMoreButton = styled.TouchableOpacity``;
+
+export const SeeMoreButtonImage = styled.Image`
+  width: ${ratioPx(24)};
+  height: ${ratioPx(24)};
 `;
 
 export const CycleContainer = styled.View`
@@ -48,4 +70,17 @@ export const NonSelectedDay = styled(Day)`
   background-color: ${WHITE};
   border-width: 1px;
   border-color: ${GREY500};
+`;
+
+export const SelectButton = styled.TouchableOpacity<{ width: number }>`
+  flex: 1;
+  width: ${({ width }) => ratioPx(width)};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SelectButtonText = styled.Text`
+  font-size: ${ratioPx(14)};
+  font-weight: 400;
+  color: #333;
 `;

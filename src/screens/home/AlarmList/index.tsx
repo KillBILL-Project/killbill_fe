@@ -46,6 +46,7 @@ const AlarmListScreen = () => {
           hour,
           minute,
           dayOfWeek: [...alarm.dayOfWeekList],
+          isOn: alarm.on,
         };
       });
     },
