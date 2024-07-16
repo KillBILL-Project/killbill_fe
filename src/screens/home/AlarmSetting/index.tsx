@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import 'moment/locale/ko';
 import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { isEmpty, toNumber } from 'lodash';
@@ -11,9 +11,9 @@ import { AlarmParams, AlarmType } from '@type/notifications';
 import { createAlarm, updateAlarm } from '@services/api/alarmService';
 import { scale } from '@utils/platform';
 import useToast from '@hooks/useToast';
-import Spacer from '@components/Spacer';
 import Screen from '@components/Screen';
 import BaseButton from '@components/BaseButton';
+import { hours, meridiems, minutes } from '@screens/home/AlarmSetting/constant';
 import {
   BottomContainer,
   ButtonContainer,
@@ -29,10 +29,6 @@ import {
 import ScrollPicker from './ScrollPicker';
 import DailyButton from './DailyButton';
 
-const meridiems = ['오전', '오후'];
-const hours = Array.from({ length: 12 }, (_, i) => `${i}`);
-const minutes = Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : `${i}`));
-
 const AlarmSettingScreen = () => {
   const { params } = useRoute<RouteProp<HomeStackParamList, 'AlarmSetting'>>();
   const [alarm, setAlarm] = useState<AlarmParams>({ ...params });
@@ -40,7 +36,7 @@ const AlarmSettingScreen = () => {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
 
-  const { mutate, isSuccess } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async () => {
       const alarmParams: AlarmType = {
         alarmId: alarm.alarmId,
@@ -59,9 +55,21 @@ const AlarmSettingScreen = () => {
 
       return Promise.resolve();
     },
+    mutationKey: ['mutate-alarm'],
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['alarm'] });
+      navigation.goBack();
+    },
   });
 
   const setAlarmProps = <K extends keyof AlarmParams>(key: K) => {
+    if (key === 'hour') {
+      return (value: AlarmParams[K]) => {
+        const result = hours.find(item => item.label === value)?.value;
+        setAlarm(prevState => ({ ...prevState, [key]: result }));
+      };
+    }
+
     return (value: AlarmParams[K]) => {
       setAlarm(prevState => ({ ...prevState, [key]: value }));
     };
@@ -82,15 +90,6 @@ const AlarmSettingScreen = () => {
 
   const onPressSaveAlarm = () => mutate();
 
-  useEffect(() => {
-    if (isSuccess) {
-      (async () => {
-        await queryClient.invalidateQueries({ queryKey: ['alarm'] });
-        navigation.goBack();
-      })();
-    }
-  }, [isSuccess, navigation, queryClient]);
-
   return (
     <Screen
       title="알림 설정"
@@ -107,32 +106,26 @@ const AlarmSettingScreen = () => {
                 itemList={meridiems}
                 value={alarm.meridiem}
                 setValue={setAlarmProps('meridiem')}
-                fontSize={scale(22)}
-                fontWeight={400}
+                fontStyle={{ fontSize: scale(22), fontWeight: '400' }}
               />
             </MeridiemScroll>
             <TimeScroll>
               <ScrollPicker
-                itemList={hours}
-                value={alarm.hour}
+                itemList={hours.map(item => item.label)}
+                value={hours.find(item => item.value === toNumber(alarm.hour))?.label ?? '1'}
                 setValue={setAlarmProps('hour')}
-                fontSize={scale(40)}
-                fontWeight={500}
+                fontStyle={{ fontSize: scale(40), fontWeight: '500' }}
               />
-              <Spacer width={32} />
               <ScrollPicker
                 itemList={[':']}
                 setValue={() => {}}
-                fontSize={scale(40)}
-                fontWeight={500}
+                fontStyle={{ fontSize: scale(40), fontWeight: '500' }}
               />
-              <Spacer width={32} />
               <ScrollPicker
                 itemList={minutes}
                 value={alarm.minute}
                 setValue={setAlarmProps('minute')}
-                fontSize={scale(40)}
-                fontWeight={500}
+                fontStyle={{ fontSize: scale(40), fontWeight: '500' }}
               />
             </TimeScroll>
           </TimePicker>

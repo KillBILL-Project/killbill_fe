@@ -33,7 +33,6 @@ export const CompleteText = styled.Text`
 
 export const BottomArea = styled.View`
   flex: 1;
-  margin-bottom: ${ratioPx(24)};
 `;
 
 export const CarbonSavingRateContainer = styled.View`
@@ -105,4 +104,11 @@ export const NavigateLocationButton = styled.TouchableOpacity`
   align-items: center;
   padding: ${ratioPx(8)} 0;
   margin-top: ${ratioPx(16)};
+`;
+
+export const AdSection = styled.View`
+  width: 100%;
+  margin: ${ratioPx(24)} 0;
+  justify-content: center;
+  align-items: center;
 `;

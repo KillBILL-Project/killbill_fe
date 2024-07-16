@@ -8,6 +8,7 @@ import { HomeStackParamList } from '@type/navigation';
 import { Medium16, Regular12 } from '@components/Typography';
 import { ReportType } from '@type/report';
 import { LeftIcon } from '@components/HistoryItem/styles';
+import { scale } from '@utils/platform';
 import {
   ArrowContainer,
   ItemContainer,
@@ -49,7 +50,7 @@ const ReportItem = ({ report }: ReportProps) => {
         </ReportTitle>
       </ReportContainer>
       <ArrowContainer>
-        <Image source={arrow} style={{ width: 20, height: 20 }} />
+        <Image source={arrow} style={{ width: scale(20), height: scale(20) }} />
       </ArrowContainer>
     </ItemContainer>
   );

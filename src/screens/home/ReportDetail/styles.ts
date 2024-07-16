@@ -104,3 +104,10 @@ export const TrashCategoryChart = styled.View`
 export const TrashChangeGuide = styled.View`
   align-items: center;
 `;
+
+export const AdSection = styled.View`
+  width: 100%;
+  margin: ${ratioPx(24)} 0;
+  justify-content: center;
+  align-items: center;
+`;

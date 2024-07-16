@@ -52,6 +52,12 @@ export const deleteAlarm = (alarmId: number): ApiResponse<void> => {
 /**
  * 알람 ON/OFF
  */
-export const switchAlarm = (alarmId: number, isOn: boolean): ApiResponse<void> => {
-  return api.patch(`/alarm/${alarmId}/on-off`, { isOn });
+export const switchAlarm = ({
+  alarmId,
+  isOn,
+}: {
+  alarmId: number;
+  isOn: boolean;
+}): ApiResponse<void> => {
+  return api.patch(`/alarm/${alarmId}/on-off`, { on: isOn });
 };

@@ -1,63 +1,89 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
-import { round } from 'lodash';
-import { scale } from '@utils/platform';
-import { Container, ItemText, ItemTextContainer } from './styles';
+import { TextStyle, View } from 'react-native';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withDecay,
+  withSpring,
+} from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { indexOf } from 'lodash';
+import { ITEM_HEIGHT } from '@screens/home/AlarmSetting/constant';
+import { styles } from '@screens/home/AlarmSetting/ScrollPicker/styles';
+import ScrollItem from '@screens/home/AlarmSetting/ScrollPicker/ScrollItem';
 
 interface ScrollPickerProps {
   itemList: string[];
   value?: string;
   setValue: (value: any) => void;
-  fontSize: number;
-  fontWeight: number;
+  fontStyle: TextStyle;
 }
 
-const TEXT_HEIGHT = round(scale(46));
-const TEXT_MARGIN = round(scale(10));
-const ITEM_HEIGHT = TEXT_HEIGHT + TEXT_MARGIN * 2;
-const SCROLL_HEIGHT = ITEM_HEIGHT * 3;
+const ScrollPicker = ({ itemList, value, setValue, fontStyle }: ScrollPickerProps) => {
+  const items = ['', ...itemList, ''];
 
-const ScrollPicker = ({ itemList, value, setValue, fontSize, fontWeight }: ScrollPickerProps) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isScroll, setIsScroll] = useState(false);
+  const offsetY = useSharedValue(value ? indexOf(itemList, value) * -ITEM_HEIGHT : 0);
 
-  const render = (item: number | string, index: number) => {
-    return (
-      <ItemTextContainer height={TEXT_HEIGHT} margin={TEXT_MARGIN}>
-        {/* index 는 앞뒤로 공백이 있어서 1 만큼의 오차가 있음. */}
-        <ItemText
-          isSelected={index === selectedIndex + 1}
-          fontSize={fontSize}
-          fontWeight={fontWeight}
-        >
-          {item}
-        </ItemText>
-      </ItemTextContainer>
-    );
-  };
+  const selectedIndex = useDerivedValue<number>(() => {
+    let index = -Math.round(offsetY.value / ITEM_HEIGHT);
+    if (index < 0) index = 0;
+    if (index >= itemList.length) index = itemList.length - 1;
+    return index;
+  });
+
+  const pan = Gesture.Pan()
+    .onChange(event => {
+      runOnJS(setIsScroll)(true);
+      if (offsetY.value > 0) return;
+      offsetY.value += event.changeY;
+    })
+    .onFinalize(event => {
+      offsetY.value = withDecay(
+        {
+          velocity: event.velocityY,
+          deceleration: 0.994,
+          rubberBandEffect: false,
+          clamp: [-ITEM_HEIGHT * itemList.length, ITEM_HEIGHT],
+        },
+        () => {
+          offsetY.value = withSpring(-selectedIndex.value * ITEM_HEIGHT, {
+            mass: 0.5,
+            damping: 10,
+            velocity: 200,
+          });
+          runOnJS(setIsScroll)(false);
+        },
+      );
+    });
+
+  const scrollAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: offsetY.value }],
+  }));
 
   useEffect(() => {
-    if (value != null) setSelectedIndex(itemList.indexOf(value));
-  }, [itemList, value]);
+    setValue(itemList[selectedIndex.value]);
+  }, [isScroll]);
 
   return (
-    <Container height={SCROLL_HEIGHT}>
-      <FlatList
-        data={['', ...itemList, '']}
-        renderItem={({ item, index }) => render(item, index)}
-        snapToInterval={ITEM_HEIGHT}
-        showsVerticalScrollIndicator={false}
-        onMomentumScrollEnd={event => {
-          const index = event.nativeEvent.contentOffset.y / ITEM_HEIGHT;
-          if (itemList.length - 1 >= index && index >= 0) setValue(itemList[index]);
-        }}
-        getItemLayout={(data, index) => ({
-          length: ITEM_HEIGHT,
-          offset: ITEM_HEIGHT * index,
-          index,
-        })}
-        initialScrollIndex={selectedIndex}
-      />
-    </Container>
+    <View style={styles.container}>
+      <GestureDetector gesture={pan}>
+        <Animated.View style={scrollAnimatedStyle}>
+          {items.map((item, index) => {
+            return (
+              <ScrollItem
+                item={item}
+                index={index}
+                selectedIndex={selectedIndex}
+                fontStyle={fontStyle}
+              />
+            );
+          })}
+        </Animated.View>
+      </GestureDetector>
+    </View>
   );
 };
 

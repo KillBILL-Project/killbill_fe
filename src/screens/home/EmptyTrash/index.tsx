@@ -18,6 +18,7 @@ import Screen from '@components/Screen';
 import Spacer from '@components/Spacer';
 import BaseButton from '@components/BaseButton';
 import {
+  AdSection,
   BottomArea,
   CarbonSavingRateContainer,
   CompleteText,
@@ -71,7 +72,7 @@ const EmptyTrashScreen = () => {
   }, [emptyTrashData]);
 
   return (
-    <Screen title="쓰레기 비우기" isHeaderShown={false}>
+    <Screen title="쓰레기 비우기" isHeaderShown={false} isTopSafeArea={false}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <TopBlackArea />
         <Container>
@@ -151,13 +152,15 @@ const EmptyTrashScreen = () => {
               </Contents>
             )}
           </BottomArea>
+          <AdSection>
+            <BannerAd
+              unitId="ca-app-pub-6467079030703763/7907740481"
+              size={BannerAdSize.LARGE_BANNER}
+            />
+          </AdSection>
           <BaseButton text="확인" onPress={goBack} />
         </Container>
       </ScrollView>
-      <BannerAd
-        unitId="ca-app-pub-6467079030703763/7907740481"
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
     </Screen>
   );
 };

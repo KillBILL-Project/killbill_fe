@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { ImageSourcePropType } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { ImageSourcePropType, View } from 'react-native';
 import { useRecoilValue } from 'recoil';
 import backButton from '@assets/icon/back_button.png';
 import { BLACK } from '@constants/colors';
@@ -14,6 +14,7 @@ import Confirm from '@components/Dialog/Confirm';
 import Spinner from '@components/Spinner';
 import { isShowToastState } from '@states/notification';
 import { inProgressState } from '@states/common';
+import GlobalStateContext from '@states/context/GlobalStateContext';
 import { Body, Center, Container, Header, HeaderContainer, Left, Right } from './styles';
 
 interface RightButtonProps {
@@ -49,17 +50,22 @@ const Screen = ({
   rightButtonProps,
 }: ScreenProps) => {
   const { goBack, canGoBack } = useNavigation();
-  const isShowToast = useRecoilValue(isShowToastState);
   const { isShowDialog, dialogProps } = useDialog();
+  const isShowToast = useRecoilValue(isShowToastState);
   const inProgress = useRecoilValue(inProgressState);
 
-  const onPressBackButton = () => goBack();
+  const { setScreenRef } = useContext(GlobalStateContext);
+  const screenRef = useRef<View>(null);
 
   return (
     <>
       {isShowDialog && (dialogProps.dialogType === 'ALERT' ? <Alert /> : <Confirm />)}
       {isShowToast && <Toast />}
-      <Container backgroundColor={backgroundColor}>
+      <Container
+        ref={screenRef}
+        backgroundColor={backgroundColor}
+        onLayout={() => setScreenRef(screenRef)}
+      >
         {inProgress && <Spinner />}
         <HeaderContainer
           backgroundColor={headerColor}
@@ -74,7 +80,7 @@ const Screen = ({
                     size={24}
                     color={backButtonColor}
                     icon={backButton}
-                    onPress={onPressBackButton}
+                    onPress={goBack}
                   />
                 )}
               </Left>
@@ -85,7 +91,7 @@ const Screen = ({
             </Header>
           )}
         </HeaderContainer>
-        <Body edges={['bottom']}>{children}</Body>
+        <Body edges={[]}>{children}</Body>
       </Container>
     </>
   );
