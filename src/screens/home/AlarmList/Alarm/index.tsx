@@ -71,6 +71,11 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
     height: height.value * ratio,
   }));
 
+  const animatedLayoutStyle = useAnimatedStyle(() => ({
+    top: offsetY.value,
+    left: offsetX.value,
+  }));
+
   const toggleDropDown = useCallback(() => {
     const itemCount = 2;
 
@@ -161,13 +166,12 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
           <Animated.View
             style={[
               {
-                top: offsetY,
-                left: offsetX,
                 position: 'absolute',
                 width: scale(selectBoxWidth),
                 alignItems: 'center',
                 zIndex: 100,
               },
+              animatedLayoutStyle,
             ]}
           >
             <Animated.View style={[{ overflow: 'hidden' }, animatedDropDownStyle]}>

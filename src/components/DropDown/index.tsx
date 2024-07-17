@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
   ImageSourcePropType,
@@ -7,7 +7,6 @@ import {
   Pressable,
   Text,
   TextStyle,
-  TouchableHighlight,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -25,8 +24,6 @@ import arrow from '@assets/icon/select_arrow.png';
 import { styles } from '@components/DropDown/styles';
 import Separator from '@components/Separator';
 import { GREY200 } from '@constants/colors';
-import { useGlobalState } from '@states/context/GlobalStateContext';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { ratio, scale } from '@utils/platform';
 
 export type ItemType = { key: string; value: string };
@@ -87,9 +84,7 @@ const DropDown = <T,>({
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
 
-  const buttonRef = useRef<TouchableHighlight>(null);
   const [active, setActive] = useState(false);
-  const { screenRef } = useGlobalState();
 
   const toggleDropDown = useCallback(() => {
     const itemCount = visibleItemCount > items.length ? items.length : visibleItemCount;
@@ -112,29 +107,37 @@ const DropDown = <T,>({
     height: height.value * ratio,
   }));
 
+  const animatedLayoutStyle = useAnimatedStyle(() => ({
+    top: offsetY.value,
+    left: offsetX.value,
+  }));
+
   const rotateIconStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: active ? '180deg' : '0deg' }],
   }));
 
-  const setTitle = (item: T) => {
-    if (!item) return '선택';
+  const setTitle = useCallback(
+    (item: T) => {
+      if (!item) return '선택';
 
-    let title = '';
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    if (titleKey) title = item[titleKey];
-    else title = item.toString();
+      let title = '';
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      if (titleKey) title = item[titleKey];
+      else title = item.toString();
 
-    if (titlePrefix) title = titlePrefix + title;
-    if (titleSuffix) title += titleSuffix;
+      if (titlePrefix) title = titlePrefix + title;
+      if (titleSuffix) title += titleSuffix;
 
-    return title;
-  };
+      return title;
+    },
+    [titleKey, titlePrefix, titleSuffix],
+  );
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<T>) => {
       return (
-        <Animated.View style={{ width }}>
+        <View style={{ width: '100%' }}>
           <TouchableOpacity
             style={[styles.item, { height: scale(itemHeight) }, itemStyle]}
             onPress={() => {
@@ -144,24 +147,19 @@ const DropDown = <T,>({
           >
             <Text style={{ fontSize: scale(itemTextSize) }}>{setTitle(item)}</Text>
           </TouchableOpacity>
-        </Animated.View>
+        </View>
       );
     },
-    [width, itemHeight, itemStyle, itemTextSize, setTitle, setItem, toggleDropDown],
+    [itemHeight, itemStyle, itemTextSize, setTitle, setItem, toggleDropDown],
   );
 
   const itemSeparator = useCallback(() => {
     return <Separator horizontal length="100%" color={GREY200} />;
   }, []);
 
-  useEffect(() => {
-    if (active) changeNavigationBarColor('transparent');
-  }, [active]);
-
   return (
     <>
-      <TouchableHighlight
-        ref={buttonRef}
+      <TouchableOpacity
         style={[
           styles.button,
           {
@@ -171,15 +169,23 @@ const DropDown = <T,>({
           buttonStyle,
         ]}
         onPress={toggleDropDown}
-        onLayout={({ nativeEvent }) => {
-          if (screenRef?.current) {
-            buttonRef.current?.measureLayout(screenRef.current, (x, y) => {
-              offsetX.value = x / 2;
-              offsetY.value = y + nativeEvent.layout.height + scale(gapToSelectBox);
-            });
-          }
+        onPressIn={event => {
+          offsetX.value = (event.nativeEvent.pageX - event.nativeEvent.locationX) / 2;
+          offsetY.value =
+            event.nativeEvent.pageY -
+            event.nativeEvent.locationY +
+            scale(28) +
+            scale(gapToSelectBox);
         }}
       >
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            zIndex: 2,
+          }}
+        />
         <View style={[styles.buttonTitle, buttonTitleStyle]}>
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text style={[{ fontSize: scale(buttonTitleTextSize) }, buttonTitleTextStyle]}>
@@ -195,26 +201,27 @@ const DropDown = <T,>({
             ]}
           />
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
       <Modal visible={active} transparent statusBarTranslucent>
         <Pressable style={{ height: '100%', width: '100%', opacity: 100 }} onPress={toggleDropDown}>
           <Animated.View
-            style={{
-              top: offsetY,
-              left: offsetX,
-              position: 'absolute',
-              width: scale(selectBoxWidth),
-              alignItems: 'center',
-              zIndex: 100,
-            }}
+            style={[
+              {
+                position: 'absolute',
+                width: scale(selectBoxWidth),
+                alignItems: 'center',
+                zIndex: 100,
+              },
+              animatedLayoutStyle,
+            ]}
           >
             <Animated.View style={[{ overflow: 'hidden' }, animatedDropDownStyle]}>
               <View
                 style={[
                   styles.selectBox,
                   {
-                    width: scale(selectBoxWidth),
-                    height: scale(itemHeight) * visibleItemCount,
+                    flex: 1,
+                    width: '100%',
                     backgroundColor: selectBoxColor,
                   },
                 ]}
