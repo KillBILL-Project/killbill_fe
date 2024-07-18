@@ -72,9 +72,9 @@ export const NonSelectedDay = styled(Day)`
   border-color: ${GREY500};
 `;
 
-export const SelectButton = styled.TouchableOpacity<{ width: number }>`
+export const SelectButton = styled.TouchableOpacity`
   flex: 1;
-  width: ${({ width }) => ratioPx(width)};
+  width: 100%;
   justify-content: center;
   align-items: center;
 `;
