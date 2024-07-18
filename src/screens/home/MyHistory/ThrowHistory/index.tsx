@@ -13,7 +13,7 @@ import Separator from '@components/Separator';
 import Spacer from '@components/Spacer';
 import Spinner from '@components/Spinner';
 import NoTrash from '@components/NoTrash';
-import { months } from '@screens/home/MyHistory';
+import { months, years } from '@screens/home/MyHistory';
 import DatePicker from '@components/DatePicker';
 import { Container } from './styles';
 
@@ -22,14 +22,13 @@ interface ThrowHistoryProps {
 }
 
 const ThrowHistory = ({ selected }: ThrowHistoryProps) => {
-  const [year, setYear] = useState('2024');
+  const [year, setYear] = useState(years[0]);
   const [month, setMonth] = useState(months[0]);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['throw', year, month],
     queryFn: async ({ pageParam }): Promise<TrashLogResponseListType> => {
-      const date = month.value === '-1' ? year : `${year}-${month.value}`;
+      const date = month.value === '-1' ? year.value : `${year.value}-${month.value}`;
 
       const response = await getTrashLog({ page: pageParam, date });
       const trashLogResponse = response.data.data;

@@ -10,20 +10,19 @@ import { scale } from '@utils/platform';
 import Screen from '@components/Screen';
 import Spinner from '@components/Spinner';
 import NoTrash from '@components/NoTrash';
-import { months } from '@screens/home/MyHistory';
+import { months, years } from '@screens/home/MyHistory';
 import DatePicker from '@components/DatePicker';
 import { Container, Header, ListContainer, ListTitle } from './styles';
 import ReportItem from './ReportItem';
 
 const ReportScreen = () => {
-  const [year, setYear] = useState('2024');
+  const [year, setYear] = useState(years[0]);
   const [month, setMonth] = useState(months[0]);
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['report', year, month],
     queryFn: async ({ pageParam }): Promise<ReportResponseType> => {
-      const date = month.value === '-1' ? year : `${year}-${month.value}`;
+      const date = month.value === '-1' ? year.value : `${year.value}-${month.value}`;
 
       const response = await getWeeklyReport({ page: pageParam, date });
       let currentMonth: WeekInfoType;

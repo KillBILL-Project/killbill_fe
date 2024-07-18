@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLACK, GREY500, WHITE } from '@constants/colors';
 import { styles, weekly } from '@constants/constants';
@@ -7,18 +7,11 @@ import { HomeStackParamList } from '@type/navigation';
 import { AlarmParams } from '@type/notifications';
 import Switch from '@components/Switch';
 import seeMore from '@assets/icon/see-more.png';
-import { Modal, Pressable, View } from 'react-native';
-import Animated, {
-  Easing,
-  ReduceMotion,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
-import { ratio, scale } from '@utils/platform';
+import { scale } from '@utils/platform';
 import Separator from '@components/Separator';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteAlarm, switchAlarm } from '@services/api/alarmService';
+import DropdownFrame from '@components/DropdownFrame';
 import {
   Container,
   CycleContainer,
@@ -37,16 +30,10 @@ import {
 
 const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams) => {
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
-  const [active, setActive] = useState(false);
+  const [isActiveDropDown, setIsActiveDropDown] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(!!isOn);
-
-  const selectBoxWidth = 82;
-  const itemHeight = 36;
-
-  const width = useSharedValue(0);
-  const height = useSharedValue(0);
-  const offsetX = useSharedValue(0);
-  const offsetY = useSharedValue(0);
+  const [offsetX, setOffsetX] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
 
   const queryClient = useQueryClient();
 
@@ -66,32 +53,6 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
     },
   });
 
-  const animatedDropDownStyle = useAnimatedStyle(() => ({
-    width: width.value * ratio,
-    height: height.value * ratio,
-  }));
-
-  const animatedLayoutStyle = useAnimatedStyle(() => ({
-    top: offsetY.value,
-    left: offsetX.value,
-  }));
-
-  const toggleDropDown = useCallback(() => {
-    const itemCount = 2;
-
-    width.value = withTiming(active ? 0 : selectBoxWidth, {
-      duration: 200,
-      easing: Easing.inOut(Easing.linear),
-      reduceMotion: ReduceMotion.System,
-    });
-    height.value = withTiming(active ? 0 : itemHeight * itemCount, {
-      duration: 200,
-      easing: Easing.inOut(Easing.cubic),
-      reduceMotion: ReduceMotion.System,
-    });
-    setActive(prevState => !prevState);
-  }, [active, height, itemHeight, selectBoxWidth, width]);
-
   const navigateToAlarmSetting = () => {
     navigate('AlarmSetting', { alarmId, hour, minute, meridiem, dayOfWeek });
   };
@@ -102,14 +63,13 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
       return !prevState;
     });
   };
-
   const onPressUpdate = () => {
-    toggleDropDown();
+    setIsActiveDropDown(false);
     navigateToAlarmSetting();
   };
 
   const onPressDelete = () => {
-    toggleDropDown();
+    setIsActiveDropDown(false);
     if (alarmId) deleteAlarmMutate(alarmId);
   };
 
@@ -134,10 +94,10 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
               backgroundInactive={GREY500}
             />
             <SeeMoreButton
-              onPress={toggleDropDown}
+              onPress={() => setIsActiveDropDown(true)}
               onPressIn={event => {
-                offsetX.value = event.nativeEvent.pageX - event.nativeEvent.locationX - scale(24);
-                offsetY.value = event.nativeEvent.pageY - event.nativeEvent.locationY + scale(28);
+                setOffsetX(event.nativeEvent.pageX - event.nativeEvent.locationX - scale(24));
+                setOffsetY(event.nativeEvent.pageY - event.nativeEvent.locationY + scale(28));
               }}
             >
               <SeeMoreButtonImage source={seeMore} />
@@ -161,44 +121,24 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
           </DayContainer>
         </CycleContainer>
       </Container>
-      <Modal visible={active} transparent statusBarTranslucent>
-        <Pressable style={{ height: '100%', width: '100%', opacity: 100 }} onPress={toggleDropDown}>
-          <Animated.View
-            style={[
-              {
-                position: 'absolute',
-                width: scale(selectBoxWidth),
-                alignItems: 'center',
-                zIndex: 100,
-              },
-              animatedLayoutStyle,
-            ]}
-          >
-            <Animated.View style={[{ overflow: 'hidden' }, animatedDropDownStyle]}>
-              <View
-                style={[
-                  {
-                    flex: 1,
-                    width: scale(selectBoxWidth),
-                    backgroundColor: WHITE,
-                    borderRadius: 5,
-                    borderWidth: 2,
-                    borderColor: '#eee',
-                  },
-                ]}
-              >
-                <SelectButton width={selectBoxWidth} style={{ flex: 1 }} onPress={onPressUpdate}>
-                  <SelectButtonText>수정</SelectButtonText>
-                </SelectButton>
-                <Separator length="100%" color="#eee" horizontal />
-                <SelectButton width={selectBoxWidth} style={{ flex: 1 }} onPress={onPressDelete}>
-                  <SelectButtonText>삭제</SelectButtonText>
-                </SelectButton>
-              </View>
-            </Animated.View>
-          </Animated.View>
-        </Pressable>
-      </Modal>
+
+      <DropdownFrame
+        dropDownWidth={82}
+        dropDownHeight={36 * 2}
+        isActiveModal={isActiveDropDown}
+        setIsActiveModal={setIsActiveDropDown}
+        offsetX={offsetX}
+        offsetY={offsetY}
+        containerStyle={{ borderRadius: 5, borderWidth: 2, borderColor: '#eee' }}
+      >
+        <SelectButton style={{ flex: 1 }} onPress={onPressUpdate}>
+          <SelectButtonText>수정</SelectButtonText>
+        </SelectButton>
+        <Separator length="100%" color="#eee" horizontal />
+        <SelectButton style={{ flex: 1 }} onPress={onPressDelete}>
+          <SelectButtonText>삭제</SelectButtonText>
+        </SelectButton>
+      </DropdownFrame>
     </>
   );
 };

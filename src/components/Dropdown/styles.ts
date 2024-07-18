@@ -23,4 +23,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  eventCapturingView: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 2,
+  },
+  buttonTitleTextWrapper: { justifyContent: 'center', alignItems: 'center' },
 });
