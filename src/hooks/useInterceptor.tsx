@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 import SplashScreen from 'react-native-splash-screen';
-import api from '../services/utils/api';
-import { tokenState } from '../states';
-import { requestReissue } from '../services/api/authService';
+import api from '@services/utils/api';
+import { requestReissue } from '@services/api/authService';
+import { tokenState } from '@states/auth';
 import UseAuth from './useAuth';
 import useToast from './useToast';
 
@@ -18,8 +18,15 @@ const useInterceptor = () => {
       config => {
         const requestConfig = { ...config };
         if (config.url !== '/auth/reissue') {
+
+        if (!config.headers.Authorization) {
           requestConfig.headers.Authorization = accessToken ? `Bearer ${accessToken}` : null;
         }
+
+        if (!requestConfig.headers['Content-Type']) {
+          requestConfig.headers['Content-Type'] = 'application/json';
+        }
+
         return requestConfig;
       },
       error => {
