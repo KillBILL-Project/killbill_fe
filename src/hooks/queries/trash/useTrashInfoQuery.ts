@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { TrashCategoryEn } from '@utils/trash';
 import { WwoossResponse } from '@type/common';
 import api from '@services/utils/api';
+import { TrashCategoryEnType } from '@type/trash';
 
 export interface TrashInfoType {
   refund: number;
   size: 'BIG' | 'MEDIUM' | 'SMALL';
-  trashCategoryName: TrashCategoryEn;
+  trashCategoryName: TrashCategoryEnType;
   trashImagePath: string;
   trashInfoId: number;
 }

@@ -1,72 +1,43 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList } from 'react-native';
-import { toString } from 'lodash';
+import { isEmpty, toString } from 'lodash';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { BLACK, MAIN, WHITE } from '@constants/colors';
-import { Bold16 } from '@components/Typography';
+import { MAIN, WHITE } from '@constants/colors';
 import { getWeeklyReport } from '@services/api/reportService';
-import { ReportResponseType, ReportType, WeekInfoType } from '@type/report';
+import { ReportResponseType } from '@type/report';
 import { scale } from '@utils/platform';
 import Screen from '@components/Screen';
 import Spinner from '@components/Spinner';
 import NoTrash from '@components/NoTrash';
 import { months, years } from '@screens/home/MyHistory';
 import DatePicker from '@components/DatePicker';
-import { Container, Header, ListContainer, ListTitle } from './styles';
+import { checkDateChanged } from '@utils/common';
+import moment from 'moment/moment';
+import { Container, Header, ListContainer } from './styles';
 import ReportItem from './ReportItem';
 
 const ReportScreen = () => {
   const [year, setYear] = useState(years[0]);
   const [month, setMonth] = useState(months[0]);
 
+  const currentDate = useRef('');
+
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['report', year, month],
     queryFn: async ({ pageParam }): Promise<ReportResponseType> => {
       const date = month.value === '-1' ? year.value : `${year.value}-${month.value}`;
-
-      const response = await getWeeklyReport({ page: pageParam, date });
-      let currentMonth: WeekInfoType;
-
-      const reportResponse = response.data.data;
-      const { weeklyReportResponseList } = reportResponse;
-
-      const newWeeklyReportResponseList = weeklyReportResponseList.map(report => {
-        const newReport = { ...report };
-
-        const isEqualMonth =
-          currentMonth?.month === newReport.weekInfo.month &&
-          currentMonth?.year === newReport.weekInfo.year;
-
-        if (!isEqualMonth) {
-          // isChanged 라는 조건을 통해 달을 구분
-          newReport.weekInfo.isChanged = true;
-          currentMonth = { ...newReport.weekInfo };
-        }
-
-        return newReport;
-      });
-
-      return {
-        hasNext: reportResponse.hasNext,
-        weeklyReportResponseList: newWeeklyReportResponseList,
-      };
+      const weeklyReport = await getWeeklyReport({ page: pageParam, date });
+      const weeklyReportResponseList = weeklyReport.weeklyReportResponseList.map(item => ({
+        ...item,
+        isDateChanged: checkDateChanged(currentDate, moment(item.toDate).format('YYYYMM')),
+      }));
+      return { ...weeklyReport, weeklyReportResponseList };
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length : undefined),
   });
 
-  const render = (item: ReportType) => {
-    if (!item.weekInfo.isChanged) return <ReportItem report={item} />;
-
-    return (
-      <>
-        <ListTitle>
-          <Bold16 color={BLACK}>{`${item.weekInfo.year}년 ${item.weekInfo.month}월`}</Bold16>
-        </ListTitle>
-        <ReportItem report={item} />
-      </>
-    );
-  };
+  if (isEmpty(data?.pages[0].weeklyReportResponseList)) currentDate.current = '';
 
   return (
     <Screen
@@ -90,7 +61,7 @@ const ReportScreen = () => {
         <ListContainer>
           <FlatList
             data={data?.pages.flatMap(value => value.weeklyReportResponseList)}
-            renderItem={({ item }) => render(item)}
+            renderItem={({ item }) => <ReportItem report={item} />}
             onEndReachedThreshold={0.8}
             onEndReached={() => hasNextPage && fetchNextPage()}
             keyExtractor={item => toString(item.weeklyReportId)}

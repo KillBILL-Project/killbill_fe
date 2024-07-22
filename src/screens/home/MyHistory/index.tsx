@@ -3,8 +3,8 @@ import Screen from '@components/Screen';
 import CategoryTab, { CategoryType } from '@components/CategoryTab';
 import { toString } from 'lodash';
 import { DropdownItemType } from '@components/Dropdown';
-import ThrowHistory from './ThrowHistory';
-import EmptyHistory from './EmptyHistory';
+import ThrowHistory from '@screens/home/MyHistory/ThrowHistory';
+import EmptyHistory from '@screens/home/MyHistory/EmptyHistory';
 
 type HistoryCategory = 'EMPTY' | 'THROW';
 

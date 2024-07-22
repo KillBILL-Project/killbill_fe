@@ -11,10 +11,10 @@ interface GetWeeklyReportParams {
 
 export const getWeeklyReport = async (
   params: GetWeeklyReportParams,
-): ApiResponse<ReportResponseType> => {
+): Promise<ReportResponseType> => {
   const queryParam = objectToQueryParam(params);
-
-  return api.get(`/weekly-reports?${queryParam}`);
+  const response = await api.get(`/weekly-reports?${queryParam}`);
+  return response.data.data;
 };
 
 export const getWeeklyReportDetail = async (

@@ -12,5 +12,3 @@ export const Header = styled.View`
 export const ListContainer = styled.View`
   flex: 1;
 `;
-
-export const ListTitle = styled.View``;
