@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import { PermissionsAndroid } from 'react-native';
 import { checkNotifications } from 'react-native-permissions';
-import { updateFcmToken } from '../services/api/authService';
+import { updateFcmToken } from '@services/api/authService';
 import { isIOS } from './platform';
 
 export const getFcmToken = async () => {

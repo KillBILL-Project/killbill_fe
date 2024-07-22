@@ -1,7 +1,7 @@
-import api from '../utils/api';
-import { objectToQueryParam } from '../../utils/common';
-import { ApiResponse } from '../../types/common';
-import { ReportDetailType, ReportResponseType } from '../../types/report';
+import { objectToQueryParam } from '@utils/common';
+import { ApiResponse } from '@type/common';
+import { ReportDetailType, ReportResponseType } from '@type/report';
+import api from '@services/utils/api';
 
 interface GetWeeklyReportParams {
   date?: string;
@@ -11,10 +11,10 @@ interface GetWeeklyReportParams {
 
 export const getWeeklyReport = async (
   params: GetWeeklyReportParams,
-): ApiResponse<ReportResponseType> => {
+): Promise<ReportResponseType> => {
   const queryParam = objectToQueryParam(params);
-
-  return api.get(`/weekly-reports?${queryParam}`);
+  const response = await api.get(`/weekly-reports?${queryParam}`);
+  return response.data.data;
 };
 
 export const getWeeklyReportDetail = async (

@@ -1,6 +1,6 @@
-import api from '../utils/api';
-import { ApiResponse } from '../../types/common';
-import { AlarmType } from '../../types/notifications';
+import { ApiResponse } from '@type/common';
+import { AlarmType } from '@type/notifications';
+import api from '@services/utils/api';
 
 /**
  * 알람 목록 가져오기
@@ -52,6 +52,12 @@ export const deleteAlarm = (alarmId: number): ApiResponse<void> => {
 /**
  * 알람 ON/OFF
  */
-export const switchAlarm = (alarmId: number, isOn: boolean): ApiResponse<void> => {
-  return api.patch(`/alarm/${alarmId}/on-off`, { isOn });
+export const switchAlarm = ({
+  alarmId,
+  isOn,
+}: {
+  alarmId: number;
+  isOn: boolean;
+}): ApiResponse<void> => {
+  return api.patch(`/alarm/${alarmId}/on-off`, { on: isOn });
 };

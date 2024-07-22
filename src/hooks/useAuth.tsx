@@ -1,8 +1,8 @@
 import { useSetRecoilState } from 'recoil';
-import { tokenState, userState } from '../states';
-import { removeRefreshToken, saveRefreshToken } from '../services/storage/encryptedStorage';
-import { LoginResponse } from '../types/auth';
-import { getUserInfo } from '../services/api/authService';
+import { removeRefreshToken, saveRefreshToken } from '@services/storage/encryptedStorage';
+import { LoginResponse } from '@type/auth';
+import { getUserInfo } from '@services/api/authService';
+import { tokenState, userState } from '@states/auth';
 
 interface UseAuthType {
   setTokens: (params: LoginResponse) => Promise<void>;

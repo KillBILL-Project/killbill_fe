@@ -1,5 +1,6 @@
 import _, { round, toString } from 'lodash';
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../constants/constants';
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from '@constants/constants';
+import { MutableRefObject } from 'react';
 
 export const isValidEmail = (email: string) => {
   return EMAIL_PATTERN.test(email);
@@ -69,4 +70,11 @@ export const calculatePercentage = (
 
   const percentage = round((num1 / num2) * 100);
   return includePercentageSymbol ? `${percentage}` : `${percentage}%`;
+};
+
+export const checkDateChanged = (currentDate: MutableRefObject<string>, date: string) => {
+  if (currentDate.current === date) return false;
+  // eslint-disable-next-line no-param-reassign
+  currentDate.current = date;
+  return true;
 };

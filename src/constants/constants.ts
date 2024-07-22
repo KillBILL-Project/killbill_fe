@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
 import moment from 'moment/moment';
-import { ItemType } from '../types/common';
-import { ratio } from '../utils/platform';
+import { scale } from '@utils/platform';
+import { ItemType } from '@type/common';
 
-export const INPUT_MARGIN = ratio * 24;
-export const INPUT_TITLE_MARGIN = ratio * 6;
-export const INPUT_WIDTH = ratio * 327;
-export const TOAST_WIDTH = ratio * 327;
-export const AUTH_HEIGHT = ratio * 48;
-export const AUTH_BORDER_RADIUS = ratio * 10;
-export const TAB_HEIGHT = ratio * 60;
-export const HEADER_HEIGHT = ratio * 48;
+export const INPUT_MARGIN = scale(24);
+export const INPUT_TITLE_MARGIN = scale(6);
+export const INPUT_WIDTH = scale(327);
+export const TOAST_WIDTH = scale(327);
+export const AUTH_HEIGHT = scale(48);
+export const AUTH_BORDER_RADIUS = scale(10);
+export const TAB_HEIGHT = scale(60);
+export const HEADER_HEIGHT = scale(48);
 
 export const EMAIL_PATTERN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 export const PASSWORD_PATTERN =

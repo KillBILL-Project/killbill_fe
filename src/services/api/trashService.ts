@@ -1,7 +1,7 @@
-import { ApiResponse, WwoossResponse } from '../../types/common';
-import api from '../utils/api';
-import { objectToQueryParam } from '../../utils/common';
-import { TrashCategory } from '../../utils/trash';
+import { WwoossResponse } from '@type/common';
+import { objectToQueryParam } from '@utils/common';
+import api from '@services/utils/api';
+import { TrashCategoryKrType } from '@type/trash';
 
 interface GetTrashCanHistoryParams {
   date?: string;
@@ -20,7 +20,7 @@ export interface TrashCanHistoryType {
   createdAt: string;
   carbonSaving: number;
   refund: number;
-  isEqualDate?: boolean;
+  isDateChanged?: boolean;
 }
 
 export interface TrashCanHistoryResponseListType {
@@ -30,11 +30,11 @@ export interface TrashCanHistoryResponseListType {
 
 export interface TrashLogType {
   trashLogId: number;
-  trashCategoryName: string;
+  trashCategoryName: TrashCategoryKrType;
   size: number;
   trashImagePath: string;
   createdAt: string;
-  isEqualDate?: boolean;
+  isDateChanged?: boolean;
 }
 
 export interface TrashLogResponseListType {
@@ -73,12 +73,12 @@ export interface ITrashLog {
 
 export interface CarbonSavingType {
   carbonSaving: number;
-  trashCategoryName: TrashCategory;
+  trashCategoryName: TrashCategoryKrType;
 }
 
 export interface RefundType {
   refund: number;
-  trashCategoryName: TrashCategory;
+  trashCategoryName: TrashCategoryKrType;
 }
 
 export interface TrashChartItemType extends CarbonSavingType {
@@ -95,17 +95,16 @@ export interface TrashCanContentsType {
 
 export const getTrashCanHistory = async (
   params: GetTrashCanHistoryParams,
-): ApiResponse<TrashCanHistoryResponseListType> => {
+): Promise<TrashCanHistoryResponseListType> => {
   const queryParam = objectToQueryParam(params);
-  return api.get(`/trash-can-histories?${queryParam}`);
+  const response = await api.get(`/trash-can-histories?${queryParam}`);
+  return response.data.data;
 };
 
-export const getTrashLog = async (
-  params: GetTrashLogParams,
-): ApiResponse<TrashLogResponseListType> => {
+export const getTrashLog = async (params: GetTrashLogParams): Promise<TrashLogResponseListType> => {
   const queryParam = objectToQueryParam(params);
-
-  return api.get(`/trash-log?${queryParam}`);
+  const response = await api.get(`/trash-log?${queryParam}`);
+  return response.data.data;
 };
 
 export const requestThrowTrash = async (trashInfoId: number) => {

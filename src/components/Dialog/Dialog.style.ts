@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { GREY100, PRIMARY, WHITE } from '../../constants/colors';
-import { ratioPx } from '../../utils/platform';
+import { GREY100, PRIMARY, WHITE } from '@constants/colors';
+import { ratioPx } from '@utils/platform';
 
 export const Container = styled.View`
   flex: 1;

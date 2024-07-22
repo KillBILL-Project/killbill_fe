@@ -1,4 +1,4 @@
-import { ComplimentCardType } from '../services/api/complimentService';
+import { ComplimentCardType } from '@services/api/complimentService';
 
 export interface WeekInfoType {
   year: number;
@@ -13,6 +13,7 @@ export interface ReportType {
   toDate: string;
   weekInfo: WeekInfoType;
   weeklyReportId: number;
+  isDateChanged?: boolean;
 }
 
 export interface ReportResponseType {

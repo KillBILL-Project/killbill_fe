@@ -89,8 +89,8 @@ android {
         applicationId "com.wwooss.io"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.0"
+        versionCode 8
+        versionName "1.0.9"
     }
     signingConfigs {
         debug {

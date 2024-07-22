@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { requestTrashCanLocation } from '../../../services/api/trashService';
+import { requestTrashCanLocation } from '@services/api/trashService';
 
 export const useTrashCanLocationQuery = ({ lat, lng, distance, trashType }: any) => {
   return useQuery({

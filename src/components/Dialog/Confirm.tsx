@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal } from 'react-native';
+import { BLACK, MAIN } from '@constants/colors';
+import { useDialog } from '@states/context/DialogContext';
+import { Medium16, Regular16 } from '@components/Typography';
 import {
   ConfirmButtonContainer,
   ConfirmButtonLeft,
@@ -8,9 +11,6 @@ import {
   PopupContainer,
   PopupTextContainer,
 } from './Dialog.style';
-import { Medium16, Regular16 } from '../Typography';
-import { BLACK, MAIN } from '../../constants/colors';
-import { useDialog } from '../../states/context/DialogContext';
 
 const Confirm = () => {
   const { isShowDialog, hideConfirm, dialogProps } = useDialog();

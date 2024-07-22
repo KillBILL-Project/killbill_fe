@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '../../../services/utils/api';
-import { TrashCategoryEn } from '../../../utils/trash';
-import { WwoossResponse } from '../../../types/common';
+import { WwoossResponse } from '@type/common';
+import api from '@services/utils/api';
+import { TrashCategoryEnType } from '@type/trash';
 
 export interface TrashInfoType {
   refund: number;
   size: 'BIG' | 'MEDIUM' | 'SMALL';
-  trashCategoryName: TrashCategoryEn;
+  trashCategoryName: TrashCategoryEnType;
   trashImagePath: string;
   trashInfoId: number;
 }
@@ -17,8 +17,9 @@ export const getTrashInfo = async (): Promise<TrashInfoType[]> => {
 };
 
 export const useTrashInfoQuery = () => {
-  return useQuery({
+  const { data: trashInfo } = useQuery({
     queryKey: ['trashInfo'],
     queryFn: getTrashInfo,
   });
+  return { trashInfo };
 };
