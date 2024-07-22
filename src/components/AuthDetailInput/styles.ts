@@ -7,7 +7,7 @@ import {
   INPUT_WIDTH,
 } from '@constants/constants';
 import { MAIN, BTN_DESELECTED_BG } from '@constants/colors';
-import { px } from '@utils/platform';
+import { px, ratioPx } from '@utils/platform';
 
 interface GenderButtonProps {
   isSelected: boolean;
@@ -22,16 +22,17 @@ export const InputTitle = styled.View`
   margin-bottom: ${px(INPUT_TITLE_MARGIN)};
 `;
 
-export const GenderSelectContainer = styled.View`
+export const GenderSection = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  gap: ${ratioPx(12)};
 `;
 
 export const GenderButton = styled.TouchableOpacity<GenderButtonProps>`
   justify-content: center;
   align-items: center;
-  width: ${px(157.5)};
+  flex: 1;
   height: ${px(AUTH_HEIGHT)};
   background-color: ${({ isSelected }) => (isSelected ? MAIN : BTN_DESELECTED_BG)};
   border-radius: ${px(AUTH_BORDER_RADIUS)};

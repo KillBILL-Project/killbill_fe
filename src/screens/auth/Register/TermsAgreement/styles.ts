@@ -18,16 +18,24 @@ export const TermsAgreementContainer = styled.View`
 export const TermsAgreementButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
+  gap: ${ratioPx(8)};
 `;
 
 export const TermsAgreementCheckBox = styled.Image`
   width: ${ratioPx(21)};
   height: ${ratioPx(21)};
-  margin-right: ${ratioPx(5)};
 `;
 
-export const TermsAgreementDetailButton = styled.TouchableOpacity``;
+export const TermsAgreementDetailButton = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+`;
 
 export const TermsAgreementDetailButtonText = styled.Text`
   color: ${GREY500};
+`;
+
+export const TermsAgreementDetailButtonImage = styled.Image`
+  width: ${ratioPx(18)};
+  height: ${ratioPx(18)};
 `;

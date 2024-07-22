@@ -7,7 +7,7 @@ import { Medium14, Semibold18 } from '@components/Typography';
 import { AuthDetailType } from '@type/auth';
 import BaseInput from '@components/BaseInput';
 import BaseDropDown from '@components/BaseDropDown';
-import { Container, GenderButton, GenderSelectContainer, InputTitle } from './styles';
+import { Container, GenderButton, GenderSection, InputTitle } from './styles';
 
 export interface DropDownProps {
   isOpen: boolean;
@@ -66,7 +66,7 @@ const AuthDetailInput = ({
         <InputTitle>
           <Medium14 color={BLACK}>{t('auth_detail.input.gender.title')}</Medium14>
         </InputTitle>
-        <GenderSelectContainer>
+        <GenderSection>
           <GenderButton onPress={onPressManButton} isSelected={isSelectedMan}>
             <Semibold18 color={isSelectedMan ? WHITE : GREY600}>
               {t('auth_detail.input.gender.button.man')}
@@ -77,7 +77,7 @@ const AuthDetailInput = ({
               {t('auth_detail.input.gender.button.woman')}
             </Semibold18>
           </GenderButton>
-        </GenderSelectContainer>
+        </GenderSection>
       </Container>
       <BaseDropDown
         title={t('auth_detail.input.country.title')}
