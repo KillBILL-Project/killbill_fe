@@ -17,7 +17,6 @@ const useInterceptor = () => {
     const requestInterceptor = api.interceptors.request.use(
       config => {
         const requestConfig = { ...config };
-        if (config.url !== '/auth/reissue') {
 
 
         if (!config.headers.Authorization) {
