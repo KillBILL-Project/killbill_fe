@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { selectedTrashType } from '@states/trash';
-import { TTrashType } from './TrashTypeList';
+import { TTrashType } from '@type/trash';
 import { TrashTypeButton, TrashTypeText } from './TrashLocation.style';
 
 interface ITrashType {

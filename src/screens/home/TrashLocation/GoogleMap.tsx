@@ -131,6 +131,12 @@ const GoogleMap = () => {
             location = region;
             calculateDistanceToTop(region);
           }}
+          initialRegion={{
+            latitude: 37.4788,
+            longitude: 127.012,
+            latitudeDelta: 0.0622,
+            longitudeDelta: 0.0221,
+          }}
         >
           <UrlTile maximumZ={19} flipY={false} zIndex={1} urlTemplate={URL_TEMPLATE} />
           {data?.map((item: ITrashCanLocation) => {

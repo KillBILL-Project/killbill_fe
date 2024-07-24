@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import Screen from '@components/Screen';
 import CategoryTab, { CategoryType } from '@components/CategoryTab';
 import { toString } from 'lodash';
-import ThrowHistory from './ThrowHistory';
-import EmptyHistory from './EmptyHistory';
+import { DropdownItemType } from '@components/Dropdown';
+import ThrowHistory from '@screens/home/MyHistory/ThrowHistory';
+import EmptyHistory from '@screens/home/MyHistory/EmptyHistory';
 
 type HistoryCategory = 'EMPTY' | 'THROW';
-
-export interface MonthType {
-  value: string;
-  label: string;
-}
 
 const selectList: CategoryType<HistoryCategory>[] = [
   { category: 'EMPTY', name: '비우기 이력' },
   { category: 'THROW', name: '배출 이력' },
 ];
 
-export const months: MonthType[] = Array.from({ length: 13 }, (_, i) =>
+export const years: DropdownItemType<string>[] = [
+  { value: '2024', label: '2024년' },
+  { value: '2023', label: '2023년' },
+];
+
+export const months: DropdownItemType<string>[] = Array.from({ length: 13 }, (_, i) =>
   i === 0
     ? { value: '-1', label: '전체' }
     : { value: i < 10 ? `0${i}` : toString(i), label: `${i}월` },
