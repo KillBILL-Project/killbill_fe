@@ -4,7 +4,7 @@ import { GREY500, WHITE } from '@constants/colors';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { scale, windowHeight } from '@utils/platform';
 import { Gesture, GestureDetector, PanGesture } from 'react-native-gesture-handler';
-import { TooltipBottomSheetProps, tooltip } from '@screens/home/EsgPassport/type';
+import { TooltipBottomSheetProps, tooltip } from '@screens/home/EsgWallet/type';
 import { Body, Bold, Content, ContentText, Header, Title, TitleText } from './styles';
 
 const TooltipBottomSheet = ({ setActive, selectedTooltip }: TooltipBottomSheetProps) => {

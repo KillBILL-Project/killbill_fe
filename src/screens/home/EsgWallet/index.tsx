@@ -10,16 +10,12 @@ import walletIcon from '@assets/icon/passport/wallet.png';
 import qrcode from '@assets/icon/passport/qrcode.png';
 import shareIcon from '@assets/icon/share.png';
 import { styles } from '@constants/constants';
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { ratio } from '@utils/platform';
-import { Modal, Pressable, View } from 'react-native';
-import {
-  carbonMetrics,
-  CarbonMetricsKeyType,
-  TooltipKeyType,
-} from '@screens/home/EsgPassport/type';
-import QrCodeBottomSheet from '@screens/home/EsgPassport/QrCodeBottomSheet';
-import TooltipBottomSheet from '@screens/home/EsgPassport/TooltipBottomSheet';
+import { Modal, Pressable } from 'react-native';
+import { carbonMetrics, CarbonMetricsKeyType, TooltipKeyType } from '@screens/home/EsgWallet/type';
+import QrCodeBottomSheet from '@screens/home/EsgWallet/QrCodeBottomSheet';
+import TooltipBottomSheet from '@screens/home/EsgWallet/TooltipBottomSheet';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -65,22 +61,26 @@ import {
   UnitSwitchingButtonText,
 } from './styles';
 
-const EsgPassport = () => {
-  const [isActiveTooltip, setActiveTooltip] = useState(false);
-  const [isActiveQrCode, setActiveQrCode] = useState(false);
+const EsgWalletScreen = () => {
+  const [isActiveTooltip, setIsActiveTooltip] = useState(false);
+  const [isActiveQrCode, setIsActiveQrCode] = useState(false);
   const [selectedTooltip, setSelectedTooltip] = useState<TooltipKeyType>('token');
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
   const backgroundHeight = useSharedValue(ratio * 240);
 
+  const gradientViewStyle = useAnimatedStyle(() => ({
+    height: backgroundHeight.value,
+  }));
+
   const onPressTooltipButton = (type: TooltipKeyType) => {
-    setActiveTooltip(true);
+    setIsActiveTooltip(true);
     setSelectedTooltip(type);
   };
 
   return (
     <Screen
-      title="ESG PASSPORT"
+      title="ESG Wallet"
       titleColor={WHITE}
       headerColor={BLACK}
       rightButtonProps={{
@@ -91,7 +91,7 @@ const EsgPassport = () => {
         onPress: () => {},
       }}
     >
-      <Animated.View style={{ position: 'absolute', width: '100%', height: backgroundHeight }}>
+      <Animated.View style={[{ position: 'absolute', width: '100%' }, gradientViewStyle]}>
         <Gradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} />
       </Animated.View>
       <Container>
@@ -107,7 +107,7 @@ const EsgPassport = () => {
               <TokenValueText>45231.00</TokenValueText>
             </TokenValue>
           </TokenValueColumn>
-          <TokenQrCodeButton onPress={() => setActiveQrCode(true)}>
+          <TokenQrCodeButton onPress={() => setIsActiveQrCode(true)}>
             <TokenQrCodeGradient
               colors={['#E7FFC4', '#F8FFEE']}
               useAngle
@@ -207,16 +207,17 @@ const EsgPassport = () => {
         <Pressable
           style={{ flex: 1, backgroundColor: '#00000032' }}
           onPress={() => {
-            setActiveTooltip(false);
-            setActiveQrCode(false);
+            setIsActiveTooltip(false);
+            setIsActiveQrCode(false);
           }}
         />
         {isActiveTooltip && (
-          <TooltipBottomSheet setActive={setActiveTooltip} selectedTooltip={selectedTooltip} />
+          <TooltipBottomSheet setActive={setIsActiveTooltip} selectedTooltip={selectedTooltip} />
         )}
-        {isActiveQrCode && <QrCodeBottomSheet setActive={setActiveQrCode} />}
+        {isActiveQrCode && <QrCodeBottomSheet setActive={setIsActiveQrCode} />}
       </Modal>
     </Screen>
   );
 };
-export default EsgPassport;
+
+export default EsgWalletScreen;

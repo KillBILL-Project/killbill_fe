@@ -6,7 +6,7 @@ import copyIcon from '@assets/icon/copy.png';
 import xIcon from '@assets/icon/passport/x.png';
 import qrcodeIcon from '@assets/icon/passport/qrcode.png';
 import { View } from 'react-native';
-import { QrCodeBottomSheetProps } from '@screens/home/EsgPassport/type';
+import { QrCodeBottomSheetProps } from '@screens/home/EsgWallet/type';
 import {
   Container,
   Gradient,
