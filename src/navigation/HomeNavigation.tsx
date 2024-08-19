@@ -2,7 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '@screens/home/Home';
-import ReportScreen from '@screens/home/Report';
 import ReportDetailScreen from '@screens/home/ReportDetail';
 import MyPageScreen from '@screens/home/MyPage';
 import FaqScreen from '@screens/home/Faq';
@@ -22,6 +21,8 @@ import WebViewScreen from '@screens/home/WebView';
 import ComplimentDetailScreen from '@screens/home/ComplimentDetail';
 import { HomeStackParamList, HomeTabParamList } from '@type/navigation';
 import CustomTabBar from '@components/CumtomTabBar';
+import EsgWalletScreen from '@screens/home/EsgWallet';
+import QuizScreen from '@screens/home/Quiz';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -30,12 +31,13 @@ const TabNavigation = () => {
   return (
     <Tab.Navigator tabBar={CustomTabBar} screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} />
+      <Tab.Screen name="Wallet" component={EsgWalletScreen} options={{ title: '지갑' }} />
+      <Tab.Screen name="Quiz" component={QuizScreen} options={{ title: '퀴즈' }} />
       <Tab.Screen
         name="Location"
         component={TrashLocationScreen}
         options={{ title: '쓰레기위치' }}
       />
-      <Tab.Screen name="Report" component={ReportScreen} options={{ title: '리포트' }} />
       <Tab.Screen name="MyPage" component={MyPageScreen} options={{ title: '마이페이지' }} />
     </Tab.Navigator>
   );

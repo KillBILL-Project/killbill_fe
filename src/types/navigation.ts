@@ -27,6 +27,8 @@ export type HomeStackParamList = MyPageParamList &
 
 export type HomeTabParamList = {
   Home: undefined;
+  Wallet: undefined;
+  Quiz: undefined;
   Location: undefined;
   Report: undefined;
   MyPage: undefined;
