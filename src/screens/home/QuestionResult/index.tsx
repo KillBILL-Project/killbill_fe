@@ -36,7 +36,7 @@ const QuestionResultScreen = () => {
     const recordedActiveLog = await recordActiveLog({ activeLogType: 'QUIZ' });
     const validatedActiveLog = await validateActiveLog(recordedActiveLog.userActiveLogId);
     const wwoossToken = await issueWwoossToken();
-    patchQuizHistory(params.quizId);
+    patchQuizHistory(params.quizHistoryId);
 
     navigate('TokenIssued', {
       recordedActiveLog,

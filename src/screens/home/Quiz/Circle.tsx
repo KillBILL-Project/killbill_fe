@@ -1,7 +1,6 @@
 import React from 'react';
 import { QuizHistoryInfoType, quizStatus } from '@constants/quiz';
-import { CircleContainer } from '@screens/home/TokenIssued/style';
-import { CircleText, CircleValueText } from '@screens/home/Quiz/style';
+import { CircleContainer, CircleText, CircleValueText } from '@screens/home/Quiz/style';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@type/navigation';
 import { GREY400 } from '@constants/colors';
@@ -11,12 +10,12 @@ interface CircleProps {
 }
 
 const Circle = ({ quizHistoryInfo }: CircleProps) => {
-  const { status, quizId, tokenValue } = quizHistoryInfo;
+  const { status, quizId, tokenValue, quizHistoryId } = quizHistoryInfo;
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
 
   const handleCirclePress = () => {
-    if (status === 'PASS') navigate('QuestionResult', { quizId, result: status });
-    else navigate('Question', { quizId, status });
+    if (status === 'PASS') navigate('QuestionResult', { quizId, result: status, quizHistoryId });
+    else navigate('Question', { quizId, status, quizHistoryId });
   };
 
   return (

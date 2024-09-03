@@ -47,12 +47,17 @@ const QuestionScreen = () => {
             </ImageSection>
             <BottomSection>
               {quizInfo.quizType === 'OX' ? (
-                <OxChoice quizInfo={quizInfo} solveQuiz={solveQuiz} />
+                <OxChoice
+                  quizInfo={quizInfo}
+                  solveQuiz={solveQuiz}
+                  quizHistoryId={params.quizHistoryId}
+                />
               ) : quizInfo.quizType === 'MULTI_CHOICE' ? (
                 <MultiChoice
                   quizInfo={quizInfo}
                   quizOptions={quizInfo.options}
                   solveQuiz={solveQuiz}
+                  quizHistoryId={params.quizHistoryId}
                 />
               ) : null}
             </BottomSection>

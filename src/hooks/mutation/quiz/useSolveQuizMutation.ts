@@ -16,6 +16,7 @@ const useSolveQuizMutation = () => {
       navigate('QuestionResult', {
         quizId: params.quizInfo.quizId,
         result,
+        quizHistoryId: params.quizHistoryId,
       });
     },
   });

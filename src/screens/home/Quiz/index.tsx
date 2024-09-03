@@ -29,6 +29,7 @@ const QuizScreen = () => {
     navigation.navigate('Question', {
       quizId: quizHistory!.pages[0].quizHistoryInfoList[0].quizId,
       status: 'UNSOLVED',
+      quizHistoryId: quizHistory!.pages[0].quizHistoryInfoList[0].quizHistoryId,
     });
   };
 

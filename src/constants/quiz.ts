@@ -21,6 +21,7 @@ export interface GetQuizParams {
 export interface SolveQuizParams {
   quizInfo: QuizInfoType;
   answer: string | number;
+  quizHistoryId: number;
 }
 
 export type QuizResultType = 'PASS' | 'FAIL';

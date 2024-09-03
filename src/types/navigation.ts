@@ -25,8 +25,8 @@ export type HomeStackParamList = MyPageParamList &
   ReportParamList &
   HomeParamList & {
     Tab: HomeTabParamList;
-    Question: { quizId: number; status: QuizHistoryStatusType };
-    QuestionResult: { quizId: number; result: QuizResultType };
+    Question: { quizId: number; status: QuizHistoryStatusType; quizHistoryId: number };
+    QuestionResult: { quizId: number; result: QuizResultType; quizHistoryId: number };
     TokenIssued: {
       recordedActiveLog: UserActiveLogType;
       validatedActiveLog: UserActiveLogType;

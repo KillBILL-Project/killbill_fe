@@ -8,14 +8,15 @@ import { QuizInfoType, SolveQuizParams } from '@constants/quiz';
 interface OxChoiceProps {
   quizInfo: QuizInfoType;
   solveQuiz: (params: SolveQuizParams) => void;
+  quizHistoryId: number;
 }
 
-const OxChoice = ({ quizInfo, solveQuiz }: OxChoiceProps) => {
+const OxChoice = ({ quizInfo, solveQuiz, quizHistoryId }: OxChoiceProps) => {
   return (
     <OxChoiceSection>
       <OxChoiceButton
         onPress={() => {
-          solveQuiz({ quizInfo, answer: 'o' });
+          solveQuiz({ quizInfo, answer: 'o', quizHistoryId });
         }}
         underlayColor={PRIMARY}
       >
@@ -23,7 +24,7 @@ const OxChoice = ({ quizInfo, solveQuiz }: OxChoiceProps) => {
       </OxChoiceButton>
       <OxChoiceButton
         onPress={() => {
-          solveQuiz({ quizInfo, answer: 'x' });
+          solveQuiz({ quizInfo, answer: 'x', quizHistoryId });
         }}
         underlayColor={PRIMARY}
       >

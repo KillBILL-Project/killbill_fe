@@ -11,9 +11,10 @@ interface MultiChoiceProps {
   quizInfo: QuizInfoType;
   quizOptions: QuizOptionType[];
   solveQuiz: (params: SolveQuizParams) => void;
+  quizHistoryId: number;
 }
 
-const MultiChoice = ({ quizOptions, quizInfo, solveQuiz }: MultiChoiceProps) => {
+const MultiChoice = ({ quizOptions, quizInfo, solveQuiz, quizHistoryId }: MultiChoiceProps) => {
   return (
     <MultiChoiceSection>
       {quizOptions.map(quizOption => (
@@ -23,6 +24,7 @@ const MultiChoice = ({ quizOptions, quizInfo, solveQuiz }: MultiChoiceProps) => 
             solveQuiz({
               quizInfo,
               answer: quizOption.value,
+              quizHistoryId,
             });
           }}
           underlayColor={PRIMARY}
