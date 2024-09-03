@@ -11,9 +11,7 @@ import quizIconFocused from '@assets/icon/bottomTab/quiz_focused.png';
 import quizIcon from '@assets/icon/bottomTab/quiz.png';
 import walletIconFocused from '@assets/icon/bottomTab/wallet_focused.png';
 import walletIcon from '@assets/icon/bottomTab/wallet.png';
-import { Medium14 } from '@components/Typography';
-import { GREY700, GREY800 } from '@constants/colors';
-import { TabBar, TabContainer, TabIconStyle } from './styles';
+import { TabBar, TabContainer, TabIconStyle, TabNameText } from './styles';
 
 interface IconProps {
   route: RouteProp<ParamListBase>;
@@ -82,7 +80,7 @@ const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarPr
             onLongPress={onLongPress}
           >
             <TabIcon route={route} isFocused={isFocused} />
-            <Medium14 color={isFocused ? GREY800 : GREY700}>{label}</Medium14>
+            <TabNameText isFocused={isFocused}>{label}</TabNameText>
           </TabContainer>
         );
       })}
