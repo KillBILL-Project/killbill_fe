@@ -5,8 +5,6 @@ import homeIconFocused from '@assets/icon/bottomTab/home_focused.png';
 import homeIcon from '@assets/icon/bottomTab/home.png';
 import locationIconFocused from '@assets/icon/bottomTab/location_focused.png';
 import locationIcon from '@assets/icon/bottomTab/location.png';
-import reportIconFocused from '@assets/icon/bottomTab/report_focused.png';
-import reportIcon from '@assets/icon/bottomTab/report.png';
 import myPageIconFocused from '@assets/icon/bottomTab/mypage_focused.png';
 import myPageIcon from '@assets/icon/bottomTab/mypage.png';
 import quizIconFocused from '@assets/icon/bottomTab/quiz_focused.png';
@@ -29,9 +27,6 @@ const TabIcon = ({ route, isFocused }: IconProps) => {
     }
     if (route.name === 'Location') {
       return isFocused ? locationIconFocused : locationIcon;
-    }
-    if (route.name === 'Report') {
-      return isFocused ? reportIconFocused : reportIcon;
     }
     if (route.name === 'MyPage') {
       return isFocused ? myPageIconFocused : myPageIcon;

@@ -1,5 +1,7 @@
 import { UserGuideDetailParams } from '@constants/userGuide';
 import { ComplimentCardType } from '@services/api/complimentService';
+import { QuizHistoryStatusType, QuizResultType } from '@constants/quiz';
+import { UserActiveLogType } from '@constants/log';
 import { RegisterParams } from './auth';
 import { AlarmParams } from './notifications';
 import { ReportDetailParams } from './report';
@@ -23,6 +25,13 @@ export type HomeStackParamList = MyPageParamList &
   ReportParamList &
   HomeParamList & {
     Tab: HomeTabParamList;
+    Question: { quizId: number; status: QuizHistoryStatusType };
+    QuestionResult: { quizId: number; result: QuizResultType };
+    TokenIssued: {
+      recordedActiveLog: UserActiveLogType;
+      validatedActiveLog: UserActiveLogType;
+      issuedTokenValue: number;
+    };
   } & CardDetailParamList;
 
 export type HomeTabParamList = {
@@ -30,11 +39,11 @@ export type HomeTabParamList = {
   Wallet: undefined;
   Quiz: undefined;
   Location: undefined;
-  Report: undefined;
   MyPage: undefined;
 };
 
 export type MyPageParamList = {
+  Report: undefined;
   AlarmList: undefined;
   MyHistory: undefined;
   UserGuide: undefined;

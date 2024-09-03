@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '@utils/platform';
+import { hRatioPx, ratioPx } from '@utils/platform';
 import { GREY600, GREY800, PRIMARY, WHITE } from '@constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled.View`
   flex: 1;
-  padding: ${ratioPx(24)};
+  padding: ${hRatioPx(24)} ${ratioPx(24)};
 `;
 
 export const Background = styled.View`
@@ -22,16 +22,16 @@ export const Gradient = styled(LinearGradient)`
 export const TooltipButton = styled.TouchableOpacity``;
 
 export const TooltipImage = styled.Image`
-  width: ${ratioPx(16)};
-  height: ${ratioPx(16)};
+  width: ${hRatioPx(16)};
+  height: ${hRatioPx(16)};
 `;
 
 export const TokenSection = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-top: ${ratioPx(40)};
-  padding-bottom: ${ratioPx(53)};
+  padding-top: ${hRatioPx(40)};
+  padding-bottom: ${hRatioPx(53)};
 `;
 
 export const TokenValueColumn = styled.View``;
@@ -39,11 +39,11 @@ export const TokenValueColumn = styled.View``;
 export const TokenTitle = styled.View`
   flex-direction: row;
   align-items: center;
-  gap: ${ratioPx(6)};
+  gap: ${hRatioPx(6)};
 `;
 
 export const TokenTitleText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   color: ${WHITE};
   font-weight: 400;
 `;
@@ -51,13 +51,13 @@ export const TokenTitleText = styled.Text`
 export const TokenValue = styled.View``;
 
 export const TokenValueText = styled.Text`
-  font-size: ${ratioPx(42)};
+  font-size: ${hRatioPx(42)};
   color: ${PRIMARY};
   font-weight: 700;
 `;
 
 export const TokenQrCodeGradient = styled(LinearGradient)`
-  padding: ${ratioPx(8)};
+  padding: ${hRatioPx(8)};
   border-radius: ${ratioPx(5)};
   z-index: 100;
 `;
@@ -65,8 +65,8 @@ export const TokenQrCodeGradient = styled(LinearGradient)`
 export const TokenQrCodeButton = styled.TouchableOpacity``;
 
 export const TokenQrCode = styled.Image`
-  width: ${ratioPx(40)};
-  height: ${ratioPx(40)};
+  width: ${hRatioPx(40)};
+  height: ${hRatioPx(40)};
 `;
 
 export const TokenButtonSection = styled.View`
@@ -81,38 +81,38 @@ export const ConnectWalletButton = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: ${ratioPx(20)} 0;
-  gap: ${ratioPx(4)};
+  padding: ${hRatioPx(20)} 0;
+  gap: ${hRatioPx(4)};
 `;
 
 export const ConnectWalletButtonImage = styled.Image`
-  width: ${ratioPx(32)};
-  height: ${ratioPx(32)};
+  width: ${hRatioPx(32)};
+  height: ${hRatioPx(32)};
 `;
 
 export const TradeButton = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: ${ratioPx(20)} 0;
-  gap: ${ratioPx(4)};
+  padding: ${hRatioPx(20)} 0;
+  gap: ${hRatioPx(4)};
 `;
 
 export const TradeButtonImage = styled.Image`
-  width: ${ratioPx(32)};
-  height: ${ratioPx(32)};
+  width: ${hRatioPx(32)};
+  height: ${hRatioPx(32)};
 `;
 
 export const ButtonTitle = styled.View``;
 
 export const ButtonTitleText = styled.Text`
-  font-size: ${ratioPx(14)};
+  font-size: ${hRatioPx(14)};
   font-weight: 500;
   color: #8e8e93;
 `;
 
 export const EsgContainer = styled.View`
-  margin: ${ratioPx(24)} 0;
+  margin: ${hRatioPx(24)} 0;
 `;
 
 export const CarbonSavingSection = styled.View``;
@@ -121,18 +121,19 @@ export const CarbonSavingTitleRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ${ratioPx(12)};
+  margin-bottom: ${hRatioPx(12)};
 `;
 
 export const CarbonSavingTitle = styled.View`
   flex-direction: row;
   align-items: center;
-  gap: ${ratioPx(6)};
+  gap: ${hRatioPx(6)};
 `;
 
 export const CarbonSavingTitleText = styled.Text`
-  font-size: ${ratioPx(20)};
+  font-size: ${hRatioPx(20)};
   font-weight: 700;
+  line-height: ${hRatioPx(30)};
 `;
 
 export const UnitSwitchingButton = styled.TouchableOpacity`
@@ -142,34 +143,36 @@ export const UnitSwitchingButton = styled.TouchableOpacity`
 `;
 
 export const UnitSwitchingButtonImage = styled.Image`
-  width: ${ratioPx(24)};
-  height: ${ratioPx(24)};
+  width: ${hRatioPx(22)};
+  height: ${hRatioPx(22)};
 `;
 
 export const UnitSwitchingButtonText = styled.Text`
-  font-size: ${ratioPx(14)};
+  font-size: ${hRatioPx(14)};
   font-weight: 400;
+  line-height: ${hRatioPx(20)};
+  color: ${GREY600};
 `;
 
 export const CarbonSavingCardRow = styled.View`
   flex-direction: row;
-  gap: ${ratioPx(12)};
-  margin-bottom: ${ratioPx(24)};
+  gap: ${hRatioPx(12)};
+  margin-bottom: ${hRatioPx(24)};
 `;
 
 export const SavingValueCard = styled(LinearGradient)`
   flex: 1;
-  padding: ${ratioPx(16)};
+  padding: ${hRatioPx(16)} ${ratioPx(16)};
   background-color: #00008b;
   border-radius: ${ratioPx(10)};
 `;
 
 export const SavingValueTitle = styled.View`
-  margin-bottom: ${ratioPx(33)};
+  margin-bottom: ${hRatioPx(33)};
 `;
 
 export const SavingValueTitleText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 400;
   color: ${WHITE};
 `;
@@ -177,18 +180,22 @@ export const SavingValueTitleText = styled.Text`
 export const SavingValue = styled.View`
   flex-direction: row;
   align-items: flex-end;
-  gap: ${ratioPx(4)};
+  gap: ${hRatioPx(4)};
+  line-height: ${hRatioPx(24)};
 `;
 
 export const SavingValueText = styled.Text`
-  font-size: ${ratioPx(32)};
+  font-size: ${hRatioPx(32)};
   font-weight: 700;
+  line-height: ${hRatioPx(32)};
   color: ${PRIMARY};
+  align-self: flex-end;
 `;
 
 export const SavingUnitText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 400;
+  line-height: ${hRatioPx(24)};
   color: ${PRIMARY};
 `;
 
@@ -200,12 +207,14 @@ export const RefundSection = styled.View`
 
 export const RefundTitle = styled.View`
   flex-direction: row;
-  gap: ${ratioPx(6)};
+  align-items: center;
+  gap: ${hRatioPx(6)};
 `;
 
 export const RefundTitleText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 500;
+  line-height: ${hRatioPx(26)};
   color: ${GREY800};
 `;
 
@@ -214,8 +223,9 @@ export const RefundValue = styled.View`
 `;
 
 export const RefundValueText = styled.Text`
-  font-size: ${ratioPx(20)};
+  font-size: ${hRatioPx(20)};
   font-weight: 700;
+  line-height: ${hRatioPx(32)};
   color: ${GREY800};
 `;
 
@@ -225,7 +235,8 @@ export const RefundSubtitle = styled.View`
 `;
 
 export const RefundSubtitleText = styled.Text`
-  font-size: ${ratioPx(12)};
+  font-size: ${hRatioPx(12)};
+  line-height: ${hRatioPx(20)};
   font-weight: 500;
   color: ${GREY600};
 `;

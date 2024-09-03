@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Screen from '@components/Screen';
-import { BLACK, GREY400, LIGHT, WHITE } from '@constants/colors';
+import { BLACK, GREY400, GREY600, LIGHT, WHITE } from '@constants/colors';
 import Separator from '@components/Separator';
 
 import switchIcon from '@assets/icon/passport/switch.png';
@@ -16,6 +16,10 @@ import { Modal, Pressable } from 'react-native';
 import { carbonMetrics, CarbonMetricsKeyType, TooltipKeyType } from '@screens/home/EsgWallet/type';
 import QrCodeBottomSheet from '@screens/home/EsgWallet/QrCodeBottomSheet';
 import TooltipBottomSheet from '@screens/home/EsgWallet/TooltipBottomSheet';
+import useWwoossTokenQuery from '@hooks/queries/quiz/useWwoossTokenQuery';
+import useUserActiveLogQuery from '@hooks/queries/log/useUserActiveLogQuery';
+import useVerifiedUserActiveLogQuery from '@hooks/queries/log/useVerifiedUserActiveLogQuery';
+import useTotalRefundQuery from '@hooks/queries/log/useTotalRefundQuery';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -67,6 +71,10 @@ const EsgWalletScreen = () => {
   const [selectedTooltip, setSelectedTooltip] = useState<TooltipKeyType>('token');
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
+  const { data: totalToken } = useWwoossTokenQuery({});
+  const { data: userActiveLog } = useUserActiveLogQuery();
+  const { data: verifiedUserActiveLog } = useVerifiedUserActiveLogQuery();
+  const { data: totalRefund } = useTotalRefundQuery();
   const backgroundHeight = useSharedValue(ratio * 240);
 
   const gradientViewStyle = useAnimatedStyle(() => ({
@@ -83,6 +91,7 @@ const EsgWalletScreen = () => {
       title="ESG Wallet"
       titleColor={WHITE}
       headerColor={BLACK}
+      isBackButtonShown={false}
       rightButtonProps={{
         icon: shareIcon,
         size: 24,
@@ -104,7 +113,7 @@ const EsgWalletScreen = () => {
               </TooltipButton>
             </TokenTitle>
             <TokenValue>
-              <TokenValueText>45231.00</TokenValueText>
+              <TokenValueText>{totalToken}</TokenValueText>
             </TokenValue>
           </TokenValueColumn>
           <TokenQrCodeButton onPress={() => setIsActiveQrCode(true)}>
@@ -158,8 +167,9 @@ const EsgWalletScreen = () => {
                     prevState === 'reduction' ? 'emission' : 'reduction',
                   )
                 }
+                disabled
               >
-                <UnitSwitchingButtonImage source={switchIcon} />
+                <UnitSwitchingButtonImage source={switchIcon} tintColor={GREY600} />
                 <UnitSwitchingButtonText>
                   {carbonMetrics[carbonMetricsKey].switchTitle}
                 </UnitSwitchingButtonText>
@@ -171,7 +181,7 @@ const EsgWalletScreen = () => {
                   <SavingValueTitleText>인증</SavingValueTitleText>
                 </SavingValueTitle>
                 <SavingValue>
-                  <SavingValueText>0.0</SavingValueText>
+                  <SavingValueText>{(verifiedUserActiveLog ?? 0).toFixed(1)}</SavingValueText>
                   <SavingUnitText>kgCO2</SavingUnitText>
                 </SavingValue>
               </SavingValueCard>
@@ -180,7 +190,7 @@ const EsgWalletScreen = () => {
                   <SavingValueTitleText>기록</SavingValueTitleText>
                 </SavingValueTitle>
                 <SavingValue>
-                  <SavingValueText>0.0</SavingValueText>
+                  <SavingValueText>{(userActiveLog ?? 0).toFixed(1)}</SavingValueText>
                   <SavingUnitText>kgCO2</SavingUnitText>
                 </SavingValue>
               </SavingValueCard>
@@ -194,7 +204,7 @@ const EsgWalletScreen = () => {
               </TooltipButton>
             </RefundTitle>
             <RefundValue>
-              <RefundValueText>500,500원</RefundValueText>
+              <RefundValueText>{`${(totalRefund ?? 0).toLocaleString()}원`}</RefundValueText>
             </RefundValue>
           </RefundSection>
           <Separator length="100%" horizontal color="#D9D9D9" margin={8} />

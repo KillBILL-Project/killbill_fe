@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '@utils/platform';
+import { hRatioPx, ratioPx } from '@utils/platform';
 import { PRIMARY, WHITE } from '@constants/colors';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -10,18 +10,18 @@ export const Container = styled.View`
 
 export const Gradient = styled(LinearGradient)`
   width: 100%;
-  padding: ${ratioPx(56)};
+  padding: ${hRatioPx(56)} ${ratioPx(56)};
   align-items: center;
 `;
 
 export const CloseButton = styled.TouchableOpacity`
   position: absolute;
-  width: ${ratioPx(72)};
-  height: ${ratioPx(72)};
+  width: ${hRatioPx(72)};
+  height: ${hRatioPx(72)};
   background-color: #000;
   align-self: center;
-  top: ${ratioPx(-36)};
-  border-radius: ${ratioPx(36)};
+  top: ${hRatioPx(-36)};
+  border-radius: ${hRatioPx(36)};
   overflow: hidden;
   z-index: 2;
 `;
@@ -34,15 +34,15 @@ export const CloseButtonGradient = styled(LinearGradient)`
 `;
 
 export const CloseButtonImage = styled.Image`
-  width: ${ratioPx(24)};
-  height: ${ratioPx(24)};
+  width: ${hRatioPx(24)};
+  height: ${hRatioPx(24)};
 `;
 
 export const Notice = styled.View`
-  padding-top: ${ratioPx(8)};
-  padding-bottom: ${ratioPx(16)};
+  padding-top: ${hRatioPx(8)};
+  padding-bottom: ${hRatioPx(16)};
   align-items: center;
-  gap: ${ratioPx(4)};
+  gap: ${hRatioPx(4)};
 `;
 
 export const NoticeText = styled.Text`
@@ -53,69 +53,69 @@ export const NoticeText = styled.Text`
 `;
 
 export const QrCodeSection = styled.View`
-  width: ${ratioPx(230)};
-  height: ${ratioPx(230)};
+  width: ${hRatioPx(230)};
+  height: ${hRatioPx(230)};
   background-color: #fff;
   border-radius: ${ratioPx(20)};
   justify-content: center;
   align-items: center;
-  margin-bottom: ${ratioPx(24)};
+  margin-bottom: ${hRatioPx(24)};
 `;
 
 export const QrCodeImage = styled.Image`
-  width: ${ratioPx(182)};
-  height: ${ratioPx(182)};
+  width: ${hRatioPx(182)};
+  height: ${hRatioPx(182)};
 `;
 
 export const UsernameTitleText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 400;
   color: ${WHITE};
 `;
 
 export const UsernameText = styled.Text`
-  font-size: ${ratioPx(24)};
+  font-size: ${hRatioPx(24)};
   font-weight: 700;
   color: ${PRIMARY};
 `;
 
 export const AdditionalButtonSection = styled.View`
-  margin-top: ${ratioPx(60)};
+  margin-top: ${hRatioPx(60)};
   flex-direction: row;
   align-items: center;
-  gap: ${ratioPx(24)};
+  gap: ${hRatioPx(24)};
 `;
 
 export const CopyButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  gap: ${ratioPx(6)};
+  gap: ${hRatioPx(6)};
 `;
 
 export const CopyButtonText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 400;
   color: ${WHITE};
 `;
 
 export const CopyButtonImage = styled.Image`
-  width: ${ratioPx(24)};
-  height: ${ratioPx(24)};
+  width: ${hRatioPx(24)};
+  height: ${hRatioPx(24)};
 `;
 
 export const ShareButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  gap: ${ratioPx(6)};
+  gap: ${hRatioPx(6)};
 `;
 
 export const ShareButtonText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
   font-weight: 400;
   color: ${WHITE};
 `;
 
 export const ShareButtonImage = styled.Image`
-  width: ${ratioPx(24)};
-  height: ${ratioPx(24)};
+  width: ${hRatioPx(24)};
+  height: ${hRatioPx(24)};
 `;

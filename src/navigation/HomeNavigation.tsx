@@ -23,6 +23,10 @@ import { HomeStackParamList, HomeTabParamList } from '@type/navigation';
 import CustomTabBar from '@components/CumtomTabBar';
 import EsgWalletScreen from '@screens/home/EsgWallet';
 import QuizScreen from '@screens/home/Quiz';
+import QuestionScreen from '@screens/home/Question';
+import TokenIssuedScreen from '@screens/home/TokenIssued';
+import QuestionResultScreen from '@screens/home/QuestionResult';
+import ReportScreen from '@screens/home/Report';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -53,6 +57,7 @@ const HomeNavigation = () => {
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="UserGuide" component={UserGuideScreen} />
       <Stack.Screen name="UserGuideDetail" component={UserGuideDetailScreen} />
+      <Stack.Screen name="Report" component={ReportScreen} />
       <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       <Stack.Screen name="MyHistory" component={MyHistoryScreen} />
       <Stack.Screen name="Notification" component={NotificationScreen} />
@@ -62,6 +67,9 @@ const HomeNavigation = () => {
       <Stack.Screen name="EmptyTrash" component={EmptyTrashScreen} />
       <Stack.Screen name="CardDetail" component={ComplimentDetailScreen} />
       <Stack.Screen name="WebView" component={WebViewScreen} />
+      <Stack.Screen name="Question" component={QuestionScreen} />
+      <Stack.Screen name="QuestionResult" component={QuestionResultScreen} />
+      <Stack.Screen name="TokenIssued" component={TokenIssuedScreen} />
     </Stack.Navigator>
   );
 };
