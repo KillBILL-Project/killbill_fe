@@ -24,17 +24,21 @@ const topMenuList: MenuType<MyPageParamList>[] = [
   },
   {
     icon: myHistory,
-    name: '내 히스토리',
+    name: '탄소절감 기록',
     route: 'MyHistory',
   },
   {
     icon: userGuide,
-    name: '이용가이드',
+    name: '분리수거 방법',
     route: 'UserGuide',
   },
 ];
 
 const menuList: MenuType<MyPageParamList>[] = [
+  {
+    name: '리포트',
+    route: 'Report',
+  },
   {
     name: '칭찬카드',
     route: 'ComplimentCard',

@@ -35,7 +35,7 @@ const MyHistoryScreen = () => {
   };
 
   return (
-    <Screen title="내 히스토리">
+    <Screen title="탄소절감 기록">
       <CategoryTab selectList={selectList} selected={selected} onPress={onPress} />
       <EmptyHistory selected={selected.category === 'EMPTY'} />
       <ThrowHistory selected={selected.category === 'THROW'} />
