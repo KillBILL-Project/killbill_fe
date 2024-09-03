@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { BLACK, GREY200, PRIMARY, WHITE } from '@constants/colors';
+import { BLACK, PRIMARY, WHITE } from '@constants/colors';
 import { hRatioPx } from '@utils/platform';
 
 export const Container = styled.View`
@@ -55,80 +55,4 @@ export const LogText = styled.Text`
   font-size: ${hRatioPx(16)};
   font-weight: 400;
   line-height: ${hRatioPx(24)};
-`;
-
-export const CycleContainer = styled.View<{ index: number }>`
-  z-index: ${({ index }) => -index};
-  align-items: center;
-`;
-
-export const CircleContainer = styled.TouchableHighlight<{ color: string }>`
-  width: 100px;
-  height: 100px;
-  background-color: ${({ color }) => color};
-  border-radius: 50px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Horizontal = styled.View`
-  width: 10px;
-`;
-
-export const Vertical = styled.View`
-  height: 30px;
-`;
-
-export const FirstRow = styled.View`
-  width: 320px;
-  height: 100px;
-  flex-direction: row;
-`;
-
-export const SecondRow = styled.View`
-  width: 210px;
-  height: 100px;
-  flex-direction: row;
-`;
-
-export const LineWrapper = styled.View`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-  align-items: center;
-`;
-
-export const Line = styled.View`
-  width: 160px;
-  height: 3px;
-  background-color: ${GREY200};
-`;
-
-export const RightArc = styled.View`
-  position: absolute;
-  width: 135px;
-  height: 135px;
-  top: 50px;
-  right: 25px;
-  border-radius: 100px;
-  border-width: 3px;
-  border-right-color: ${GREY200};
-  border-bottom-color: ${GREY200};
-  border-left-color: transparent;
-  border-top-color: transparent;
-`;
-
-export const LeftArc = styled.View`
-  position: absolute;
-  width: 135px;
-  height: 135px;
-  top: -85px;
-  left: 25px;
-  border-radius: 100px;
-  border-width: 3px;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: ${GREY200};
-  border-top-color: ${GREY200};
 `;

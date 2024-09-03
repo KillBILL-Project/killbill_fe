@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { hRatioPx, ratioPx } from '@utils/platform';
-import { GREY400, PRIMARY, WHITE } from '@constants/colors';
+import { hRatioPx, hScale, px, ratioPx, scale, width } from '@utils/platform';
+import { GREY200, GREY400, PRIMARY, WHITE } from '@constants/colors';
 
 export const TopSection = styled.View``;
 
@@ -57,4 +57,65 @@ export const CircleText = styled.Text`
   font-size: ${ratioPx(14)};
   font-weight: 400;
   line-height: ${ratioPx(20)};
+`;
+export const CycleContainer = styled.View<{ index: number }>`
+  z-index: ${({ index }) => -index};
+  align-items: center;
+`;
+
+const marginVertical = scale(32);
+const horizontal = scale(22);
+const firstRowWidth = width - marginVertical * 2;
+const circleWidth = (firstRowWidth - horizontal * 2) / 3;
+const vertical = hScale(30);
+
+export const CircleContainer = styled.TouchableHighlight<{ color: string }>`
+  width: ${px(circleWidth)};
+  height: ${px(circleWidth)};
+  background-color: ${({ color }) => color};
+  border-radius: ${px(circleWidth / 2)};
+  justify-content: center;
+  align-items: center;
+`;
+export const Horizontal = styled.View`
+  width: ${px(horizontal)};
+`;
+export const Vertical = styled.View`
+  height: ${px(vertical)};
+`;
+export const FirstRow = styled.View`
+  width: ${px(firstRowWidth)};
+  height: ${px(circleWidth)};
+  flex-direction: row;
+`;
+export const SecondRow = styled.View`
+  width: ${px(circleWidth * 2 + horizontal)};
+  height: ${px(circleWidth)};
+  flex-direction: row;
+`;
+export const LineWrapper = styled.View`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+`;
+export const Line = styled.View`
+  width: ${px(firstRowWidth / 2)};
+  height: 3px;
+  background-color: ${GREY200};
+`;
+export const RightArc = styled.Image`
+  position: absolute;
+  width: ${px(circleWidth + vertical)};
+  height: ${px(circleWidth + vertical)};
+  top: ${px(circleWidth / 2)};
+  right: 0;
+`;
+export const LeftArc = styled.Image`
+  position: absolute;
+  width: ${px(circleWidth + vertical)};
+  height: ${px(circleWidth + vertical)};
+  top: ${px(-circleWidth / 2 - vertical)};
+  left: 0;
 `;

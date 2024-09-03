@@ -1,4 +1,8 @@
 import React from 'react';
+import { QuizHistoryInfoType } from '@constants/quiz';
+import Circle from '@screens/home/Quiz/Circle';
+import leftArc from '@assets/image/quiz/left_arc.png';
+import rightArc from '@assets/image/quiz/right_arc.png';
 import {
   CycleContainer,
   FirstRow,
@@ -9,9 +13,7 @@ import {
   RightArc,
   SecondRow,
   Vertical,
-} from '@screens/home/TokenIssued/style';
-import { QuizHistoryInfoType } from '@constants/quiz';
-import Circle from '@screens/home/Quiz/Circle';
+} from '@screens/home/Quiz/style';
 
 interface CycleProps {
   quizHistoryInfoList: QuizHistoryInfoType[];
@@ -23,8 +25,8 @@ const Cycle = ({ quizHistoryInfoList, index }: CycleProps) => {
     <>
       {!!index && <Vertical />}
       <CycleContainer index={index}>
-        {!!index && <LeftArc />}
-        {quizHistoryInfoList[3] && <RightArc />}
+        {!!index && <LeftArc source={leftArc} resizeMode="contain" />}
+        {quizHistoryInfoList[3] && <RightArc source={rightArc} resizeMode="contain" />}
         <FirstRow>
           <LineWrapper>
             {quizHistoryInfoList[1] && <Line />}
