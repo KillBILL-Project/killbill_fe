@@ -2,9 +2,9 @@ import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import notification from '@assets/icon/notification.png';
-import alarmSetting from '@assets/icon/my_page/alarm_setting.png';
-import myHistory from '@assets/icon/my_page/my_history.png';
-import userGuide from '@assets/icon/my_page/user_guide.png';
+import alarmSetting from '@assets/icon/myPage/alarm_setting.png';
+import myHistory from '@assets/icon/myPage/my_history.png';
+import userGuide from '@assets/icon/myPage/user_guide.png';
 import { HomeTabParamList, MyPageParamList } from '@type/navigation';
 import { width } from '@utils/platform';
 import { MenuType } from '@type/common';
@@ -24,17 +24,21 @@ const topMenuList: MenuType<MyPageParamList>[] = [
   },
   {
     icon: myHistory,
-    name: '내 히스토리',
+    name: '탄소절감 기록',
     route: 'MyHistory',
   },
   {
     icon: userGuide,
-    name: '이용가이드',
+    name: '분리수거 방법',
     route: 'UserGuide',
   },
 ];
 
 const menuList: MenuType<MyPageParamList>[] = [
+  {
+    name: '리포트',
+    route: 'Report',
+  },
   {
     name: '칭찬카드',
     route: 'ComplimentCard',

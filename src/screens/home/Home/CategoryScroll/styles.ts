@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '@utils/platform';
+import { px } from '@utils/platform';
+import { FIRST_CIRCLE_SIZE } from '@screens/home/Home/constant';
 
 export const Container = styled.View`
-  flex: 1;
   justify-content: center;
   align-items: center;
-  height: ${ratioPx(159)};
+  height: ${px(FIRST_CIRCLE_SIZE)};
 `;
 
 export const Column = styled.View`

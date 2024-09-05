@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'react-native';
-import findRefund from '@assets/icon/my_page/find_refund.png';
+import findRefund from '@assets/icon/myPage/find_refund.png';
 import { WHITE } from '@constants/colors';
 import { Regular14, Semibold18 } from '@components/Typography';
 import { scale } from '@utils/platform';

@@ -153,10 +153,7 @@ const EmptyTrashScreen = () => {
             )}
           </BottomArea>
           <AdSection>
-            <BannerAd
-              unitId="ca-app-pub-6467079030703763/7907740481"
-              size={BannerAdSize.LARGE_BANNER}
-            />
+            <BannerAd unitId="adUnitId" size={BannerAdSize.LARGE_BANNER} />
           </AdSection>
           <BaseButton text="확인" onPress={goBack} />
         </Container>
