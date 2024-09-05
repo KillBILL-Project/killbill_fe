@@ -2,9 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { Image, ImageBackground, Text, View } from 'react-native';
 import { width } from '@utils/platform';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { EmptyTrashButton, styles } from '@screens/home/Home/styles';
-import { Regular14 } from '@components/Typography';
-import { BLACK } from '@constants/colors';
+import { EmptyTrashButton, EmptyTrashButtonText, styles } from '@screens/home/Home/styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeParamList } from '@type/navigation';
 import { useDialog } from '@states/context/DialogContext';
@@ -25,7 +23,7 @@ const useMotion = () => {
   }));
 
   const countAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: countLocation.value }],
+    transform: [{ translateY: 0 }],
   }));
 
   const setCountLocation = useCallback(
@@ -95,7 +93,7 @@ const useMotion = () => {
         <Animated.View style={[styles.imageRowContainer, motionTranslateAnimatedStyle]}>
           {motionArray.map((item, index) => (
             <View key={`motion${index}`} style={styles.eachImageContainer}>
-              <Image source={item} style={styles.image} resizeMode="contain" />
+              <Image source={item} style={styles.image} resizeMode="cover" />
             </View>
           ))}
         </Animated.View>
@@ -103,7 +101,7 @@ const useMotion = () => {
           <Image
             source={motionArray[0]}
             style={styles.image}
-            resizeMode="contain"
+            resizeMode="cover"
             onLayout={event => {
               setCountLocation(event.nativeEvent.layout.width, event.nativeEvent.layout.height);
             }}
@@ -115,7 +113,7 @@ const useMotion = () => {
           </Animated.View>
         </View>
         <EmptyTrashButton onPress={handleEmptyTrash}>
-          <Regular14 color={BLACK}>비우기</Regular14>
+          <EmptyTrashButtonText>비우기</EmptyTrashButtonText>
         </EmptyTrashButton>
       </ImageBackground>
     );

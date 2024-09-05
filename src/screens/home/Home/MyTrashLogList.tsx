@@ -4,6 +4,7 @@ import { useTrashLogQuery } from '@hooks/queries/trash/useTrashLogQuery';
 import { ITrashLog } from '@services/api/trashService';
 import MyTrashLogHeader from '@screens/home/TrashLocation/MyTrashLogHeader';
 import NoData from '@components/common/NoData';
+import { MyTrashLogContainer } from '@screens/home/Home/styles';
 import Item from './Item';
 
 const MyTrashLogList = () => {
@@ -15,7 +16,7 @@ const MyTrashLogList = () => {
   }, []);
 
   return (
-    <>
+    <MyTrashLogContainer>
       <MyTrashLogHeader totalCount={data?.pages[0].totalCount ?? 0} />
       <FlatList
         keyExtractor={keyExtractor}
@@ -24,8 +25,9 @@ const MyTrashLogList = () => {
         onEndReached={() => hasNextPage && fetchNextPage()}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={<NoData />}
+        contentContainerStyle={{ flexGrow: 1 }}
       />
-    </>
+    </MyTrashLogContainer>
   );
 };
 

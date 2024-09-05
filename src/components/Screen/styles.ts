@@ -49,6 +49,6 @@ export const Right = styled.View`
   z-index: 1;
 `;
 
-export const Body = styled(SafeAreaView)`
+export const Body = styled.View`
   flex: 1;
 `;

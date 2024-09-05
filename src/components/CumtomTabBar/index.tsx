@@ -41,9 +41,24 @@ const TabIcon = ({ route, isFocused }: IconProps) => {
   return <TabIconStyle source={iconName} />;
 };
 
-const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarProps) => {
+interface CustomTabBarProps {
+  setBottomTabHeight: (param: number) => void;
+}
+
+const CustomTabBar = ({
+  state,
+  descriptors,
+  navigation,
+  insets,
+  setBottomTabHeight,
+}: BottomTabBarProps & CustomTabBarProps) => {
   return (
-    <TabBar bottomSafeArea={insets.bottom}>
+    <TabBar
+      bottomSafeArea={insets.bottom}
+      onLayout={event => {
+        setBottomTabHeight(event.nativeEvent.layout.height);
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label = options.title ?? route.name;

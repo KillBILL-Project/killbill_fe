@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import { GREY400, GREY700, GREY900, WHITE } from '@constants/colors';
-import { TAB_HEIGHT } from '@constants/constants';
 import { px, ratioPx } from '@utils/platform';
 
 interface TabBarProps {
@@ -8,7 +7,6 @@ interface TabBarProps {
 }
 
 export const TabBar = styled.View<TabBarProps>`
-  height: ${({ bottomSafeArea }) => px(TAB_HEIGHT + bottomSafeArea)};
   background-color: ${WHITE};
   flex-direction: row;
   border-width: 1px;
@@ -25,7 +23,7 @@ export const TabContainer = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: ${ratioPx(5)} 0;
+  padding-top: ${ratioPx(9)};
 `;
 
 export const TabIconStyle = styled.Image`

@@ -1,15 +1,14 @@
 import React from 'react';
-import { BLACK, GREY600 } from '@constants/colors';
-
-import { Regular14, Regular16 } from '@components/Typography';
 import { convertTimeFullDate } from '@utils/common';
 import {
   Container,
   CreatedTime,
+  CreatedTimeText,
   DetailContainer,
   ItemImage,
   ItemImageContainer,
   ItemName,
+  ItemNameText,
 } from './styles';
 
 const Item = (data: any) => {
@@ -24,10 +23,10 @@ const Item = (data: any) => {
       </ItemImageContainer>
       <DetailContainer>
         <CreatedTime>
-          <Regular14 color={GREY600}>{convertTimeFullDate(createdAt)}</Regular14>
+          <CreatedTimeText>{convertTimeFullDate(createdAt)}</CreatedTimeText>
         </CreatedTime>
         <ItemName>
-          <Regular16 color={BLACK}>{`${trashSize} ${trashCategoryName}`}</Regular16>
+          <ItemNameText>{`${trashSize} ${trashCategoryName}`}</ItemNameText>
         </ItemName>
       </DetailContainer>
     </Container>

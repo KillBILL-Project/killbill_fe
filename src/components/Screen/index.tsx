@@ -84,7 +84,7 @@ const Screen = ({
             </Header>
           )}
         </HeaderContainer>
-        <Body edges={[]}>{children}</Body>
+        <Body>{children}</Body>
       </Container>
     </>
   );
