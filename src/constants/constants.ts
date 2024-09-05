@@ -9,7 +9,6 @@ export const INPUT_WIDTH = scale(327);
 export const TOAST_WIDTH = scale(327);
 export const AUTH_HEIGHT = scale(48);
 export const AUTH_BORDER_RADIUS = scale(10);
-export const TAB_HEIGHT = scale(60);
 export const HEADER_HEIGHT = scale(48);
 
 export const EMAIL_PATTERN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;

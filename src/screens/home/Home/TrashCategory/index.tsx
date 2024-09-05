@@ -1,11 +1,9 @@
 import React from 'react';
-import { Image } from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
-  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import { MAIN } from '@constants/colors';
@@ -27,9 +25,6 @@ const TrashCategory = ({
   trashSize = 2,
   changeX,
 }: TrashCategoryProps) => {
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-
   const firstCircleAnimatedStyle = useAnimatedStyle(() => {
     const color = interpolateColor(
       selectedIndex.value,

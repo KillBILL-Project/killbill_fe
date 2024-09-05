@@ -45,7 +45,7 @@ const ReportScreen = () => {
       isHeaderShown
       headerColor={MAIN}
       titleColor={WHITE}
-      isBackButtonShown={false}
+      backButtonColor={WHITE}
     >
       <Container>
         <Header>

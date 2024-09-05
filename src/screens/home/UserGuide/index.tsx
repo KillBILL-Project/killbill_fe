@@ -17,7 +17,7 @@ const UserGuideScreen = () => {
   };
 
   return (
-    <Screen title="이용가이드">
+    <Screen title="분리수거 방법">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <Container>
           {userGuideCategoryArray.map(category => (

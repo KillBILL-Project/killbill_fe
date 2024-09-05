@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { BTN_BG_LIGHT, GREY700 } from '@constants/colors';
-import { ratioPx } from '@utils/platform';
+import { hRatioPx, ratioPx } from '@utils/platform';
 import { Medium14, Semibold12, Semibold18 } from '@components/Typography';
 
 export const Wrapper = styled.View<{ top: number }>`
@@ -11,9 +11,8 @@ export const Wrapper = styled.View<{ top: number }>`
   right: 0;
 `;
 export const SearchPosition = styled.TouchableOpacity`
-  padding: ${ratioPx(5)} ${ratioPx(10)};
+  padding: ${hRatioPx(5)} ${hRatioPx(10)};
   border-radius: 10px;
-  width: ${ratioPx(120)};
   background-color: white;
 `;
 
@@ -25,7 +24,9 @@ export const PositionWrapper = styled.View`
 export const MyPosition = styled.TouchableOpacity``;
 
 export const SearchText = styled.Text`
-  text-align: center;
+  font-size: ${hRatioPx(16)};
+  line-height: ${hRatioPx(24)};
+  font-weight: 400;
 `;
 
 export const MapWrapper = styled.TouchableOpacity`

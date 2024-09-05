@@ -1,17 +1,17 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs/src/types';
 import React, { useMemo } from 'react';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
-import homeIconFocused from '@assets/icon/home_focused.png';
-import homeIcon from '@assets/icon/home.png';
-import locationIconFocused from '@assets/icon/location_focused.png';
-import locationIcon from '@assets/icon/location.png';
-import reportIconFocused from '@assets/icon/report_focused.png';
-import reportIcon from '@assets/icon/report.png';
-import myPageIconFocused from '@assets/icon/mypage_focused.png';
-import myPageIcon from '@assets/icon/mypage.png';
-import { Medium14 } from '@components/Typography';
-import { GREY700, GREY800 } from '@constants/colors';
-import { TabBar, TabContainer, TabIconStyle } from './styles';
+import homeIconFocused from '@assets/icon/bottomTab/home_focused.png';
+import homeIcon from '@assets/icon/bottomTab/home.png';
+import locationIconFocused from '@assets/icon/bottomTab/location_focused.png';
+import locationIcon from '@assets/icon/bottomTab/location.png';
+import myPageIconFocused from '@assets/icon/bottomTab/mypage_focused.png';
+import myPageIcon from '@assets/icon/bottomTab/mypage.png';
+import quizIconFocused from '@assets/icon/bottomTab/quiz_focused.png';
+import quizIcon from '@assets/icon/bottomTab/quiz.png';
+import walletIconFocused from '@assets/icon/bottomTab/wallet_focused.png';
+import walletIcon from '@assets/icon/bottomTab/wallet.png';
+import { TabBar, TabContainer, TabIconStyle, TabNameText } from './styles';
 
 interface IconProps {
   route: RouteProp<ParamListBase>;
@@ -26,11 +26,14 @@ const TabIcon = ({ route, isFocused }: IconProps) => {
     if (route.name === 'Location') {
       return isFocused ? locationIconFocused : locationIcon;
     }
-    if (route.name === 'Report') {
-      return isFocused ? reportIconFocused : reportIcon;
-    }
     if (route.name === 'MyPage') {
       return isFocused ? myPageIconFocused : myPageIcon;
+    }
+    if (route.name === 'Wallet') {
+      return isFocused ? walletIconFocused : walletIcon;
+    }
+    if (route.name === 'Quiz') {
+      return isFocused ? quizIconFocused : quizIcon;
     }
     return homeIcon;
   }, [isFocused, route.name]);
@@ -38,9 +41,24 @@ const TabIcon = ({ route, isFocused }: IconProps) => {
   return <TabIconStyle source={iconName} />;
 };
 
-const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarProps) => {
+interface CustomTabBarProps {
+  setBottomTabHeight: (param: number) => void;
+}
+
+const CustomTabBar = ({
+  state,
+  descriptors,
+  navigation,
+  insets,
+  setBottomTabHeight,
+}: BottomTabBarProps & CustomTabBarProps) => {
   return (
-    <TabBar bottomSafeArea={insets.bottom}>
+    <TabBar
+      bottomSafeArea={insets.bottom}
+      onLayout={event => {
+        setBottomTabHeight(event.nativeEvent.layout.height);
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label = options.title ?? route.name;
@@ -77,7 +95,7 @@ const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarPr
             onLongPress={onLongPress}
           >
             <TabIcon route={route} isFocused={isFocused} />
-            <Medium14 color={isFocused ? GREY800 : GREY700}>{label}</Medium14>
+            <TabNameText isFocused={isFocused}>{label}</TabNameText>
           </TabContainer>
         );
       })}
