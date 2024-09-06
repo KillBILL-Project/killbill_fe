@@ -20,16 +20,18 @@ import Cycle from '@screens/home/Quiz/Cycle';
 import { hScale, scale } from '@utils/platform';
 import useQuizHistoryQuery from '@hooks/queries/quiz/useQuizHistoryQuery';
 import useWwoossTokenQuery from '@hooks/queries/quiz/useWwoossTokenQuery';
+import { isEmpty } from 'lodash';
 
 const QuizScreen = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const { data: quizHistory, hasNextPage, fetchNextPage } = useQuizHistoryQuery();
   const { data: wwoossToken } = useWwoossTokenQuery({ issueType: 'QUIZ' });
   const handleSolveButtonPress = () => {
+    if (!quizHistory?.pages[0].quizHistoryInfoList) return;
     navigation.navigate('Question', {
-      quizId: quizHistory!.pages[0].quizHistoryInfoList[0].quizId,
+      quizId: quizHistory.pages[0].quizHistoryInfoList[0].quizId,
       status: 'UNSOLVED',
-      quizHistoryId: quizHistory!.pages[0].quizHistoryInfoList[0].quizHistoryId,
+      quizHistoryId: quizHistory.pages[0].quizHistoryInfoList[0].quizHistoryId,
     });
   };
 
@@ -52,6 +54,7 @@ const QuizScreen = () => {
               onPress={handleSolveButtonPress}
               disabled={
                 !quizHistory ||
+                isEmpty(quizHistory?.pages[0].quizHistoryInfoList) ||
                 ['PASS', 'ISSUED'].includes(quizHistory.pages[0].quizHistoryInfoList[0].status)
               }
             >
@@ -61,7 +64,7 @@ const QuizScreen = () => {
         </Gradient>
       </TopSection>
       <BottomSection>
-        {quizHistory && (
+        {quizHistory && !isEmpty(quizHistory?.pages[0].quizHistoryInfoList) && (
           <FlatList
             data={quizHistory.pages.flatMap(item => item)}
             CellRendererComponent={zIndexCell}

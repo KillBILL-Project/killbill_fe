@@ -14,7 +14,7 @@ import { Gesture, GestureDetector, PanGesture } from 'react-native-gesture-handl
 import { hRatio, hScale, isIOS, windowHeight } from '@utils/platform';
 
 const BottomSheet = ({ children }: { children: React.ReactNode }) => {
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const bottomTabHeight = useRecoilValue(bottomTabHeightState);
   const setBlankHeight = useSetRecoilState(blankHeightState);
   const [adjustingBarHeight, setAdjustingBarHeight] = useState(0);
@@ -29,12 +29,12 @@ const BottomSheet = ({ children }: { children: React.ReactNode }) => {
     })
     .onFinalize(event => {
       let y = hRatio * 20;
-      const aFifthInitialY = Math.round(sharedInitialY.value / 5);
+      const aSeventhInitialY = Math.round(sharedInitialY.value / 7);
 
       if (event.velocityY > 0) {
-        y = aFifthInitialY < translateY.value ? sharedInitialY.value : y;
+        y = aSeventhInitialY < translateY.value ? sharedInitialY.value : y;
       } else {
-        y = aFifthInitialY * 4 > translateY.value ? y : sharedInitialY.value;
+        y = aSeventhInitialY * 6 > translateY.value ? y : sharedInitialY.value;
       }
 
       translateY.value = withSpring(y, {
@@ -45,11 +45,13 @@ const BottomSheet = ({ children }: { children: React.ReactNode }) => {
     });
 
   const height = useMemo(() => {
-    return isIOS ? windowHeight - top - bottomTabHeight : windowHeight - bottomTabHeight;
-  }, [bottomTabHeight, top]);
+    return isIOS
+      ? windowHeight - top - bottomTabHeight
+      : windowHeight - bottomTabHeight - top + bottom;
+  }, [bottomTabHeight, top, bottom]);
 
   const titleHeight = hScale(36);
-  const blank = useMemo(() => adjustingBarHeight + titleHeight, [adjustingBarHeight]);
+  const blank = useMemo(() => adjustingBarHeight + titleHeight, [adjustingBarHeight, titleHeight]);
 
   useEffect(() => {
     setBlankHeight(blank);

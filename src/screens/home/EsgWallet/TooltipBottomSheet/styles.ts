@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { ratioPx } from '@utils/platform';
-import { MAIN } from '@constants/colors';
+import { hRatioPx, ratioPx } from '@utils/platform';
+import { GREY500, MAIN } from '@constants/colors';
 
 export const Container = styled.View`
   background-color: #fff;
@@ -8,7 +8,18 @@ export const Container = styled.View`
   overflow: hidden;
 `;
 
-export const Header = styled.View``;
+export const Header = styled.View`
+  padding: ${hRatioPx(10)} 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const HeaderBar = styled.View`
+  width: ${ratioPx(48)};
+  height: ${hRatioPx(4)};
+  border-radius: ${hRatioPx(10)};
+  background-color: ${GREY500};
+`;
 
 export const Body = styled.View``;
 
@@ -17,7 +28,8 @@ export const Title = styled.View`
 `;
 
 export const TitleText = styled.Text`
-  font-size: ${ratioPx(20)};
+  font-size: ${hRatioPx(20)};
+  line-height: ${hRatioPx(30)};
   font-weight: 700;
   color: ${MAIN};
 `;
@@ -27,7 +39,8 @@ export const Content = styled.View`
 `;
 
 export const ContentText = styled.Text`
-  font-size: ${ratioPx(16)};
+  font-size: ${hRatioPx(16)};
+  line-height: ${hRatioPx(24)};
   font-weight: 400;
   color: ${MAIN};
 `;
