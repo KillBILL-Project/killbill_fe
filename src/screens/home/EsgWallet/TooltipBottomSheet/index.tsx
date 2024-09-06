@@ -1,73 +1,79 @@
 import React from 'react';
-import Separator from '@components/Separator';
-import { GREY500, WHITE } from '@constants/colors';
+import { WHITE } from '@constants/colors';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { scale, windowHeight } from '@utils/platform';
-import { Gesture, GestureDetector, PanGesture } from 'react-native-gesture-handler';
-import { TooltipBottomSheetProps, tooltip } from '@screens/home/EsgWallet/type';
-import { Body, Bold, Content, ContentText, Header, Title, TitleText } from './styles';
+import { scale } from '@utils/platform';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+  PanGesture,
+} from 'react-native-gesture-handler';
+import { tooltip, TooltipBottomSheetProps } from '@screens/home/EsgWallet/type';
+import { Body, Bold, Content, ContentText, Header, HeaderBar, Title, TitleText } from './styles';
 
 const TooltipBottomSheet = ({ setActive, selectedTooltip }: TooltipBottomSheetProps) => {
   const bottomSheetHeight = useSharedValue(0);
-  const initialBottomSheetHeight = useSharedValue(0);
+  const bottomSheetPosition = useSharedValue(0);
 
   const pan: PanGesture = Gesture.Pan()
     .onChange(event => {
-      if (event.changeY < 0) return;
-      bottomSheetHeight.value -= event.changeY;
+      if (bottomSheetPosition.value <= 0 && bottomSheetHeight.value > -bottomSheetPosition.value) {
+        const position = bottomSheetPosition.value - event.changeY;
+        bottomSheetPosition.value = position > 0 ? 0 : position;
+      }
     })
-    .onFinalize(event => {
-      if (
-        event.velocityY > 350 ||
-        bottomSheetHeight.value <= (initialBottomSheetHeight.value * 2) / 3
-      ) {
+    .onFinalize(() => {
+      if (-Math.round(bottomSheetHeight.value / 7) > bottomSheetPosition.value) {
         runOnJS(setActive)(false);
       } else {
-        bottomSheetHeight.value = initialBottomSheetHeight.value;
+        bottomSheetPosition.value = 0;
       }
     });
 
   const animatedContainerStyle = useAnimatedStyle(() => {
-    return { top: windowHeight - bottomSheetHeight.value };
+    return {
+      bottom: bottomSheetPosition.value,
+    };
   });
 
   return (
     <Animated.View
       style={[
         {
-          position: 'absolute',
           borderTopLeftRadius: scale(10),
           borderTopRightRadius: scale(10),
           overflow: 'hidden',
           backgroundColor: WHITE,
+          width: '100%',
         },
         animatedContainerStyle,
       ]}
       onLayout={event => {
         if (bottomSheetHeight.value === 0) {
           bottomSheetHeight.value = event.nativeEvent.layout.height;
-          initialBottomSheetHeight.value = event.nativeEvent.layout.height;
         }
       }}
     >
-      <GestureDetector gesture={pan}>
-        <Header>
-          <Separator length={48} thickness={4} color={GREY500} horizontal margin={10} />
-        </Header>
-      </GestureDetector>
-      <Body>
-        <Title>
-          <TitleText> {tooltip[selectedTooltip].title}</TitleText>
-        </Title>
-        <Content>
-          <ContentText>
-            {tooltip[selectedTooltip].content.map(item => {
-              const text = item.newline ? `\n${item.text}` : item.text;
-              return item.bold ? <Bold>{text}</Bold> : text;
-            })}
-          </ContentText>
-        </Content>
-      </Body>
+      <GestureHandlerRootView style={{}}>
+        <GestureDetector gesture={pan}>
+          <Header>
+            <HeaderBar />
+          </Header>
+        </GestureDetector>
+        <Body>
+          <Title>
+            <TitleText>{tooltip[selectedTooltip].title}</TitleText>
+          </Title>
+          <Content>
+            <ContentText>
+              {tooltip[selectedTooltip].content.map((item, index) => {
+                const text = item.newline ? `\n${item.text}` : item.text;
+                return item.bold ? <Bold key={`${item.text + index}`}>{text}</Bold> : text;
+              })}
+            </ContentText>
+          </Content>
+        </Body>
+      </GestureHandlerRootView>
     </Animated.View>
   );
 };
