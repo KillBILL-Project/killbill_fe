@@ -81,7 +81,7 @@ export const BottomSheetContainer = styled(Animated.View)`
 `;
 
 export const AdjustingBarSection = styled.View`
-  padding: ${hRatioPx(10)} 0;
+  padding: ${hRatioPx(14)} 0;
   justify-content: center;
   align-items: center;
 `;

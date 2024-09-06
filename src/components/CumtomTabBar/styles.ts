@@ -9,14 +9,13 @@ interface TabBarProps {
 export const TabBar = styled.View<TabBarProps>`
   background-color: ${WHITE};
   flex-direction: row;
-  border-width: 1px;
-  border-bottom-width: 0;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-color: ${GREY400};
+  border-top-left-radius: ${ratioPx(20)};
+  border-top-right-radius: ${ratioPx(20)};
   bottom: 0;
   padding-bottom: ${({ bottomSafeArea }) => px(bottomSafeArea)};
   overflow: hidden;
+  border-top-width: 1px;
+  border-color: ${GREY400};
 `;
 
 export const TabContainer = styled.TouchableOpacity`

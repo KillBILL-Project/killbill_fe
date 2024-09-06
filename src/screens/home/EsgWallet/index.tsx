@@ -12,7 +12,7 @@ import shareIcon from '@assets/icon/share.png';
 import { styles } from '@constants/constants';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { ratio } from '@utils/platform';
-import { Modal, Pressable } from 'react-native';
+import { Modal, Pressable, View } from 'react-native';
 import { carbonMetrics, CarbonMetricsKeyType, TooltipKeyType } from '@screens/home/EsgWallet/type';
 import QrCodeBottomSheet from '@screens/home/EsgWallet/QrCodeBottomSheet';
 import TooltipBottomSheet from '@screens/home/EsgWallet/TooltipBottomSheet';
@@ -214,17 +214,19 @@ const EsgWalletScreen = () => {
         </EsgContainer>
       </Container>
       <Modal transparent visible={isActiveTooltip || isActiveQrCode} statusBarTranslucent>
-        <Pressable
-          style={{ flex: 1, backgroundColor: '#00000032' }}
-          onPress={() => {
-            setIsActiveTooltip(false);
-            setIsActiveQrCode(false);
-          }}
-        />
-        {isActiveTooltip && (
-          <TooltipBottomSheet setActive={setIsActiveTooltip} selectedTooltip={selectedTooltip} />
-        )}
-        {isActiveQrCode && <QrCodeBottomSheet setActive={setIsActiveQrCode} />}
+        <View style={{ flex: 1, backgroundColor: '#00000032' }}>
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={() => {
+              setIsActiveTooltip(false);
+              setIsActiveQrCode(false);
+            }}
+          />
+          {isActiveTooltip && (
+            <TooltipBottomSheet setActive={setIsActiveTooltip} selectedTooltip={selectedTooltip} />
+          )}
+          {isActiveQrCode && <QrCodeBottomSheet setActive={setIsActiveQrCode} />}
+        </View>
       </Modal>
     </Screen>
   );
