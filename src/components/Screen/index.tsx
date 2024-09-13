@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ImageSourcePropType } from 'react-native';
-import { useRecoilValue } from 'recoil';
+import { ImageSourcePropType, StatusBar } from 'react-native';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import backButton from '@assets/icon/back_button.png';
 import { BLACK } from '@constants/colors';
 import { useDialog } from '@states/context/DialogContext';
@@ -13,7 +13,7 @@ import Confirm from '@components/Dialog/Confirm';
 
 import Spinner from '@components/Spinner';
 import { isShowToastState } from '@states/notification';
-import { inProgressState } from '@states/common';
+import { inProgressState, screenHeightState } from '@states/common';
 import { Body, Center, Container, Header, HeaderContainer, Left, Right } from './styles';
 
 interface RightButtonProps {
@@ -56,6 +56,11 @@ const Screen = ({
 
   return (
     <>
+      <StatusBar
+        translucent
+        barStyle={headerColor === '#000000' ? 'light-content' : 'dark-content'}
+        backgroundColor="transparent"
+      />
       {isShowDialog && (dialogProps.dialogType === 'ALERT' ? <Alert /> : <Confirm />)}
       {isShowToast && <Toast />}
       <Container backgroundColor={backgroundColor}>
