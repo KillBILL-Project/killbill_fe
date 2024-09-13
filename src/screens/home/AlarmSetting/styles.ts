@@ -35,18 +35,25 @@ export const BottomContainer = styled.View`
   padding: ${ratioPx(36)} ${ratioPx(24)} ${ratioPx(24)};
 `;
 
-export const WeeklyPickerContainer = styled.View`
+export const DayPickerSection = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
 
-export const WeeklyPickerTitle = styled.View`
+export const DayPickerTitle = styled.View`
   flex: 1;
 `;
 
-export const WeeklyPicker = styled.View`
+export const DayPickerTitleText = styled.Text`
+  font-weight: 700;
+  font-size: ${ratioPx(16)};
+  line-height: ${ratioPx(24)};
+`;
+
+export const DayPickerRow = styled.View`
   flex-direction: row;
+  gap: ${ratioPx(8)};
 `;
 
 export const ButtonContainer = styled.View`

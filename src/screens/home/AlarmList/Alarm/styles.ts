@@ -15,13 +15,21 @@ export const TimeRow = styled.View`
   gap: ${ratioPx(8)};
 `;
 
-export const TimeTest = styled.Text`
-  font-size: 34px;
+export const TimeText = styled.Text`
+  font-size: ${ratioPx(34)};
+  line-height: ${ratioPx(46)};
   font-weight: 700;
   color: ${BLACK};
 `;
 
-export const TopSection = styled.View`
+export const MeridiemText = styled.Text`
+  font-size: ${ratioPx(18)};
+  line-height: ${ratioPx(38)};
+  font-weight: 400;
+  color: ${BLACK};
+`;
+
+export const TopRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -34,8 +42,6 @@ export const SettingRow = styled.View`
   gap: ${ratioPx(6)};
 `;
 
-export const AlarmToggleSwitch = styled.View``;
-
 export const SeeMoreButton = styled.TouchableOpacity``;
 
 export const SeeMoreButtonImage = styled.Image`
@@ -43,7 +49,7 @@ export const SeeMoreButtonImage = styled.Image`
   height: ${ratioPx(24)};
 `;
 
-export const CycleContainer = styled.View`
+export const BottomRow = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -62,14 +68,24 @@ const Day = styled.View`
   margin: ${ratioPx(3)};
 `;
 
-export const SelectedDay = styled(Day)`
-  background-color: ${BLACK};
+export const SingleDay = styled(Day)<{ selected: boolean }>`
+  background-color: ${({ selected }) => (selected ? BLACK : WHITE)};
+  border-width: 1px;
+  border-color: ${({ selected }) => (selected ? BLACK : GREY500)};
 `;
 
-export const NonSelectedDay = styled(Day)`
-  background-color: ${WHITE};
-  border-width: 1px;
-  border-color: ${GREY500};
+export const SingleDayText = styled.Text<{ selected: boolean }>`
+  color: ${({ selected }) => (selected ? WHITE : BLACK)};
+  font-size: ${ratioPx(12)};
+  font-weight: 400;
+  line-height: ${ratioPx(18)};
+`;
+
+export const EachWeekText = styled.Text`
+  font-size: ${ratioPx(16)};
+  font-weight: 400;
+  line-height: ${ratioPx(24)};
+  color: ${BLACK};
 `;
 
 export const SelectButton = styled.TouchableOpacity`

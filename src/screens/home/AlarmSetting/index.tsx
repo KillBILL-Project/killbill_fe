@@ -1,66 +1,36 @@
 import React, { useCallback, useState } from 'react';
 import 'moment/locale/ko';
-import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { isEmpty, toNumber } from 'lodash';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { toNumber } from 'lodash';
 import { BLACK, LIGHT, WHITE } from '@constants/colors';
 import { weekly } from '@constants/constants';
-import { Bold16 } from '@components/Typography';
 import { HomeStackParamList } from '@type/navigation';
-import { AlarmParams, AlarmType } from '@type/notifications';
-import { createAlarm, updateAlarm } from '@services/api/alarmService';
+import { AlarmParams } from '@type/notifications';
 import { scale } from '@utils/platform';
-import useToast from '@hooks/useToast';
 import Screen from '@components/Screen';
 import BaseButton from '@components/BaseButton';
 import { hours, meridiems, minutes } from '@screens/home/AlarmSetting/constant';
+import useUpdateAlarmMutation from '@hooks/mutation/alram/useUpdateAlarmMutation';
 import {
   BottomContainer,
   ButtonContainer,
   Container,
+  DayPickerRow,
+  DayPickerSection,
+  DayPickerTitle,
+  DayPickerTitleText,
   MeridiemScroll,
   TimePicker,
   TimePickerContainer,
   TimeScroll,
-  WeeklyPicker,
-  WeeklyPickerContainer,
-  WeeklyPickerTitle,
 } from './styles';
 import ScrollPicker from './ScrollPicker';
-import DailyButton from './DailyButton';
+import DayPicker from './DailyButton';
 
 const AlarmSettingScreen = () => {
   const { params } = useRoute<RouteProp<HomeStackParamList, 'AlarmSetting'>>();
   const [alarm, setAlarm] = useState<AlarmParams>({ ...params });
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
-  const { showToast } = useToast();
-  const queryClient = useQueryClient();
-
-  const { mutate } = useMutation({
-    mutationFn: async () => {
-      const alarmParams: AlarmType = {
-        alarmId: alarm.alarmId,
-        dayOfWeekList: [...alarm.dayOfWeek],
-        sendHour: alarm.meridiem === '오후' ? toNumber(alarm.hour) + 12 : toNumber(alarm.hour),
-        sendMinute: toNumber(alarm.minute),
-      };
-
-      if (isEmpty(alarmParams.dayOfWeekList)) {
-        showToast({ isFailed: true, message: '적어도 하나의 요일을 선택해주세요.' });
-        return Promise.reject(new Error('선택된 요일이 없습니다.'));
-      }
-
-      if (alarmParams.alarmId) await updateAlarm(alarmParams);
-      else await createAlarm(alarmParams);
-
-      return Promise.resolve();
-    },
-    mutationKey: ['mutate-alarm'],
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ['alarm'] });
-      navigation.goBack();
-    },
-  });
+  const { mutate: updateAlarm } = useUpdateAlarmMutation();
 
   const setAlarmProps = <K extends keyof AlarmParams>(key: K) => {
     if (key === 'hour') {
@@ -88,7 +58,9 @@ const AlarmSettingScreen = () => {
     [alarm.dayOfWeek],
   );
 
-  const onPressSaveAlarm = () => mutate();
+  const onPressSaveAlarm = useCallback(() => {
+    updateAlarm(alarm);
+  }, [alarm]);
 
   return (
     <Screen
@@ -131,21 +103,21 @@ const AlarmSettingScreen = () => {
           </TimePicker>
         </TimePickerContainer>
         <BottomContainer>
-          <WeeklyPickerContainer>
-            <WeeklyPickerTitle>
-              <Bold16 color={BLACK}>매주</Bold16>
-            </WeeklyPickerTitle>
-            <WeeklyPicker>
+          <DayPickerSection>
+            <DayPickerTitle>
+              <DayPickerTitleText>매주</DayPickerTitleText>
+            </DayPickerTitle>
+            <DayPickerRow>
               {weekly.map(item => (
-                <DailyButton
+                <DayPicker
                   key={item.value}
                   day={item.text}
                   isSelected={alarm.dayOfWeek.includes(item.value)}
                   onPress={() => onPressDailyButton(item.value)}
                 />
               ))}
-            </WeeklyPicker>
-          </WeeklyPickerContainer>
+            </DayPickerRow>
+          </DayPickerSection>
           <ButtonContainer>
             <BaseButton text="저장" onPress={onPressSaveAlarm} />
           </ButtonContainer>

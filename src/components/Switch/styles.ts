@@ -1,33 +1,31 @@
 import styled from 'styled-components/native';
-import { Animated } from 'react-native';
 import { ratioPx } from '@utils/platform';
+import Animated from 'react-native-reanimated';
 
 interface ContainerProps {
-  width: number;
-  height: number;
-  backgroundColor: string;
+  switchWidth: number;
+  switchHeight: number;
+  switchColor: string;
 }
 
 interface CircleProps {
-  height: number;
-  borderColor: string;
-  borderWidth: number;
-  backgroundColor: string;
+  knobSize: number;
+  knobMargin?: number;
+  knobColor: string;
 }
 
-export const Container = styled.Pressable<ContainerProps>`
-  width: ${({ width }) => ratioPx(width)};
-  height: ${({ height }) => ratioPx(height)};
-  border-radius: ${({ height }) => ratioPx(height / 2)};
-  background-color: ${({ backgroundColor }) => backgroundColor};
+export const SwitchTrack = styled.Pressable<ContainerProps>`
+  width: ${({ switchWidth }) => ratioPx(switchWidth)};
+  height: ${({ switchHeight }) => ratioPx(switchHeight)};
+  border-radius: ${({ switchHeight }) => ratioPx(switchHeight / 2)};
+  background-color: ${({ switchColor }) => switchColor};
   justify-content: center;
 `;
 
-export const Circle = styled(Animated.View)<CircleProps>`
-  width: ${({ height }) => ratioPx(height)};
-  height: ${({ height }) => ratioPx(height)};
-  border-radius: ${({ height }) => ratioPx(height / 2)};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  border-width: ${({ borderWidth }) => ratioPx(borderWidth)};
-  border-color: ${({ borderColor }) => borderColor};
+export const Knob = styled(Animated.View)<CircleProps>`
+  width: ${({ knobSize, knobMargin = 0 }) => ratioPx(knobSize - knobMargin * 2)};
+  height: ${({ knobSize, knobMargin = 0 }) => ratioPx(knobSize - knobMargin * 2)};
+  margin: ${({ knobSize, knobMargin = 0 }) => ratioPx(knobMargin)};
+  border-radius: ${({ knobSize }) => ratioPx(knobSize / 2)};
+  background-color: ${({ knobColor }) => knobColor};
 `;
