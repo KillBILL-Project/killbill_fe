@@ -53,6 +53,7 @@ const Screen = ({
   const { isShowDialog, dialogProps } = useDialog();
   const isShowToast = useRecoilValue(isShowToastState);
   const inProgress = useRecoilValue(inProgressState);
+  const setScreenHeight = useSetRecoilState(screenHeightState);
 
   return (
     <>
@@ -63,7 +64,12 @@ const Screen = ({
       />
       {isShowDialog && (dialogProps.dialogType === 'ALERT' ? <Alert /> : <Confirm />)}
       {isShowToast && <Toast />}
-      <Container backgroundColor={backgroundColor}>
+      <Container
+        backgroundColor={backgroundColor}
+        onLayout={e => {
+          setScreenHeight(e.nativeEvent.layout.height);
+        }}
+      >
         {inProgress && <Spinner />}
         <HeaderContainer
           backgroundColor={headerColor}

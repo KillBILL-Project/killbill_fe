@@ -27,20 +27,13 @@ import QuestionScreen from '@screens/home/Question';
 import TokenIssuedScreen from '@screens/home/TokenIssued';
 import QuestionResultScreen from '@screens/home/QuestionResult';
 import ReportScreen from '@screens/home/Report';
-import { useSetRecoilState } from 'recoil';
-import { bottomTabHeightState } from '@states/common';
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const TabNavigation = () => {
-  const setBottomTabHeight = useSetRecoilState(bottomTabHeightState);
-
   return (
-    <Tab.Navigator
-      tabBar={props => <CustomTabBar {...props} setBottomTabHeight={setBottomTabHeight} />}
-      screenOptions={{ headerShown: false }}
-    >
+    <Tab.Navigator tabBar={CustomTabBar} screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} />
       <Tab.Screen name="Wallet" component={EsgWalletScreen} options={{ title: '지갑' }} />
       <Tab.Screen name="Quiz" component={QuizScreen} options={{ title: '퀴즈' }} />

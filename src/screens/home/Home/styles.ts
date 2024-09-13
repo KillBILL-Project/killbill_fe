@@ -4,6 +4,11 @@ import { StyleSheet } from 'react-native';
 import { GREY500, WHITE } from '@constants/colors';
 import Animated from 'react-native-reanimated';
 
+interface ContentSectionProps {
+  gestureBarHeight: number;
+  height: number;
+}
+
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -27,7 +32,8 @@ export const TrashHistoryHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: ${hRatioPx(4)} 0;
+  width: 100%;
+  padding: ${hRatioPx(4)} ${ratioPx(24)};
 `;
 
 export const Title = styled.View``;
@@ -72,30 +78,37 @@ export const EmptyTrashButtonText = styled.Text`
   line-height: ${hRatioPx(20)};
 `;
 
-export const BottomSheetContainer = styled(Animated.View)`
-  position: absolute;
+export const GestureSection = styled(Animated.View)`
   width: 100%;
-  background-color: ${WHITE};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  background-color: ${WHITE};
+`;
+
+export const GestureBar = styled.View`
+  justify-content: center;
+  align-items: center;
 `;
 
 export const AdjustingBarSection = styled.View`
-  padding: ${hRatioPx(14)} 0;
+  padding: ${hRatioPx(18)} 0;
   justify-content: center;
   align-items: center;
 `;
 
 export const AdjustingBar = styled.View`
-  width: ${ratioPx(48)};
+  width: ${hRatioPx(48)};
   height: ${hRatioPx(4)};
   border-radius: ${hRatioPx(10)};
   background-color: ${GREY500};
 `;
 
-export const ContentSection = styled.View`
-  flex: 1;
-  padding-bottom: ${hRatioPx(24)};
+export const ContentSection = styled.View<ContentSectionProps>`
+  position: absolute;
+  width: 100%;
+  height: ${({ height }) => px(height)};
+  top: ${({ gestureBarHeight }) => px(gestureBarHeight)};
+  background-color: ${WHITE};
 `;
 
 export const styles = StyleSheet.create({
