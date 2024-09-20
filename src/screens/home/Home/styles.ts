@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { hRatioPx, hScale, px, ratioPx, width } from '@utils/platform';
+import { hRatioPx, px, ratioPx, scale, width } from '@utils/platform';
 import { StyleSheet } from 'react-native';
 import { GREY500, WHITE } from '@constants/colors';
 import Animated from 'react-native-reanimated';
@@ -21,10 +21,9 @@ export const MotionContainer = styled.View`
   flex: 1;
 `;
 
-export const TrashContainer = styled.View<{ blankHeight: number }>`
+export const TrashContainer = styled.View`
   width: 100%;
   z-index: 1000;
-  margin-bottom: ${({ blankHeight }) => px(blankHeight)};
   padding: ${hRatioPx(17)} 0;
 `;
 
@@ -141,10 +140,10 @@ export const styles = StyleSheet.create({
   },
   trashCountBox: {
     position: 'absolute',
-    bottom: hScale(95),
+    bottom: scale(112),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  trashCountText: { fontSize: hScale(36), fontWeight: '700' },
+  trashCountText: { fontSize: scale(36), fontWeight: '700' },
   imageBackground: { flex: 1, justifyContent: 'center' },
 });

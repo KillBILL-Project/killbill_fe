@@ -1,21 +1,23 @@
 import styled from 'styled-components/native';
-import { px } from '@utils/platform';
-import { FIRST_CIRCLE_SIZE } from '@screens/home/Home/constant';
+import { px, ratioPx, width } from '@utils/platform';
+import { SELECTED_CIRCLE_SIZE } from '@screens/home/Home/constant';
 
 export const Container = styled.View`
+  height: ${px(SELECTED_CIRCLE_SIZE)};
   justify-content: center;
-  align-items: center;
-  height: ${px(FIRST_CIRCLE_SIZE)};
 `;
 
 export const Column = styled.View`
-  flex: 1;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
+const halfCircle = SELECTED_CIRCLE_SIZE / 2;
+const halfWidth = width / 2;
+
 export const Row = styled.View`
+  gap: ${ratioPx(8)};
   flex-direction: row;
   align-items: center;
+  left: ${px(halfWidth - halfCircle)};
 `;

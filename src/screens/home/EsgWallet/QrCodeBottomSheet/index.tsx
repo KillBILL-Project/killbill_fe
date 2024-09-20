@@ -46,7 +46,7 @@ const QrCodeBottomSheet = ({ setActive }: QrCodeBottomSheetProps) => {
             <QrCodeImage source={qrcodeIcon} />
           </QrCodeSection>
           <UsernameTitleText>Username</UsernameTitleText>
-          <UsernameText>Bumja12</UsernameText>
+          <UsernameText>Coming Soon...</UsernameText>
           <AdditionalButtonSection>
             <CopyButton>
               <CopyButtonImage source={copyIcon} tintColor={WHITE} />
