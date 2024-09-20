@@ -2,30 +2,31 @@ import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BLACK, GREY500, WHITE } from '@constants/colors';
 import { styles, weekly } from '@constants/constants';
-import { Bold12, Regular16, Regular18 } from '@components/Typography';
 import { HomeStackParamList } from '@type/navigation';
 import { AlarmParams } from '@type/notifications';
 import Switch from '@components/Switch';
 import seeMore from '@assets/icon/see-more.png';
 import { scale } from '@utils/platform';
 import Separator from '@components/Separator';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteAlarm, switchAlarm } from '@services/api/alarmService';
 import DropdownFrame from '@components/DropdownFrame';
+import useDeleteAlarmMutation from '@hooks/mutation/alram/useDeleteAlarmMutation';
+import useSwitchAlarmMutation from '@hooks/mutation/alram/useSwitchAlarmMutation';
 import {
+  BottomRow,
   Container,
-  CycleContainer,
   DayContainer,
-  NonSelectedDay,
+  EachWeekText,
+  MeridiemText,
   SeeMoreButton,
   SeeMoreButtonImage,
   SelectButton,
   SelectButtonText,
-  SelectedDay,
   SettingRow,
+  SingleDay,
+  SingleDayText,
   TimeRow,
-  TimeTest,
-  TopSection,
+  TimeText,
+  TopRow,
 } from './styles';
 
 const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams) => {
@@ -35,23 +36,8 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
 
-  const queryClient = useQueryClient();
-
-  const { mutate: deleteAlarmMutate } = useMutation({
-    mutationFn: deleteAlarm,
-    mutationKey: ['delete-alarm'],
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ['alarm'] });
-    },
-  });
-
-  const { mutate: switchAlarmMutate } = useMutation({
-    mutationFn: switchAlarm,
-    mutationKey: ['switch-alarm'],
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ['alarm'] });
-    },
-  });
+  const { mutate: deleteAlarmMutate } = useDeleteAlarmMutation();
+  const { mutate: switchAlarmMutate } = useSwitchAlarmMutation();
 
   const navigateToAlarmSetting = () => {
     navigate('AlarmSetting', { alarmId, hour, minute, meridiem, dayOfWeek });
@@ -76,11 +62,11 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
   return (
     <>
       <Container style={styles.shadow} onPress={navigateToAlarmSetting}>
-        <TopSection>
+        <TopRow>
           <TimeRow>
             {/* eslint-disable-next-line eqeqeq */}
-            <TimeTest>{`${hour == '0' ? '12' : hour}:${minute}`}</TimeTest>
-            <Regular18 color={BLACK}>{meridiem}</Regular18>
+            <TimeText>{`${hour == '0' ? '12' : hour}:${minute}`}</TimeText>
+            <MeridiemText>{meridiem}</MeridiemText>
           </TimeRow>
           <SettingRow>
             <Switch
@@ -88,10 +74,10 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
               onValueChange={onPressSwitchAlarmButton}
               width={46}
               height={24}
-              circleMargin={2.5}
-              circleColor={WHITE}
-              backgroundActive={BLACK}
-              backgroundInactive={GREY500}
+              knobMargin={3}
+              knobColor={WHITE}
+              activeColor={BLACK}
+              inactiveColor={GREY500}
             />
             <SeeMoreButton
               onPress={() => setIsActiveDropDown(true)}
@@ -103,23 +89,21 @@ const Alarm = ({ alarmId, hour, minute, meridiem, dayOfWeek, isOn }: AlarmParams
               <SeeMoreButtonImage source={seeMore} />
             </SeeMoreButton>
           </SettingRow>
-        </TopSection>
-        <CycleContainer>
-          <Regular16 color={BLACK}>매주</Regular16>
+        </TopRow>
+        <BottomRow>
+          <EachWeekText>매주</EachWeekText>
           <DayContainer>
             {weekly.map(item => {
-              return dayOfWeek.includes(item.value) ? (
-                <SelectedDay key={item.value}>
-                  <Bold12 color={WHITE}>{item.text}</Bold12>
-                </SelectedDay>
-              ) : (
-                <NonSelectedDay key={item.value}>
-                  <Bold12 color={GREY500}>{item.text}</Bold12>
-                </NonSelectedDay>
+              return (
+                <SingleDay key={item.value} selected={dayOfWeek.includes(item.value)}>
+                  <SingleDayText selected={dayOfWeek.includes(item.value)}>
+                    {item.text}
+                  </SingleDayText>
+                </SingleDay>
               );
             })}
           </DayContainer>
-        </CycleContainer>
+        </BottomRow>
       </Container>
 
       <DropdownFrame

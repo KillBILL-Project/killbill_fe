@@ -34,6 +34,8 @@ import t33 from '@assets/image/motion/33.png';
 import { ImageSourcePropType } from 'react-native';
 import { scale } from '@utils/platform';
 import { SharedValue } from 'react-native-reanimated';
+import { TrashCategoryKrType } from '@type/trash';
+import { PanGesture } from 'react-native-gesture-handler';
 
 export const motionArray: ImageSourcePropType[] = [
   t1,
@@ -71,22 +73,28 @@ export const motionArray: ImageSourcePropType[] = [
   t33,
 ];
 
+interface PlayMotionType {
+  open: () => void;
+  close: () => void;
+  empty: () => void;
+  reset: () => void;
+}
+
 export interface CategoryScrollProps {
-  trashSize: number;
-  playMotion: () => void;
+  playMotion: PlayMotionType;
 }
 
 export interface TrashCategoryProps {
   index: number;
   selectedIndex: SharedValue<number>;
-  changeX: SharedValue<number>;
   image: ImageSourcePropType;
-  trashSize: number;
+  text: TrashCategoryKrType;
+  isHorizontal: SharedValue<boolean>;
+  parentPanGesture: PanGesture;
+  throwTrash: () => void;
+  playMotion: PlayMotionType;
 }
 
-export const ITEM_SIZE = scale(88);
-export const SELECT_ITEM_SIZE = scale(127);
-export const FIRST_CIRCLE_SIZE = scale(119);
-export const SECOND_CIRCLE_SIZE = scale(107);
-export const THIRD_CIRCLE_SIZE = scale(95);
-export const COMMON_CIRCLE_SIZE = scale(80);
+export const SELECTED_CIRCLE_SIZE = scale(119);
+export const SECOND_CIRCLE_SIZE = scale(80);
+export const THIRD_CIRCLE_SIZE = scale(64);

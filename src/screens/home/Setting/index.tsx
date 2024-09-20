@@ -54,10 +54,10 @@ const SettingScreen = () => {
               onValueChange={onSwitchPress}
               width={46}
               height={24}
-              circleMargin={2.5}
-              circleColor={WHITE}
-              backgroundActive={BLACK}
-              backgroundInactive={GREY500}
+              knobMargin={2.5}
+              knobColor={WHITE}
+              activeColor={BLACK}
+              inactiveColor={GREY500}
             />
           </PushToggleSwitch>
         </PushContainer>

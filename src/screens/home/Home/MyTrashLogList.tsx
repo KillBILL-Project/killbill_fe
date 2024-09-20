@@ -1,32 +1,38 @@
 import React, { useCallback } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
-import { useTrashLogQuery } from '@hooks/queries/trash/useTrashLogQuery';
-import { ITrashLog } from '@services/api/trashService';
-import MyTrashLogHeader from '@screens/home/TrashLocation/MyTrashLogHeader';
+import { ITrashLog, ITrashLogList } from '@services/api/trashService';
 import NoData from '@components/common/NoData';
 import { MyTrashLogContainer } from '@screens/home/Home/styles';
+import { FetchNextPageOptions, InfiniteData } from '@tanstack/react-query';
+import { isEmpty } from 'lodash';
 import Item from './Item';
 
-const MyTrashLogList = () => {
-  const { data, hasNextPage, fetchNextPage } = useTrashLogQuery();
+interface MyTrashLogListProps {
+  trashLogList: InfiniteData<ITrashLogList & { nextPage: number }> | undefined;
+  hasNextPage: boolean;
+  fetchNextPage: (options?: FetchNextPageOptions) => Promise<unknown>;
+}
 
+const MyTrashLogList = ({ trashLogList, hasNextPage, fetchNextPage }: MyTrashLogListProps) => {
   const keyExtractor = useCallback(({ trashLogId }: { trashLogId: number }) => `${trashLogId}`, []);
   const renderItem: ListRenderItem<ITrashLog> = useCallback(({ item }) => {
     return <Item data={item} />;
   }, []);
 
+  // TODO: 예외 처리
   return (
     <MyTrashLogContainer>
-      <MyTrashLogHeader totalCount={data?.pages[0].totalCount ?? 0} />
-      <FlatList
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        data={data?.pages.flatMap(log => log.trashLogResponseList)}
-        onEndReached={() => hasNextPage && fetchNextPage()}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={<NoData />}
-        contentContainerStyle={{ flexGrow: 1 }}
-      />
+      {trashLogList && !isEmpty(trashLogList.pages) ? (
+        <FlatList
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          data={trashLogList.pages.flatMap(log => log.trashLogResponseList)}
+          onEndReached={() => hasNextPage && fetchNextPage()}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<NoData />}
+          contentContainerStyle={{ flexGrow: 1 }}
+        />
+      ) : null}
     </MyTrashLogContainer>
   );
 };
