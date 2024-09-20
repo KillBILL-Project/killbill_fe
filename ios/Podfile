@@ -46,7 +46,7 @@ setup_permissions([
 #   use_frameworks! :linkage => linkage.to_sym
 # end
 
-platform :ios, 14
+platform :ios, 13.4
 prepare_react_native_project!
 
 target 'wwooss' do
