@@ -1,18 +1,29 @@
 import styled from 'styled-components/native';
-import { GREY400, MAIN, WHITE } from '@constants/colors';
+import { BLACK, GREY400, MAIN, WHITE } from '@constants/colors';
+import { ratioPx } from '@utils/platform';
 
 interface ContainerProps {
   isSelected: boolean;
 }
 
-export const Container = styled.TouchableOpacity<ContainerProps>`
-  width: 32px;
-  height: 32px;
+interface DayPickerButtonTextProps {
+  isSelected: boolean;
+}
+
+export const DayPickerButton = styled.TouchableOpacity<ContainerProps>`
+  width: ${ratioPx(32)};
+  height: ${ratioPx(32)};
   background-color: ${({ isSelected }) => (isSelected ? MAIN : WHITE)};
-  border-radius: 16px;
+  border-radius: ${ratioPx(32)};
   border-width: 1px;
   border-color: ${({ isSelected }) => (isSelected ? MAIN : GREY400)};
-  margin-left: 8px;
   justify-content: center;
   align-items: center;
+`;
+
+export const DayPickerButtonText = styled.Text<DayPickerButtonTextProps>`
+  font-weight: 400;
+  font-size: ${ratioPx(14)};
+  line-height: ${ratioPx(18)};
+  color: ${({ isSelected }) => (isSelected ? WHITE : BLACK)};
 `;

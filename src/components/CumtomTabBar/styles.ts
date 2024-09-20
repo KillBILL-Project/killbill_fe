@@ -12,9 +12,10 @@ export const TabBar = styled.View<TabBarProps>`
   border-top-left-radius: ${ratioPx(20)};
   border-top-right-radius: ${ratioPx(20)};
   bottom: 0;
-  padding-bottom: ${({ bottomSafeArea }) => px(bottomSafeArea)};
-  overflow: hidden;
+  margin-bottom: ${({ bottomSafeArea }) => px(bottomSafeArea)};
   border-top-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
   border-color: ${GREY400};
 `;
 

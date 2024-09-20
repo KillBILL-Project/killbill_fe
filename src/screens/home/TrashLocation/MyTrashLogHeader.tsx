@@ -6,14 +6,18 @@ import {
   TrashHistoryHeaderText,
 } from '@screens/home/Home/styles';
 
-const MyTrashLogHeader = ({ totalCount }: { totalCount: number }) => {
+interface MyTrashLogHeaderProps {
+  totalCount?: number;
+}
+
+const MyTrashLogHeader = ({ totalCount }: MyTrashLogHeaderProps) => {
   return (
     <TrashHistoryHeader>
       <Title>
         <TrashHistoryHeaderText>나의 쓰레기 내역</TrashHistoryHeaderText>
       </Title>
       <TrashCount>
-        <TrashHistoryHeaderText>{totalCount}개</TrashHistoryHeaderText>
+        <TrashHistoryHeaderText>{totalCount ?? 0}개</TrashHistoryHeaderText>
       </TrashCount>
     </TrashHistoryHeader>
   );

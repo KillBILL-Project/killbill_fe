@@ -5,12 +5,18 @@ import paper from '@assets/image/home/paper.png';
 import vinyl from '@assets/image/home/vinyl.png';
 import common from '@assets/image/home/common.png';
 
-import { TTrashType } from '@type/trash';
+import { TrashCategoryEnType, TTrashType } from '@type/trash';
+import { ImageSourcePropType } from 'react-native';
 
 export const TrashCategoryKr = ['병', '종이', '플라스틱', '캔', '비닐', '기타'] as const;
 export const TrashCategoryEn = ['GLASS', 'PAPER', 'PLASTIC', 'CAN', 'VINYL', 'COMMON'] as const;
 
-export const trashCategory = [
+interface TrashCategoryType {
+  name: TrashCategoryEnType;
+  image: ImageSourcePropType;
+}
+
+export const trashCategory: TrashCategoryType[] = [
   { name: 'GLASS', image: glass },
   { name: 'PAPER', image: paper },
   { name: 'PLASTIC', image: plastic },

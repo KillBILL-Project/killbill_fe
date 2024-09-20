@@ -1,60 +1,58 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Easing } from 'react-native';
-import { Circle, Container } from './styles';
+import React, { useEffect } from 'react';
+import { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { scale } from '@utils/platform';
+import { Knob, SwitchTrack } from './styles';
 
 interface SwitchProps {
   width: number;
   height: number;
-  circleMargin: number;
+  knobMargin?: number;
   value: boolean;
-  backgroundActive: string;
-  backgroundInactive: string;
-  circleColor: string;
+  activeColor: string;
+  inactiveColor: string;
+  knobColor: string;
   onValueChange: () => void;
 }
 
 const Switch = ({
   width,
   height,
-  circleMargin,
-  backgroundActive,
-  backgroundInactive,
-  circleColor,
+  knobMargin = 0,
+  activeColor,
+  inactiveColor,
+  knobColor,
   value,
   onValueChange,
 }: SwitchProps) => {
-  const switchAnim = useRef(new Animated.Value(0)).current;
+  const distance = scale(width) - scale(height);
+  const knobPosition = useSharedValue(value ? distance : 0);
 
   useEffect(() => {
-    Animated.timing(switchAnim, {
-      toValue: !value ? 0 : width - height,
-      easing: Easing.out(Easing.circle),
-      duration: 50,
-      useNativeDriver: true,
-    }).start();
-  }, [height, switchAnim, value, width]);
+    knobPosition.value = withSpring(value ? distance : 0, {
+      mass: 0.2,
+      damping: 10,
+      velocity: 200,
+    });
+  }, [value]);
+
+  const animatedKnobStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: knobPosition.value }],
+  }));
 
   return (
-    <Container
-      width={width}
-      height={height}
-      backgroundColor={value ? backgroundActive : backgroundInactive}
+    <SwitchTrack
+      switchWidth={width}
+      switchHeight={height}
+      switchColor={value ? activeColor : inactiveColor}
       onPress={onValueChange}
     >
-      <Circle
-        height={height}
-        backgroundColor={circleColor}
-        borderWidth={circleMargin}
-        borderColor={value ? backgroundActive : backgroundInactive}
-        style={{
-          transform: [
-            {
-              translateX: switchAnim,
-            },
-          ],
-        }}
+      <Knob
+        knobSize={height}
+        knobMargin={knobMargin}
+        knobColor={knobColor}
+        style={animatedKnobStyle}
       />
-    </Container>
+    </SwitchTrack>
   );
 };
 

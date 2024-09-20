@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { hRatioPx, ratioPx } from '@utils/platform';
-import { GREY500, MAIN } from '@constants/colors';
+import { GREY500, MAIN, WHITE } from '@constants/colors';
 
 export const Container = styled.View`
   background-color: #fff;
@@ -21,7 +21,9 @@ export const HeaderBar = styled.View`
   background-color: ${GREY500};
 `;
 
-export const Body = styled.View``;
+export const Body = styled.View`
+  background-color: ${WHITE};
+`;
 
 export const Title = styled.View`
   padding: ${ratioPx(16)} ${ratioPx(20)};

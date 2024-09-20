@@ -1,7 +1,5 @@
 import React from 'react';
-import { GREY500, WHITE } from '@constants/colors';
-import { Medium14 } from '@components/Typography';
-import { Container } from './styles';
+import { DayPickerButton, DayPickerButtonText } from './styles';
 
 interface DailyButtonProps {
   day: string;
@@ -9,12 +7,12 @@ interface DailyButtonProps {
   onPress: () => void;
 }
 
-const DailyButton = ({ day, isSelected, onPress }: DailyButtonProps) => {
+const DayPicker = ({ day, isSelected, onPress }: DailyButtonProps) => {
   return (
-    <Container isSelected={isSelected} onPress={onPress}>
-      <Medium14 color={isSelected ? WHITE : GREY500}>{day}</Medium14>
-    </Container>
+    <DayPickerButton isSelected={isSelected} onPress={onPress}>
+      <DayPickerButtonText isSelected={isSelected}>{day}</DayPickerButtonText>
+    </DayPickerButton>
   );
 };
 
-export default DailyButton;
+export default DayPicker;
