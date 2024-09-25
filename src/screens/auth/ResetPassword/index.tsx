@@ -1,19 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidPassword } from '@utils/common';
-import { useDialog } from '@states/context/DialogContext';
 import { requestChangePassword } from '@services/api/authService';
 import useToast from '@hooks/useToast';
 import UseAuth from '@hooks/useAuth';
 import Screen from '@components/Screen';
 import BaseInput from '@components/BaseInput';
 import BaseButton from '@components/BaseButton';
+import useAlert from '@hooks/useAlert';
 import { Container, ResetPasswordBottomContainer, ResetPasswordContainer } from './styles';
 
 const ResetPasswordScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const { showAlert } = useDialog();
+  const { showAlert, Alert } = useAlert();
   const { showToast } = useToast();
   const { logout } = UseAuth();
   const { t } = useTranslation();
@@ -22,10 +22,7 @@ const ResetPasswordScreen = () => {
   const onChangeConfirmedPassword = (enteredPassword: string) =>
     setConfirmedPassword(enteredPassword);
 
-  const alertMessage = [
-    t('reset_password.alert.reset_password.0'),
-    t('reset_password.alert.reset_password.1'),
-  ];
+  const alertMessage = t('reset_password.alert.reset_password');
 
   const validationList = useMemo(
     () => [
@@ -57,8 +54,7 @@ const ResetPasswordScreen = () => {
     }
     try {
       await requestChangePassword({ password });
-      await showAlert({ alertMessage });
-      logout();
+      showAlert({ content: alertMessage, confirmAction: logout });
     } catch (e) {
       showToast({ message: '일시적인 오류가 발생했습니다. 다시 시도해주세요.', isFailed: true });
     }
@@ -66,6 +62,7 @@ const ResetPasswordScreen = () => {
 
   return (
     <Screen title={t('reset_password.title')}>
+      <Alert />
       <Container>
         <ResetPasswordContainer>
           <BaseInput

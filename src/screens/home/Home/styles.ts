@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { hRatioPx, px, ratioPx, scale, width } from '@utils/platform';
+import { hRatioPx, px, ratioPx, scale } from '@utils/platform';
 import { StyleSheet } from 'react-native';
 import { GREY500, WHITE } from '@constants/colors';
 import Animated from 'react-native-reanimated';
@@ -111,39 +111,20 @@ export const ContentSection = styled.View<ContentSectionProps>`
 `;
 
 export const styles = StyleSheet.create({
-  imageRowContainer: {
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    zIndex: 2,
-  },
-  eachImageContainer: {
-    width,
-    height: '100%',
-    padding: 20,
-  },
-  staticBinImage: {
-    position: 'absolute',
-    width,
-    height: '100%',
-    padding: 20,
-    zIndex: 1,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
   trashCountContainer: {
     position: 'absolute',
+    left: 0,
+    right: 0,
+    height: '100%',
     zIndex: 3,
     alignItems: 'center',
   },
   trashCountBox: {
     position: 'absolute',
-    bottom: scale(112),
+    bottom: scale(72),
     justifyContent: 'center',
     alignItems: 'center',
   },
   trashCountText: { fontSize: scale(36), fontWeight: '700' },
-  imageBackground: { flex: 1, justifyContent: 'center' },
+  imageBackground: { flex: 1, justifyContent: 'flex-end' },
 });

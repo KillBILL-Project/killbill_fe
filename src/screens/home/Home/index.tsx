@@ -9,8 +9,10 @@ import homeBackground from '@assets/image/home_background.png';
 import spinner from '@assets/lottie/mot.json';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeParamList } from '@type/navigation';
-import { useDialog } from '@states/context/DialogContext';
 import LottieView from 'lottie-react-native';
+import { width } from '@utils/platform';
+import useAlert from '@hooks/useAlert';
+import useConfirm from '@hooks/useConfirm';
 import {
   Container,
   EmptyTrashButton,
@@ -26,7 +28,8 @@ const AnimatedLottieView = RnAnimated.createAnimatedComponent(LottieView);
 
 const HomeScreen = () => {
   const { navigate } = useNavigation<NavigationProp<HomeParamList>>();
-  const { showConfirm } = useDialog();
+  const { showConfirm, Confirm } = useConfirm();
+  const { showAlert, Alert } = useAlert();
 
   const { data, hasNextPage, fetchNextPage } = useTrashLogQuery();
   const { data: count } = useTrashCanContentsCount();
@@ -71,38 +74,42 @@ const HomeScreen = () => {
     });
   }, []);
 
-  const emptyTrash = async () => {
+  const emptyTrash = () => {
     if (!count) {
-      await showConfirm({
-        alertMessage: '비울 쓰레기가 없습니다.',
-        confirmText: '확인',
-      });
+      showAlert({ content: '비울 쓰레기가 없습니다.' });
       return;
     }
 
-    await showConfirm({
-      alertMessage: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
+    showConfirm({
+      content: `지금부터 쓰레기를 비웁니다.${'\n'}정말 비우시겠습니까?`,
       confirmText: '비울게요',
+      confirmAction: () => navigate('EmptyTrash'),
     });
-
-    navigate('EmptyTrash');
   };
+
+  const lottieHeight = useRef(new RnAnimated.Value(0)).current;
 
   return (
     <Screen title="홈" isHeaderShown={false} isTopSafeArea={false}>
+      <Confirm />
+      <Alert />
       <Container>
-        <MotionContainer>
+        <MotionContainer
+          onLayout={event => {
+            const h = event.nativeEvent.layout.height;
+            const r = 406 / 376;
+            lottieHeight.setValue(h > 376 ? width * r : h);
+          }}
+        >
           <ImageBackground source={homeBackground} style={styles.imageBackground}>
             <AnimatedLottieView
               source={spinner}
               loop={false}
               renderMode="AUTOMATIC"
-              style={{
-                height: '100%',
-              }}
+              style={{ height: lottieHeight }}
               progress={progress.current}
             />
-            <View style={[styles.eachImageContainer, styles.trashCountContainer]}>
+            <View style={[styles.trashCountContainer]}>
               <View style={styles.trashCountBox}>
                 <Text style={styles.trashCountText}>{count == null ? '' : `${count}개`}</Text>
               </View>
