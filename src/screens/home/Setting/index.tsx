@@ -6,12 +6,12 @@ import { Bold18, Medium16, Regular16 } from '@components/Typography';
 import { width } from '@utils/platform';
 import { userState } from '@states/auth';
 import { requestWithdrawal } from '@services/api/authService';
-import { useDialog } from '@states/context/DialogContext';
 import UseAuth from '@hooks/useAuth';
 import useNotification from '@hooks/useNotification';
 import Separator from '@components/Separator';
 import Screen from '@components/Screen';
 import Switch from '@components/Switch';
+import useConfirm from '@hooks/useConfirm';
 import {
   Box,
   Container,
@@ -25,24 +25,30 @@ import {
 const SettingScreen = () => {
   const { checkPermission, pushConsent } = useNotification();
   const [user, setUser] = useRecoilState(userState);
-  const { showConfirm } = useDialog();
+  const { showConfirm, Confirm } = useConfirm();
   const { clearTokens } = UseAuth();
 
   const onSwitchPress = () => {
     checkPermission();
   };
 
-  const onPressSecession = async () => {
-    try {
-      await showConfirm({ alertMessage: '정말로 탈퇴하시겠습니까?', confirmText: '탈퇴하기' });
-      await requestWithdrawal();
-      setUser(null);
-      await clearTokens();
-    } catch (e) {}
+  const withdrawal = () => {
+    requestWithdrawal();
+    setUser(null);
+    clearTokens();
+  };
+
+  const onPressSecession = () => {
+    showConfirm({
+      content: '정말로 탈퇴하시겠습니까?',
+      confirmText: '탈퇴하기',
+      confirmAction: withdrawal,
+    });
   };
 
   return (
     <Screen title="설정">
+      <Confirm />
       <Container>
         <PushContainer>
           <PushTitle>

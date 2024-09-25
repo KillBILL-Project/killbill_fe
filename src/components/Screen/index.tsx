@@ -4,12 +4,9 @@ import { ImageSourcePropType, StatusBar } from 'react-native';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import backButton from '@assets/icon/back_button.png';
 import { BLACK } from '@constants/colors';
-import { useDialog } from '@states/context/DialogContext';
 import { Medium18 } from '@components/Typography';
 import HeaderButton from '@components/Screen/HeaderButton';
 import Toast from '@components/Toast';
-import Alert from '@components/Dialog/Alert';
-import Confirm from '@components/Dialog/Confirm';
 
 import Spinner from '@components/Spinner';
 import { isShowToastState } from '@states/notification';
@@ -50,7 +47,6 @@ const Screen = ({
   rightButtonProps,
 }: ScreenProps) => {
   const { goBack, canGoBack } = useNavigation();
-  const { isShowDialog, dialogProps } = useDialog();
   const isShowToast = useRecoilValue(isShowToastState);
   const inProgress = useRecoilValue(inProgressState);
   const setScreenHeight = useSetRecoilState(screenHeightState);
@@ -62,7 +58,6 @@ const Screen = ({
         barStyle={headerColor === '#000000' ? 'light-content' : 'dark-content'}
         backgroundColor="transparent"
       />
-      {isShowDialog && (dialogProps.dialogType === 'ALERT' ? <Alert /> : <Confirm />)}
       {isShowToast && <Toast />}
       <Container
         backgroundColor={backgroundColor}

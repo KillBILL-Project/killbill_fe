@@ -36,10 +36,7 @@
   },
   "forgot_password": {
     "alert": {
-      "sent_email": [
-        "A temporary password has been sent",
-        "to the email address you entered."
-      ]
+      "sent_email": "A temporary password has been sent\nto the email address you entered."
     },
     "button": {
       "submit": "Submit"
@@ -117,10 +114,7 @@
   },
   "reset_password": {
     "alert": {
-      "reset_password": [
-        "Your password has been reset.",
-        "Please log in again."
-      ]
+      "reset_password": "Your password has been reset.\nPlease log in again."
     },
     "button": {
       "submit": "Submit"

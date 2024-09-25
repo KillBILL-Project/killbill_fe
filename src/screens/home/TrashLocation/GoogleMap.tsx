@@ -9,8 +9,8 @@ import selectedMarker from '@assets/icon/selectedMarker.png';
 import { useTrashCanLocationQuery } from '@hooks/queries/trash/useTrashCanLocationQuery';
 import { activeTrashCanDetail, selectedTrashType } from '@states/trash';
 import { isIOS, scale } from '@utils/platform';
-import { useDialog } from '@states/context/DialogContext';
 import { ITrashCanLocation } from '@services/api/trashService';
+import useConfirm from '@hooks/useConfirm';
 import TrashList from './TrashList';
 import RefetchByCurrentPoint from './RefetchByCurrentPoint';
 import MyLocation from './MyLocation';
@@ -33,7 +33,7 @@ const GoogleMap = () => {
   const trashType = useRecoilValue(selectedTrashType);
   const mapViewRef = useRef<MapView>(null);
   const [distanceToTop, setDistanceToTop] = useState(0);
-  const { showConfirm } = useDialog();
+  const { showConfirm, Confirm } = useConfirm();
 
   const { data, refetch } = useTrashCanLocationQuery({
     lat: location?.latitude,
@@ -81,11 +81,8 @@ const GoogleMap = () => {
 
         if (result === 'blocked') {
           showConfirm({
-            alertMessage: '분리수거 로봇 위치를 찾기 위해서는 위치 접근 권한이 필요합니다.',
-            confirmText: '설정',
-            cancelText: '취소',
-          }).then(() => {
-            openSettings();
+            content: `분리수거 로봇 위치를 찾기 위해서는 위치 접근 권한이 필요합니다.`,
+            confirmAction: openSettings,
           });
         }
       },
@@ -116,6 +113,7 @@ const GoogleMap = () => {
 
   return (
     <>
+      <Confirm />
       <MapWrapper activeOpacity={1} onPress={blurTrashCanDetail}>
         <MapView
           ref={mapViewRef}
