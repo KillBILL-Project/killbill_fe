@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { BLACK, PRIMARY } from '@constants/colors';
 import { AuthStackParamList } from '@type/navigation';
 import { isValidEmail } from '@utils/common';
-import { useDialog } from '@states/context/DialogContext';
 import useToast from '@hooks/useToast';
 import Screen from '@components/Screen';
 import BaseInput from '@components/BaseInput';
 import BaseButton from '@components/BaseButton';
+import useAlert from '@hooks/useAlert';
 import {
   AuthButtonContainer,
   Container,
@@ -22,12 +22,9 @@ const ForgotPasswordScreen = () => {
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
   const { showToast } = useToast();
   const { t } = useTranslation();
-  const { showAlert } = useDialog();
+  const { showAlert, Alert } = useAlert();
 
-  const alertMessage = [
-    t('forgot_password.alert.sent_email.0'),
-    t('forgot_password.alert.sent_email.1'),
-  ];
+  const alertMessage = t('forgot_password.alert.sent_email');
 
   const onChangeEmail = (value: string) => {
     setEmail(value);
@@ -40,13 +37,13 @@ const ForgotPasswordScreen = () => {
     }
     // TODO: api
 
-    await showAlert({ alertMessage });
-    navigate('Login');
+    showAlert({ content: alertMessage, confirmAction: () => navigate('Login') });
   };
 
   return (
     <Screen title={t('forgot_password.title')}>
       <Container>
+        <Alert />
         <InputContainer>
           <InfoMessage>
             <InfoMessageText>{t('forgot_password.info_message.0')}</InfoMessageText>

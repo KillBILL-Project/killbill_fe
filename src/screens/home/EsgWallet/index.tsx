@@ -20,6 +20,7 @@ import useWwoossTokenQuery from '@hooks/queries/quiz/useWwoossTokenQuery';
 import useUserActiveLogQuery from '@hooks/queries/log/useUserActiveLogQuery';
 import useVerifiedUserActiveLogQuery from '@hooks/queries/log/useVerifiedUserActiveLogQuery';
 import useTotalRefundQuery from '@hooks/queries/log/useTotalRefundQuery';
+import useAlert from '@hooks/useAlert';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -71,6 +72,8 @@ const EsgWalletScreen = () => {
   const [selectedTooltip, setSelectedTooltip] = useState<TooltipKeyType>('token');
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
+  const { showAlert, Alert } = useAlert();
+
   const { data: totalToken } = useWwoossTokenQuery({});
   const { data: userActiveLog } = useUserActiveLogQuery();
   const { data: verifiedUserActiveLog } = useVerifiedUserActiveLogQuery();
@@ -86,6 +89,10 @@ const EsgWalletScreen = () => {
     setSelectedTooltip(type);
   };
 
+  const notReadyAlert = () => {
+    showAlert({ content: '준비중입니다.' });
+  };
+
   return (
     <Screen
       title="ESG Wallet"
@@ -97,9 +104,10 @@ const EsgWalletScreen = () => {
         size: 24,
         padding: 24,
         color: WHITE,
-        onPress: () => {},
+        onPress: notReadyAlert,
       }}
     >
+      <Alert />
       <Animated.View style={[{ position: 'absolute', width: '100%' }, gradientViewStyle]}>
         <Gradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} />
       </Animated.View>
@@ -134,14 +142,14 @@ const EsgWalletScreen = () => {
             backgroundHeight.value = y + height / 2;
           }}
         >
-          <ConnectWalletButton>
+          <ConnectWalletButton onPress={notReadyAlert}>
             <ConnectWalletButtonImage source={walletIcon} />
             <ButtonTitle>
               <ButtonTitleText>Connect Wallet</ButtonTitleText>
             </ButtonTitle>
           </ConnectWalletButton>
           <Separator length={48} horizontal={false} color={GREY400} />
-          <TradeButton>
+          <TradeButton onPress={notReadyAlert}>
             <TradeButtonImage source={tradeIcon} />
             <ButtonTitle>
               <ButtonTitleText>Trade</ButtonTitleText>
