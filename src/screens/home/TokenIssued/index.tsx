@@ -39,7 +39,7 @@ const TokenIssuedScreen = () => {
     >
       <Container>
         <Title>
-          <TitleText>TOKEN 발급 완료!</TitleText>
+          <TitleText>CREDIT 발급 완료!</TitleText>
         </Title>
         <ImageSection>
           <AcquiredToken>

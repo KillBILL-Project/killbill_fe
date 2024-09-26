@@ -17,7 +17,7 @@ export type TooltipType = {
 
 export const tooltip: TooltipType = {
   token: {
-    title: '토큰이란?',
+    title: '크레딧이란?',
     content: [
       {
         text: '향후 개인의 ',
@@ -30,7 +30,7 @@ export const tooltip: TooltipType = {
         newline: false,
       },
       {
-        text: '할 수 있는 환경 블록체인 토큰(TOKEN)입니다. 현재는 오픈베타 중이며, 향후 프로젝트가 완료되면 사용할 수 있습니다.',
+        text: '할 수 있는 환경 크레딧(CREDIT)입니다. 현재는 오픈베타 중이며, 향후 프로젝트가 완료되면 사용할 수 있습니다.',
         bold: false,
         newline: false,
       },
