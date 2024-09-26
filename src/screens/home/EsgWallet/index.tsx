@@ -89,10 +89,6 @@ const EsgWalletScreen = () => {
     setSelectedTooltip(type);
   };
 
-  const notReadyAlert = () => {
-    showAlert({ content: '준비중입니다.' });
-  };
-
   return (
     <Screen
       title="ESG Wallet"
@@ -104,7 +100,8 @@ const EsgWalletScreen = () => {
         size: 24,
         padding: 24,
         color: WHITE,
-        onPress: notReadyAlert,
+        onPress: () =>
+          showAlert({ content: '본인의 탄소관리지갑(ESG Wallet)을 공유할 수 있습니다.' }),
       }}
     >
       <Alert />
@@ -115,7 +112,7 @@ const EsgWalletScreen = () => {
         <TokenSection>
           <TokenValueColumn>
             <TokenTitle>
-              <TokenTitleText>TOKEN</TokenTitleText>
+              <TokenTitleText>CREDIT</TokenTitleText>
               <TooltipButton onPress={() => onPressTooltipButton('token')}>
                 <TooltipImage source={tooltipIcon} tintColor={WHITE} />
               </TooltipButton>
@@ -142,14 +139,22 @@ const EsgWalletScreen = () => {
             backgroundHeight.value = y + height / 2;
           }}
         >
-          <ConnectWalletButton onPress={notReadyAlert}>
+          <ConnectWalletButton
+            onPress={() =>
+              showAlert({ content: '향후 ESG Wallet은 다른 매체와 연결하여 사용할 수 있습니다.' })
+            }
+          >
             <ConnectWalletButtonImage source={walletIcon} />
             <ButtonTitle>
               <ButtonTitleText>Connect Wallet</ButtonTitleText>
             </ButtonTitle>
           </ConnectWalletButton>
           <Separator length={48} horizontal={false} color={GREY400} />
-          <TradeButton onPress={notReadyAlert}>
+          <TradeButton
+            onPress={() =>
+              showAlert({ content: '향후 ESG Wallet은 다른 현금성포인트로 바꿀 수 있습니다.' })
+            }
+          >
             <TradeButtonImage source={tradeIcon} />
             <ButtonTitle>
               <ButtonTitleText>Trade</ButtonTitleText>
@@ -222,7 +227,7 @@ const EsgWalletScreen = () => {
         </EsgContainer>
       </Container>
       <Modal transparent visible={isActiveTooltip || isActiveQrCode} statusBarTranslucent>
-        <View style={{ flex: 1, backgroundColor: '#00000032' }}>
+        <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.32)' }}>
           <Pressable
             style={{ flex: 1 }}
             onPress={() => {
