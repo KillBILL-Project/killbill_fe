@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   contentSection: {
     width: '100%',
     paddingVertical: scale(40),
+    paddingHorizontal: scale(30),
     alignItems: 'center',
     backgroundColor: WHITE,
   },
