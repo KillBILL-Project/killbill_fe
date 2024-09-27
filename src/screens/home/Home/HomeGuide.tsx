@@ -50,8 +50,8 @@ const HomeGuide = ({ visible, motionHeight, lottieHeight, setGuideShown }: HomeG
   };
 
   return (
-    <Modal visible={visible} transparent statusBarTranslucent>
-      {lottieHeight > 0 && (
+    lottieHeight != null && (
+      <Modal visible={visible} transparent statusBarTranslucent>
         <Background>
           <CloseButtonSection topInset={top}>
             <CloseButton onPress={handleCloseButtonPress}>
@@ -105,8 +105,8 @@ const HomeGuide = ({ visible, motionHeight, lottieHeight, setGuideShown }: HomeG
             </Text>
           </ScrollGuideSection>
         </Background>
-      )}
-    </Modal>
+      </Modal>
+    )
   );
 };
 
