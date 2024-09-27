@@ -20,7 +20,8 @@ import useWwoossTokenQuery from '@hooks/queries/quiz/useWwoossTokenQuery';
 import useUserActiveLogQuery from '@hooks/queries/log/useUserActiveLogQuery';
 import useVerifiedUserActiveLogQuery from '@hooks/queries/log/useVerifiedUserActiveLogQuery';
 import useTotalRefundQuery from '@hooks/queries/log/useTotalRefundQuery';
-import useAlert from '@hooks/useAlert';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { HomeStackParamList } from '@type/navigation';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -72,7 +73,7 @@ const EsgWalletScreen = () => {
   const [selectedTooltip, setSelectedTooltip] = useState<TooltipKeyType>('token');
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
-  const { showAlert, Alert } = useAlert();
+  const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
 
   const { data: totalToken } = useWwoossTokenQuery({});
   const { data: userActiveLog } = useUserActiveLogQuery();
@@ -89,6 +90,12 @@ const EsgWalletScreen = () => {
     setSelectedTooltip(type);
   };
 
+  const handlePlannedButtonPress = () => {
+    navigate('WebView', {
+      url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+    });
+  };
+
   return (
     <Screen
       title="ESG Wallet"
@@ -100,11 +107,9 @@ const EsgWalletScreen = () => {
         size: 24,
         padding: 24,
         color: WHITE,
-        onPress: () =>
-          showAlert({ content: '본인의 탄소관리지갑(ESG Wallet)을 공유할 수 있습니다.' }),
+        onPress: handlePlannedButtonPress,
       }}
     >
-      <Alert />
       <Animated.View style={[{ position: 'absolute', width: '100%' }, gradientViewStyle]}>
         <Gradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} />
       </Animated.View>
@@ -139,22 +144,14 @@ const EsgWalletScreen = () => {
             backgroundHeight.value = y + height / 2;
           }}
         >
-          <ConnectWalletButton
-            onPress={() =>
-              showAlert({ content: '향후 ESG Wallet은 다른 매체와 연결하여 사용할 수 있습니다.' })
-            }
-          >
+          <ConnectWalletButton onPress={handlePlannedButtonPress}>
             <ConnectWalletButtonImage source={walletIcon} />
             <ButtonTitle>
               <ButtonTitleText>Connect Wallet</ButtonTitleText>
             </ButtonTitle>
           </ConnectWalletButton>
           <Separator length={48} horizontal={false} color={GREY400} />
-          <TradeButton
-            onPress={() =>
-              showAlert({ content: '향후 ESG Wallet은 다른 현금성포인트로 바꿀 수 있습니다.' })
-            }
-          >
+          <TradeButton onPress={handlePlannedButtonPress}>
             <TradeButtonImage source={tradeIcon} />
             <ButtonTitle>
               <ButtonTitleText>Trade</ButtonTitleText>

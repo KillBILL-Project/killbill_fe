@@ -7,7 +7,8 @@ import xIcon from '@assets/icon/x.png';
 import qrcodeIcon from '@assets/icon/passport/qrcode.png';
 import { View } from 'react-native';
 import { QrCodeBottomSheetProps } from '@screens/home/EsgWallet/type';
-import useAlert from '@hooks/useAlert';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { HomeStackParamList } from '@type/navigation';
 import {
   Container,
   Gradient,
@@ -30,10 +31,16 @@ import {
 } from './styles';
 
 const QrCodeBottomSheet = ({ setActive }: QrCodeBottomSheetProps) => {
-  const { showAlert, Alert } = useAlert();
+  const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+
+  const handlePlannedButtonPress = () => {
+    navigate('WebView', {
+      url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+    });
+  };
+
   return (
     <View>
-      <Alert />
       <CloseButton onPress={() => setActive(false)}>
         <CloseButtonGradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>
           <CloseButtonImage source={xIcon} tintColor={WHITE} />
@@ -51,20 +58,12 @@ const QrCodeBottomSheet = ({ setActive }: QrCodeBottomSheetProps) => {
           <UsernameTitleText>Username</UsernameTitleText>
           <UsernameText>Coming Soon...</UsernameText>
           <AdditionalButtonSection>
-            <CopyButton
-              onPress={() =>
-                showAlert({ content: '본인의 탄소관리지갑(ESG Wallet)을 공유할 수 있습니다.' })
-              }
-            >
+            <CopyButton onPress={handlePlannedButtonPress}>
               <CopyButtonImage source={copyIcon} tintColor={WHITE} />
               <CopyButtonText>복사하기</CopyButtonText>
             </CopyButton>
             <Separator length={16} thickness={2} horizontal={false} />
-            <ShareButton
-              onPress={() =>
-                showAlert({ content: '본인의 탄소관리지갑(ESG Wallet)을 공유할 수 있습니다.' })
-              }
-            >
+            <ShareButton onPress={handlePlannedButtonPress}>
               <ShareButtonImage source={shareIcon} tintColor={WHITE} />
               <ShareButtonText>공유하기</ShareButtonText>
             </ShareButton>
