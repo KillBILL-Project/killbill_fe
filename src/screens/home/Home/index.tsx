@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Screen from '@components/Screen';
 import BottomSheet from '@screens/home/Home/BottomSheet';
 import { useTrashLogQuery } from '@hooks/queries/trash/useTrashLogQuery';
@@ -13,9 +13,14 @@ import LottieView from 'lottie-react-native';
 import { width } from '@utils/platform';
 import useAlert from '@hooks/useAlert';
 import useConfirm from '@hooks/useConfirm';
+import HomeGuide from '@screens/home/Home/HomeGuide';
+import { getHomeGuideShown } from '@states/asyncStorage';
+import { useSetRecoilState } from 'recoil';
+import { screenHeightState } from '@states/common';
 import {
   Container,
   EmptyTrashButton,
+  EmptyTrashButtonSection,
   EmptyTrashButtonText,
   MotionContainer,
   styles,
@@ -27,22 +32,26 @@ import CategoryScroll from './CategoryScroll';
 const AnimatedLottieView = RnAnimated.createAnimatedComponent(LottieView);
 
 const HomeScreen = () => {
-  const { navigate } = useNavigation<NavigationProp<HomeParamList>>();
-  const { showConfirm, Confirm } = useConfirm();
-  const { showAlert, Alert } = useAlert();
+  const lottieHeightAnim = useRef(new RnAnimated.Value(0)).current;
+  const [motionHeight, setMotionHeight] = useState(0);
+  const [lottieHeight, setLottieHeight] = useState(0);
+  const [guideShown, setGuideShown] = useState(false);
+  const motionProgress = useRef(new RnAnimated.Value(0));
 
   const { data, hasNextPage, fetchNextPage } = useTrashLogQuery();
   const { data: count } = useTrashCanContentsCount();
 
-  const progress = useRef(new RnAnimated.Value(0));
+  const { navigate } = useNavigation<NavigationProp<HomeParamList>>();
+  const { showConfirm, Confirm } = useConfirm();
+  const { showAlert, Alert } = useAlert();
 
   const reset = useCallback(() => {
-    progress.current.resetAnimation();
+    motionProgress.current.resetAnimation();
   }, []);
 
   const open = useCallback((fn?: () => void) => {
-    progress.current.stopAnimation();
-    RnAnimated.timing(progress.current, {
+    motionProgress.current.stopAnimation();
+    RnAnimated.timing(motionProgress.current, {
       toValue: 0.5,
       duration: 500,
       easing: Easing.linear,
@@ -53,8 +62,8 @@ const HomeScreen = () => {
   }, []);
 
   const close = useCallback(() => {
-    progress.current.stopAnimation();
-    RnAnimated.timing(progress.current, {
+    motionProgress.current.stopAnimation();
+    RnAnimated.timing(motionProgress.current, {
       toValue: 0,
       duration: 500,
       easing: Easing.linear,
@@ -63,14 +72,14 @@ const HomeScreen = () => {
   }, []);
 
   const empty = useCallback(() => {
-    progress.current.stopAnimation();
-    RnAnimated.timing(progress.current, {
+    motionProgress.current.stopAnimation();
+    RnAnimated.timing(motionProgress.current, {
       toValue: 1,
       duration: 500,
       easing: Easing.linear,
       useNativeDriver: false,
     }).start(() => {
-      progress.current.setValue(0);
+      motionProgress.current.setValue(0);
     });
   }, []);
 
@@ -87,18 +96,31 @@ const HomeScreen = () => {
     });
   };
 
-  const lottieHeight = useRef(new RnAnimated.Value(0)).current;
+  useEffect(() => {
+    (async () => {
+      const homeGuideShown = await getHomeGuideShown();
+      setGuideShown(homeGuideShown === 'true');
+    })();
+  }, []);
+  const setScreenHeight = useSetRecoilState(screenHeightState);
 
   return (
     <Screen title="홈" isHeaderShown={false} isTopSafeArea={false}>
       <Confirm />
       <Alert />
-      <Container>
+      <Container
+        onLayout={e => {
+          console.log('e.nativeEvent.layout.height: ', e.nativeEvent.layout.height);
+          setScreenHeight(e.nativeEvent.layout.height);
+        }}
+      >
         <MotionContainer
           onLayout={event => {
             const h = event.nativeEvent.layout.height;
+            setMotionHeight(h);
             const r = 406 / 376;
-            lottieHeight.setValue(h > 376 ? width * r : h);
+            setLottieHeight(h > 376 ? width * r : h);
+            lottieHeightAnim.setValue(h > 376 ? width * r : h);
           }}
         >
           <ImageBackground source={homeBackground} style={styles.imageBackground}>
@@ -106,17 +128,19 @@ const HomeScreen = () => {
               source={spinner}
               loop={false}
               renderMode="AUTOMATIC"
-              style={{ height: lottieHeight }}
-              progress={progress.current}
+              style={{ height: lottieHeightAnim }}
+              progress={motionProgress.current}
             />
             <View style={[styles.trashCountContainer]}>
               <View style={styles.trashCountBox}>
                 <Text style={styles.trashCountText}>{count == null ? '' : `${count}개`}</Text>
               </View>
             </View>
-            <EmptyTrashButton onPress={emptyTrash}>
-              <EmptyTrashButtonText>비우기</EmptyTrashButtonText>
-            </EmptyTrashButton>
+            <EmptyTrashButtonSection>
+              <EmptyTrashButton onPress={emptyTrash}>
+                <EmptyTrashButtonText>비우기</EmptyTrashButtonText>
+              </EmptyTrashButton>
+            </EmptyTrashButtonSection>
           </ImageBackground>
         </MotionContainer>
         <TrashContainer>
@@ -130,6 +154,12 @@ const HomeScreen = () => {
           fetchNextPage={fetchNextPage}
         />
       </BottomSheet>
+      <HomeGuide
+        visible={!guideShown}
+        motionHeight={motionHeight}
+        lottieHeight={lottieHeight}
+        setGuideShown={setGuideShown}
+      />
     </Screen>
   );
 };
