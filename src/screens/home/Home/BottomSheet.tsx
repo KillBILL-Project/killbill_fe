@@ -25,8 +25,8 @@ const BottomSheet = ({
   const screenHeight = useRecoilValue(screenHeightState);
 
   const contentHeight = useMemo(() => {
-    return screenHeight - top - gestureBarHeight;
-  }, [gestureBarHeight, screenHeight, top]);
+    return screenHeight - top;
+  }, [screenHeight, top]);
 
   const translateY = useSharedValue(0);
   const animatedSheetStyle = useAnimatedStyle(() => ({

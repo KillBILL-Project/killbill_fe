@@ -15,6 +15,8 @@ import useAlert from '@hooks/useAlert';
 import useConfirm from '@hooks/useConfirm';
 import HomeGuide from '@screens/home/Home/HomeGuide';
 import { getHomeGuideShown } from '@states/asyncStorage';
+import { useSetRecoilState } from 'recoil';
+import { screenHeightState } from '@states/common';
 import {
   Container,
   EmptyTrashButton,
@@ -100,12 +102,18 @@ const HomeScreen = () => {
       setGuideShown(homeGuideShown === 'true');
     })();
   }, []);
+  const setScreenHeight = useSetRecoilState(screenHeightState);
 
   return (
     <Screen title="홈" isHeaderShown={false} isTopSafeArea={false}>
       <Confirm />
       <Alert />
-      <Container>
+      <Container
+        onLayout={e => {
+          console.log('e.nativeEvent.layout.height: ', e.nativeEvent.layout.height);
+          setScreenHeight(e.nativeEvent.layout.height);
+        }}
+      >
         <MotionContainer
           onLayout={event => {
             const h = event.nativeEvent.layout.height;
