@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs/src/types';
 import React, { useMemo } from 'react';
-import { ParamListBase, RouteProp } from '@react-navigation/native';
+import { CommonActions, ParamListBase, RouteProp } from '@react-navigation/native';
 import homeIconFocused from '@assets/icon/bottomTab/home_focused.png';
 import homeIcon from '@assets/icon/bottomTab/home.png';
 import locationIconFocused from '@assets/icon/bottomTab/location_focused.png';
@@ -58,7 +58,10 @@ const CustomTabBar = ({ state, descriptors, navigation, insets }: BottomTabBarPr
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
+            navigation.dispatch({
+              ...CommonActions.navigate(route.name, route.params),
+              target: state.key,
+            });
           }
         };
 

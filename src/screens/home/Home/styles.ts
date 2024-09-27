@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 import { hRatioPx, px, ratioPx, scale } from '@utils/platform';
 import { StyleSheet } from 'react-native';
-import { GREY500, WHITE } from '@constants/colors';
+import { GREY500, PRIMARY, WHITE } from '@constants/colors';
 import Animated from 'react-native-reanimated';
+import { SELECTED_CIRCLE_SIZE } from '@screens/home/Home/constant';
 
 interface ContentSectionProps {
   gestureBarHeight: number;
@@ -57,11 +58,16 @@ export const FilterContainer = styled.View`
   border-bottom-color: #f0f0f6;
 `;
 
-export const EmptyTrashButton = styled.TouchableOpacity`
+export const EmptyTrashButtonSection = styled.View`
   position: absolute;
-  padding: ${hRatioPx(6)} ${hRatioPx(12)};
-  bottom: ${hRatioPx(13)};
   left: ${ratioPx(18)};
+  bottom: ${hRatioPx(13)};
+  align-items: flex-start;
+  z-index: 100;
+`;
+
+export const EmptyTrashButton = styled.TouchableOpacity`
+  padding: ${hRatioPx(6)} ${ratioPx(12)};
   justify-content: center;
   align-items: center;
   border-radius: 30px;
@@ -128,3 +134,95 @@ export const styles = StyleSheet.create({
   trashCountText: { fontSize: scale(36), fontWeight: '700' },
   imageBackground: { flex: 1, justifyContent: 'flex-end' },
 });
+
+/* HomeGuide */
+
+export const Background = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+`;
+
+export const MotionSection = styled.View<{ height: number }>`
+  height: ${({ height }) => px(height)};
+  align-items: center;
+`;
+
+export const EmptyDescriptionRow = styled.View`
+  flex-direction: row;
+  left: ${ratioPx(28)};
+  gap: ${ratioPx(6)};
+`;
+
+export const LoopedArrowImage = styled.Image`
+  width: ${ratioPx(46)};
+  height: ${ratioPx(46)};
+`;
+
+export const EmptyDescription = styled.View`
+  top: ${ratioPx(-9)};
+  align-items: center;
+`;
+
+export const ThrowDescription = styled.View<{ position: number }>`
+  position: absolute;
+  bottom: ${({ position }) => px(position)};
+  align-items: center;
+`;
+
+export const NormalDescriptionText = styled.Text`
+  font-size: ${ratioPx(16)};
+  font-weight: 400;
+  line-height: ${ratioPx(24)};
+  color: ${WHITE};
+`;
+
+export const HighlightedDescriptionText = styled.Text`
+  font-size: ${ratioPx(16)};
+  font-weight: 700;
+  line-height: ${ratioPx(24)};
+  color: ${PRIMARY};
+`;
+
+export const ScrollSection = styled.View`
+  padding: ${ratioPx(17)} 0;
+  align-items: center;
+`;
+
+export const CategoryCircle = styled.View`
+  width: ${px(SELECTED_CIRCLE_SIZE)};
+  height: ${px(SELECTED_CIRCLE_SIZE)};
+  border-radius: 100px;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: ${WHITE};
+`;
+
+export const CategoryImage = styled.Image`
+  position: absolute;
+`;
+
+export const ScrollGuideSection = styled.View`
+  align-items: center;
+  gap: ${ratioPx(8)};
+`;
+
+export const HandImage = styled.Image`
+  width: ${ratioPx(55)};
+  height: ${ratioPx(55)};
+`;
+
+export const CloseButtonSection = styled.View<{ top: number }>`
+  position: absolute;
+  width: 100%;
+  margin-top: ${({ top }) => px(top)};
+  align-items: flex-end;
+`;
+
+export const CloseButton = styled.TouchableOpacity`
+  padding: ${ratioPx(16)};
+`;
+
+export const CloseButtonImage = styled.Image`
+  width: ${ratioPx(24)};
+  height: ${ratioPx(24)};
+`;
