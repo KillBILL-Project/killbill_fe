@@ -110,7 +110,6 @@ const HomeScreen = () => {
       <Alert />
       <Container
         onLayout={e => {
-          console.log('e.nativeEvent.layout.height: ', e.nativeEvent.layout.height);
           setScreenHeight(e.nativeEvent.layout.height);
         }}
       >

@@ -211,11 +211,12 @@ export const HandImage = styled.Image`
   height: ${ratioPx(55)};
 `;
 
-export const CloseButtonSection = styled.View<{ top: number }>`
+export const CloseButtonSection = styled.View<{ topInset: number }>`
   position: absolute;
   width: 100%;
-  margin-top: ${({ top }) => px(top)};
+  margin-top: ${({ topInset }) => px(topInset)};
   align-items: flex-end;
+  z-index: 100;
 `;
 
 export const CloseButton = styled.TouchableOpacity`

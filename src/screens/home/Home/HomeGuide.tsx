@@ -53,7 +53,7 @@ const HomeGuide = ({ visible, motionHeight, lottieHeight, setGuideShown }: HomeG
     <Modal visible={visible} transparent statusBarTranslucent>
       {lottieHeight > 0 && (
         <Background>
-          <CloseButtonSection top={top}>
+          <CloseButtonSection topInset={top}>
             <CloseButton onPress={handleCloseButtonPress}>
               <CloseButtonImage source={x} tintColor={WHITE} />
             </CloseButton>
