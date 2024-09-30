@@ -108,6 +108,7 @@ export const ButtonTitle = styled.View``;
 export const ButtonTitleText = styled.Text`
   font-size: ${hRatioPx(14)};
   font-weight: 500;
+  line-height: ${hRatioPx(20)};
   color: #8e8e93;
 `;
 
