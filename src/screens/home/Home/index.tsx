@@ -71,11 +71,11 @@ const HomeScreen = () => {
     }).start();
   }, []);
 
-  const empty = useCallback(() => {
+  const empty = useCallback((long?: boolean) => {
     motionProgress.current.stopAnimation();
     RnAnimated.timing(motionProgress.current, {
       toValue: 1,
-      duration: 500,
+      duration: long ? 1000 : 500,
       easing: Easing.linear,
       useNativeDriver: false,
     }).start(() => {

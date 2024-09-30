@@ -1,9 +1,12 @@
 import React from 'react';
 import Animated, {
+  Easing,
+  ReduceMotion,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import useThrowTrashMutation from '@hooks/mutation/trash/useThrowTrashMutation';
@@ -25,13 +28,24 @@ const CategoryScroll = ({ playMotion }: CategoryScrollProps) => {
   const changeX = useSharedValue(
     -ratio * (88 + 72 * (Math.round(trashCategoryList.length / 2) - 1)),
   );
+
   const isHorizontal = useSharedValue(true);
+
   const selectedIndex = useDerivedValue(() => {
     return Math.min(
       trashCategoryList.length - 1,
       Math.max(0, -Math.round((changeX.value - ratio * 16) / (ratio * 72))),
     );
   });
+
+  const changeIndex = (index: number) => {
+    const position = index ? ratio * (88 + 72 * (index - 1)) : 0;
+    changeX.value = withTiming(-position, {
+      duration: 100,
+      easing: Easing.inOut(Easing.circle),
+      reduceMotion: ReduceMotion.System,
+    });
+  };
 
   const pan = Gesture.Pan()
     .onStart(event => {
@@ -53,7 +67,7 @@ const CategoryScroll = ({ playMotion }: CategoryScrollProps) => {
     transform: [{ translateX: changeX.value }],
   }));
 
-  const handleThrowTrash = (index: number) => {
+  const handleThrowTrash = (index: number, long?: boolean) => {
     const actualIndex = index % trashCategoryList.length;
     const selectedTrashCategory = trashCategoryList[actualIndex];
     const selectedTrashInfo = find(
@@ -62,7 +76,7 @@ const CategoryScroll = ({ playMotion }: CategoryScrollProps) => {
     );
 
     if (selectedTrashInfo) throwTrash(selectedTrashInfo.trashInfoId);
-    playMotion.empty();
+    playMotion.empty(long);
   };
 
   return (
@@ -81,8 +95,9 @@ const CategoryScroll = ({ playMotion }: CategoryScrollProps) => {
                     text={convertTrashCategory(item.name) as TrashCategoryKrType}
                     isHorizontal={isHorizontal}
                     parentPanGesture={pan}
-                    throwTrash={() => handleThrowTrash(index)}
+                    throwTrash={handleThrowTrash}
                     playMotion={playMotion}
+                    changeIndex={() => changeIndex(index)}
                   />
                 );
               })}

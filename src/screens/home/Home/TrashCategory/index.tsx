@@ -26,6 +26,7 @@ const TrashCategory = ({
   parentPanGesture,
   playMotion,
   throwTrash,
+  changeIndex,
 }: TrashCategoryProps) => {
   const itemCircleAnimatedStyle = useAnimatedStyle(() => {
     const iSize = interpolate(
@@ -125,7 +126,7 @@ const TrashCategory = ({
     })
     .onTouchesUp(() => {
       if (isOpened.value) {
-        runOnJS(throwTrash)();
+        runOnJS(throwTrash)(index);
       }
     });
 
@@ -134,9 +135,14 @@ const TrashCategory = ({
     transform: [{ translateX: positionX.value }, { translateY: positionY.value }],
   }));
 
+  const handleCategoryPress = (long?: boolean) => {
+    if (index === selectedIndex.value) throwTrash(index, long);
+    else changeIndex();
+  };
+
   return (
     <GestureDetector gesture={pan}>
-      <TouchableOpacity activeOpacity={0.85} onPress={throwTrash}>
+      <TouchableOpacity activeOpacity={0.85} onPress={() => handleCategoryPress(true)}>
         <Animated.View style={[styles.eachItemCircle, itemCircleAnimatedStyle]}>
           <Animated.View style={[styles.outerCircle, selectedAnimatedStyle]}>
             <View style={styles.middleCircle}>
