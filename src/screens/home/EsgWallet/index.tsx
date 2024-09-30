@@ -22,6 +22,7 @@ import useVerifiedUserActiveLogQuery from '@hooks/queries/log/useVerifiedUserAct
 import useTotalRefundQuery from '@hooks/queries/log/useTotalRefundQuery';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@type/navigation';
+import useAlert from '@hooks/useAlert';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -74,6 +75,7 @@ const EsgWalletScreen = () => {
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { Alert, showAlert } = useAlert();
 
   const { data: totalToken } = useWwoossTokenQuery({});
   const { data: userActiveLog } = useUserActiveLogQuery();
@@ -91,9 +93,13 @@ const EsgWalletScreen = () => {
   };
 
   const handlePlannedButtonPress = () => {
-    navigate('WebView', {
-      url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
-    });
+    if (isIOS) {
+      navigate('WebView', {
+        url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+      });
+    } else {
+      showAlert({ content: '준비중입니다.' });
+    }
   };
 
   return (
@@ -114,6 +120,7 @@ const EsgWalletScreen = () => {
             }
       }
     >
+      <Alert />
       <Animated.View style={[{ position: 'absolute', width: '100%' }, gradientViewStyle]}>
         <Gradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} />
       </Animated.View>

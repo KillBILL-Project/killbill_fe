@@ -9,6 +9,8 @@ import { View } from 'react-native';
 import { QrCodeBottomSheetProps } from '@screens/home/EsgWallet/type';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@type/navigation';
+import { isIOS } from '@utils/platform';
+import useAlert from '@hooks/useAlert';
 import {
   Container,
   Gradient,
@@ -32,15 +34,21 @@ import {
 
 const QrCodeBottomSheet = ({ setActive }: QrCodeBottomSheetProps) => {
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { Alert, showAlert } = useAlert();
 
   const handlePlannedButtonPress = () => {
-    navigate('WebView', {
-      url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
-    });
+    if (isIOS) {
+      navigate('WebView', {
+        url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+      });
+    } else {
+      showAlert({ content: '준비중입니다.' });
+    }
   };
 
   return (
     <View>
+      <Alert />
       <CloseButton onPress={() => setActive(false)}>
         <CloseButtonGradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>
           <CloseButtonImage source={xIcon} tintColor={WHITE} />
