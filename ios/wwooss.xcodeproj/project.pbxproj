@@ -524,7 +524,7 @@
 				CODE_SIGN_ENTITLEMENTS = wwooss/wwooss.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.9.27.3;
+				CURRENT_PROJECT_VERSION = 2024.9.30;
 				DEVELOPMENT_TEAM = Q4K44P5984;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = wwooss/Info.plist;
@@ -658,7 +658,7 @@
 				CODE_SIGN_ENTITLEMENTS = wwooss/wwooss.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2024.9.27.3;
+				CURRENT_PROJECT_VERSION = 2024.9.30;
 				DEVELOPMENT_TEAM = Q4K44P5984;
 				INFOPLIST_FILE = wwooss/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = wwooss;
