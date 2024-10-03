@@ -11,10 +11,15 @@ import { MenuType } from '@type/common';
 import WideButton from '@screens/home/MyPage/WideButton';
 import Screen from '@components/Screen';
 import TopMenuButton from '@screens/home/MyPage/TopMenuButton';
-import Spacer from '@components/Spacer';
 import Separator from '@components/Separator';
 import MenuButton from '@components/MenuButton';
-import { Container, MenuButtonContainer, ThreeButtonContainer } from './styles';
+import {
+  BottomSection,
+  Container,
+  MenuButtonContainer,
+  ThreeButtonContainer,
+  TopSection,
+} from './styles';
 
 const topMenuList: MenuType<MyPageParamList>[] = [
   {
@@ -92,25 +97,32 @@ const MyPageScreen = () => {
 
   return (
     <Screen title="더보기" isBackButtonShown={false} rightButtonProps={rightButtonProps}>
-      <Container>
-        <ThreeButtonContainer>
-          {topMenuList.map(menu => (
-            <TopMenuButton
-              key={menu.route}
-              title={menu.name}
-              onPress={() => onPressMenu(menu.route)}
-              icon={menu.icon!}
-            />
-          ))}
-        </ThreeButtonContainer>
-        <Spacer height={16} />
-        <WideButton onPress={onPressBanner} />
-        <Separator horizontal length={width} thickness={8} marginTop={24} marginBottom={24} />
-        <MenuButtonContainer>
-          {menuList.map(menu => (
-            <MenuButton key={menu.name} title={menu.name} onPress={() => onPressMenu(menu.route)} />
-          ))}
-        </MenuButtonContainer>
+      <Container contentContainerStyle={{ flexGrow: 1 }}>
+        <TopSection>
+          <ThreeButtonContainer>
+            {topMenuList.map(menu => (
+              <TopMenuButton
+                key={menu.route}
+                title={menu.name}
+                onPress={() => onPressMenu(menu.route)}
+                icon={menu.icon!}
+              />
+            ))}
+          </ThreeButtonContainer>
+          <WideButton onPress={onPressBanner} />
+        </TopSection>
+        <Separator horizontal length={width} thickness={8} />
+        <BottomSection>
+          <MenuButtonContainer>
+            {menuList.map(menu => (
+              <MenuButton
+                key={menu.name}
+                title={menu.name}
+                onPress={() => onPressMenu(menu.route)}
+              />
+            ))}
+          </MenuButtonContainer>
+        </BottomSection>
       </Container>
     </Screen>
   );

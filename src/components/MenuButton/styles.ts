@@ -3,15 +3,24 @@ import { AUTH_BORDER_RADIUS } from '@constants/constants';
 import { ratioPx } from '@utils/platform';
 
 export const Container = styled.TouchableOpacity`
-  justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${ratioPx(56)};
   border-radius: ${ratioPx(AUTH_BORDER_RADIUS)};
   flex-direction: row;
 `;
-export const Title = styled.View``;
+
+export const Title = styled.View`
+  flex: 1;
+  padding: ${ratioPx(16)} 0;
+`;
+
+export const TitleText = styled.Text`
+  font-size: ${ratioPx(16)};
+  font-weight: 400;
+  line-height: ${ratioPx(24)};
+`;
+
 export const Icon = styled.Image`
-  width: 24px;
-  height: 24px;
+  width: ${ratioPx(24)};
+  height: ${ratioPx(24)};
 `;
