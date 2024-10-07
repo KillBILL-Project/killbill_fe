@@ -16,7 +16,7 @@ const OxChoice = ({ quizInfo, solveQuiz, quizHistoryId }: OxChoiceProps) => {
     <OxChoiceSection>
       <OxChoiceButton
         onPress={() => {
-          solveQuiz({ quizInfo, answer: 'o', quizHistoryId });
+          solveQuiz({ quizInfo, answer: 'O', quizHistoryId });
         }}
         underlayColor={PRIMARY}
       >
@@ -24,7 +24,7 @@ const OxChoice = ({ quizInfo, solveQuiz, quizHistoryId }: OxChoiceProps) => {
       </OxChoiceButton>
       <OxChoiceButton
         onPress={() => {
-          solveQuiz({ quizInfo, answer: 'x', quizHistoryId });
+          solveQuiz({ quizInfo, answer: 'X', quizHistoryId });
         }}
         underlayColor={PRIMARY}
       >
