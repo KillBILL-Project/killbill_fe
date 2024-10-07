@@ -96,6 +96,7 @@ const EsgWalletScreen = () => {
     if (isIOS) {
       navigate('WebView', {
         url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+        title: '가이드',
       });
     } else {
       showAlert({ content: '준비중입니다.' });

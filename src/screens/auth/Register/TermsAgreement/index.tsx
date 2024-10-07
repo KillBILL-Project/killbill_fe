@@ -31,6 +31,7 @@ const TermsAgreement = ({
   const onPressDetail = () => {
     navigate('WebView', {
       url: 'https://wwooss.notion.site/4ffdf0c0d7134630bcc0482bb524bbe3?pvs=4',
+      title: '서비스 이용약관',
     });
   };
 

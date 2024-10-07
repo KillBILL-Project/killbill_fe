@@ -153,12 +153,14 @@ const HomeScreen = () => {
           fetchNextPage={fetchNextPage}
         />
       </BottomSheet>
-      <HomeGuide
-        visible={!guideShown}
-        motionHeight={motionHeight}
-        lottieHeight={lottieHeight}
-        setGuideShown={setGuideShown}
-      />
+      {!guideShown && (
+        <HomeGuide
+          visible={!guideShown}
+          motionHeight={motionHeight}
+          lottieHeight={lottieHeight}
+          setGuideShown={setGuideShown}
+        />
+      )}
     </Screen>
   );
 };
