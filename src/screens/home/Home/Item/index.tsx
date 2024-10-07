@@ -14,7 +14,6 @@ import {
 const Item = (data: any) => {
   const trash = data?.data;
   const { createdAt, trashImagePath, size, trashCategoryName } = trash;
-  const trashSize = size === 'SMALL' ? '작은' : size === 'MEDIUM' ? '중간' : '큰';
 
   return (
     <Container>
@@ -26,7 +25,7 @@ const Item = (data: any) => {
           <CreatedTimeText>{convertTimeFullDate(createdAt)}</CreatedTimeText>
         </CreatedTime>
         <ItemName>
-          <ItemNameText>{`${trashSize} ${trashCategoryName}`}</ItemNameText>
+          <ItemNameText>{trashCategoryName}</ItemNameText>
         </ItemName>
       </DetailContainer>
     </Container>
