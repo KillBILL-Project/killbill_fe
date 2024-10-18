@@ -29,7 +29,7 @@ export const TRASH_TYPE_LIST: { id: number; trashType: TTrashType | null; name: 
   {
     id: 0,
     trashType: null,
-    name: '전체검색',
+    name: '전체',
   },
   {
     id: 1,

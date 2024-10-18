@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
-import { selectedTrashType } from '@states/trash';
+import { selectedTrashTypeState } from '@states/trash';
 import { TTrashType } from '@type/trash';
+import { includes, isEmpty, without } from 'lodash';
 import { TrashTypeButton, TrashTypeText } from './TrashLocation.style';
 
 interface ITrashType {
@@ -10,30 +11,26 @@ interface ITrashType {
 }
 
 const TrashType = ({ trashType, name }: ITrashType) => {
-  const [selected, setSelected] = useRecoilState(selectedTrashType);
-  const onPress = useCallback(() => {
-    if (trashType === null) {
-      setSelected(null);
-      return;
-    }
-    if (selected === null) {
-      setSelected([trashType]);
-      return;
-    }
+  const [selectedType, setSelectedType] = useRecoilState(selectedTrashTypeState);
 
-    const alreadySelected = selected.find(type => type === trashType);
-    const newList = alreadySelected
-      ? selected.filter(type => type !== trashType)
-      : [...selected, trashType];
-    setSelected(newList.length === 0 ? null : newList);
-  }, [selected, trashType]);
+  const handleTrashTypeButton = useCallback(() => {
+    setSelectedType(prev => {
+      if (trashType === null) return [];
 
-  const isSelected =
-    trashType === null ? selected === null : !!selected?.find(trash => trash === trashType);
+      return includes(prev, trashType) ? without(prev, trashType) : [...prev, trashType];
+    });
+  }, [trashType]);
+
+  const isSelected = useMemo(() => {
+    if (trashType === null && isEmpty(selectedType)) {
+      return true;
+    }
+    return includes(selectedType, trashType);
+  }, [trashType, selectedType]);
 
   return (
-    <TrashTypeButton isSelected={isSelected} onPress={onPress}>
-      <TrashTypeText>{name}</TrashTypeText>
+    <TrashTypeButton isSelected={isSelected} onPress={handleTrashTypeButton}>
+      <TrashTypeText isSelected={isSelected}>{name}</TrashTypeText>
     </TrashTypeButton>
   );
 };
