@@ -11,7 +11,7 @@ import qrcode from '@assets/icon/passport/qrcode.png';
 import shareIcon from '@assets/icon/share.png';
 import { styles } from '@constants/constants';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { ratio } from '@utils/platform';
+import { isIOS, ratio } from '@utils/platform';
 import { Modal, Pressable, View } from 'react-native';
 import { carbonMetrics, CarbonMetricsKeyType, TooltipKeyType } from '@screens/home/EsgWallet/type';
 import QrCodeBottomSheet from '@screens/home/EsgWallet/QrCodeBottomSheet';
@@ -22,6 +22,7 @@ import useVerifiedUserActiveLogQuery from '@hooks/queries/log/useVerifiedUserAct
 import useTotalRefundQuery from '@hooks/queries/log/useTotalRefundQuery';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@type/navigation';
+import useAlert from '@hooks/useAlert';
 import {
   ButtonTitle,
   ButtonTitleText,
@@ -74,6 +75,7 @@ const EsgWalletScreen = () => {
   const [carbonMetricsKey, setCarbonMetricsKey] = useState<CarbonMetricsKeyType>('reduction');
 
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { Alert, showAlert } = useAlert();
 
   const { data: totalToken } = useWwoossTokenQuery({});
   const { data: userActiveLog } = useUserActiveLogQuery();
@@ -91,9 +93,14 @@ const EsgWalletScreen = () => {
   };
 
   const handlePlannedButtonPress = () => {
-    navigate('WebView', {
-      url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
-    });
+    if (isIOS) {
+      navigate('WebView', {
+        url: 'https://wwooss.notion.site/ESG-Wallet-10eb50d14cf68083b228e4d912ebc5d6',
+        title: '가이드',
+      });
+    } else {
+      showAlert({ content: '준비중입니다.' });
+    }
   };
 
   return (
@@ -102,14 +109,19 @@ const EsgWalletScreen = () => {
       titleColor={WHITE}
       headerColor={BLACK}
       isBackButtonShown={false}
-      rightButtonProps={{
-        icon: shareIcon,
-        size: 24,
-        padding: 24,
-        color: WHITE,
-        onPress: handlePlannedButtonPress,
-      }}
+      rightButtonProps={
+        isIOS
+          ? undefined
+          : {
+              icon: shareIcon,
+              size: 24,
+              padding: 24,
+              color: WHITE,
+              onPress: handlePlannedButtonPress,
+            }
+      }
     >
+      <Alert />
       <Animated.View style={[{ position: 'absolute', width: '100%' }, gradientViewStyle]}>
         <Gradient colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} />
       </Animated.View>
@@ -126,7 +138,7 @@ const EsgWalletScreen = () => {
               <TokenValueText>{totalToken}</TokenValueText>
             </TokenValue>
           </TokenValueColumn>
-          <TokenQrCodeButton onPress={() => setIsActiveQrCode(true)}>
+          <TokenQrCodeButton onPress={() => setIsActiveQrCode(true)} disabled={isIOS}>
             <TokenQrCodeGradient
               colors={['#E7FFC4', '#F8FFEE']}
               useAngle
@@ -147,14 +159,14 @@ const EsgWalletScreen = () => {
           <ConnectWalletButton onPress={handlePlannedButtonPress}>
             <ConnectWalletButtonImage source={walletIcon} />
             <ButtonTitle>
-              <ButtonTitleText>Connect Wallet</ButtonTitleText>
+              <ButtonTitleText>{isIOS ? 'Wallet Guide' : 'Connect Wallet'}</ButtonTitleText>
             </ButtonTitle>
           </ConnectWalletButton>
           <Separator length={48} horizontal={false} color={GREY400} />
           <TradeButton onPress={handlePlannedButtonPress}>
             <TradeButtonImage source={tradeIcon} />
             <ButtonTitle>
-              <ButtonTitleText>Trade</ButtonTitleText>
+              <ButtonTitleText>{isIOS ? 'FAQ' : 'Trade'}</ButtonTitleText>
             </ButtonTitle>
           </TradeButton>
         </TokenButtonSection>
@@ -171,19 +183,21 @@ const EsgWalletScreen = () => {
                   <TooltipImage source={tooltipIcon} />
                 </TooltipButton>
               </CarbonSavingTitle>
-              <UnitSwitchingButton
-                onPress={() =>
-                  setCarbonMetricsKey(prevState =>
-                    prevState === 'reduction' ? 'emission' : 'reduction',
-                  )
-                }
-                disabled
-              >
-                <UnitSwitchingButtonImage source={switchIcon} tintColor={GREY600} />
-                <UnitSwitchingButtonText>
-                  {carbonMetrics[carbonMetricsKey].switchTitle}
-                </UnitSwitchingButtonText>
-              </UnitSwitchingButton>
+              {!isIOS && (
+                <UnitSwitchingButton
+                  onPress={() =>
+                    setCarbonMetricsKey(prevState =>
+                      prevState === 'reduction' ? 'emission' : 'reduction',
+                    )
+                  }
+                  disabled
+                >
+                  <UnitSwitchingButtonImage source={switchIcon} tintColor={GREY600} />
+                  <UnitSwitchingButtonText>
+                    {carbonMetrics[carbonMetricsKey].switchTitle}
+                  </UnitSwitchingButtonText>
+                </UnitSwitchingButton>
+              )}
             </CarbonSavingTitleRow>
             <CarbonSavingCardRow>
               <SavingValueCard colors={[BLACK, LIGHT]} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>

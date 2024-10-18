@@ -52,7 +52,7 @@ export type MyPageParamList = {
   Setting: undefined;
   Faq: undefined;
   Notification: undefined;
-  WebView: { url: string };
+  WebView: { url: string; title: string };
 };
 
 export type AlarmListParamList = {

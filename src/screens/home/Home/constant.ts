@@ -76,7 +76,7 @@ export const motionArray: ImageSourcePropType[] = [
 interface PlayMotionType {
   open: () => void;
   close: () => void;
-  empty: () => void;
+  empty: (long?: boolean) => void;
   reset: () => void;
 }
 
@@ -91,7 +91,8 @@ export interface TrashCategoryProps {
   text: TrashCategoryKrType;
   isHorizontal: SharedValue<boolean>;
   parentPanGesture: PanGesture;
-  throwTrash: () => void;
+  throwTrash: (index: number, long?: boolean) => void;
+  changeIndex: () => void;
   playMotion: PlayMotionType;
 }
 

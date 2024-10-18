@@ -2,6 +2,7 @@ import { WwoossResponse } from '@type/common';
 import { objectToQueryParam } from '@utils/common';
 import api from '@services/utils/api';
 import { TrashCategoryKrType } from '@type/trash';
+import { isEmpty } from 'lodash';
 
 interface GetTrashCanHistoryParams {
   date?: string;
@@ -126,10 +127,10 @@ export const requestTrashCanLocation = async (
   lat: number,
   lng: number,
   distance: number,
-  trashType: string[] | null,
+  trashType: string[],
 ): Promise<ITrashCanLocation[]> => {
   let url = `trash-can?lat=${+lat}&lng=${+lng}&distance=${distance}`;
-  if (trashType) {
+  if (!isEmpty(trashType)) {
     url += `&trashType=${trashType.toString()}`;
   }
   const { data } = await api.get(url);

@@ -1,22 +1,36 @@
 import styled from 'styled-components/native';
-import { LIGHT } from '@constants/colors';
+import { LIGHT, WHITE } from '@constants/colors';
 import { AUTH_BORDER_RADIUS } from '@constants/constants';
 import { ratioPx } from '@utils/platform';
 
 export const Container = styled.TouchableOpacity`
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: ${ratioPx(100)};
   background-color: ${LIGHT};
   border-radius: ${ratioPx(AUTH_BORDER_RADIUS)};
   flex-direction: row;
-  padding: 0 ${ratioPx(24)};
+  padding: ${ratioPx(20)} ${ratioPx(24)};
 `;
-export const TextContainer = styled.View`
+
+export const TextColumn = styled.View`
   flex: 1;
   justify-content: center;
+  gap: ${ratioPx(5)};
 `;
-export const Icon = styled.Image``;
+
 export const Title = styled.View``;
+
+export const TitleText = styled.Text`
+  font-size: ${ratioPx(18)};
+  font-weight: 400;
+  line-height: ${ratioPx(27)};
+  color: ${WHITE};
+`;
+
 export const Description = styled.View``;
+
+export const DescriptionText = styled.Text`
+  font-size: ${ratioPx(14)};
+  font-weight: 400;
+  line-height: ${ratioPx(20)};
+  color: ${WHITE};
+`;
